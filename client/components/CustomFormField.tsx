@@ -7,17 +7,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import 'react-phone-number-input/style.css'
+import "react-phone-number-input/style.css";
+import "react-datepicker/dist/react-datepicker.css";
 import { Input } from "@/components/ui/input";
 import { CustomProps, FormFieldType } from "@/types/fromTypes";
 import Image from "next/image";
-import PhoneInput from 'react-phone-number-input'
-
-
-
+import PhoneInput from "react-phone-number-input";
+import ReactDatePicker from "react-datepicker";
+import { Select } from "@radix-ui/react-select";
+import { SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
-  const { fieldType, iconSrc, iconAlt, placeholder } = props;
+  const { fieldType, iconSrc, iconAlt, placeholder, renderSkeleton } = props;
 
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -42,7 +43,45 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </div>
       );
 
-    case FormFieldType.PHONE_INPUT:
+    case FormFieldType.DATE_PICKER:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+          <Image
+            src="/assets/icons/calendar.svg"
+            height={24}
+            width={24}
+            alt="user"
+            className="ml-2"
+          />
+          <FormControl>
+            <ReactDatePicker
+              showTimeSelect={props.showTimeSelect ?? false}
+              selected={field.value}
+              onChange={(date) => field.onChange(date)}
+              timeInputLabel="Time:"
+              dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
+              wrapperClassName="date-picker"
+            />
+          </FormControl>
+        </div>
+      );
+    case FormFieldType.SELECT:
+      return (
+        <FormControl>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger className="shad-select-trigger">
+                <SelectValue placeholder={props.placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent className="shad-select-content">
+              {props.children}
+            </SelectContent>
+          </Select>
+        </FormControl>
+      );
+      
+      case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
           <PhoneInput
@@ -69,6 +108,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </FormControl>
         </div>
       );
+
+      case FormFieldType.SKELETON:
+        return renderSkeleton ? renderSkeleton(field) : null;
 
     default:
       return null;

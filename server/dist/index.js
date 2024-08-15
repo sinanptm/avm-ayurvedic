@@ -16,5 +16,5 @@ mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 // Start the server
-app.listen(9000);
+app.listen(process.env.PORT);
 //# sourceMappingURL=index.js.map

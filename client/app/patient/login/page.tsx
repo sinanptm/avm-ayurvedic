@@ -1,6 +1,8 @@
+import LoginForm from "@/components/forms/LoginForm";
 import Image from "next/image";
 import Link from "next/link";
-const Register = () => {
+const Login = ()=> {
+  
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
@@ -12,6 +14,7 @@ const Register = () => {
             alt="patient"
             className="mb-12 h-10 w-fit"
           />
+          <LoginForm />
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 AVM Care
@@ -24,14 +27,14 @@ const Register = () => {
       </section>
 
       <Image
-        src={"/assets/images/register-img.png"}
-        alt="patient"
+        src="/assets/images/onboarding-img.png"
         height={1000}
         width={1000}
-        className="side-img max-w[390px]"
+        alt="patient"
+        className="side-img max-w-[50%]"
       />
     </div>
   );
-};
+}
 
-export default Register;
+export default Login

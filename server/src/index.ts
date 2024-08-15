@@ -22,4 +22,4 @@ mongoose.connect(mongoUri)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Start the server
-app.listen(9000);
+app.listen(process.env.PORT);

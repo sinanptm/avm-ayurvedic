@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-     "test": "echo \"No tests specified\" && exit 0"
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-radio-group": "^1.2.0",
+    "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@reduxjs/toolkit": "^2.2.7",
     "class-variance-authority": "^0.7.0",
@@ -20,6 +22,7 @@
     "next": "14.2.5",
     "next-themes": "^0.3.0",
     "react": "^18",
+    "react-datepicker": "^7.3.0",
     "react-dom": "^18",
     "react-hook-form": "^7.52.2",
     "react-phone-number-input": "^3.4.5",
