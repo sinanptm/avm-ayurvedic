@@ -1,16 +1,25 @@
-import express from "express";
-const port = 8000;
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import authRoutes from './routes/auth.js';
+
+dotenv.config(); // Ensure this is at the top
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("HELLO FROM EXPRESS + TS!!!!");
-});
+app.use(express.json());
+app.use('/api', authRoutes);  //post //api/login    //api/register
 
-app.get("/hi", (req, res) => {
-  res.send("BYEEE!!");
-});
+// MongoDB connection
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+  console.error('MongoDB URI is not defined in environment variables.');
+  process.exit(1);
+}
 
-app.listen(port, () => {
-  console.log(`now listening on port ${port}`);
-});
+mongoose.connect(mongoUri)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Start the server
+app.listen(9000);
