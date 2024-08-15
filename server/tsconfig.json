@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2021",
+    "outDir": "dist",
+    "sourceMap": true
+  },
+  "include": ["src/**/*", "src/index.ts"]
+}
