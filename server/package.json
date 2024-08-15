@@ -10,7 +10,8 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node dist/index.js",
-    "serve": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
+    "serve": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [],
   "author": "",
