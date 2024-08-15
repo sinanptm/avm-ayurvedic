@@ -9,31 +9,16 @@ import {
 } from "@/components/ui/form";
 import 'react-phone-number-input/style.css'
 import { Input } from "@/components/ui/input";
-import { Control } from "react-hook-form";
-import { FormFieldType } from "./forms/PatientForm";
+import { CustomProps, FormFieldType } from "@/types/fromTypes";
 import Image from "next/image";
 import PhoneInput from 'react-phone-number-input'
 
 
-interface CustomProps {
-  control: Control<any>;
-  fieldType: FormFieldType;
-  name: string;
-  label?: string;
-  placeholder?: string;
-  iconSrc?: string;
-  iconAlt?: string;
-  disabled?: boolean;
-  errorMessage?: string;
-  dateFormat?: string;
-  showTime?: boolean;
-  children?: React.ReactNode;
-  renderSkeleton?: (field: any) => React.ReactNode;
-}
+
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   const { fieldType, iconSrc, iconAlt, placeholder } = props;
-  
+
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -60,7 +45,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
-         <PhoneInput
+          <PhoneInput
             placeholder={placeholder}
             defaultCountry="IN"
             {...field}
@@ -68,7 +53,21 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             addInternationalOption
             className="input-phone"
           />
-      </FormControl>
+        </FormControl>
+      );
+
+    case FormFieldType.PASSWORD:
+      return (
+        <div className="flex rounded-md border-dark-500 bg-dark-400">
+          <FormControl>
+            <Input
+              type="password"
+              {...field}
+              placeholder={placeholder}
+              className="shad-input border-0"
+            />
+          </FormControl>
+        </div>
       );
 
     default:
