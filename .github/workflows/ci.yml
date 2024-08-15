@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies for client
+        run: npm install
+        working-directory: client
+
+      - name: Run lint for client
+        run: npm run lint
+        working-directory: client
+
+      - name: Build client project
+        run: npm run build
+        working-directory: client
+
+      - name: Run tests for client
+        run: npm test
+        working-directory: client
+
+  build-server:
+    runs-on: ubuntu-latest
+    needs: build-client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies for server
+        run: npm install
+        working-directory: server
+
+      - name: Build server project
+        run: npm run build
+        working-directory: server
+
+      - name: Run tests for server
+        run: npm test
+        working-directory: server
