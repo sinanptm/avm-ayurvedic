@@ -16,9 +16,18 @@ import PhoneInput from "react-phone-number-input";
 import ReactDatePicker from "react-datepicker";
 import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { Checkbox } from "./ui/checkbox";
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
-  const { fieldType, iconSrc, iconAlt, placeholder, renderSkeleton } = props;
+  const {
+    fieldType,
+    iconSrc,
+    iconAlt,
+    placeholder,
+    renderSkeleton,
+    label,
+    name,
+  } = props;
 
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -80,8 +89,8 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </Select>
         </FormControl>
       );
-      
-      case FormFieldType.PHONE_INPUT:
+
+    case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
           <PhoneInput
@@ -109,9 +118,24 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </div>
       );
 
-      case FormFieldType.SKELETON:
-        return renderSkeleton ? renderSkeleton(field) : null;
+    case FormFieldType.SKELETON:
+      return renderSkeleton ? renderSkeleton(field) : null;
 
+    case FormFieldType.CHECKBOX:
+      return (
+        <FormControl>
+          <div className="flex items-center gap-4">
+            <Checkbox
+              id={name}
+              checked={field.value}
+              onChange={field.onChange}
+            />
+            <label htmlFor={name} className="checkbox-label">
+              {label}
+            </label>
+          </div>
+        </FormControl>
+      );
     default:
       return null;
   }

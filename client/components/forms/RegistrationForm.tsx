@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { loginFormValidation } from "@/lib/validation";
+import { registerFormValidation } from "@/lib/validation";
 // import { useLoginMutation } from "@/lib/features/api/authApi";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
@@ -20,15 +20,15 @@ import Image from "next/image";
 const RegistrationForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [login] = useLoginMutation();
-  const form = useForm<z.infer<typeof loginFormValidation>>({
-    resolver: zodResolver(loginFormValidation),
+  const form = useForm<z.infer<typeof registerFormValidation>>({
+    resolver: zodResolver(registerFormValidation),
     defaultValues: {
       phone: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof loginFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {
     setIsLoading(true);
     setTimeout(() => {
       console.log("done");
@@ -102,7 +102,7 @@ const RegistrationForm = () => {
             fieldType={FormFieldType.DATE_PICKER}
             control={form.control}
             name="birthDate"
-            label="Date of birth"
+            label="Date of birth *"
           />
 
           <CustomFormField
@@ -177,7 +177,30 @@ const RegistrationForm = () => {
           label="Confirm Password"
           placeholder="Re-enter your password"
         />
+        <section className="mb-12 space-y-4">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Consent and Privacy</h2>
+          </div>
+        </section>
 
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.CHECKBOX}
+          name="concent"
+          label="I consent to receive treatment for my health condition."
+        />
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.CHECKBOX}
+          name="disclosureConsent"
+          label="I consent to the use and disclosure of my health information for treatment purposes."
+        />
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.CHECKBOX}
+          name="privacyPolicy"
+          label="I acknowledge that I have reviewed and agree to the privacy policy."
+        />
         <SubmitButton isLoading={isLoading}>Sign In</SubmitButton>
       </form>
     </Form>
