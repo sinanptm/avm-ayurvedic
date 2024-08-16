@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
-import { registerFormValidation } from "@/lib/userValidation";
+import { signupFormValidation } from "@/lib/userValidation";
 // import { useLoginMutation } from "@/lib/features/api/authApi";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
@@ -15,15 +15,18 @@ import Link from "next/link";
 const RegistrationForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [login] = useLoginMutation();
-  const form = useForm<z.infer<typeof registerFormValidation>>({
-    resolver: zodResolver(registerFormValidation),
+  const form = useForm<z.infer<typeof signupFormValidation>>({
+    resolver: zodResolver(signupFormValidation),
     defaultValues: {
-      // phone: ,
-      // password: "",
+      phone:"",
+      password: "",
+      name: "",
+      email:"",
+      confirmPassword:""
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof signupFormValidation>) => {
     setIsLoading(true);
     setTimeout(() => {
       console.log("done");

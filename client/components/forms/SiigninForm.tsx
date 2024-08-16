@@ -7,23 +7,23 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
-import { loginFormValidation } from "@/lib/userValidation";
+import { signinFormValidation } from "@/lib/userValidation";
 import { useLoginMutation } from "@/lib/features/api/authApi";
-import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
+import { FormFieldType } from "@/types/fromTypes";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [login] = useLoginMutation();
-  const form = useForm<z.infer<typeof loginFormValidation>>({
-    resolver: zodResolver(loginFormValidation),
+  const form = useForm<z.infer<typeof signinFormValidation>>({
+    resolver: zodResolver(signinFormValidation),
     defaultValues: {
       phone: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof loginFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
     console.log("clicked");
     setIsLoading(true);
 

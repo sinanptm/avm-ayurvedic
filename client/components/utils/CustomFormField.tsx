@@ -1,7 +1,6 @@
 "use client";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,26 +29,27 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     name,
     isLimited,
     disabled,
-    children
+    children,
+    dateFormat
   } = props;
 
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="flex rounded-md border-dark-500 bg-dark-400">
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
           {iconSrc && (
             <Image
               src={iconSrc}
-              width={24}
+              alt={iconAlt || `${name}-icon`}
               height={24}
+              width={24}
               className="ml-2"
-              alt={iconAlt || "icon"}
             />
           )}
           <FormControl>
             <Input
-              {...field}
               placeholder={placeholder}
+              {...field}
               className="shad-input border-0"
             />
           </FormControl>
@@ -72,7 +72,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               selected={field.value}
               onChange={(date) => field.onChange(date)}
               timeInputLabel="Time:"
-              dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
+              dateFormat={dateFormat ?? "MM/dd/yyyy"}
               wrapperClassName="date-picker"
               {...(isLimited ? { minDate: new Date() } : {})}
             />
@@ -138,21 +138,21 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null;
 
-    case FormFieldType.CHECKBOX:
-      return (
-        <FormControl>
+      case FormFieldType.CHECKBOX:
+        return (
           <div className="flex items-center gap-4">
             <Checkbox
               id={name}
               checked={field.value}
-              onChange={field.onChange}
+              onCheckedChange={field.onChange}
             />
-            <label htmlFor={name} className="checkbox-label">
+            <label
+              htmlFor={name}
+              className="checkbox-label">
               {label}
             </label>
           </div>
-        </FormControl>
-      );
+        );
     default:
       return null;
   }

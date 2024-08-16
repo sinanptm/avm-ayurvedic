@@ -1,7 +1,6 @@
-import { BloodTypes, GenderOptions } from "@/constants";
 import { z } from "zod";
 
-export const loginFormValidation = z.object({
+export const signinFormValidation = z.object({
   phone: z
     .string()
     .refine(
@@ -11,45 +10,33 @@ export const loginFormValidation = z.object({
   password: z.string().min(4, "Password must be at least 4 characters long"),
 });
 
-export const registerFormValidation = z.object({
-  birthDate: z.string().min(1, "Date of birth is required"),
-  gender: z.enum(["Male", "Female", "Other"]),
-  bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
-  disease: z.string().min(1, "Primary Disease is required"),
-  privacyPolicy: z
-    .boolean()
-    .refine((val) => val === true, "You must agree to the Privacy Policy"),
-  concent: z
-    .boolean()
-    .refine((val) => val === true, "You must Consent to Treatment"),
-  disclosureConsent: z
-    .boolean()
-    .refine((val) => val === true, "You must Consent to Privacy Policy"),
-});
-
 export const signupFormValidation = z
   .object({
     name: z
       .string()
-      .min(1, "Full Name is required"),
-    email: z
-      .string()
-      .email("Invalid email address")
-      .min(1, "Email address is required"),
+      .min(3, "Full Name must be at least 3 characters long")
+      .max(50, "Name must be at most 50 characters."),
+    email: z.string().email("Invalid email address"),
     phone: z
       .string()
       .min(10, "Phone number must be at least 10 digits")
       .max(15, "Phone number must be at most 15 digits"),
-    password: z.string().min(4, "Password must be at least 4 characters long"),
     // password: z.string()
-    //   .min(8, "Password must be at least 8 characters long")
-    //   .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    //   .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    //   .regex(/[0-9]/, "Password must contain at least one number")
-    //   .regex(/[@$!%*?&#]/, "Password must contain at least one special character"),
+    // .min(4, "Password must be at least 4 characters long"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .max(20, "Password must be at most 15 characters long")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[@$!%*?&#]/,
+        "Password must contain at least one special character"
+      ),
     confirmPassword: z
       .string()
-      .min(4, "Password must be at least 4 characters long"),
+      .min(8, "Password must be at least 4 characters long"),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -60,3 +47,38 @@ export const signupFormValidation = z
       });
     }
   });
+
+export const registerFormValidation = z.object({
+  birthDate: z.coerce.date(),
+  gender: z.enum(["Male", "Female", "Other"]),
+  bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
+  disease: z.string().min(1, "Primary Disease is required"),
+  privacyConsent: z
+    .boolean()
+    .default(false)
+    .refine((val) => val === true, {
+      message: "You must agree to the Privacy Consent ",
+    }),
+  concent: z
+    .boolean()
+    .default(false)
+    .refine((val) => val === true, {
+      message: "You must Consent to Treatment",
+    }),
+  disclosureConsent: z
+    .boolean()
+    .default(false)
+    .refine((val) => val === true, {
+      message: "You must consent to disclosure in order to proceed",
+    }),
+  address: z.string().min(4, "Address is required"),
+  occupation: z.string().min(3, "Occupation is required"),
+});
+
+export const appointmentFormValidation = z.object({
+  appointmentType:z.enum(['outpatient','inpatient']),
+  reason: z.string().min(5, "Reason must be at least 5 characters long"),
+  note:z.string().min(5, "Notes must be at least 5 characters long"),
+  schedule:z.coerce.date(),
+  payment:z.enum(['online','payment'])
+})

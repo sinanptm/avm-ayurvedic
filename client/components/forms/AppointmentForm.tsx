@@ -7,26 +7,31 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
-import { loginFormValidation } from "@/lib/userValidation";
-import { useLoginMutation } from "@/lib/features/api/authApi";
-import { FormFieldType } from "@/types/fromTypes";
+import { appointmentFormValidation } from "@/lib/userValidation";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import { AppointmentTypes, PaymentOptions } from "@/constants";
+import { FormFieldType } from "@/types/fromTypes";
 
 const AppointmentForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [login] = useLoginMutation();
-  const form = useForm<z.infer<typeof loginFormValidation>>({
-    resolver: zodResolver(loginFormValidation),
+  const form = useForm<z.infer<typeof appointmentFormValidation>>({
+    resolver: zodResolver(appointmentFormValidation),
     defaultValues: {
-      phone: "",
-      password: "",
+      appointmentType: "inpatient",
+      reason: "",
+      note: "",
+      schedule: new Date(Date.now()),
+      payment: "online",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof loginFormValidation>) => {
-    console.log("clicked");
+  const onSubmit = async (
+    values: z.infer<typeof appointmentFormValidation>
+  ) => {
+    setIsLoading(true);
+    console.log("clicked", values);
+    setIsLoading(false);
   };
 
   return (
@@ -72,9 +77,9 @@ const AppointmentForm = () => {
           <CustomFormField
             fieldType={FormFieldType.TEXTAREA}
             control={form.control}
-            name="Symptoms"
-            label="Symptoms"
-            placeholder="Having Headache while sleeping"
+            name="note"
+            label="Note"
+            placeholder="Please schedule before evening "
           />
         </div>
 
@@ -84,7 +89,7 @@ const AppointmentForm = () => {
           name="schedule"
           label="Expected appointment date"
           isLimited
-          dateFormat="MM/dd/yyyy  -  h:mm aa"
+          dateFormat="MM/dd/yyyy"
         />
         <CustomFormField
           fieldType={FormFieldType.SELECT}

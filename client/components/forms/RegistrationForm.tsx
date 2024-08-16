@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FormFieldType } from "@/types/fromTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,10 +9,9 @@ import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField"
 import SubmitButton from "@/components/utils/SubmitButton";
 import { registerFormValidation } from "@/lib/userValidation";
-import { FormFieldType } from "@/types/fromTypes";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
-import { BloodTypes, DiseaseOptions, GenderOptions } from "@/constants";
+import { BloodTypes, DiseaseOptions, GenderOptions, PatientFormDefaultValues } from "@/constants";
 import { SelectItem } from "../ui/select";
 
 const RegistrationForm = () => {
@@ -19,15 +19,14 @@ const RegistrationForm = () => {
   // const [login] = useLoginMutation();
   const form = useForm<z.infer<typeof registerFormValidation>>({
     resolver: zodResolver(registerFormValidation),
-    defaultValues: {
-      disease: "none",
-    },
+    defaultValues: {...PatientFormDefaultValues},
   });
 
   const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {
     setIsLoading(true);
     setTimeout(() => {
-      console.log("done");
+      console.log(values);
+      setIsLoading(false);
     }, 2000);
     // try {
     //   const user = await login({
@@ -39,7 +38,6 @@ const RegistrationForm = () => {
     // } catch (error) {
     //   console.error("Failed to log in:", error);
     // } finally {
-    setIsLoading(false);
     // }
   };
 
@@ -155,7 +153,7 @@ const RegistrationForm = () => {
         <CustomFormField
           control={form.control}
           fieldType={FormFieldType.CHECKBOX}
-          name="privacyPolicy"
+          name="privacyConsent"
           label="I acknowledge that I have reviewed and agree to the privacy policy."
         />
         <SubmitButton isLoading={isLoading}>Sign In</SubmitButton>
