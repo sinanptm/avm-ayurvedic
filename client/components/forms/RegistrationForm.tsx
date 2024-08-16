@@ -6,12 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
-import CustomFormField from "@/components/utils/CustomFormField"
+import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
 import { registerFormValidation } from "@/lib/userValidation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
-import { BloodTypes, DiseaseOptions, GenderOptions, PatientFormDefaultValues } from "@/constants";
+import { BloodTypes, DiseaseOptions, GenderOptions } from "@/constants";
 import { SelectItem } from "../ui/select";
 
 const RegistrationForm = () => {
@@ -19,7 +19,17 @@ const RegistrationForm = () => {
   // const [login] = useLoginMutation();
   const form = useForm<z.infer<typeof registerFormValidation>>({
     resolver: zodResolver(registerFormValidation),
-    defaultValues: {...PatientFormDefaultValues},
+    defaultValues: {
+      birthDate: new Date(Date.now()),
+      gender: "Male",
+      address: "",
+      occupation: "",
+      concent: false,
+      disclosureConsent: false,
+      privacyConsent: false,
+      bloodType:"O+",
+      disease:"none"
+    },
   });
 
   const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {
@@ -47,7 +57,7 @@ const RegistrationForm = () => {
         <section className="mb-12 space-y-4">
           <h3 className="header">Personal information 🧑‍⚕️</h3>
         </section>
-        
+
         {/* BirthDate & Gender */}
         <div className="flex flex-col gap-6 xl:flex-row">
           <CustomFormField

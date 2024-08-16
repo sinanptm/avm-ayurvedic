@@ -74,15 +74,3 @@ export const DiseaseOptions: string[] = [
   "Meningitis",
 ];
 
-export const PatientFormDefaultValues = {
-  name: "",
-  email: "",
-  phone: "",
-  birthDate: new Date(Date.now()),
-  gender: "Male" as Gender,
-  address: "",
-  occupation: "",
-  concent: false,
-  disclosureConsent: false,
-  privacyConsent: false,
-};
