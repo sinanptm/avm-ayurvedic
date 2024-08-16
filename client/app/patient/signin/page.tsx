@@ -1,10 +1,12 @@
-import SigninForm from "@/components/forms/SiigninForm";
+import SigninForm from "@/components/forms/SigninForm";
+import OtpVerificationModel from "@/components/modles/OtpVerificationModel";
 import Image from "next/image";
 import Link from "next/link";
 const SignIn = ()=> {
   
   return (
     <div className="flex h-screen max-h-screen">
+      <OtpVerificationModel />
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-[496px:">
           <Image
