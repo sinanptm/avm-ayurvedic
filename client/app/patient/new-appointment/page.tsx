@@ -1,6 +1,7 @@
+import AppointmentForm from "@/components/forms/AppointmentForm";
 import Image from "next/image";
-import RegistrationForm from "@/components/forms/RegistrationForm";
-const Register = () => {
+
+const Appointment = () => {
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
@@ -13,14 +14,14 @@ const Register = () => {
             className="mb-12 h-10 w-fit"
           />
 
-          <RegistrationForm />
+          <AppointmentForm />
 
-          <p className="copyright py-12">© 2024 AVM Cares</p>
+          <p className="copyright py-8">© 2024 AVM Cares</p>
         </div>
       </section>
 
       <Image
-        src="/assets/images/register-img.png"
+        src="/assets/images/appointment-img.png"
         height={1000}
         width={1000}
         alt="patient"
@@ -30,4 +31,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Appointment;

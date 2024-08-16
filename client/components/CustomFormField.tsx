@@ -17,6 +17,7 @@ import ReactDatePicker from "react-datepicker";
 import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
+import { Textarea } from "./ui/textarea";
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   const {
@@ -27,6 +28,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     renderSkeleton,
     label,
     name,
+    isLimited,
+    disabled,
+    children
   } = props;
 
   switch (fieldType) {
@@ -70,6 +74,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               timeInputLabel="Time:"
               dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
               wrapperClassName="date-picker"
+              {...(isLimited ? { minDate: new Date() } : {})}
             />
           </FormControl>
         </div>
@@ -80,11 +85,11 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger className="shad-select-trigger">
-                <SelectValue placeholder={props.placeholder} />
+                <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent className="shad-select-content">
-              {props.children}
+              {children}
             </SelectContent>
           </Select>
         </FormControl>
@@ -103,6 +108,18 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           />
         </FormControl>
       );
+
+      case FormFieldType.TEXTAREA:
+        return (
+          <FormControl>
+            <Textarea
+              placeholder={placeholder}
+              {...field}
+              className="shad-textArea"
+              disabled={disabled}
+            />
+          </FormControl>
+        );
 
     case FormFieldType.PASSWORD:
       return (

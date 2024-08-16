@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { loginFormValidation } from "@/lib/validation";
+import { loginFormValidation } from "@/lib/userValidation";
 import { useLoginMutation } from "@/lib/features/api/authApi";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";

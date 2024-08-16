@@ -24,4 +24,6 @@ export interface CustomProps {
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
   fieldType: FormFieldType;
+  isLimited?:boolean;
+  availableTimes?:string[];
 }
