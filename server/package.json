@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "del dist",
     "prebuild": "npm run clean",
     "build": "tsc",
     "prestart": "npm run build",
@@ -29,6 +29,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.3.0",
     "concurrently": "^8.2.2",
+    "del-cli": "^5.1.0",
     "nodemon": "^3.1.4",
     "rimraf": "^6.0.1",
     "typescript": "^5.5.4"
