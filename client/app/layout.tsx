@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/utils/theme-provider";
 import StoreProvider from "./StoreProvider";
 
 const inter = Plus_Jakarta_Sans({
@@ -24,17 +24,18 @@ export default function RootLayout({
 }>) {
   return (
     <StoreProvider>
-      <html lang="en">
-        <body
-          className={cn(
-            "min-h-screen text-white bg-dark-300 font-sans antialiased"
-          )}
+     <html lang="en">
+      <body suppressHydrationWarning={true} className={cn('min-h-screen bg-dark-300 font-sans antialiased', inter.variable)}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
         >
-          <ThemeProvider attribute="class" defaultTheme="dark">
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
     </StoreProvider>
   );
 }

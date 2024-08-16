@@ -11,12 +11,27 @@ export const loginFormValidation = z.object({
   password: z.string().min(4, "Password must be at least 4 characters long"),
 });
 
-export const registerFormValidation = z
+export const registerFormValidation = z.object({
+  birthDate: z.string().min(1, "Date of birth is required"),
+  gender: z.enum(["Male", "Female", "Other"]),
+  bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
+  disease: z.string().min(1, "Primary Disease is required"),
+  privacyPolicy: z
+    .boolean()
+    .refine((val) => val === true, "You must agree to the Privacy Policy"),
+  concent: z
+    .boolean()
+    .refine((val) => val === true, "You must Consent to Treatment"),
+  disclosureConsent: z
+    .boolean()
+    .refine((val) => val === true, "You must Consent to Privacy Policy"),
+});
+
+export const signupFormValidation = z
   .object({
     name: z
       .string()
-      .min(1, "Full Name is required")
-      .nonempty("Full Name cannot be empty"),
+      .min(1, "Full Name is required"),
     email: z
       .string()
       .email("Invalid email address")
@@ -25,10 +40,6 @@ export const registerFormValidation = z
       .string()
       .min(10, "Phone number must be at least 10 digits")
       .max(15, "Phone number must be at most 15 digits"),
-    birthDate: z.string().min(1, "Date of birth is required"),
-    gender: z.enum(["Male", "Female", "Other"]),
-    bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
-    disease: z.string().min(1, "Primary Disease is required"),
     password: z.string().min(4, "Password must be at least 4 characters long"),
     // password: z.string()
     //   .min(8, "Password must be at least 8 characters long")
@@ -39,18 +50,6 @@ export const registerFormValidation = z
     confirmPassword: z
       .string()
       .min(4, "Password must be at least 4 characters long"),
-    privacyPolicy: z
-      .boolean()
-      .refine(
-        (val) => val === true,
-        "You must agree to the Privacy Policy"
-      ),
-    concent: z
-      .boolean()
-      .refine((val) => val === true, "You must Consent to Treatment"),
-    disclosureConsent: z
-      .boolean()
-      .refine((val) => val === true, "You must Consent to Privacy Policy"),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {

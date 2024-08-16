@@ -1,7 +1,7 @@
-import LoginForm from "@/components/forms/LoginForm";
+import SigninForm from "@/components/forms/SiigninForm";
 import Image from "next/image";
 import Link from "next/link";
-const Login = ()=> {
+const SignIn = ()=> {
   
   return (
     <div className="flex h-screen max-h-screen">
@@ -14,7 +14,7 @@ const Login = ()=> {
             alt="patient"
             className="mb-12 h-10 w-fit"
           />
-          <LoginForm />
+          <SigninForm />
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 AVM Care
@@ -37,4 +37,4 @@ const Login = ()=> {
   );
 }
 
-export default Login
+export default SignIn
