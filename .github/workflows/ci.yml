@@ -21,6 +21,14 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Cache Node.js dependencies for client
+        uses: actions/cache@v3
+        with:
+          path: client/node_modules
+          key: client-node-modules-${{ hashFiles('client/package-lock.json') }}
+          restore-keys: |
+            client-node-modules-
+
       - name: Install dependencies for client
         run: npm install
         working-directory: client
@@ -49,6 +57,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+
+      - name: Cache Node.js dependencies for server
+        uses: actions/cache@v3
+        with:
+          path: server/node_modules
+          key: server-node-modules-${{ hashFiles('server/package-lock.json') }}
+          restore-keys: |
+            server-node-modules-
 
       - name: Install dependencies for server
         run: npm install
