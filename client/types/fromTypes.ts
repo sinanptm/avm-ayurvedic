@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { Control } from "react-hook-form";
 
 export enum FormFieldType {
@@ -26,4 +27,5 @@ export enum FormFieldType {
     fieldType: FormFieldType;
     isLimited?:boolean;
     availableTimes?:string[];
+    Icon?: FC<{ className?: string }>;
   }

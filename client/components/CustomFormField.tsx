@@ -17,6 +17,7 @@ import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
 import { Textarea } from "./ui/textarea";
+import { IconCalendar } from '@tabler/icons-react';
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   const {
@@ -30,22 +31,32 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     isLimited,
     disabled,
     children,
-    dateFormat
+    dateFormat,
+    Icon,
   } = props;
+
+  const renderIcon = () => {
+    if (Icon) {
+      return <Icon className="ml-2 mt-1" />;
+    } else if (iconSrc) {
+      return (
+        <Image
+          src={iconSrc}
+          alt={iconAlt || `${name}-icon`}
+          height={24}
+          width={24}
+          className="ml-2"
+        />
+      );
+    }
+    return null;
+  };
 
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
-          {iconSrc && (
-            <Image
-              src={iconSrc}
-              alt={iconAlt || `${name}-icon`}
-              height={24}
-              width={24}
-              className="ml-2"
-            />
-          )}
+          {renderIcon()}
           <FormControl>
             <Input
               placeholder={placeholder}
@@ -56,16 +67,10 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </div>
       );
 
-    case FormFieldType.DATE_PICKER:
+      case FormFieldType.DATE_PICKER:
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
-          <Image
-            src="/assets/icons/calendar.svg"
-            height={24}
-            width={24}
-            alt="user"
-            className="ml-2"
-          />
+          <IconCalendar className="ml-2 mt-1" />
           <FormControl>
             <ReactDatePicker
               showTimeSelect={props.showTimeSelect ?? false}
@@ -79,6 +84,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </FormControl>
         </div>
       );
+
     case FormFieldType.SELECT:
       return (
         <FormControl>
@@ -109,21 +115,22 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </FormControl>
       );
 
-      case FormFieldType.TEXTAREA:
-        return (
-          <FormControl>
-            <Textarea
-              placeholder={placeholder}
-              {...field}
-              className="shad-textArea"
-              disabled={disabled}
-            />
-          </FormControl>
-        );
+    case FormFieldType.TEXTAREA:
+      return (
+        <FormControl>
+          <Textarea
+            placeholder={placeholder}
+            {...field}
+            className="shad-textArea"
+            disabled={disabled}
+          />
+        </FormControl>
+      );
 
     case FormFieldType.PASSWORD:
       return (
         <div className="flex rounded-md border-dark-500 bg-dark-400">
+          {renderIcon()}
           <FormControl>
             <Input
               type="password"
@@ -138,21 +145,20 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null;
 
-      case FormFieldType.CHECKBOX:
-        return (
-          <div className="flex items-center gap-4">
-            <Checkbox
-              id={name}
-              checked={field.value}
-              onCheckedChange={field.onChange}
-            />
-            <label
-              htmlFor={name}
-              className="checkbox-label">
-              {label}
-            </label>
-          </div>
-        );
+    case FormFieldType.CHECKBOX:
+      return (
+        <div className="flex items-center gap-4">
+          <Checkbox
+            id={name}
+            checked={field.value}
+            onCheckedChange={field.onChange}
+          />
+          <label htmlFor={name} className="checkbox-label">
+            {label}
+          </label>
+        </div>
+      );
+
     default:
       return null;
   }

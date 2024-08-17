@@ -4,17 +4,16 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { signupFormValidation } from "@/lib/userValidation";
-// import { useLoginMutation } from "@/lib/features/api/authApi";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
+import { IconMail, IconUser } from "@tabler/icons-react";
 
 const RegistrationForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [login] = useLoginMutation();
   const form = useForm<z.infer<typeof signupFormValidation>>({
     resolver: zodResolver(signupFormValidation),
     defaultValues: {
@@ -31,18 +30,7 @@ const RegistrationForm = () => {
     setTimeout(() => {
       console.log("done");
     }, 2000);
-    // try {
-    //   const user = await login({
-    //     phone: values.phone,
-    //     password: values.password,
-    //   }).unwrap();
-
-    //   console.log("Login successful:", user);
-    // } catch (error) {
-    //   console.error("Failed to log in:", error);
-    // } finally {
     setIsLoading(false);
-    // }
   };
 
   return (
@@ -69,8 +57,7 @@ const RegistrationForm = () => {
           name="name"
           label="Full Name *"
           placeholder="John Doe"
-          iconSrc="/assets/icons/user.svg"
-          iconAlt="user"
+          Icon={IconUser}
         />
 
         {/* EMAIL & PHONE */}
@@ -81,8 +68,7 @@ const RegistrationForm = () => {
             name="email"
             label="Email address  *"
             placeholder="johndoe@gmail.com"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="email"
+            Icon={IconMail}
           />
 
           <CustomFormField
