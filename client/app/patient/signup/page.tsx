@@ -13,7 +13,7 @@ const Register = () => {
             className="mb-12 h-10 w-fit"
           />
           <SignupForm />
-          <p className="copyright py-12">© 2024 AVM Cares</p>
+          <p className="copyright py-12">© 2024 AVM  Ayurveda&apos;ss</p>
         </div>
       </section>
 

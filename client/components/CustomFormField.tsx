@@ -72,7 +72,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               selected={field.value}
               onChange={(date) => field.onChange(date)}
               timeInputLabel="Time:"
-              dateFormat={dateFormat ?? "MM/dd/yyyy"}
+              dateFormat={dateFormat ?? "dd/MM/yyyy"}
               wrapperClassName="date-picker"
               {...(isLimited ? { minDate: new Date() } : {})}
             />

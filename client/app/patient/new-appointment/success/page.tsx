@@ -45,7 +45,7 @@ const SuccessPage = () => {
                     New Appointment
                 </Link>
             </Button>
-                <p className='copyright'>© 2024 AVM Care</p>
+                <p className='copyright'>© 2024 AVM  Ayurveda&apos;s</p>
         </div>
     </div>
   )

@@ -13,8 +13,8 @@ const inter = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AVM Care",
-  description: "Appointment booking and video call consultation",
+  title: "AVM Ayurveda's",
+  description: "Appointment booking and video call consultation, an ayurveda hospital",
 };
 
 export default function RootLayout({
