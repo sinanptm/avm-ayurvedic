@@ -3,6 +3,10 @@ import {
   IconBrandTabler,
   IconSettings,
   IconUserBolt,
+  IconBuildingStore,
+  IconUserFilled,
+  IconHomeFilled,
+  IconMessageFilled,
 } from "@tabler/icons-react";
 
 export const AppointmentTypes: { type: string; image: string }[] = [
@@ -108,5 +112,28 @@ export const AdminSideBarLinks = [
     icon: (
       <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
+  },
+];
+
+export const NavItems = [
+  {
+    name: "Home",
+    link: "/",
+    icon: <IconHomeFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  },
+  {
+    name: "Consultation",
+    link: "/consultation",
+    icon: <IconUserFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  },
+  {
+    name: "Store",
+    link: "/products",
+    icon: <IconBuildingStore stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  },
+  {
+    name: "Contact",
+    link: "/contact",
+    icon: <IconMessageFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
 ];

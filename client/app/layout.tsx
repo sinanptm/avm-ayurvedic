@@ -5,6 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import StoreProvider from "./StoreProvider";
+import NavBar from "@/components/NavBar";
 
 const inter = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -14,7 +15,8 @@ const inter = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "AVM Ayurveda's",
-  description: "Appointment booking and video call consultation, an ayurveda hospital",
+  description:
+    "Appointment booking and video call consultation, an ayurveda hospital",
 };
 
 export default function RootLayout({
@@ -24,17 +26,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={cn('min-h-screen bg-dark-300 font-sans antialiased', inter.variable)}>
+      <body
+        suppressHydrationWarning={true}
+        className={cn(
+          "min-h-[1000px] bg-dark-300 font-sans antialiased",
+          inter.variable
+        )}
+      >
         <StoreProvider>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          // enableSystem
-          // disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-    </StoreProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            // enableSystem
+            // disableTransitionOnChange
+          >
+            <NavBar />
+            {children}
+          </ThemeProvider>
+        </StoreProvider>
       </body>
     </html>
   );
