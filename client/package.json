@@ -24,6 +24,7 @@
     "lucide-react": "^0.427.0",
     "next": "14.2.5",
     "next-themes": "^0.3.0",
+    "otp-timer-ts": "^3.0.1",
     "react": "^18",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18",

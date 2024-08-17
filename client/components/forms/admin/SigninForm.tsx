@@ -7,16 +7,16 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
-import { signinFormValidation } from "@/lib/userValidation";
+import { signinFormValidation } from "@/lib/adminValidation";
 import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";
 
-const LoginForm = () => {
+const SigninForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof signinFormValidation>>({
     resolver: zodResolver(signinFormValidation),
     defaultValues: {
-      phone: "",
+      email: "",
       password: "",
     },
   });
@@ -31,27 +31,27 @@ const LoginForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
-          <h1 className="header">Welcome Back 👋</h1>
+          <h1 className="header">Dashboard Signin</h1>
           <p className="text-dark-700">
-            Schedule your first appointment{" "}
-            <Link href={"/patient/signup"} className="text-blue-400">
-              Sign Up
-            </Link>
+            Please signin to go to dashboard
           </p>
         </section>
 
         <CustomFormField
-          control={form.control}
-          fieldType={FormFieldType.PHONE_INPUT}
-          name="phone"
-          label="Phone Number"
-        />
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="email"
+            label="Email address  *"
+            placeholder="johndoe@gmail.com"
+            iconSrc="/assets/icons/email.svg"
+            iconAlt="email"
+          />
 
         <CustomFormField
           control={form.control}
           fieldType={FormFieldType.PASSWORD}
           name="password"
-          label="Password"
+          label="Password *"
           placeholder="Enter your password"
         />
 
@@ -61,4 +61,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SigninForm;
