@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import {
   FormControl,
   FormField,
@@ -17,7 +18,7 @@ import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
 import { Textarea } from "./ui/textarea";
-import { IconCalendar } from '@tabler/icons-react';
+import { IconCalendar } from "@tabler/icons-react";
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   const {
@@ -67,7 +68,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </div>
       );
 
-      case FormFieldType.DATE_PICKER:
+    case FormFieldType.DATE_PICKER:
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
           <IconCalendar className="ml-2 mt-1" />
@@ -89,11 +90,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <FormControl>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
-              <SelectTrigger className="shad-select-trigger">
-                <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
-            </FormControl>
+            <SelectTrigger className="shad-select-trigger">
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
             <SelectContent className="shad-select-content">
               {children}
             </SelectContent>
@@ -164,7 +163,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   }
 };
 
-const CustomFormField = (props: CustomProps) => {
+const CustomFormField: React.FC<CustomProps> = (props) => {
   const { control, fieldType, name, label } = props;
   return (
     <FormField

@@ -43,7 +43,7 @@ const OtpVerificationModel = () => {
       <AlertDialogContent className="shad-alert-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-start justify-between">
-            <h2 className="sub-header">OTP Verification</h2>
+            <p className="sub-header">OTP Verification</p>
             <Image
               src={`/assets/icons/close.svg`}
               width={20}
