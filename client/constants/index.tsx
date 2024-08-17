@@ -4,9 +4,10 @@ import {
   IconSettings,
   IconUserBolt,
   IconBuildingStore,
-  IconUserFilled,
   IconHomeFilled,
   IconMessageFilled,
+  IconCalendarPlus,
+  IconUserFilled,
 } from "@tabler/icons-react";
 
 export const AppointmentTypes: { type: string; image: string }[] = [
@@ -124,7 +125,7 @@ export const NavItems = [
   {
     name: "Consultation",
     link: "/consultation",
-    icon: <IconUserFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    icon: <IconCalendarPlus stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
   {
     name: "Store",
@@ -136,4 +137,10 @@ export const NavItems = [
     link: "/contact",
     icon: <IconMessageFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
+  {
+    name:"Profile",
+    link:"/profile",
+    icon: <IconUserFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />
+  }
 ];
+
