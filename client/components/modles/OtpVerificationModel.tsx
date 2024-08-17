@@ -93,37 +93,3 @@ const OtpVerificationModel = () => {
 
 export default OtpVerificationModel;
 
-
-// GET /patient/signin 200 in 354ms
-//  ✓ Compiled in 730ms (1527 modules)
-
-// <--- Last few GCs --->
-
-// [8600:0000023A945E0B90]  2025911 ms: Mark-Compact (reduce) 391.6 (410.8) -> 390.8 (410.0) MB, 448.11 / 0.00 ms  (average mu = 0.899, current mu = 0.000) external memory pressure; GC in old space requested        
-// [8600:0000023A945E0B90]  2026075 ms: Scavenge 391.8 (410.0) -> 391.3 (411.0) MB, 5.93 / 0.00 ms  (average mu = 0.899, current mu = 0.000) allocation failure;
-
-
-// <--- JS stacktrace --->
-
-// FATAL ERROR: NewSpace::EnsureCurrentCapacity Allocation failed - JavaScript heap out of memory
-//  1: 00007FF7083A436F 
-//  2: 00007FF70831C686
-//  3: 00007FF70831E471
-//  4: 00007FF708D8B281
-//  5: 00007FF708D74A18
-//  6: 00007FF708BD60A0
-//  7: 00007FF708BAF580
-//  8: 00007FF708BDCCEA
-//  9: 00007FF708BDF7AC
-// 10: 00007FF708BD2DC0
-// 11: 00007FF708BD0913
-// 12: 00007FF708AD2682
-// 13: 00007FF708D38BC4
-// 14: 00007FF708D38351
-// 15: 00007FF708D37DD0
-// 16: 00007FF708E3C74E
-// 17: 00007FF708DAB4C3
-// 18: 00007FF708EC3A16
-// 19: 00007FF708E2D7CF
-// 20: 00007FF708DAB4C3
-// 21: 00007FF68A4F4B64

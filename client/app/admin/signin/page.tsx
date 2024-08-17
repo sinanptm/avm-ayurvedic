@@ -1,8 +1,8 @@
+'use server'
 import SigninForm from "@/components/forms/admin/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
-const SignIn = ()=> {
-  
+const SignIn = () => {
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
@@ -17,7 +17,7 @@ const SignIn = ()=> {
           <SigninForm />
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
-              © 2024 AVM  Ayurveda&apos;s
+              © 2024 AVM Ayurveda&apos;s
             </p>
             <Link href={"/patient/signin"} className="text-green-500">
               Patient
@@ -35,6 +35,6 @@ const SignIn = ()=> {
       />
     </div>
   );
-}
+};
 
-export default SignIn
+export default SignIn;
