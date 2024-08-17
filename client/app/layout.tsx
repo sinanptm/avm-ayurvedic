@@ -23,9 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <StoreProvider>
-     <html lang="en">
+    <html lang="en">
       <body suppressHydrationWarning={true} className={cn('min-h-screen bg-dark-300 font-sans antialiased', inter.variable)}>
+        <StoreProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -34,8 +34,8 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+    </StoreProvider>
       </body>
     </html>
-    </StoreProvider>
   );
 }
