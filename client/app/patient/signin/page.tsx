@@ -1,12 +1,10 @@
 import SigninForm from "@/components/forms/SigninForm";
-import OtpVerificationModel from "@/components/modles/OtpVerificationModel";
 import Image from "next/image";
 import Link from "next/link";
 const SignIn = ()=> {
   
   return (
     <div className="flex h-screen max-h-screen">
-      <OtpVerificationModel />
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-[496px:">
           <Image
@@ -17,12 +15,12 @@ const SignIn = ()=> {
             className="mb-12 h-10 w-fit"
           />
           <SigninForm />
-          <div className="text-14-regular mt-20 flex justify-between">
+          <div className="text-14-regular py-12 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 AVM  Ayurveda&apos;s
             </p>
-            <Link href={"/admin/signin"} className="text-green-500">
-              Admin
+            <Link href={"/doctor/signin"} className="text-green-500">
+              Doctor
             </Link>
           </div>
         </div>
