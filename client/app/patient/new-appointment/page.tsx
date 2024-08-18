@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Appointment = () => {
   return (
-    <div className="flex h-screen max-h-screen">
+    <div className="flex h-screen max-h-screen py-5">
       <section className="remove-scrollbar container">
         <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
           <Image
@@ -13,7 +13,6 @@ const Appointment = () => {
             alt="patient"
             className="mb-12 h-10 w-fit"
           />
-
           <AppointmentForm />
 
           <p className="copyright py-8">© 2024 AVM  Ayurveda&apos;ss</p>

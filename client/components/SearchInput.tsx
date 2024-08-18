@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { FormFieldType, SearchInputProps } from '@/types/fromTypes'
+import { SearchInputProps } from '@/types/index'
 import { Input } from './ui/input'
-import CustomFormField from './CustomFormField'
 import { Button } from './ui/button'
 import { Search } from 'lucide-react'
 

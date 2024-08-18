@@ -1,3 +1,4 @@
+import { DoctorType } from "@/types";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -20,7 +21,7 @@ export const AppointmentTypes: { type: string; image: string }[] = [
     image: "/assets/images/OP-image.jpg",
   },
 ];
-export const PaymentOptions: string[] = ["online", "At Appointment"];
+export const PaymentOptions: string[] = ["online", "Op"];
 // ! from server
 export const AvailableTimes = [
   "09:00",
@@ -116,7 +117,7 @@ export const AdminSideBarLinks = [
   },
 ];
 
-export const NavItems = [
+export const NavItems:{name:string,link:string,icon:React.ReactNode}[] = [
   {
     name: "Home",
     link: "/",
@@ -144,3 +145,25 @@ export const NavItems = [
   }
 ];
 
+export const DoctorList:DoctorType[] = [
+  {
+    _id:'21123123',
+    name:"Shafeek",
+    image:'/assets/images/admin.png'
+  },
+  {
+     _id:'211kkkn23123',
+    name:"Hakeem",
+    image:'/assets/images/admin.png'
+  },
+  {
+    _id:'211kkknnjkl23123',
+    name:"Salih",
+    image:'/assets/images/admin.png'
+  },
+  {
+    _id:'223423',
+    name:"Sinan",
+    image:'/assets/images/admin.png'
+  }
+]

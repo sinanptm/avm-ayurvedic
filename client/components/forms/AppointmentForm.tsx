@@ -10,7 +10,7 @@ import SubmitButton from "@/components/SubmitButton";
 import { appointmentFormValidation } from "@/lib/userValidation";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
-import { AppointmentTypes, PaymentOptions } from "@/constants";
+import { AppointmentTypes, DoctorList, PaymentOptions } from "@/constants";
 import { FormFieldType } from "@/types/fromTypes";
 
 const AppointmentForm = () => {
@@ -23,6 +23,7 @@ const AppointmentForm = () => {
       note: "",
       schedule: new Date(Date.now()),
       payment: "online",
+      doctor:'Shafeek'
     },
   });
 
@@ -60,6 +61,28 @@ const AppointmentForm = () => {
                   className="rounded-full border border-dark-500"
                 />
                 <p>{appointment.type}</p>
+              </div>
+            </SelectItem>
+          ))}
+        </CustomFormField>
+
+        <CustomFormField
+          fieldType={FormFieldType.SELECT}
+          control={form.control}
+          name="doctor"
+          label="Doctor"
+        >
+          {DoctorList.map(doctor => (
+            <SelectItem key={doctor._id} value={doctor.name}>
+              <div className="flex cursor-pointer items-center gap-2">
+                <Image
+                  src={doctor.image}
+                  width={25}
+                  height={25}
+                  alt={doctor.name}
+                  className="rounded-full border border-dark-500"
+                />
+                <p>{doctor.name}</p>
               </div>
             </SelectItem>
           ))}

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import "@/styles/global.css";
+import "../styles/globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import StoreProvider from "./StoreProvider";
+import StoreProvider from "./redux/StoreProvider";
 import NavBar from "@/components/NavBar";
 
 const inter = Plus_Jakarta_Sans({
@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         suppressHydrationWarning={true}
         className={cn(
-          "min-h-[1000px] bg-dark-300 font-sans antialiased",
+          "min-h-[600px] bg-dark-300 font-sans antialiased",
           inter.variable
         )}
       >

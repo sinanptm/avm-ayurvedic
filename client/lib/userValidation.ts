@@ -1,3 +1,4 @@
+import { DoctorType } from "@/types/index";
 import { z } from "zod";
 
 export const signinFormValidation = z.object({
@@ -86,5 +87,6 @@ export const appointmentFormValidation = z.object({
   reason: z.string().trim().min(5, "Reason must be at least 5 characters long"),
   note: z.string().trim().min(5, "Notes must be at least 5 characters long"),
   schedule: z.coerce.date(),
-  payment: z.enum(["online", "payment"]),
+  payment: z.enum(["online", "Op"]),
+  doctor:z.enum(['Shafeek','Hakeem','Salih','Sinan'])
 });

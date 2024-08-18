@@ -28,11 +28,6 @@ export interface CustomProps {
   isLimited?: boolean;
   availableTimes?: string[];
   Icon?: FC<{ className?: string }>;
+  doctor?:string;
 }
 
-
-export interface SearchInputProps {
-  placeHolder:string;
-  name?:string;
-  onChange?:()=>void
-}
