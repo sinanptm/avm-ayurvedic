@@ -10,7 +10,6 @@ import SubmitButton from "@/components/SubmitButton";
 import { signupFormValidation } from "@/lib/userValidation";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
-import { IconMail, IconUser } from "@tabler/icons-react";
 
 const RegistrationForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -57,7 +56,7 @@ const RegistrationForm = () => {
           name="name"
           label="Full Name *"
           placeholder="John Doe"
-          Icon={IconUser}
+          iconSrc="/assets/icons/user.svg"
         />
 
         {/* EMAIL & PHONE */}
@@ -68,7 +67,7 @@ const RegistrationForm = () => {
             name="email"
             label="Email address  *"
             placeholder="johndoe@gmail.com"
-            Icon={IconMail}
+            iconSrc={'/assets/icons/email.svg'}
           />
 
           <CustomFormField

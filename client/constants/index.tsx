@@ -1,15 +1,5 @@
 import { DoctorType, NavLinkType } from "@/types";
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
-  IconBuildingStore,
-  IconHomeFilled,
-  IconMessageFilled,
-  IconCalendarPlus,
-  IconUserFilled,
-} from "@tabler/icons-react";
+import Image from "next/image";
 
 export const AppointmentTypes: { type: string; image: string }[] = [
   {
@@ -91,38 +81,38 @@ export const AdminSideBarLinks = [
     label: "Dashboard",
     href: "#",
     icon: (
-      <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <Image src={'/assets/icons/user.svg'} width={21} height={23} alt='User Icon' className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
   {
     label: "Profile",
     href: "#",
     icon: (
-      <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <Image src={'/assets/icons/user.svg'} width={21} height={23} alt='User Icon' className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
   {
     label: "Settings",
     href: "#",
     icon: (
-      <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <Image src={'/assets/icons/user.svg'} width={21} height={23} alt='User Icon' className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
   {
     label: "Logout",
     href: "#",
     icon: (
-      <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <Image src={'/assets/icons/user.svg'} width={21} height={23} alt='User Icon' className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
 ];
 
 export const NavLinks:NavLinkType[] = [
-    { href: "#", label: "Dashboard" },
-    { href: "#", label: "Orders" },
-    { href: "#", label: "Products" },
-    { href: "#", label: "Customers" },
-    { href: "#", label: "Settings" },
+    { href: "/", label: "Home" },
+    { href: "/consultation", label: "Consultation" },
+    { href: "/products", label: "Products" },
+    { href: "/contact", label: "Contact" },
+    { href: "/about", label: "About" },
   ];
 
 

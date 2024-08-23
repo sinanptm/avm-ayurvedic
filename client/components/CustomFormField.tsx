@@ -18,7 +18,7 @@ import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
 import { Textarea } from "./ui/textarea";
-import { IconCalendar } from "@tabler/icons-react";
+
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   const {
@@ -71,7 +71,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.DATE_PICKER:
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
-          <IconCalendar className="ml-2 mt-1" />
+          <Image src={'/assets/icons/calendar.svg'} alt="Calendar" width={22} height={22} className="ml-2 mt-1" />
           <FormControl>
             <ReactDatePicker
               showTimeSelect={props.showTimeSelect ?? false}

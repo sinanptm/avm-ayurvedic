@@ -8,9 +8,7 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { signinFormValidation } from "@/lib/adminValidation";
-import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";
-import { IconMail } from "@tabler/icons-react";
 
 const SigninForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -44,7 +42,7 @@ const SigninForm = () => {
             name="email"
             label="Email address  *"
             placeholder="johndoe@gmail.com"
-            Icon={IconMail}
+            iconSrc={'/assets/icons/email.svg'}
           />
 
         <CustomFormField
