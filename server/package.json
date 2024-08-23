@@ -3,20 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "clean": "del dist",
-    "prebuild": "npm run clean",
     "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node dist/index.js",
-    "serve": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/mongoose": "^5.11.97",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -27,10 +26,10 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^22.3.0",
+    "@types/node": "^22.5.0",
     "concurrently": "^8.2.2",
-    "del-cli": "^5.1.0",
     "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
 }

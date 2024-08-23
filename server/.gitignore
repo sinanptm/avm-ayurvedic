@@ -1,0 +1,43 @@
+
+/clean.txt
+
+# Ignore all node_modules directories
+**/node_modules/
+
+# Ignore all package-lock.json files
+**/package-lock.json
+
+# Ignore all log files
+**/*.log
+
+# Ignore environment files
+**/.env
+
+# Build directories
+**/.next/
+**/out/
+**/dist/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sublime-workspace
+
+# TypeScript cache and build artifacts
+*.tsbuildinfo
+*.js.map
+*.d.ts
+
+# General ignore patterns
+*.bak
+*.tmp
+*.swp
