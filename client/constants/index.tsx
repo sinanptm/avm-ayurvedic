@@ -1,4 +1,4 @@
-import { DoctorType } from "@/types";
+import { DoctorType, NavLinkType } from "@/types";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -117,33 +117,14 @@ export const AdminSideBarLinks = [
   },
 ];
 
-export const NavItems:{name:string,link:string,icon:React.ReactNode}[] = [
-  {
-    name: "Home",
-    link: "/",
-    icon: <IconHomeFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
-  },
-  {
-    name: "Consultation",
-    link: "/consultation",
-    icon: <IconCalendarPlus stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
-  },
-  {
-    name: "Store",
-    link: "/products",
-    icon: <IconBuildingStore stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
-  },
-  {
-    name: "Contact",
-    link: "/contact",
-    icon: <IconMessageFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />,
-  },
-  {
-    name:"Profile",
-    link:"/profile",
-    icon: <IconUserFilled stroke={3} className="h-4 w-4 text-neutral-500 dark:text-white" />
-  }
-];
+export const NavLinks:NavLinkType[] = [
+    { href: "#", label: "Dashboard" },
+    { href: "#", label: "Orders" },
+    { href: "#", label: "Products" },
+    { href: "#", label: "Customers" },
+    { href: "#", label: "Settings" },
+  ];
+
 
 export const DoctorList:DoctorType[] = [
   {
