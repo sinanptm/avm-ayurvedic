@@ -1,5 +1,5 @@
 
-/resources.ts
+/clean.txt
 
 # Ignore all node_modules directories
 **/node_modules/

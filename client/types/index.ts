@@ -9,3 +9,8 @@ export type DoctorType = {
   name: string;
   image: string;
 };
+
+export type NavLinkType = {
+  label: string;
+  href: string;
+};

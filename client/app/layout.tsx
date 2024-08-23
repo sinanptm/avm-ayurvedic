@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "../styles/globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import StoreProvider from "./redux/StoreProvider";
+import StoreProvider from "../lib/redux/StoreProvider";
 import NavBar from "@/components/NavBar";
 
 const inter = Plus_Jakarta_Sans({
@@ -24,10 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        suppressHydrationWarning={true}
-        className={cn(
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(
           "min-h-[600px] bg-dark-300 font-sans antialiased",
           inter.variable
         )}
@@ -36,8 +34,6 @@ export default function RootLayout({
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
-            // enableSystem
-            // disableTransitionOnChange
           >
             <NavBar />
             {children}
