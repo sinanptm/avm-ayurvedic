@@ -1,4 +1,3 @@
-import { DoctorType } from "@/types/index";
 import { z } from "zod";
 
 export const signinFormValidation = z.object({

@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "../styles/globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import StoreProvider from "./StoreProvider";
+import { StoreProvider } from "./StoreProvider";
 import NavBar from "@/components/NavBar";
 
 const inter = Plus_Jakarta_Sans({
@@ -13,9 +13,12 @@ const inter = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AVM Ayurveda's",
-  description:
-    "Appointment booking and video call consultation, an ayurveda hospital",
+  title: {
+    absolute:"",
+    template:"AVM | %s",
+    default:"AVM Ayurveda's"
+  },
+  description: "Appointment booking and video call consultation, an ayurveda hospital",
 };
 
 export default function RootLayout({
@@ -25,16 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(
-          "min-h-[600px] bg-dark-300 font-sans antialiased",
-          inter.variable
-        )}
-      >
+      <body className={cn("min-h-[600px] bg-dark-300 font-sans antialiased", inter.variable)}>
         <StoreProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-          >
+          <ThemeProvider attribute="class" defaultTheme="dark">
             <NavBar />
             {children}
           </ThemeProvider>

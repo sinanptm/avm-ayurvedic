@@ -1,6 +1,11 @@
 import SigninForm from "@/components/forms/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from 'next'
+
+export const metadata:Metadata ={
+  title:"SignIn"
+}
 const SignIn = ()=> {
   
   return (
@@ -19,8 +24,8 @@ const SignIn = ()=> {
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 AVM  Ayurveda&apos;s
             </p>
-            <Link href={"/doctor/signin"} className="text-green-500">
-              Doctor
+            <Link href={"/doctor/staf-login"} className="text-green-500">
+              Staf
             </Link>
           </div>
         </div>
