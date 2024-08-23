@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { SearchInputProps } from '@/types/index'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
-import { Search } from 'lucide-react'
+import Image from 'next/image'
 
 const SearchInput = ({placeHolder}:SearchInputProps) => {
     const [input,setInput] = useState<string>('')
@@ -10,7 +10,7 @@ const SearchInput = ({placeHolder}:SearchInputProps) => {
     <div className='boarder rounded-lg flex justify-between items-center'>
         <Input type='text' placeholder={placeHolder} className='boarder-none' />
         <Button variant={'ghost'} size={"icon"} >
-            <Search />
+            <Image src='/assets/icons/search.svg' width={23} height={23} alt='Search Icon' />
             <span className='sr-only'>Search Button</span>
         </Button>
     </div>
