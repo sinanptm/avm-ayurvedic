@@ -18,9 +18,9 @@ export default function Component() {
           medicine.
         </p>
       </div>
-      <div className="relative h-[400px] sm:h-[400px] md:h-[700px]md:w-[150px] w-full lg:w-1/2">
+      <div className="relative h-[200px] sm:h-[400px] md:h-[700px]md:w-[150px] w-full lg:w-1/2">
         <Image
-          src="/assets/images/about-ayurveda.jpeg"
+          src="/assets/images/ayurveda1.jpg"
           alt="Ayurveda herbs and treatments"
           fill
           className="object-cover"
