@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import React from "react";
-import { ImagesSlider } from "./ui/images-slider";
+import { ImagesSlider } from "@/components/ui/images-slider";
 import { SliderImages } from "@/constants";
 
 const ImageSlider = () => {

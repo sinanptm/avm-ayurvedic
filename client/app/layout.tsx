@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { StoreProvider } from "./StoreProvider";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 const inter = Plus_Jakarta_Sans({
    subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
                <ThemeProvider attribute="class" defaultTheme="dark">
                   <NavBar />
                   {children}
+                  <Footer />
                </ThemeProvider>
             </StoreProvider>
          </body>

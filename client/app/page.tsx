@@ -1,6 +1,6 @@
 import React from "react";
 import AboutAyurveda from "@/components/home/AboutAyurveda";
-import ImageSlider from "@/components/ImageSlider";
+import ImageSlider from "@/components/home/ImageSlider";
 import FeaturesList from "@/components/home/FeatureList";
 
 
