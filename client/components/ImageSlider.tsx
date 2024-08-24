@@ -6,7 +6,7 @@ import { SliderImages } from "@/constants";
 
 const ImageSlider = () => {
   return (
-    <ImagesSlider className="h-[40rem]" images={SliderImages}>
+    <ImagesSlider className="h-[40rem] z-10"  images={SliderImages}>
       <motion.div
         initial={{
           opacity: 0,
