@@ -4,11 +4,9 @@ import React from "react";
 const page = () => {
   return (
     <section className="mx-auto">
-       <ImageSlider />
+       <ImageSlider />   
     </section>
   );
 };
 
 export default page;
-
-
