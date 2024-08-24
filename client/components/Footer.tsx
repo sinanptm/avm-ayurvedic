@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -14,7 +14,7 @@ const Footer = () => {
       return null;
    }
    return (
-      <footer className="from-green-900 to-gray-900  ">
+      <footer className="from-green-900 to-gray-900">
          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Link href="/" className="flex items-center" prefetch={false}>
                <Image

@@ -133,7 +133,7 @@ export const AdminSideBarLinks = [
 
 export const NavLinks: NavLinkType[] = [
    { href: "/", label: "Home" },
-   { href: "/consultation", label: "Consultation" },
+   { href: "/doctors", label: "Doctors" },
    { href: "/products", label: "Products" },
    { href: "/contact", label: "Contact" },
    { href: "/about", label: "About" },
@@ -195,4 +195,29 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
       linkText: "Get Support",
       link:"/contact"
    },
+];
+
+
+
+export const GuaranteeListHonePage:{src:string,text:string,heading:string}[] = [
+   {
+      src: "/assets/icons/guarantees/confidential.svg",
+      text: "All advice & consultations are completely confidential. You can also delete chats whenever you want.",
+      heading: "100% Confidential",
+   },
+   {
+      src: "/assets/icons/guarantees/certified.svg",
+      text: "We offer quality healthcare through our network of certified and experienced doctors.",
+      heading: "Certified Doctors",
+   },
+   {
+      src: "/assets/icons/guarantees/convenience.svg",
+      text: "Forget the hassle of long queues and rush hour. Seek expert opinion anytime, anywhere.",
+      heading: "Convenience",
+   },
+   {
+      src: "/assets/icons/guarantees/costEffective.svg",
+      text: "We provide medical assistance on non urgent queries for free. Fee starting at ₹50 for faster response to queries.",
+      heading: "Cost Effective",
+   },   
 ];

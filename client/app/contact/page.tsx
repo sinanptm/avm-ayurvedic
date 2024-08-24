@@ -6,7 +6,11 @@ export const metadata: Metadata = {
 };
 
 const Contact = () => {
-   return <div>Contact</div>;
+   return (
+      <section className="mx-auto">
+         
+      </section>
+   );
 };
 
 export default Contact;
