@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./features/api/authApi";
 import authSlice from "./features/slices/authSlice";
-import localStorageMiddleWare from "../middlewares/localStorageMiddlewarre";
+import localStorageMiddleWare from "./middlewares/localStorageMiddleware";
 
 export const makeStore = () => {
   return configureStore({

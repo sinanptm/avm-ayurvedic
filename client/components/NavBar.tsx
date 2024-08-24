@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { NavLinks } from "@/constants";
+import { usePathname } from "next/navigation";
 
-export default function Component() {
+export const NavBar = () => {
+  const path = usePathname();
+
+  if(path.includes('signup')|| path.includes('staff')||  path.includes('signin') || []){
+    return null;
+  }
+  
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -45,13 +53,7 @@ export default function Component() {
           </SheetTitle>
           <nav className="grid gap-6 text-lg font-medium">
             <Link href="/client" className="flex items-center gap-2 text-lg font-semibold" prefetch={false}>
-              <Image
-                src={"/assets/icons/logo-icon.svg"}
-                width={33}
-                height={33}
-                alt="Logo"
-                className="h-11 w-11"
-              />
+              <Image src={"/assets/icons/logo-icon.svg"} width={33} height={33} alt="Logo" className="h-11 w-11" />
               <span className="sr-only">Acme Inc</span>
             </Link>
             {NavLinks.map((link) => (
@@ -108,4 +110,6 @@ export default function Component() {
       </div>
     </header>
   );
-}
+};
+
+export default NavBar;

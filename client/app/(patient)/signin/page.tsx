@@ -24,8 +24,8 @@ const SignIn = ()=> {
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 AVM  Ayurveda&apos;s
             </p>
-            <Link href={"/doctor/staf-login"} className="text-green-500">
-              Staf
+            <Link href={"/staff/login"} className="text-green-500">
+              Staff
             </Link>
           </div>
         </div>

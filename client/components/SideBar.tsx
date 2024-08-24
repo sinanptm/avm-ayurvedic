@@ -6,7 +6,7 @@ import Image from "next/image";
 import { AdminSideBarLinks } from "@/constants";
 
 const  SideBar= () =>{
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex h-screen">
@@ -23,7 +23,7 @@ const  SideBar= () =>{
           <div>
             <SidebarLink
               link={{
-                label: "Manu Arora",
+                label: "Admin",
                 href: "#",
                 icon: (
                   <Image
