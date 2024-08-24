@@ -19,7 +19,7 @@ import { usePathname } from "next/navigation";
 export const NavBar = () => {
   const path = usePathname();
 
-  if(path.includes('signup')|| path.includes('staff')||  path.includes('signin') || []){
+  if(path.includes('signup')|| path.includes('staff')||  path.includes('signin') ){
     return null;
   }
   

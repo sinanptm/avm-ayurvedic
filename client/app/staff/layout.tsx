@@ -1,8 +1,13 @@
 import React from "react";
 import SideBar from "@/components/SideBar";
+import { Metadata } from "next";
 
 interface AdminLayoutWrapperProps {
   children: React.ReactNode;
+};
+
+export const metadata:Metadata = {
+  title:"Dashboard"
 }
 
 const AdminLayoutWrapper: React.FC<AdminLayoutWrapperProps> = ({ children }) => {

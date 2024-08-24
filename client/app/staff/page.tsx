@@ -1,28 +1,47 @@
-import React from 'react';
+import React from "react";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col h-full w-full p-2 md:p-10">
-      <div className="flex flex-col gap-2 flex-1 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900">
-        <div className="flex gap-2 mb-4">
-          {[...new Array(4)].map((_, i) => (
-            <div
-              key={`first-array-${i}`}
-              className="h-20 w-full rounded-lg bg-gray-100 dark:bg-neutral-800 animate-pulse"
-            ></div>
-          ))}
-        </div>
-        <div className="flex gap-2 flex-1">
-          {[...new Array(2)].map((_, i) => (
-            <div
-              key={`second-array-${i}`}
-              className="h-full w-full rounded-lg bg-gray-100 dark:bg-neutral-800 animate-pulse"
-            ></div>
-          ))}
+    <main className="lex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+      <div className="flex items-center">
+        <h1 className="text-lg font-semibold md:text-2xl">Dashboard</h1>
+      </div>
+      <div className="flex flex-1 items-center justify-center rounded-lg shadow-sm">
+        <div className="flex flex-col items-center gap-1 text-center">
+          
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
 export default Dashboard;
+
+
+
+
+
+
+
+
+
+
+
+// import React from "react";
+
+// const Dashboard = () => {
+//   return (
+//     <main className="lex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+//       <div className="flex items-center">
+//         <h1 className="text-lg font-semibold md:text-2xl">Dashboard</h1>
+//       </div>
+//       <div className="flex flex-1 items-center justify-center rounded-lg shadow-sm">
+//         <div className="flex flex-col items-center gap-1 text-center">
+          
+//         </div>
+//       </div>
+//     </main>
+//   );
+// };
+
+// export default Dashboard;
