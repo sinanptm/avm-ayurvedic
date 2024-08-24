@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
-import CustomFormField from "@/components/CustomFormField";
-import SubmitButton from "@/components/SubmitButton";
+import CustomFormField from "@/components/utils/CustomFormField";
+import SubmitButton from "@/components/utils/SubmitButton";
 import { signinFormValidation } from "@/lib/adminValidation";
 import { FormFieldType } from "@/types/fromTypes";
 

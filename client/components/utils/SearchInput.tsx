@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { SearchInputProps } from '@/types/index'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
 import Image from 'next/image'
 
 const SearchInput = ({placeHolder}:SearchInputProps) => {

@@ -14,9 +14,9 @@ import Image from "next/image";
 import PhoneInput from "react-phone-number-input";
 import ReactDatePicker from "react-datepicker";
 import { Select } from "@radix-ui/react-select";
-import { SelectContent, SelectTrigger, SelectValue } from "./ui/select";
-import { Checkbox } from "./ui/checkbox";
-import { Textarea } from "./ui/textarea";
+import { SelectContent, SelectTrigger, SelectValue } from "../ui/select";
+import { Checkbox } from "../ui/checkbox";
+import { Textarea } from "../ui/textarea";
 
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
