@@ -1,4 +1,4 @@
-import { DoctorType, NavLinkType } from "@/types";
+import { AnimatedCardProps, DoctorType, NavLinkType } from "@/types";
 import Image from "next/image";
 
 export const AppointmentTypes: { type: string; image: string }[] = [
@@ -166,4 +166,39 @@ export const SliderImages: string[] = [
    "https://images.unsplash.com/photo-1485433592409-9018e83a1f0d?q=80&w=1814&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
    "https://images.unsplash.com/photo-1483982258113-b72862e6cff6?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
    "https://images.unsplash.com/photo-1482189349482-3defd547e0e9?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+];
+
+export const FeaturesCardsHomePage: AnimatedCardProps[] = [
+   {
+      heading: "Instant Appointments",
+      key: 1,
+      image: "/assets/3D/appointment.jpg",
+      text: "Book Your Appointment",
+      linkText: "Book Now",
+      link:"/new-appointment"
+   },
+   {
+      heading: "Natural Medicines",
+      key: 2,
+      image: "/assets/3D/products.jpg",
+      text: "100% Quality",
+      linkText: "Shop Now",
+      link:"/products"
+   },
+   {
+      heading: "Video Sessions",
+      key: 3,
+      image: "/assets/3D/online-consulting.jpg",
+      text: "Book your Appointment",
+      linkText: "Book now",
+      link:"/new-appointment"
+   },
+   {
+      heading: "Customer Support",
+      key: 3,
+      image: "/assets/3D/customer-support.jpg",
+      text: "24/7 Customer Service",
+      linkText: "Get Support",
+      link:"/contact"
+   },
 ];

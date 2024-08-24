@@ -1,19 +1,29 @@
+import React from "react";
 import AboutAyurveda from "@/components/AboutAyurveda";
 import ImageSlider from "@/components/ImageSlider";
 import AnimatedCard from "@/components/utils/AnimatedCard";
-import React from "react";
+import { FeaturesCardsHomePage } from "@/constants";
 
 const page = () => {
    return (
       <section className="mx-auto">
          <ImageSlider />
          <AboutAyurveda />
-         <AnimatedCard
-            heading="Instant Appointments"
-            key={21}
-            image="/assets/3D/appointment.png"
-            text="Book Your Appointment"
-         />
+         <section className="mt-14">
+            <h2 className="text-3xl font-bold text-center mb-8">Features</h2>
+            <div className="flex flex-wrap justify-center gap-11">
+               {FeaturesCardsHomePage.map(({heading,key,image,link,linkText,text}) => (
+                  <AnimatedCard 
+                     heading={heading}
+                     key={key}
+                     image={image}
+                     link={link}
+                     linkText={linkText}
+                     text={text}
+                   />
+               ))}
+            </div>
+         </section>
       </section>
    );
 };
