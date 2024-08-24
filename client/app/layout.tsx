@@ -7,35 +7,41 @@ import { StoreProvider } from "./StoreProvider";
 import NavBar from "@/components/NavBar";
 
 const inter = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "700", "700"],
-  variable: "--font-sans",
+   subsets: ["latin"],
+   weight: ["300", "400", "700", "700"],
+   variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
-  title: {
-    absolute:"",
-    template:"AVM | %s",
-    default:"AVM Ayurveda's"
-  },
-  description: "Appointment booking and video call consultation, an ayurveda hospital",
+   title: {
+      absolute: "",
+      template: "AVM | %s",
+      default: "AVM Ayurveda's",
+   },
+   description:
+      "Appointment booking and video call consultation, an ayurveda hospital",
 };
 
 export default function RootLayout({
-  children,
+   children,
 }: Readonly<{
-  children: React.ReactNode;
+   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={cn("min-h-[600px] bg-dark-300 font-sans antialiased", inter.variable)}>
-        <StoreProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark">
-            <NavBar />
-            {children}
-          </ThemeProvider>
-        </StoreProvider>
-      </body>
-    </html>
-  );
+   return (
+      <html lang="en" suppressHydrationWarning>
+         <body
+            className={cn(
+               "min-h-[600px] bg-dark-300 font-sans antialiased",
+               inter.variable,
+            )}
+         >
+            <StoreProvider>
+               <ThemeProvider attribute="class" defaultTheme="dark">
+                  <NavBar />
+                  {children}
+               </ThemeProvider>
+            </StoreProvider>
+         </body>
+      </html>
+   );
 }

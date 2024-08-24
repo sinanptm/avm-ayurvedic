@@ -1,14 +1,12 @@
-import React from 'react'
-import { Metadata } from 'next'
+import React from "react";
+import { Metadata } from "next";
 
-export const metadata:Metadata ={
-  title:"Products"
-}
+export const metadata: Metadata = {
+   title: "Products",
+};
 
 const Products = () => {
-  return (
-    <div>Products</div>
-  )
-}
+   return <div>Products</div>;
+};
 
-export default Products
+export default Products;
