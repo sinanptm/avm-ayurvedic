@@ -35,7 +35,7 @@ const AnimatedCard = ({
                   priority
                   height="1000"
                   width="1000"
-                  className={imageClassName}
+                  className={`group-hover/card:shadow-xl ${imageClassName}`}
                   alt="thumbnail"
                />
             </CardItem>

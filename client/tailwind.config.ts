@@ -20,6 +20,10 @@ const config = {
          },
       },
       extend: {
+         screens:{
+            'md':"732px",
+            'md-cus':"930px"
+         },
          colors: {
             green: {
                500: "#24AE7C",

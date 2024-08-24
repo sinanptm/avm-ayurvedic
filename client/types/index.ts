@@ -18,8 +18,8 @@ export type NavLinkType = {
 };
 
 export type AnimatedCardProps = {
-   image?: string;
-   heading?: string;
+   image: string;
+   heading: string;
    text?: string;
    key: string | number;
    link?: string;
