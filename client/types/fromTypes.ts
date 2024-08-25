@@ -40,4 +40,7 @@ export interface OtpFromProps {
 
 export type OptModelProps = {
    returnRoute:string;
+   timer:number;
+   handleResend:()=>void;
+   handleVerify:(e:FormEvent)=>void;
 }

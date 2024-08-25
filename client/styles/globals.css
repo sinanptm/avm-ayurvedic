@@ -259,7 +259,7 @@
    }
 
    .shad-alert-dialog {
-      @apply space-y-5 bg-dark-400 border-dark-500 outline-none !important;
+      @apply space-y-5 bg-dark-400 border-dark-500 outline-none backdrop-opacity-10 !important;
    }
 
    .shad-sheet-content button {

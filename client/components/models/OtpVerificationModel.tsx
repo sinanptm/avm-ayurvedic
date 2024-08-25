@@ -19,7 +19,7 @@ import {
 import { Otptimer } from "otp-timer-ts";
 import { OptModelProps } from "@/types/fromTypes";
 
-const OtpVerificationModel = ({ returnRoute }: OptModelProps) => {
+const OtpVerificationModel = ({ returnRoute,handleResend,handleVerify,timer }: OptModelProps) => {
    const router = useRouter();
    const [open, setOpen] = useState(true);
    const [otp, setOtp] = useState("");
@@ -30,16 +30,11 @@ const OtpVerificationModel = ({ returnRoute }: OptModelProps) => {
       router.push(returnRoute);
    };
 
-   const handleResend = () => {
-      setOpen(false);
-      setTimeout(() => {
-         setOpen(true);
-      }, 1000);
-   };
 
    return (
-      <AlertDialog open={open} onOpenChange={setOpen}>
-         <AlertDialogContent className="shad-alert-dialog">
+      <AlertDialog open={open} onOpenChange={setOpen} >
+        <form onSubmit={(e)=>handleVerify(e)}>
+        <AlertDialogContent className="shad-alert-dialog" >
             <AlertDialogHeader>
                <AlertDialogTitle className="flex items-start justify-between">
                   <p className="sub-header">OTP Verification</p>
@@ -78,14 +73,15 @@ const OtpVerificationModel = ({ returnRoute }: OptModelProps) => {
                )}
             </div>
             <div>
-               <Otptimer minutes={0} seconds={30} onResend={handleResend} />
+               <Otptimer seconds={timer} onResend={handleResend} />
             </div>
             <AlertDialogFooter>
-               <AlertDialogAction className="shad-primary-btn w-full">
+               <AlertDialogAction type="submit" className="shad-primary-btn w-full">
                   Verify OTP
                </AlertDialogAction>
             </AlertDialogFooter>
          </AlertDialogContent>
+        </form>
       </AlertDialog>
    );
 };
