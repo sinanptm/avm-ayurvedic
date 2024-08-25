@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, FormEvent } from "react";
 import { Control } from "react-hook-form";
 
 export enum FormFieldType {
@@ -29,4 +29,11 @@ export interface CustomProps {
    availableTimes?: string[];
    Icon?: FC<{ className?: string }>;
    doctor?: string;
+}
+
+
+export interface OtpFromProps {
+   handleVerify:(e:FormEvent)=>void;
+   handleResend:()=>void;
+   timer:number;
 }

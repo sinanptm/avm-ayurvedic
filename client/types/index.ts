@@ -28,3 +28,7 @@ export type AnimatedCardProps = {
    imageClassName?: string;
    children?: ReactNode;
 };
+
+export type OptModelProps = {
+   returnRoute:string;
+}

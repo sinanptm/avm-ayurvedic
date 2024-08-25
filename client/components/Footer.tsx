@@ -26,7 +26,7 @@ const Footer = () => {
                />
             </Link>
             <div className="text-sm text-muted-foreground">
-               © {new Date().getFullYear()} AVM Ayurvedic. All rights reserved.
+               © {new Date().getFullYear()} AVM Ayurvedic.
             </div>
          </div>
       </footer>

@@ -1,9 +1,7 @@
 "use client";
-
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
 import {
    AlertDialog,
    AlertDialogAction,
@@ -19,8 +17,9 @@ import {
    InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Otptimer } from "otp-timer-ts";
+import { OptModelProps } from "@/types";
 
-const OtpVerificationModel = () => {
+const OtpVerificationModel = ({ returnRoute }: OptModelProps) => {
    const router = useRouter();
    const [open, setOpen] = useState(true);
    const [otp, setOtp] = useState("");
@@ -28,7 +27,7 @@ const OtpVerificationModel = () => {
 
    const closeModal = () => {
       setOpen(false);
-      router.push(`/`);
+      router.push(returnRoute);
    };
 
    const handleResend = () => {
