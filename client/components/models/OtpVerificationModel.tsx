@@ -17,7 +17,7 @@ import {
    InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Otptimer } from "otp-timer-ts";
-import { OptModelProps } from "@/types";
+import { OptModelProps } from "@/types/fromTypes";
 
 const OtpVerificationModel = ({ returnRoute }: OptModelProps) => {
    const router = useRouter();

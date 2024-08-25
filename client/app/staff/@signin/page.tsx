@@ -1,5 +1,5 @@
 "use server";
-import SigninForm from "@/components/forms/staff/SigninForm";
+import SigninForm from "@/components/forms/admin/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
 const SignIn = () => {

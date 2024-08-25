@@ -37,3 +37,7 @@ export interface OtpFromProps {
    handleResend:()=>void;
    timer:number;
 }
+
+export type OptModelProps = {
+   returnRoute:string;
+}

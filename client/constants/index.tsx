@@ -1,4 +1,4 @@
-import { AnimatedCardProps, DoctorType, NavLinkType } from "@/types";
+import { AnimatedCardProps, DoctorType, NavLinkType, SideBarLink } from "@/types";
 import Image from "next/image";
 
 export const AppointmentTypes: { type: string; image: string }[] = [
@@ -76,56 +76,84 @@ export const DiseaseOptions: string[] = [
    "Zika Virus",
    "Meningitis",
 ];
-export const AdminSideBarLinks = [
+export const AdminSideBarLinks:SideBarLink[] = [
    {
       label: "Dashboard",
-      href: "#",
+      href: "/staff/",
       icon: (
          <Image
-            src={"/assets/icons/user.svg"}
+            src={"/assets/icons/dashboard.svg"}
             width={21}
             height={23}
-            alt="User Icon"
-            className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0"
+            alt="Dashboard"
+            className="h-7 w-7"
          />
       ),
    },
    {
       label: "Profile",
-      href: "#",
+      href: "/staffs/profile",
+      admin:false,
       icon: (
          <Image
             src={"/assets/icons/user.svg"}
             width={21}
             height={23}
-            alt="User Icon"
-            className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0"
+            alt="Profile"
+            className="h-7 w-7"
          />
       ),
    },
    {
-      label: "Settings",
-      href: "#",
+      label: "Doctors",
+      href: "/staff/doctors",
+      admin:false,
       icon: (
          <Image
-            src={"/assets/icons/user.svg"}
+            src={"/assets/icons/doctor.svg"}
             width={21}
             height={23}
-            alt="User Icon"
-            className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0"
+            alt="Doctors"
+            className="h-7 w-7"
+         />
+      ),
+   },
+   {
+      label: "Patients",
+      href: "/staff/patients",
+      icon: (
+         <Image
+            src={"/assets/icons/wheelchair.svg"}
+            width={21}
+            height={23}
+            alt="Patients"
+            className="h-7 w-7"
+         />
+      ),
+   },
+   {
+      label: "Products",
+      href: "/staff/products",
+      icon: (
+         <Image
+            src={"/assets/icons/store.svg"}
+            width={21}
+            height={23}
+            alt="Products"
+            className="h-7 w-7"
          />
       ),
    },
    {
       label: "Logout",
-      href: "#",
+      href: "/staff/logout",
       icon: (
          <Image
-            src={"/assets/icons/user.svg"}
+            src={"/assets/icons/logout.svg"}
             width={21}
             height={23}
-            alt="User Icon"
-            className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0"
+            alt="Logout"
+            className="h-7 w-7"
          />
       ),
    },

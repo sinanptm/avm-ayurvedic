@@ -1,5 +1,5 @@
 import { ReactNode, FC } from "react";
-import SideBar from "@/components/SideBar";
+import AdminSideBar from "@/components/AdminSideBar";
 import { Metadata } from "next";
 
 interface AdminLayoutWrapperProps {
@@ -15,16 +15,14 @@ const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({
    signin,
    children,
 }) => {
-   const isLoggedIn = false;
+   const isLoggedIn = true;
    return isLoggedIn ? (
-      <div className="flex min-h-screen bg-background">
-         <SideBar />
-         <div className="flex-1 overflow-auto">
-            <main className="container mx-auto p-3 sm:p-5 lg:p-7">
-               {children}
-            </main>
-         </div>
-      </div>
+      <div className="flex h-screen">
+          <AdminSideBar />
+          <main className="flex-1 overflow-auto">
+            {children}
+          </main>
+        </div>
    ) : (
       signin
    );

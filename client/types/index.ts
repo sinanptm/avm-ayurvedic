@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export interface SearchInputProps {
+export type SearchInputProps = {
    placeHolder: string;
    name?: string;
    onChange?: () => void;
@@ -29,6 +29,10 @@ export type AnimatedCardProps = {
    children?: ReactNode;
 };
 
-export type OptModelProps = {
-   returnRoute:string;
+
+export type SideBarLink = {
+   label:string;
+   href:string;
+   icon:ReactNode;
+   admin?:boolean;
 }
