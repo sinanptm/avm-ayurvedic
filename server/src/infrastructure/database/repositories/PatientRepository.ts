@@ -5,9 +5,16 @@ import PatientModel from "../models/PatientModel";
 
 export default class PatientRepository implements IPatientRepository {
    model = PatientModel;
-   async create(patient: IPatient): Promise<IPatient> {
-      const patientModel = new this.model(patient);
-      return await patientModel.save();
+   async create(patient: IPatient): Promise<IPatient | never> {
+      try {
+         const patientModel = new this.model(patient);
+         return await patientModel.save();
+      } catch (error: any) {
+         if (error.code  === 11000) {
+            throw new Error("Patient With Email Already Exists!.");
+         }
+         throw error;
+      }
    }
    async update(patient: IPatient): Promise<IPatient | null> {
       return await this.model.findByIdAndUpdate(patient._id, patient, { new: true });

@@ -1,7 +1,7 @@
 import { IPatient } from "../../domain/entities/Patient";
 
 export default interface IPatientRepository {
-   create(patient: IPatient): Promise<IPatient>;
+   create(patient: IPatient): Promise<IPatient|never>;
    update(patient: IPatient): Promise<IPatient | null>;
    changeStatus(id: string, status: boolean): Promise<IPatient | null>;
    findByEmail(email: string): Promise<IPatient | null>;

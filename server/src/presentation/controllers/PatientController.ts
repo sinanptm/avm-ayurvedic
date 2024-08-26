@@ -16,25 +16,23 @@ export default class PatientController {
       try {
          const patient = req.body.patient as IPatient;
 
-         //  * email validation
+         // email validation
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is Required" });
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid Email Format" });
 
-         //  * password validation
+         // password validation
          if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
          if (!isValidatePassword(patient.password)) return res.status(422).json({ message: "Password is too week" });
 
-         //  * name validation
+         // name validation
          if (!patient.name?.trim()) return res.status(400).json({ message: "Name is required" });
 
-         //  * phone validation
+         // phone validation
          if (!patient.phone?.toString().trim()) return res.status(400).json({ message: "Phone number is required" });
 
-         const newPatient = await this.registerPatientUseCase.execute(patient);
-
-         res.status(200).json({ patient: newPatient });
+         res.status(200).json({ patient: await this.registerPatientUseCase.execute(patient) });
+         
       } catch (error) {
-         console.error("Error registering patient:", error);
          next(error);
       }
    }
@@ -43,7 +41,6 @@ export default class PatientController {
       try {
          this.loginPatientUseCase.execute(req.body.patient);
       } catch (error) {
-         console.log("Error in Patient login : ", error);
          next(error);
       }
    }

@@ -15,7 +15,7 @@ const loginPatientUseCase = new LoginPatientUseCase(patientRepository, passwordS
 const registerPatientUseCase = new RegisterPatientUseCase(patientRepository, passwordService);
 const patientController = new PatientController(patientUseCase, registerPatientUseCase, loginPatientUseCase);
 
-route.post("/register", (req, res, next) => {
+route.post("/", (req, res, next) => {
    patientController.registerPatient(req, res, next);
 });
 
