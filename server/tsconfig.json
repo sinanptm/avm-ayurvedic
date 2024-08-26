@@ -1,16 +1,16 @@
 {
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "NodeNext",
-    "strict": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  },
-  "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
-  "exclude": ["node_modules"]
+   "compilerOptions": {
+      "target": "ES6",
+      "module": "NodeNext",
+      "strict": true,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
+   },
+   "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
+   "exclude": ["node_modules"]
 }

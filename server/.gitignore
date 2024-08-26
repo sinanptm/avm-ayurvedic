@@ -1,43 +1,40 @@
+# Node.js dependencies
+/node_modules
 
-/clean.txt
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Ignore all node_modules directories
-**/node_modules/
+# Environment variables
+.env
 
-# Ignore all package-lock.json files
-**/package-lock.json
+# Debugging and Testing
+/.nyc_output
+/coverage
+/.vscode
 
-# Ignore all log files
-**/*.log
+# Production
+/build
+/dist
 
-# Ignore environment files
-**/.env
+# Optional npm cache directory
+.npm
 
-# Build directories
-**/.next/
-**/out/
-**/dist/
+# Optional eslint cache
+.eslintcache
 
-# OS-specific files
-.DS_Store
-Thumbs.db
+# Optional REPL history
+.node_repl_history
 
-# IDE and editor files
-.vscode/
-.idea/
+# IDE and Editor settings
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-*.sublime-workspace
 
-# TypeScript cache and build artifacts
-*.tsbuildinfo
-*.js.map
-*.d.ts
-
-# General ignore patterns
-*.bak
-*.tmp
-*.swp
+# Mac
