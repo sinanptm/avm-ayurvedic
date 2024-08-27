@@ -12,7 +12,7 @@ export default class PatientController {
       private loginPatientUseCase: LoginPatientUseCase
    ) {}
 
-   async registerPatient(req: Request, res: Response, next: NextFunction) {
+   async register(req: Request, res: Response, next: NextFunction) {
       try {
          const patient: IPatient = req.body;
 
@@ -36,10 +36,10 @@ export default class PatientController {
       }
    }
 
-   async loginPatient(req: Request, res: Response, next: NextFunction) {
+   async login(req: Request, res: Response, next: NextFunction) {
       try {
          let patient: IPatient = req.body;
-         // Input validations 
+         // Input validations
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is required" });
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid email format" });
          if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
@@ -47,7 +47,10 @@ export default class PatientController {
          const patientDetails = await this.loginPatientUseCase.execute(patient);
 
          if (patientDetails) {
-            res.status(200).json({ message: `Login successful, OTP sent to email address : ${patientDetails.email}`  });
+            res.status(200).json({
+               message: `Login successful, OTP sent to email address : ${patientDetails.email}`,
+               email: patientDetails.email,
+            });
          } else {
             res.status(204).json({ message: "No further action required" });
          }
@@ -59,6 +62,25 @@ export default class PatientController {
          } else {
             next(error);
          }
+      }
+   }
+
+   async validateOtp(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { otp, email } = req.body;
+
+         console.log(req.body);
+         
+
+         if (!otp) return res.status(400).json({ message: "Otp is required" });
+         if (!email) return res.status(400).json({ message: "Email is required" });
+
+         return await this.loginPatientUseCase.validateOtp(otp, email);
+         
+      } catch (error: any) {
+
+         if (error.message === "Invalid Otp") res.status(401).json({ message: "Invalid Otp" });
+         next(error);
       }
    }
 }

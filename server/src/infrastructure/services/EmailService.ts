@@ -18,7 +18,7 @@ export default class EmailService implements IEmailService{
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.SENDER_MAIL,
+                user: process.env.SENDER_EMAIL,
                 pass: process.env.NODEMAILER_PASSKEY,
             },
         });

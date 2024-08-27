@@ -6,17 +6,7 @@
 // * flowbite
 
 // ! Gradiant Generator
-// * tailwindcss gradient gernorator
 
-// * redix ui
-// * shadcn
-// * appwrite sms-database
-
-// * https://ui.aceternity.com/
-
-
-//  Shadcn components to reduce the time spent building UI components.
-//  For managing forms, you can use TanStack Form or React Hook Form to reduce your workload.
 
 // * https://github.com/Mohammedshibilpv0/Freelance-X-server/tree/main
 
@@ -24,6 +14,7 @@
 
 // https://enhanced-button.vercel.app/ enhanced buttons
 
+// ! https://dbdiagram.io/d/66bcfc198b4bb5230e23164a : data base design
 
 // https://nextui.org/docs/components
 // https://nextui.org/docs/components/time-input
@@ -42,3 +33,9 @@
 
 
 // https://nextjs.org/docs/app/building-your-application/data-fetching/caching-and-revalidating/
+
+// !email service 
+// https://medium.com/@raghavendralacharya/sending-html-email-templates-with-images-using-node-js-and-nodemailer-719a1f1dc894
+
+
+

@@ -10,4 +10,6 @@ export interface IPatient {
    isBlocked?: false;
    address?: string;
    token?: string;
+   createdAt?:string;
+   updatedAt?:string
 }

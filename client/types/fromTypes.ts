@@ -1,4 +1,4 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, SetStateAction } from "react";
 import { Control } from "react-hook-form";
 
 export enum FormFieldType {
@@ -36,6 +36,9 @@ export interface OtpFromProps {
    handleVerify:(e:FormEvent)=>void;
    handleResend:()=>void;
    timer:number;
+   isLoading:boolean;
+   otp:string;
+   setOtp:(value:string)=>void;
 }
 
 export type OptModelProps = {
