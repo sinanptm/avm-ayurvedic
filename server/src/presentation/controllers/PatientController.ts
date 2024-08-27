@@ -14,7 +14,7 @@ export default class PatientController {
 
    async registerPatient(req: Request, res: Response, next: NextFunction) {
       try {
-         const patient = req.body.patient as IPatient;
+         const patient = req.body as IPatient;
 
          // email validation
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is Required" });
@@ -30,7 +30,7 @@ export default class PatientController {
          // phone validation
          if (!patient.phone?.toString().trim()) return res.status(400).json({ message: "Phone number is required" });
 
-         res.status(200).json({ patient: await this.registerPatientUseCase.execute(patient) });
+         res.status(200).json({ message: await this.registerPatientUseCase.execute(patient) });
          
       } catch (error) {
          next(error);

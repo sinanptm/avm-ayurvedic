@@ -1,7 +1,13 @@
 import AboutAyurveda from "@/components/home/AboutAyurveda";
 import ImageSlider from "@/components/home/ImageSlider";
-import FeaturesList from "@/components/home/FeatureList";
 import WhyUs from "@/components/utils/WhyUs";
+import dynamic from "next/dynamic";
+import Loader  from "@/components/Loader";
+
+const  FeaturesList = dynamic(()=>import("@/components/home/FeatureList"),{
+   loading:()=><Loader />,
+})
+
 
 const Page = () => {
    return (

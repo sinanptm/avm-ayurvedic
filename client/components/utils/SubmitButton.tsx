@@ -23,8 +23,8 @@ const SubmitButton = ({
                <Image
                   src="/assets/icons/loader.svg"
                   alt="loader"
-                  width={24}
-                  height={24}
+                  width={30}
+                  height={30}
                />
             </div>
          ) : (

@@ -1,11 +1,12 @@
-export interface LoginCredentials {
-   phone: string;
+
+export interface SignInCredentials {
+   email: string;
    password: string;
 }
 
-export interface LoginResponse {
+export interface SignInResponse {
    user: {
-      id: string;
+      _id: string;
       email: string;
       name: string;
       phone: string;
@@ -15,4 +16,8 @@ export interface LoginResponse {
 
 export interface AuthState {
    token: string | null;
+}
+
+export interface SignUpResponse{
+   message:string;
 }

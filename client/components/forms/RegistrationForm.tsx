@@ -8,7 +8,7 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
-import { registerFormValidation } from "@/lib/userValidation";
+import { registerFormValidation } from "@/lib/validators/userValidation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
 import { BloodTypes, DiseaseOptions, GenderOptions } from "@/constants";

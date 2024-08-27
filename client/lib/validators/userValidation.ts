@@ -30,8 +30,8 @@ export const signupFormValidation = z
       password: z
          .string()
          .trim()
-         .min(8, "Password must be at least 8 characters long")
-         .max(20, "Password must be at most 15 characters long")
+         .min(6, "Password must be at least 6 characters long")
+         .max(25, "Password must be at most 25 characters long")
          .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
          .regex(/[a-z]/, "Password must contain at least one lowercase letter")
          .regex(/[0-9]/, "Password must contain at least one number")
@@ -42,7 +42,7 @@ export const signupFormValidation = z
       confirmPassword: z
          .string()
          .trim()
-         .min(8, "Password must be at least 4 characters long"),
+         .min(6, "Password must be at least 6 characters long"),
    })
    .superRefine(({ confirmPassword, password }, ctx) => {
       if (confirmPassword !== password) {

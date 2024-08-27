@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
-import { signinFormValidation } from "@/lib/userValidation";
+import { signinFormValidation } from "@/lib/validators/userValidation";
 import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";
 
@@ -37,7 +37,7 @@ const LoginForm = () => {
                <h1 className="header">Welcome Back 👋</h1>
                <p className="text-dark-700">
                   Schedule your first appointment{" "}
-                  <Link href={"/patient/signup"} className="text-blue-400">
+                  <Link href={"/signup"} className="text-blue-400">
                      Sign Up
                   </Link>
                </p>

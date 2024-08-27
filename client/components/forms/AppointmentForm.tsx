@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
-import { appointmentFormValidation } from "@/lib/userValidation";
+import { appointmentFormValidation } from "@/lib/validators/userValidation";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import { AppointmentTypes, DoctorList, PaymentOptions } from "@/constants";
