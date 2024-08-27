@@ -1,6 +1,6 @@
 import AboutAyurveda from "@/components/home/AboutAyurveda";
 import ImageSlider from "@/components/home/ImageSlider";
-import WhyUs from "@/components/utils/WhyUs";
+import WhyUs from "@/components/home/WhyUs";
 import dynamic from "next/dynamic";
 import Loader  from "@/components/Loader";
 

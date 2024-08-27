@@ -2,7 +2,6 @@
 import OtpVerificationSection from "@/components/forms/OtpForms";
 import { useVerifyOtpMutation } from "@/lib/features/api/authApi";
 import Image from "next/image";
-import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import {RootState} from '@/lib/store'
