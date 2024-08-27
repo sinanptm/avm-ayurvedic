@@ -64,7 +64,7 @@ const RegistrationForm = () => {
                <h1 className="header">Hi There👋</h1>
                <p className="text-dark-700">
                   Already have an account?{" "}
-                  <Link href="/patient/signin" className="text-blue-400">
+                  <Link href="/signin" className="text-blue-400">
                      Sign In
                   </Link>
                </p>

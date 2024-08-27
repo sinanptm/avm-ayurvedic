@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SignInCredentials, SignInResponse, SignUpResponse } from "@/types/auth";
 import { IPatient } from "@/types";
 
 export const authApi = createApi({
@@ -8,14 +7,14 @@ export const authApi = createApi({
       baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/patient`,
    }),
    endpoints: (builder) => ({
-      signIn: builder.mutation<SignInResponse, SignInCredentials>({
+      signIn: builder.mutation<{ patient: IPatient; token: string }, IPatient>({
          query: (credentials) => ({
-            url: "/signin",
+            url: "/login",
             method: "POST",
             body: credentials,
          }),
       }),
-      signUp: builder.mutation<SignUpResponse, IPatient>({
+      signUp: builder.mutation<{ message: string }, IPatient>({
          query: (credentials) => ({
             url: "/",
             method: "POST",

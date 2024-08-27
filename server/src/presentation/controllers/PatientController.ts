@@ -14,7 +14,7 @@ export default class PatientController {
 
    async registerPatient(req: Request, res: Response, next: NextFunction) {
       try {
-         const patient = req.body as IPatient;
+         const patient: IPatient = req.body;
 
          // email validation
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is Required" });
@@ -31,7 +31,6 @@ export default class PatientController {
          if (!patient.phone?.toString().trim()) return res.status(400).json({ message: "Phone number is required" });
 
          res.status(200).json({ message: await this.registerPatientUseCase.execute(patient) });
-         
       } catch (error) {
          next(error);
       }
@@ -39,9 +38,24 @@ export default class PatientController {
 
    async loginPatient(req: Request, res: Response, next: NextFunction) {
       try {
-         this.loginPatientUseCase.execute(req.body.patient);
-      } catch (error) {
-         next(error);
+         let patient: IPatient = req.body;
+
+         // Validate the input data
+         if (!patient.email?.trim()) return res.status(400).json({ message: "Email is required" });
+         if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid email format" });
+
+         if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
+
+         const loggedInPatient = await this.loginPatientUseCase.execute(patient);
+         res.status(200).json({ message: "Login successful", patient: loggedInPatient });
+      } catch (error: any) {
+         if (error.message === "User Not Found") {
+            return res.status(404).json({ message: "User not found" });
+         } else if (error.message === "Invalid Credentials") {
+            return res.status(401).json({ message: "Invalid credentials" });
+         } else {
+            next(error);
+         }
       }
    }
 }

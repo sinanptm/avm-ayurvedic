@@ -6,4 +6,5 @@ export default interface IPatientRepository {
    changeStatus(id: string, status: boolean): Promise<IPatient | null>;
    findByEmail(email: string): Promise<IPatient | null>;
    findById(id: string): Promise<IPatient | null>;
+   findByEmailWithPassword(email:string):Promise<IPatient|null>
 }

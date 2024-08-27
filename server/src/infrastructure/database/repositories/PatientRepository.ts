@@ -10,7 +10,7 @@ export default class PatientRepository implements IPatientRepository {
          const patientModel = new this.model(patient);
          return await patientModel.save();
       } catch (error: any) {
-         if (error.code  === 11000) {
+         if (error.code === 11000) {
             throw new Error("Patient With Email Already Exists!.");
          }
          throw error;
@@ -23,12 +23,15 @@ export default class PatientRepository implements IPatientRepository {
       return await this.model.findByIdAndUpdate(id, { $set: { isBlocked: !status } });
    }
    async findByEmail(email: string): Promise<IPatient | null> {
-      return await this.model.findOne({ email });
+      return await this.model.findOne({ email }).select("-password");
    }
    async findById(id: string): Promise<IPatient | null> {
       if (!isValidObjectId(id)) {
          throw new Error(`Invalid Object id : ${id}`);
       }
-      return await this.model.findById(id);
+      return await this.model.findById(id).select("-password");
+   }
+   async findByEmailWithPassword(email: string): Promise<IPatient | null> {
+      return await this.model.findOne({ email });
    }
 }

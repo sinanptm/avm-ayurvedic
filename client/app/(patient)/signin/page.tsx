@@ -23,8 +23,8 @@ const SignIn = () => {
                   <p className="justify-items-end text-dark-600 xl:text-left">
                      © 2024 AVM Ayurveda&apos;s
                   </p>
-                  <Link href={"/signin/otp-verification"} className="text-green-500">
-                     OTP
+                  <Link href={"/signup"} className="text-green-500 text-xs">
+                     Staff-Login
                   </Link>
                </div>
             </div>
