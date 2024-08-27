@@ -3,7 +3,6 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "../styles/globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { StoreProvider } from "./StoreProvider";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
@@ -31,14 +30,12 @@ export default function RootLayout({
    return (
       <html lang="en" suppressHydrationWarning>
          <body className={cn("min-h-[600px] bg-dark-300 font-sans antialiased", inter.variable)}>
-            <StoreProvider>
                <ThemeProvider attribute="class" defaultTheme="dark">
                   <NavBar />
                   <Toaster />
                   {children}
                   <Footer />
                </ThemeProvider>
-            </StoreProvider>
          </body>
       </html>
    );

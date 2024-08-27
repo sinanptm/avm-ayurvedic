@@ -1,25 +1,16 @@
 "use client";
 import OtpVerificationSection from "@/components/forms/OtpForms";
-import { useVerifyOtpMutation } from "@/lib/features/api/authApi";
 import Image from "next/image";
 import React, { FormEvent, useState } from "react";
-import { useSelector } from "react-redux";
-import {RootState} from '@/lib/store'
-
 const OtpVerificationPage = () => {
-   const [otp,setOtp] = useState('')
-   const [verifyOtp, { isLoading , data}] = useVerifyOtpMutation();
-   const email = useSelector((state:RootState)=>state.auth.token) as string
+   const [otp, setOtp] = useState("");
+   const [isLoading, setLoading] = useState(false);
 
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
       try {
-         await verifyOtp({otp: parseInt(otp),email});
-         console.log(data);
-         
       } catch (error) {
          console.log(error);
-         
       }
    };
 
@@ -44,7 +35,6 @@ const OtpVerificationPage = () => {
                   isLoading={isLoading}
                   timer={30}
                />
-              
             </div>
          </section>
 

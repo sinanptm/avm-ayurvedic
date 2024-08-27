@@ -10,18 +10,14 @@ import SubmitButton from "@/components/utils/SubmitButton";
 import { signinFormValidation } from "@/lib/validators/userValidation";
 import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";
-import { useSignInMutation } from "@/lib/features/api/authApi";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "@/lib/features/slices/authSlice";
 
 const LoginForm = () => {
-   const [signIn, { isLoading: isPosting, data, error: signinError }] = useSignInMutation();
    const [error, setError] = useState("");
    const { toast } = useToast();
    const router = useRouter();
-   const dispatch = useDispatch();
+   const [isLoading,setLoading] = useState(false);
 
    const form = useForm<z.infer<typeof signinFormValidation>>({
       resolver: zodResolver(signinFormValidation),
@@ -33,20 +29,14 @@ const LoginForm = () => {
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
       try {
-         const result = await signIn(values).unwrap();
-         console.log(result);
-         
-         dispatch(setCredentials({token:result.email}));
-         router.push("/signin/otp-verification");
          toast({
             title: "OTP Verification",
             description: "Please check your email for the OTP.",
             variant: "default",
          });
+         router.push('/signin/otp-verification')
       } catch (error: any) {
          setError(error.data?.message || "An error occurred during sign-in.");
-         console.log(error);
-
          toast({
             title: "Sign-In Failed",
             description: error.data?.message || "Please try again.",
@@ -87,7 +77,7 @@ const LoginForm = () => {
 
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-            <SubmitButton isLoading={isPosting}>Sign In</SubmitButton>
+            <SubmitButton isLoading={isLoading}>Sign In</SubmitButton>
          </form>
       </Form>
    );

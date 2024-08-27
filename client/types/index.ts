@@ -1,11 +1,5 @@
 import { ReactNode } from "react";
 
-export type SearchInputProps = {
-   placeHolder: string;
-   name?: string;
-   onChange?: () => void;
-}
-
 export type DoctorType = {
    _id: string;
    name: string;

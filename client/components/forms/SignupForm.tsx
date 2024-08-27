@@ -8,7 +8,6 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/utils/CustomFormField";
 import SubmitButton from "@/components/utils/SubmitButton";
 import { signupFormValidation } from "@/lib/validators/userValidation";
-import { useSignUpMutation } from "@/lib/features/api/authApi";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,6 +18,7 @@ const RegistrationForm = () => {
    const [error, setError] = useState<string>("");
    const router = useRouter();
    const { toast } = useToast();
+   const [isLoading, setLoading] = useState(false);
 
    const form = useForm<z.infer<typeof signupFormValidation>>({
       resolver: zodResolver(signupFormValidation),
@@ -31,11 +31,8 @@ const RegistrationForm = () => {
       },
    });
 
-   const [signUp, { isLoading: isPosting, data: response, error: signUpError }] = useSignUpMutation();
-
    const onSubmit = async (formData: z.infer<typeof signupFormValidation>) => {
       try {
-         await signUp(formData).unwrap();
          toast({
             title: "Registration Successful",
             description: "You have successfully registered. Please sign in.",
@@ -120,7 +117,7 @@ const RegistrationForm = () => {
 
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-            <SubmitButton isLoading={isPosting}>Sign Up</SubmitButton>
+            <SubmitButton isLoading={isLoading}>Sign Up</SubmitButton>
          </form>
       </Form>
    );

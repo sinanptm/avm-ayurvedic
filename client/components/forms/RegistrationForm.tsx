@@ -16,7 +16,6 @@ import { SelectItem } from "../ui/select";
 
 const RegistrationForm = () => {
    const [isLoading, setIsLoading] = useState<boolean>(false);
-   // const [login] = useLoginMutation();
    const form = useForm<z.infer<typeof registerFormValidation>>({
       resolver: zodResolver(registerFormValidation),
       defaultValues: {
@@ -38,17 +37,6 @@ const RegistrationForm = () => {
          console.log(values);
          setIsLoading(false);
       }, 2000);
-      // try {
-      //   const user = await login({
-      //     phone: values.phone,
-      //     password: values.password,
-      //   }).unwrap();
-
-      //   console.log("Login successful:", user);
-      // } catch (error) {
-      //   console.error("Failed to log in:", error);
-      // } finally {
-      // }
    };
 
    return (
@@ -72,20 +60,16 @@ const RegistrationForm = () => {
                   control={form.control}
                   name="gender"
                   label="Gender  *"
-                  renderSkeleton={field => (
+                  renderSkeleton={(field) => (
                      <FormControl>
                         <RadioGroup
                            className="flex h-11 gap-6 xl:justify-between"
                            onValueChange={field.onChange}
-                           defaultValue={field.value}
-                        >
+                           defaultValue={field.value}>
                            {GenderOptions.map((option, i) => (
                               <div key={option} className="radio-group">
                                  <RadioGroupItem value={option} id={option} />
-                                 <Label
-                                    htmlFor={option}
-                                    className="cursor-pointer"
-                                 >
+                                 <Label htmlFor={option} className="cursor-pointer">
                                     {option}
                                  </Label>
                               </div>
@@ -101,8 +85,7 @@ const RegistrationForm = () => {
                   control={form.control}
                   name="bloodType"
                   label="Your blood type  *"
-                  placeholder="Select blood type"
-               >
+                  placeholder="Select blood type">
                   {BloodTypes.map((blood, i) => (
                      <SelectItem key={blood + i} value={blood}>
                         <div className="flex cursor-pointer items-center gap-2">
@@ -117,8 +100,7 @@ const RegistrationForm = () => {
                   control={form.control}
                   name="disease"
                   label="Primary Disease  *"
-                  placeholder="Select a disease"
-               >
+                  placeholder="Select a disease">
                   {DiseaseOptions.map((disease, i) => (
                      <SelectItem key={disease + i} value={disease}>
                         <div className="flex cursor-pointer items-center gap-2">
