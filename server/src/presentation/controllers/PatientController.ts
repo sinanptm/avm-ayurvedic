@@ -39,15 +39,18 @@ export default class PatientController {
    async loginPatient(req: Request, res: Response, next: NextFunction) {
       try {
          let patient: IPatient = req.body;
-
-         // Validate the input data
+         // Input validations 
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is required" });
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid email format" });
-
          if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
 
-         const loggedInPatient = await this.loginPatientUseCase.execute(patient);
-         res.status(200).json({ message: "Login successful", patient: loggedInPatient });
+         const patientDetails = await this.loginPatientUseCase.execute(patient);
+
+         if (patientDetails) {
+            res.status(200).json({ message: `Login successful, OTP sent to email address : ${patientDetails.email}`  });
+         } else {
+            res.status(204).json({ message: "No further action required" });
+         }
       } catch (error: any) {
          if (error.message === "User Not Found") {
             return res.status(404).json({ message: "User not found" });

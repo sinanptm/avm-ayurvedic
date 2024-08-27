@@ -18,7 +18,8 @@
       "dotenv": "^16.4.5",
       "express": "^4.19.2",
       "jsonwebtoken": "^9.0.2",
-      "mongoose": "^8.5.3"
+      "mongoose": "^8.5.3",
+      "nodemailer": "^6.9.14"
    },
    "devDependencies": {
       "@types/bcryptjs": "^2.4.6",
@@ -28,6 +29,7 @@
       "@types/jsonwebtoken": "^9.0.6",
       "@types/mongoose": "^5.11.97",
       "@types/node": "^22.5.0",
+      "@types/nodemailer": "^6.4.15",
       "concurrently": "^8.2.2",
       "nodemon": "^3.1.4",
       "prettier": "^3.3.3",
