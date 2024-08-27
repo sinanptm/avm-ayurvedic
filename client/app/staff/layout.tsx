@@ -1,5 +1,5 @@
 import { ReactNode, FC } from "react";
-import AdminSideBar from "@/components/AdminSideBar";
+import AdminSideBar from "@/components/layout/AdminSideBar";
 import { Metadata } from "next";
 
 interface AdminLayoutWrapperProps {

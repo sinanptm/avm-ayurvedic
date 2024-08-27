@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "../styles/globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import NavBar from "@/components/layout/NavBar";
+import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Plus_Jakarta_Sans({

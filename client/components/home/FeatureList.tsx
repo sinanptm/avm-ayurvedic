@@ -1,5 +1,5 @@
 import React from "react";
-import AnimatedCard from "@/components/utils/AnimatedCard";
+import AnimatedCard from "@/components/common/AnimatedCard";
 import { FeaturesCardsHomePage } from "@/constants";
 
 const FeaturesList = () => {
