@@ -1,5 +1,5 @@
 'use client'
-import OtpForm from "@/components/forms/OtpForms";
+import OtpForm from "@/components/common/forms/OtpForms";
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState } from "react";

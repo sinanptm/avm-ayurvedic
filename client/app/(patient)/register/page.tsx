@@ -1,5 +1,5 @@
 import Image from "next/image";
-import RegistrationForm from "@/components/forms/RegistrationForm";
+import RegistrationForm from "@/components/common/forms/RegistrationForm";
 const Register = () => {
    return (
       <div className="flex h-screen max-h-screen">

@@ -8,7 +8,7 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
 import { appointmentFormValidation } from "@/lib/validators/userValidation";
-import { SelectItem } from "../ui/select";
+import { SelectItem } from "../../ui/select";
 import Image from "next/image";
 import { AppointmentTypes, DoctorList, PaymentOptions } from "@/constants";
 import { FormFieldType } from "@/types/fromTypes";
@@ -27,9 +27,7 @@ const AppointmentForm = () => {
       },
    });
 
-   const onSubmit = async (
-      values: z.infer<typeof appointmentFormValidation>,
-   ) => {
+   const onSubmit = async (values: z.infer<typeof appointmentFormValidation>) => {
       setIsLoading(true);
       console.log("clicked", values);
       setIsLoading(false);
@@ -37,15 +35,10 @@ const AppointmentForm = () => {
 
    return (
       <Form {...form}>
-         <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 flex-1"
-         >
+         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
             <section className="mb-12 space-y-4">
                <h1 className="header">New Appointment</h1>
-               <p className="text-dark-700">
-                  Request New Appointment in 10 seconds
-               </p>
+               <p className="text-dark-700">Request New Appointment in 10 seconds</p>
             </section>
 
             <CustomFormField
@@ -53,13 +46,9 @@ const AppointmentForm = () => {
                control={form.control}
                name="appointmentType"
                label="Appointment Type"
-               placeholder="Select an Appointment"
-            >
+               placeholder="Select an Appointment">
                {AppointmentTypes.map((appointment, i) => (
-                  <SelectItem
-                     key={appointment.type + i}
-                     value={appointment.type}
-                  >
+                  <SelectItem key={appointment.type + i} value={appointment.type}>
                      <div className="flex cursor-pointer items-center gap-2">
                         <Image
                            src={appointment.image}
@@ -74,13 +63,8 @@ const AppointmentForm = () => {
                ))}
             </CustomFormField>
 
-            <CustomFormField
-               fieldType={FormFieldType.SELECT}
-               control={form.control}
-               name="doctor"
-               label="Doctor"
-            >
-               {DoctorList.map(doctor => (
+            <CustomFormField fieldType={FormFieldType.SELECT} control={form.control} name="doctor" label="Doctor">
+               {DoctorList.map((doctor) => (
                   <SelectItem key={doctor._id} value={doctor.name}>
                      <div className="flex cursor-pointer items-center gap-2">
                         <Image
@@ -127,8 +111,7 @@ const AppointmentForm = () => {
                control={form.control}
                name="payment"
                label="Payment Options"
-               placeholder="Available Options"
-            >
+               placeholder="Available Options">
                {PaymentOptions.map((appointment, i) => (
                   <SelectItem key={appointment + i} value={appointment}>
                      <div className="flex cursor-pointer items-center gap-2">

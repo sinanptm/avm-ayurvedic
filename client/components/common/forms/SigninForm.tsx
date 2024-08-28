@@ -10,14 +10,15 @@ import SubmitButton from "@/components/common/SubmitButton";
 import { signinFormValidation } from "@/lib/validators/userValidation";
 import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "../../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useSignInPatient } from "@/lib/hooks/usePatinet";
 
 const LoginForm = () => {
    const [error, setError] = useState("");
    const { toast } = useToast();
    const router = useRouter();
-   const [isLoading,setLoading] = useState(false);
+   const { mutate: signIn, isPending } = useSignInPatient();
 
    const form = useForm<z.infer<typeof signinFormValidation>>({
       resolver: zodResolver(signinFormValidation),
@@ -27,22 +28,28 @@ const LoginForm = () => {
       },
    });
 
-   const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
-      try {
-         toast({
-            title: "OTP Verification",
-            description: "Please check your email for the OTP.",
-            variant: "default",
-         });
-         router.push('/signin/otp-verification')
-      } catch (error: any) {
-         setError(error.data?.message || "An error occurred during sign-in.");
-         toast({
-            title: "Sign-In Failed",
-            description: error.data?.message || "Please try again.",
-            variant: "destructive",
-         });
-      }
+   const onSubmit = async ({ email, password }: z.infer<typeof signinFormValidation>) => {
+      signIn(
+         { email, password },
+         {
+            onSuccess() {
+               toast({
+                  title: "OTP Verification ✅",
+                  description: "Please check your email for the OTP.",
+                  variant: "default",
+               });
+               router.push("/signin/otp-verification");
+            },
+            onError(error) {
+               setError(error.response?.data.message || "An error occurred during sign-in.");
+               toast({
+                  title: "Sign-In Failed ❌",
+                  description: error.response?.data.message || "Please try again.",
+                  variant: "destructive",
+               });
+            },
+         }
+      );
    };
 
    return (
@@ -77,7 +84,7 @@ const LoginForm = () => {
 
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-            <SubmitButton isLoading={isLoading}>Sign In</SubmitButton>
+            <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
          </form>
       </Form>
    );

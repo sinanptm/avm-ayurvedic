@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import QueryProvider from "@/lib/query-provider"
 
 const inter = Plus_Jakarta_Sans({
    subsets: ["latin"],
@@ -30,12 +31,14 @@ export default function RootLayout({
    return (
       <html lang="en" suppressHydrationWarning>
          <body className={cn("min-h-[600px] bg-dark-300 font-sans antialiased", inter.variable)}>
+            <QueryProvider>
                <ThemeProvider attribute="class" defaultTheme="dark">
                   <NavBar />
                   <Toaster />
                   {children}
                   <Footer />
                </ThemeProvider>
+            </QueryProvider>
          </body>
       </html>
    );

@@ -1,17 +1,46 @@
 "use client";
-import OtpVerificationSection from "@/components/forms/OtpForms";
+import OtpVerificationSection from "@/components/common/forms/OtpForms";
 import Image from "next/image";
 import React, { FormEvent, useState } from "react";
+import { useValidateOtpPatient } from "@/lib/hooks/usePatinet";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 const OtpVerificationPage = () => {
-   const [otp, setOtp] = useState("");
-   const [isLoading, setLoading] = useState(false);
+   const [otp, setOtp] = useState<string>("");
+   const { mutate: validateOtp, isPending } = useValidateOtpPatient();
+   const { toast } = useToast();
+   const navigate = useRouter();
 
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
-      try {
-      } catch (error) {
-         console.log(error);
-      }
+      validateOtp(
+         { email: "muhammedsinan0549@gmail.com", otp: parseInt(otp) },
+         {
+            onSuccess: (data) => {
+               toast({
+                  title: "Otp Verification Success ✅",
+                  description: "Authentication Completed!. let's book your first appointment",
+                  variant: "default",
+                  action: (
+                     <Button variant={"outline"}>
+                        <Link href={"/new-appointment"}>Book Now</Link>
+                     </Button>
+                  ),
+               });
+               console.log(data);
+            },
+            onError: (error) => {
+               toast({
+                  title: "Otp Verification Failed ❌",
+                  description: error.response?.data.message,
+                  variant: "destructive",
+               });
+            },
+         }
+      );
    };
 
    const handleResend = async () => {};
@@ -32,7 +61,7 @@ const OtpVerificationPage = () => {
                   otp={otp}
                   setOtp={setOtp}
                   handleVerify={handleVerify}
-                  isLoading={isLoading}
+                  isLoading={isPending}
                   timer={30}
                />
             </div>

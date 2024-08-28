@@ -1,4 +1,4 @@
-import SigninForm from "@/components/forms/SigninForm";
+import SigninForm from "@/components/common/forms/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";

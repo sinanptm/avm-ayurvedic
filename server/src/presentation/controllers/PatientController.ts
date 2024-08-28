@@ -68,18 +68,17 @@ export default class PatientController {
    async validateOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { otp, email } = req.body;
-
-         console.log(req.body);
          
 
          if (!otp) return res.status(400).json({ message: "Otp is required" });
          if (!email) return res.status(400).json({ message: "Email is required" });
 
-         return await this.loginPatientUseCase.validateOtp(otp, email);
+         const patient = await this.loginPatientUseCase.validateOtp(otp, email);
+
+         res.status(200).json(patient)
          
       } catch (error: any) {
-
-         if (error.message === "Invalid Otp") res.status(401).json({ message: "Invalid Otp" });
+         if (error.message === "Invalid Otp") return res.status(401).json({ message: "Invalid Otp" });
          next(error);
       }
    }

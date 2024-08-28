@@ -12,7 +12,7 @@ import { registerFormValidation } from "@/lib/validators/userValidation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
 import { BloodTypes, DiseaseOptions, GenderOptions } from "@/constants";
-import { SelectItem } from "../ui/select";
+import { SelectItem } from "../../ui/select";
 
 const RegistrationForm = () => {
    const [isLoading, setIsLoading] = useState<boolean>(false);

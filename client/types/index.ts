@@ -45,3 +45,9 @@ export interface IPatient {
    address?: string;
    token?: string;
 }
+
+
+export interface ErrorResponse {
+   message?:string;
+   stack?:string;
+}
