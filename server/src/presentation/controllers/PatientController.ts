@@ -59,7 +59,9 @@ export default class PatientController {
             return res.status(404).json({ message: "User not found" });
          } else if (error.message === "Invalid Credentials") {
             return res.status(401).json({ message: "Invalid credentials" });
-         } else {
+         } else if (error.message === "Unauthorized") {
+            return res.status(401).json({ message: "Unauthorized" });
+         }else{
             next(error);
          }
       }
@@ -68,15 +70,13 @@ export default class PatientController {
    async validateOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { otp, email } = req.body;
-         
 
          if (!otp) return res.status(400).json({ message: "Otp is required" });
          if (!email) return res.status(400).json({ message: "Email is required" });
 
          const patient = await this.loginPatientUseCase.validateOtp(otp, email);
 
-         res.status(200).json(patient)
-         
+         res.status(200).json(patient);
       } catch (error: any) {
          if (error.message === "Invalid Otp") return res.status(401).json({ message: "Invalid Otp" });
          next(error);

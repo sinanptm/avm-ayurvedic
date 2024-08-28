@@ -14,18 +14,20 @@ export default class LoginPatientUseCase {
    ) {}
 
    async execute(patient: IPatient): Promise<{ email: string } | null> {
-      const existingPatient = await this.patientRepository.findByEmailWithPassword(patient.email!);
-      if (!existingPatient) throw new Error("User Not Found");
+      const foundedPatient = await this.patientRepository.findByEmailWithPassword(patient.email!);
+      if (!foundedPatient) throw new Error("User Not Found");
 
-      const isPasswordValid = await this.passwordService.compare(patient.password!, existingPatient.password!);
+      const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
       if (!isPasswordValid) throw new Error("Invalid Credentials");
 
+      if(foundedPatient.isBlocked) throw new Error("Unauthorized")
+
       const otp = generateOTP(6);
-      await this.otpRepository.create(otp, existingPatient.email!);
+      await this.otpRepository.create(otp, foundedPatient.email!);
 
-      await this.emailService.sendOtp(existingPatient.email!, existingPatient.name!, otp);
+      await this.emailService.sendOtp(foundedPatient.email!, foundedPatient.name!, otp);
 
-      return { email: existingPatient.email! };
+      return { email: foundedPatient.email! };
    }
 
    async validateOtp(otp: number, email: string): Promise<IPatient> {
