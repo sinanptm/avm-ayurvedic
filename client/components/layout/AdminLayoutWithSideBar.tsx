@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import {ReactNode} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,9 +19,17 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { AdminSideBarLinks } from "@/constants";
+import { useSelector } from "react-redux";
+import { selectAdminToken, selectDoctorToken } from "@/lib/features/authSlice";
 
-const AdminLayoutWithSideBar = ({ children }: { children: React.ReactNode }) => {
+const AdminLayoutWithSideBar = ({ children }: { children: ReactNode[]|ReactNode }) => {
    const pathname = usePathname();
+   const AdminToken = useSelector(selectAdminToken);
+   const DoctorToken  = useSelector(selectDoctorToken);
+
+   // if(!AdminToken&&!DoctorToken){
+   //    return children
+   // }
 
    return (
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -32,7 +40,7 @@ const AdminLayoutWithSideBar = ({ children }: { children: React.ReactNode }) => 
                      href="/staff"
                      className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base">
                      <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-                     <span className="sr-only">Acme Inc</span>
+                     <span className="sr-only">AVM</span>
                   </Link>
                   {AdminSideBarLinks.map((item) => (
                      <Tooltip key={item.href}>

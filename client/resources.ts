@@ -37,9 +37,3 @@
 
 // !email service 
 // https://medium.com/@raghavendralacharya/sending-html-email-templates-with-images-using-node-js-and-nodemailer-719a1f1dc894
-
-
-
-
-
-// https://stackoverflow.com/questions/64662486/how-do-you-deal-with-public-and-private-routes-in-a-nextjs-app
