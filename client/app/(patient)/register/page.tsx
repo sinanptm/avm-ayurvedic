@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RegistrationForm from "@/components/common/forms/RegistrationForm";
+import { Banners } from "@/constants";
 const Register = () => {
    return (
       <div className="flex h-screen max-h-screen">
@@ -20,7 +21,7 @@ const Register = () => {
          </section>
 
          <Image
-            src="/assets/images/register-img.png"
+            src={Banners.patient_register}
             height={1000}
             width={1000}
             alt="patient"

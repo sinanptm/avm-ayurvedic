@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Banners } from "@/constants";
 
 const OtpVerificationPage = () => {
    const [otp, setOtp] = useState<string>("");
@@ -68,7 +69,7 @@ const OtpVerificationPage = () => {
          </section>
 
          <Image
-            src="/assets/images/onboarding-img.png"
+            src={Banners.otp}
             height={1000}
             width={1000}
             alt="patient"

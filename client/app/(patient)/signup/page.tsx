@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SignupForm from "@/components/common/forms/SignupForm";
 import { Metadata } from "next";
+import { Banners } from "@/constants";
 
 export const metadata: Metadata = {
    title: "SignUp",
@@ -24,7 +25,7 @@ const Register = () => {
          </section>
 
          <Image
-            src="/assets/images/register-img.png"
+            src={Banners.signup}
             height={1000}
             width={1000}
             alt="patient"

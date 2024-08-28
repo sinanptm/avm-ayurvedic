@@ -1,6 +1,7 @@
 import AppointmentForm from "@/components/common/forms/AppointmentForm";
 import Image from "next/image";
 import { Metadata } from "next";
+import { Banners } from "@/constants";
 
 export const metadata: Metadata = {
    title: "Products",
@@ -25,7 +26,7 @@ const Appointment = () => {
          </section>
 
          <Image
-            src="/assets/images/appointment-img.png"
+            src={Banners.patient_newAppointment}
             height={1000}
             width={1000}
             alt="patient"

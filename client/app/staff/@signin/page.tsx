@@ -1,4 +1,5 @@
 import SigninForm from "@/components/common/forms/admin/SigninForm";
+import { Banners } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 const SignIn = () => {
@@ -26,7 +27,7 @@ const SignIn = () => {
          </section>
 
          <Image
-            src="/assets/images/onboarding-img.png"
+            src={Banners.staff_signin}
             height={1000}
             width={1000}
             alt="patient"

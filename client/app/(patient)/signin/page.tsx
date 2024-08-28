@@ -2,6 +2,7 @@ import SigninForm from "@/components/common/forms/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
+import { Banners } from "@/constants";
 
 export const metadata: Metadata = {
    title: "SignIn",
@@ -31,7 +32,7 @@ const SignIn = () => {
          </section>
 
          <Image
-            src="/assets/images/onboarding-img.png"
+            src={Banners.signin}
             height={1000}
             width={1000}
             alt="patient"

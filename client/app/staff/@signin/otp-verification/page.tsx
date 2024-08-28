@@ -1,5 +1,6 @@
 'use client'
 import OtpForm from "@/components/common/forms/OtpForms";
+import { Banners } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
@@ -44,7 +45,7 @@ const OtpVerificationPage = () => {
          </section>
 
          <Image
-            src="/assets/images/onboarding-img.png"
+            src={Banners.staff_otp}
             height={1000}
             width={1000}
             alt="patient"

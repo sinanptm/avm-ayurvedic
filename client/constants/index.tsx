@@ -34,16 +34,7 @@ export const AvailableTimes = [
 ];
 
 export const GenderOptions: string[] = ["Male", "Female", "Other"];
-export const BloodTypes: string[] = [
-   "A+",
-   "A-",
-   "B+",
-   "B-",
-   "AB+",
-   "AB-",
-   "O+",
-   "O-",
-];
+export const BloodTypes: string[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 export const DiseaseOptions: string[] = [
    "none",
    "Diabetes",
@@ -76,86 +67,38 @@ export const DiseaseOptions: string[] = [
    "Zika Virus",
    "Meningitis",
 ];
-export const AdminSideBarLinks:SideBarLink[] = [
+export const AdminSideBarLinks: SideBarLink[] = [
    {
       label: "Dashboard",
       href: "/staff/",
-      icon: (
-         <Image
-            src={"/assets/icons/dashboard.svg"}
-            width={21}
-            height={23}
-            alt="Dashboard"
-            className="h-7 w-7"
-         />
-      ),
+      icon: <Image src={"/assets/icons/dashboard.svg"} width={21} height={23} alt="Dashboard" className="h-7 w-7" />,
    },
    {
       label: "Profile",
       href: "/staffs/profile",
-      admin:false,
-      icon: (
-         <Image
-            src={"/assets/icons/user.svg"}
-            width={21}
-            height={23}
-            alt="Profile"
-            className="h-7 w-7"
-         />
-      ),
+      admin: false,
+      icon: <Image src={"/assets/icons/user.svg"} width={21} height={23} alt="Profile" className="h-7 w-7" />,
    },
    {
       label: "Doctors",
       href: "/staff/doctors",
-      admin:false,
-      icon: (
-         <Image
-            src={"/assets/icons/doctor.svg"}
-            width={21}
-            height={23}
-            alt="Doctors"
-            className="h-7 w-7"
-         />
-      ),
+      admin: false,
+      icon: <Image src={"/assets/icons/doctor.svg"} width={21} height={23} alt="Doctors" className="h-7 w-7" />,
    },
    {
       label: "Patients",
       href: "/staff/patients",
-      icon: (
-         <Image
-            src={"/assets/icons/wheelchair.svg"}
-            width={21}
-            height={23}
-            alt="Patients"
-            className="h-7 w-7"
-         />
-      ),
+      icon: <Image src={"/assets/icons/wheelchair.svg"} width={21} height={23} alt="Patients" className="h-7 w-7" />,
    },
    {
       label: "Products",
       href: "/staff/products",
-      icon: (
-         <Image
-            src={"/assets/icons/store.svg"}
-            width={21}
-            height={23}
-            alt="Products"
-            className="h-7 w-7"
-         />
-      ),
+      icon: <Image src={"/assets/icons/store.svg"} width={21} height={23} alt="Products" className="h-7 w-7" />,
    },
    {
       label: "Logout",
       href: "/staff/logout",
-      icon: (
-         <Image
-            src={"/assets/icons/logout.svg"}
-            width={21}
-            height={23}
-            alt="Logout"
-            className="h-7 w-7"
-         />
-      ),
+      icon: <Image src={"/assets/icons/logout.svg"} width={21} height={23} alt="Logout" className="h-7 w-7" />,
    },
 ];
 
@@ -192,7 +135,7 @@ export const DoctorList: DoctorType[] = [
 
 export const SliderImages: string[] = [
    "/assets/images/ayurveda1.jpg",
-   "/assets/images/onboarding-img.png"
+   "/assets/images/onboarding-img.png",
    // "https://images.unsplash.com/photo-1485433592409-9018e83a1f0d?q=80&w=1814&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
    // "https://images.unsplash.com/photo-1483982258113-b72862e6cff6?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
    // "https://images.unsplash.com/photo-1482189349482-3defd547e0e9?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -205,7 +148,7 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
       image: "/assets/3D/appointment.jpg",
       text: "Book Your Appointment",
       linkText: "Book Now",
-      link:"/new-appointment"
+      link: "/new-appointment",
    },
    {
       heading: "Natural Medicines",
@@ -213,7 +156,7 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
       image: "/assets/3D/products.jpg",
       text: "100% Quality",
       linkText: "Shop Now",
-      link:"/products"
+      link: "/products",
    },
    {
       heading: "Customer Support",
@@ -221,13 +164,21 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
       image: "/assets/3D/customer-support.jpg",
       text: "24/7 Customer Service",
       linkText: "Get Support",
-      link:"/contact"
+      link: "/contact",
    },
 ];
 
+export const Banners = {
+   signin: "/assets/images/onboarding-img.png",
+   signup: "/assets/images/register-img.png",
+   otp: "/assets/images/onboarding-img.png",
+   patient_register: "/assets/images/register-img.png",
+   patient_newAppointment: "/assets/images/appointment-img.png",
+   staff_signin: "/assets/images/onboarding-img.png",
+   staff_otp: "/assets/images/onboarding-img.png",
+};
 
-
-export const GuaranteeListHonePage:{src:string,text:string,heading:string}[] = [
+export const GuaranteeListHonePage: { src: string; text: string; heading: string }[] = [
    {
       src: "/assets/icons/guarantees/confidential.svg",
       text: "All advice & consultations are completely confidential. You can also delete chats whenever you want.",
@@ -247,5 +198,5 @@ export const GuaranteeListHonePage:{src:string,text:string,heading:string}[] = [
       src: "/assets/icons/guarantees/costEffective.svg",
       text: "We provide medical assistance on non urgent queries for free. Fee starting at ₹50 for faster response to queries.",
       heading: "Cost Effective",
-   },   
+   },
 ];
