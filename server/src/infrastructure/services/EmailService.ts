@@ -23,14 +23,13 @@ export default class EmailService implements IEmailService{
             },
         });
 
-        const info = await transporter.sendMail({
+        await transporter.sendMail({
             from: process.env.SENDER_MAIL,
             to: email,
             subject: 'Your OTP for Verification',
             html: htmlTemplate,
         });
 
-        console.log('Email sent:', info.messageId);
     }
 
 }

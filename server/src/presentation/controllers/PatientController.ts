@@ -7,7 +7,6 @@ import { isValidatePassword, isValidEmail } from "../validators/authValidators";
 
 export default class PatientController {
    constructor(
-      private patientUseCase: UpdatePatientUseCase,
       private registerPatientUseCase: RegisterPatientUseCase,
       private loginPatientUseCase: LoginPatientUseCase
    ) {}
@@ -55,15 +54,7 @@ export default class PatientController {
             res.status(204).json({ message: "No further action required" });
          }
       } catch (error: any) {
-         if (error.message === "User Not Found") {
-            return res.status(404).json({ message: "User not found" });
-         } else if (error.message === "Invalid Credentials") {
-            return res.status(401).json({ message: "Invalid credentials" });
-         } else if (error.message === "Unauthorized") {
-            return res.status(401).json({ message: "Unauthorized" });
-         }else{
             next(error);
-         }
       }
    }
 
@@ -74,11 +65,45 @@ export default class PatientController {
          if (!otp) return res.status(400).json({ message: "Otp is required" });
          if (!email) return res.status(400).json({ message: "Email is required" });
 
-         const patient = await this.loginPatientUseCase.validateOtp(otp, email);
+         const { refreshToken, accessToken } = await this.loginPatientUseCase.validateOtp(otp, email);
 
-         res.status(200).json(patient);
+         res.cookie("patient_token", refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict" as const,
+            maxAge: 30 * 24 * 60 * 1000,
+         });
+
+         res.json({ accessToken });
       } catch (error: any) {
-         if (error.message === "Invalid Otp") return res.status(401).json({ message: "Invalid Otp" });
+         next(error);
+      }
+   }
+
+   async refreshAccessToken(req: Request, res: Response, next: NextFunction) {
+      try {
+         const cookies = req.cookies;
+         if (!cookies?.patient_token) return res.status(401).json({ message: "Unauthorized" });
+
+         const newAccessToken = await this.loginPatientUseCase.refreshAccessToken(cookies.patient_token);
+
+         return res.status(200).json(newAccessToken);
+      } catch (error: any) {
+         next(error);
+      }
+   }
+
+   logout(req: Request, res: Response, next: NextFunction) {
+      try {
+         const cookies = req.cookies;
+         if (!cookies?.patient_token) return res.sendStatus(204);
+         res.clearCookie("patient_token", {
+            httpOnly: true,
+            sameSite: "strict" as const,
+            secure: true,
+         });
+         res.json({ message: "cookie cleared" });
+      } catch (error) {
          next(error);
       }
    }

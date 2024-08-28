@@ -1,10 +1,10 @@
 import express from "express";
-import patientRoutes from "./PatientRoutes";
+import patientAuthRoutes from "./patient/PatientAuthRoutes";
 import { errorHandler } from "../middlewares/errorHandler";
 
 const app = express();
 
-app.use("/patient", patientRoutes);
+app.use("/patient", patientAuthRoutes);
 
 app.use(errorHandler);
 

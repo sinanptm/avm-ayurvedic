@@ -3,6 +3,7 @@ import IOtpRepository from "../../interface/repositories/IOtpRepository";
 import IPatientRepository from "../../interface/repositories/IPatientRepository";
 import IEmailService from "../../interface/services/IEmailService";
 import { IPasswordServiceRepository } from "../../interface/services/IPasswordServiceRepository";
+import ITokenService from "../../interface/services/ITokenService";
 import { generateOTP } from "../../utils";
 
 export default class LoginPatientUseCase {
@@ -10,17 +11,18 @@ export default class LoginPatientUseCase {
       private patientRepository: IPatientRepository,
       private passwordService: IPasswordServiceRepository,
       private emailService: IEmailService,
-      private otpRepository: IOtpRepository
+      private otpRepository: IOtpRepository,
+      private tokenService: ITokenService
    ) {}
 
    async execute(patient: IPatient): Promise<{ email: string } | null> {
       const foundedPatient = await this.patientRepository.findByEmailWithPassword(patient.email!);
-      if (!foundedPatient) throw new Error("User Not Found");
+      if (!foundedPatient) throw new Error("Patient Not Found");
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
       if (!isPasswordValid) throw new Error("Invalid Credentials");
 
-      if(foundedPatient.isBlocked) throw new Error("Unauthorized")
+      if (foundedPatient.isBlocked) throw new Error("Unauthorized");
 
       const otp = generateOTP(6);
       await this.otpRepository.create(otp, foundedPatient.email!);
@@ -30,14 +32,35 @@ export default class LoginPatientUseCase {
       return { email: foundedPatient.email! };
    }
 
-   async validateOtp(otp: number, email: string): Promise<IPatient> {
+   async validateOtp(otp: number, email: string): Promise<{ accessToken: string; refreshToken: string }> {
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw Error("Invalid Otp");
 
-      const patient = await this.patientRepository.findByEmail(email);
+      const patient = await this.patientRepository.findByEmail(email)!;
+      if (patient && patient?.isBlocked) throw new Error("Unauthorized");
 
-      patient!.token = '2dfjlaasdfsadfa'
+      const refreshToken = this.tokenService.createRefreshToken(patient?.email!, patient?._id!);
+      const accessToken = this.tokenService.createAccessToken(patient?.email!, patient?._id!);
 
-      return patient!
+      patient!.token = refreshToken;
+
+      await this.patientRepository.update(patient!);
+
+      await this.otpRepository.deleteMany(otp,email);
+
+      return { accessToken, refreshToken };
+   }
+
+   async refreshAccessToken(token: string): Promise<{ accessToken: string }> {
+      const { id } = this.tokenService.verifyRefreshToken(token);
+
+      const patient = await this.patientRepository.findById(id);
+      if (!patient) throw new Error("Unauthorized");
+
+      if (patient.isBlocked) throw new Error("Patient is blocked");
+
+      const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!);
+
+      return { accessToken };
    }
 }

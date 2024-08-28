@@ -12,6 +12,14 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
         });
     }
 
+    if (err.message === "Unauthorized" || err.message === "Invalid Credentials" || err.message === "Invalid Otp") {
+        return res.status(401).json({ message: err.message });
+    } else if (err.message === "Patient is blocked") {
+        return res.status(403).json({ message: err.message });
+    }else if (err.message==="Patient not found"){
+        return res.status(404).json({message:err.message})
+    }
+
     res.status(statusCode).json({
         message: err.message || "Internal Server Error",
         ...(process.env.NODE_ENV !== 'production' && { stack: err.stack }),
