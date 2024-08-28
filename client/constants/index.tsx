@@ -1,5 +1,4 @@
-import { AnimatedCardProps, DoctorType, NavLinkType, SideBarLink } from "@/types";
-import Image from "next/image";
+import { AnimatedCardProps, DoctorType, NavLinkType } from "@/types";
 
 export const AppointmentTypes: { type: string; image: string }[] = [
    {
@@ -67,40 +66,7 @@ export const DiseaseOptions: string[] = [
    "Zika Virus",
    "Meningitis",
 ];
-export const AdminSideBarLinks: SideBarLink[] = [
-   {
-      label: "Dashboard",
-      href: "/staff/",
-      icon: <Image src={"/assets/icons/dashboard.svg"} width={21} height={23} alt="Dashboard" className="h-7 w-7" />,
-   },
-   {
-      label: "Profile",
-      href: "/staffs/profile",
-      admin: false,
-      icon: <Image src={"/assets/icons/user.svg"} width={21} height={23} alt="Profile" className="h-7 w-7" />,
-   },
-   {
-      label: "Doctors",
-      href: "/staff/doctors",
-      admin: false,
-      icon: <Image src={"/assets/icons/doctor.svg"} width={21} height={23} alt="Doctors" className="h-7 w-7" />,
-   },
-   {
-      label: "Patients",
-      href: "/staff/patients",
-      icon: <Image src={"/assets/icons/wheelchair.svg"} width={21} height={23} alt="Patients" className="h-7 w-7" />,
-   },
-   {
-      label: "Products",
-      href: "/staff/products",
-      icon: <Image src={"/assets/icons/store.svg"} width={21} height={23} alt="Products" className="h-7 w-7" />,
-   },
-   {
-      label: "Logout",
-      href: "/staff/logout",
-      icon: <Image src={"/assets/icons/logout.svg"} width={21} height={23} alt="Logout" className="h-7 w-7" />,
-   },
-];
+
 
 export const NavLinks: NavLinkType[] = [
    { href: "/", label: "Home" },
@@ -198,5 +164,36 @@ export const GuaranteeListHonePage: { src: string; text: string; heading: string
       src: "/assets/icons/guarantees/costEffective.svg",
       text: "We provide medical assistance on non urgent queries for free. Fee starting at ₹50 for faster response to queries.",
       heading: "Cost Effective",
+   },
+];
+
+
+export const AdminSideBarLinks = [
+   {
+      label: "Dashboard",
+      href: "/staff/",
+      icon: "/assets/icons/dashboard.svg",
+   },
+   {
+      label: "Profile",
+      href: "/staffs/profile",
+      admin: false,
+      icon: "/assets/icons/user.svg",
+   },
+   {
+      label: "Doctors",
+      href: "/staff/doctors",
+      admin: false,
+      icon: "/assets/icons/doctor.svg",
+   },
+   {
+      label: "Patients",
+      href: "/staff/patients",
+      icon: "/assets/icons/wheelchair.svg",
+   },
+   {
+      label: "Products",
+      href: "/staff/products",
+      icon: "/assets/icons/store.svg",
    },
 ];

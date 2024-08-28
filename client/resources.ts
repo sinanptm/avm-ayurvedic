@@ -40,3 +40,6 @@
 
 
 
+
+
+// https://stackoverflow.com/questions/64662486/how-do-you-deal-with-public-and-private-routes-in-a-nextjs-app

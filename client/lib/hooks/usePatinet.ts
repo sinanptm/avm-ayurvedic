@@ -1,6 +1,6 @@
 import { ErrorResponse, IPatient } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { signInPatient, signUpPatient, validateOtpPatient } from "../../services/api/auth/patientAuth";
+import { signInPatient, signUpPatient, validateOtpPatient } from "@/services/api/auth/patientAuth"
 import { AxiosError } from "axios";
 
 
