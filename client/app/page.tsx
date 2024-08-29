@@ -1,10 +1,10 @@
-import AboutAyurveda from "@/components/home/AboutAyurveda";
-import ImageSlider from "@/components/home/ImageSlider";
-import WhyUs from "@/components/home/WhyUs";
+import AboutAyurveda from "@/components/(patient)/home/AboutAyurveda";
+import ImageSlider from "@/components/(patient)/home/ImageSlider";
+import WhyUs from "@/components/(patient)/home/WhyUs";
 import dynamic from "next/dynamic";
 import Loader  from "@/components/common/Loader";
 
-const  FeaturesList = dynamic(()=>import("@/components/home/FeatureList"),{
+const  FeaturesList = dynamic(()=>import("@/components/(patient)/home/FeatureList"),{
    loading:()=><Loader />,
 })
 
