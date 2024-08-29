@@ -1,4 +1,4 @@
-import { AnimatedCardProps, DoctorType, NavLinkType } from "@/types";
+import { AnimatedCardProps, NavLinkType } from "@/types";
 
 export const AppointmentTypes: { type: string; image: string }[] = [
    {
@@ -76,28 +76,49 @@ export const NavLinks: NavLinkType[] = [
    { href: "/about", label: "About" },
 ];
 
-export const DoctorList: DoctorType[] = [
+export const DoctorList = [
    {
-      _id: "21123123",
-      name: "Shafeek",
-      image: "/assets/images/admin.png",
+     _id: '1',
+     name: "Dr. John Doe",
+    image:"/assets/images/admin.png",
+     status: "active",
+     specialty: "Cardiology",
+     patients: 150,
    },
    {
-      _id: "211kkkn23123",
-      name: "Hakeem",
-      image: "/assets/images/admin.png",
+     _id: '2',
+     name: "Dr. Jane Smith",
+    image:"/assets/images/admin.png",
+     status: "active",
+     specialty: "Pediatrics",
+     patients: 120,
    },
    {
-      _id: "211kkknnjkl23123",
-      name: "Salih",
-      image: "/assets/images/admin.png",
+     _id: '3',
+     name: "Dr. Mike Johnson",
+    image:"/assets/images/admin.png",
+     status: "on leave",
+     specialty: "Neurology",
+     patients: 100,
    },
    {
-      _id: "223423",
-      name: "Sinan",
-      image: "/assets/images/admin.png",
+     _id: '4',
+     name: "Dr. Sarah Williams",
+    image:"/assets/images/admin.png",
+     status: "active",
+     specialty: "Dermatology",
+     patients: 130,
    },
-];
+   {
+     _id: '5',
+     name: "Dr. Robert Brown",
+    image:"/assets/images/admin.png",
+     status: "inactive",
+     specialty: "Orthopedics",
+     patients: 90,
+   },
+ ];
+
 
 export const SliderImages: string[] = [
    "/assets/images/ayurveda1.jpg",
@@ -176,7 +197,7 @@ export const AdminSideBarLinks = [
    },
    {
       label: "Profile",
-      href: "/staffs/profile",
+      href: "/staff/profile",
       admin: false,
       icon: "/assets/icons/user.svg",
    },

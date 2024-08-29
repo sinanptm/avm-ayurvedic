@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProductsPage = () => {
   return (
-    <div>ProductsPage</div>
+    <h1 className='text-5xl font-extrabold '>ProductsPage</h1>
   )
 }
 

@@ -1,10 +1,11 @@
-import React from "react";
 
 const Dashboard = () => {
    return (
+      <main className="">
          <main className="">
-            <h1>Dashboard</h1>
+            <h2 className="text-5xl font-extrabold "> Dashboard</h2>
          </main>
+      </main>
    );
 };
 

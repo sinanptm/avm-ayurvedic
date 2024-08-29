@@ -22,7 +22,8 @@ const config = {
       extend: {
          screens:{
             'md':"732px",
-            'md-cus':"930px"
+            'md-cus':"930px",
+            "admin-nav":"635px"
          },
          colors: {
             green: {
