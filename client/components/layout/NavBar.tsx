@@ -118,8 +118,9 @@ export const NavBar = () => {
                      </>
                   ) : (
                      <>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                        <DropdownMenuItem>
+                           <Link href={'/signin'}>SingIn</Link>
+                        </DropdownMenuItem>
                      </>
                   )}
                </DropdownMenuContent>
