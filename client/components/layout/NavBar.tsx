@@ -1,11 +1,6 @@
 "use client";
 import Link from "next/link";
-import {
-   Sheet,
-   SheetTrigger,
-   SheetContent,
-   SheetTitle,
-} from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Package2 } from "lucide-react";
@@ -20,54 +15,38 @@ import {
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import { usePathname } from "next/navigation";
+import { selectPatientToken } from "@/lib/features/authSlice";
+import { useSelector } from "react-redux";
 
 export const NavBar = () => {
    const path = usePathname();
+   const patientToken = useSelector(selectPatientToken);
 
-   if (
-      path.includes("signup") ||
-      path.includes("staff") ||
-      path.includes("signin")
-   ) {
+   if (path.includes("signup") || path.includes("staff") || path.includes("signin")) {
       return null;
    }
-
+   
    return (
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">
          <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-            <Link
-               href="/"
-               className="flex items-center gap-2 text-lg font-semibold md:text-base"
-               prefetch={false}
-            >
+            <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base" prefetch={false}>
                <Package2 className="h-6 w-6" />
                <span className="sr-only">Acme Inc</span>
             </Link>
-            {NavLinks.map(link => (
+            {NavLinks.map((link) => (
                <Link
                   href={link.href}
                   key={link.label + link.href}
                   className="text-muted-foreground transition-colors hover:text-foreground"
-                  prefetch={false}
-               >
+                  prefetch={false}>
                   {link.label}
                </Link>
             ))}
          </nav>
          <Sheet>
             <SheetTrigger asChild>
-               <Button
-                  variant="outline"
-                  size="icon"
-                  className="shrink-0 md:hidden"
-               >
-                  <Image
-                     src={"/assets/icons/menu.svg"}
-                     alt="Menu"
-                     width={30}
-                     height={30}
-                     className="h-5 w-5"
-                  />
+               <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+                  <Image src={"/assets/icons/menu.svg"} alt="Menu" width={30} height={30} className="h-5 w-5" />
                   <span className="sr-only">Toggle navigation menu</span>
                </Button>
             </SheetTrigger>
@@ -76,11 +55,7 @@ export const NavBar = () => {
                   <span className="sr-only">Navigation Menu</span>
                </SheetTitle>
                <nav className="grid gap-6 text-lg font-medium">
-                  <Link
-                     href="/client"
-                     className="flex items-center gap-2 text-lg font-semibold"
-                     prefetch={false}
-                  >
+                  <Link href="/client" className="flex items-center gap-2 text-lg font-semibold" prefetch={false}>
                      <Image
                         src={"/assets/icons/logo-icon.svg"}
                         width={33}
@@ -90,13 +65,12 @@ export const NavBar = () => {
                      />
                      <span className="sr-only">Acme Inc</span>
                   </Link>
-                  {NavLinks.map(link => (
+                  {NavLinks.map((link) => (
                      <Link
                         href={link.href}
                         key={link.label + link.href}
                         className="text-muted-foreground hover:text-foreground"
-                        prefetch={false}
-                     >
+                        prefetch={false}>
                         {link.label}
                      </Link>
                   ))}
@@ -122,28 +96,32 @@ export const NavBar = () => {
             </form>
             <DropdownMenu>
                <DropdownMenuTrigger asChild>
-                  <Button
-                     variant="secondary"
-                     size="icon"
-                     className="rounded-full"
-                  >
+                  <Button variant="ghost" size="icon" className="rounded-full">
                      <Image
-                        src={"/assets/icons/circle-user.svg"}
-                        width={33}
-                        height={33}
-                        alt="Circle User"
-                        className="h-5 w-5"
+                        src="/assets/icons/circle-user.svg"
+                        width={30}
+                        height={30}
+                        className="rounded-full"
+                        alt="Avatar"
                      />
                      <span className="sr-only">Toggle user menu</span>
                   </Button>
                </DropdownMenuTrigger>
                <DropdownMenuContent align="end" className="mt-3">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Support</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                  {patientToken ? (
+                     <>
+                        <DropdownMenuLabel>
+                           <Link href={'/profile'} >My Account</Link>
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Logout</DropdownMenuItem>
+                     </>
+                  ) : (
+                     <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                     </>
+                  )}
                </DropdownMenuContent>
             </DropdownMenu>
          </div>

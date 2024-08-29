@@ -20,11 +20,6 @@
 // https://nextui.org/docs/components/time-input
 
 
-// https://uibakery.io/ui-bakery-components
-
-
-// https://daisyui.com/components/
-
 // 1st https://github.com/tailwindlabs/tailw...
 // 2nd https://github.com/chronark/highstorm
 // 3rd https://github.com/resendlabs/react-e...
