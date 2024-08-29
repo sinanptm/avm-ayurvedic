@@ -38,6 +38,7 @@ export const ImagesSlider = ({
 
    useEffect(() => {
       loadImages();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    const loadImages = () => {

@@ -49,7 +49,7 @@ export default function ConsultantProfilePage() {
           <CardContent className="p-4 sm:p-6">
             <h2 className="text-xl font-semibold mb-4 text-green-400">About Me</h2>
             <p className="text-gray-300 mb-4">
-              With over 15 years of experience, I specialize in cognitive behavioral therapy and mindfulness-based approaches. I'm passionate about helping individuals overcome anxiety, depression, and stress-related issues.
+              With over 15 years of experience, I specialize in cognitive behavioral therapy and mindfulness-based approaches. I&apos;m passionate about helping individuals overcome anxiety, depression, and stress-related issues.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
