@@ -17,7 +17,7 @@ const otpRepository = new OtpRepository();
 const passwordService = new PasswordService();
 const patientRepository = new PatientRepository();
 const registerPatientUseCase = new RegisterPatientUseCase(patientRepository, passwordService);
-const loginPatientUseCase = new LoginPatientUseCase(patientRepository, passwordService, emailService, otpRepository,tokenService);
+const loginPatientUseCase = new LoginPatientUseCase(patientRepository, passwordService, emailService, otpRepository, tokenService);
 const patientController = new PatientController(registerPatientUseCase, loginPatientUseCase);
 
 const patientAuthMiddleWare = new PatientAuthMiddleware (tokenService);
