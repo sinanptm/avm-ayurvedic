@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function Component() {
+export default function UniversalSkelton() {
   return (
     <div className="w-full min-h-screen p-6 space-y-8">
       {/* Header */}

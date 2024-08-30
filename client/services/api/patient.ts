@@ -62,7 +62,7 @@ axiosInstance.interceptors.response.use(
    }
 );
 
-export const getUserProfile = async () => {
+export const getPatientProfile = async () => {
    const response = await axiosInstance.get(`/profile`);
    return response.data;
 };

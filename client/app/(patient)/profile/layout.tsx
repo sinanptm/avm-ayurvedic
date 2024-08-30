@@ -2,7 +2,7 @@
 import NavSection from "@/components/patient/profile/NavSection";
 import { memo, ReactNode, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getUserProfile } from "@/services/api/patient";
+import { getPatientProfile } from "@/services/api/patient";
 import { ErrorResponse, IPatient } from "@/types";
 import { AxiosError } from "axios";
 import ProfileSkeleton from "@/components/skeletons/profile";
@@ -19,7 +19,7 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
 
   const { data, isLoading, isError } = useQuery<IPatient, AxiosError<ErrorResponse>>({
     queryKey: ['patientProfile'],
-    queryFn: getUserProfile
+    queryFn: getPatientProfile
   });
 
   if (isLoading) {
