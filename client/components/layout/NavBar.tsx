@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/lib/hooks/useAuth";
 export const NavBar = () => {
    const path = usePathname();
    const { patientToken } = useAuth();

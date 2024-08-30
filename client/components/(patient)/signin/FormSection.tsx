@@ -4,7 +4,7 @@ import SigninForm from "@/components/forms/patient/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
 import { Banners } from "@/constants";
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/lib/hooks/useAuth';
 import { notFound } from 'next/navigation';
 
 const FromSection = () => {

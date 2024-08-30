@@ -2,7 +2,7 @@
 import OtpVerificationSection from "@/components/forms/patient/OtpForms";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
-import { useValidateOtpPatient } from "@/hooks/usePatientAuth";
+import { useValidateOtpPatient } from "@/lib/hooks/usePatientAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";

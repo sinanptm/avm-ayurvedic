@@ -12,7 +12,7 @@ import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useSignInPatient } from "@/hooks/usePatientAuth";
+import { useSignInPatient } from "@/lib/hooks/usePatientAuth";
 
 const LoginForm = () => {
    const [error, setError] = useState("");
