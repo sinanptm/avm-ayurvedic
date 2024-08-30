@@ -192,29 +192,29 @@ export const GuaranteeListHonePage: { src: string; text: string; heading: string
 export const AdminSideBarLinks = [
    {
       label: "Dashboard",
-      href: "/staff/",
+      href: "/admin/",
       icon: "/assets/icons/dashboard.svg",
    },
    {
       label: "Profile",
-      href: "/staff/profile",
+      href: "/admin/profile",
       admin: false,
       icon: "/assets/icons/user.svg",
    },
    {
       label: "Doctors",
-      href: "/staff/doctors",
+      href: "/admin/doctors",
       admin: false,
       icon: "/assets/icons/doctor.svg",
    },
    {
       label: "Patients",
-      href: "/staff/patients",
+      href: "/admin/patients",
       icon: "/assets/icons/wheelchair.svg",
    },
    {
       label: "Products",
-      href: "/staff/products",
+      href: "/admin/products",
       icon: "/assets/icons/store.svg",
    },
 ];

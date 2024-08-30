@@ -13,7 +13,7 @@ export default function NotFound() {
         <h2 className="text-3xl font-semibold mb-4">Page Not Found</h2>
         <p className="text-xl mb-8">Oops! The page you&apos;re looking for doesn&apos;t exist.</p>
         <Button
-          onClick={() => router.push('/staff')}
+          onClick={() => router.push('/admin')}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300"
         >
           Go Home

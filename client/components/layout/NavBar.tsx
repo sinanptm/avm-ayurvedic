@@ -20,7 +20,7 @@ export const NavBar = () => {
    const path = usePathname();
    const { patientToken } = useAuth();
 
-   if (path.includes("signup") || path.includes("staff") || path.includes("signin")) {
+   if (path.includes("signup") || path.includes("admin") || path.includes("signin")) {
       return null;
    }
    const handleLogout = () => {

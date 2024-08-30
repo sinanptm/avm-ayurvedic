@@ -1,5 +1,5 @@
 'use client';
-import NavSection from "@/components/(patient)/profile/NavSection";
+import NavSection from "@/components/patient/profile/NavSection";
 import { memo, ReactNode, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUserProfile } from "@/services/api/patient";

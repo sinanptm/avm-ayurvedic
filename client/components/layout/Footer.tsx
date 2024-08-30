@@ -7,7 +7,7 @@ const Footer = () => {
    if (
       path.includes("signup") ||
       path.includes("signin") ||
-      path.includes("staff")
+      path.includes("admin")
    ) {
       return null;
    }

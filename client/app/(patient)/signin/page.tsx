@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import FormSection from '@/components/(patient)/signin/FormSection'
+import FormSection from '@/components/patient/signin/FormSection'
 
 export const metadata: Metadata = {
    title: "SignIn",

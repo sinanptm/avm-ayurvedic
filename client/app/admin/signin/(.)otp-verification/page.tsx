@@ -10,7 +10,7 @@ const OptInterceptor = () => {
         handleVerify
     }
 
-    return <OtpVerificationModel handleResend={handleResend} handleVerify={handleResend} timer={15} key={12} returnRoute='/staff/' />
+    return <OtpVerificationModel handleResend={handleResend} handleVerify={handleResend} timer={15} key={12} returnRoute='/admin/' />
 }
 
 export default OptInterceptor
