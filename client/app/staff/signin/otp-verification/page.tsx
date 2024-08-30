@@ -1,5 +1,5 @@
 'use client'
-import OtpForm from "@/components/forms/OtpForms";
+import OtpForm from "@/components/forms/patient/OtpForms";
 import { Banners } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";

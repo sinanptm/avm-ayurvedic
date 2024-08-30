@@ -1,5 +1,5 @@
 "use client";
-import OtpVerificationSection from "@/components/forms/OtpForms";
+import OtpVerificationSection from "@/components/forms/patient/OtpForms";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { useValidateOtpPatient } from "@/hooks/usePatientAuth";
@@ -8,14 +8,12 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Banners } from "@/constants";
-import { useDispatch } from "react-redux";
 
 const OtpVerificationPage = () => {
    const [otp, setOtp] = useState<string>("");
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
    const { toast } = useToast();
    const navigate = useRouter();
-   const dispatch = useDispatch();
    
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
