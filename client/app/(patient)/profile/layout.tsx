@@ -5,6 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserProfile } from "@/services/api/patient";
 import { ErrorResponse, IPatient } from "@/types";
 import { AxiosError } from "axios";
+import ProfileSkeleton from "@/components/skeletons/profile";
+import { useRouter } from "next/navigation";
+
 
 interface Props {
    children: ReactNode;
@@ -14,6 +17,7 @@ interface Props {
 
 const ProfilePageLayout = ({ children, appointments, records }: Props) => {
    const [section, setSection] = useState<"profile" | "appointments" | "records">('profile');
+   const router = useRouter()
 
    const { data , isLoading, isError } = useQuery<IPatient, AxiosError<ErrorResponse>>({
       queryKey:['patientProfile'],
@@ -21,11 +25,11 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
    });
 
    if (isLoading) {
-      return <div>Loading...</div>;
+      return <ProfileSkeleton />;
    }
 
    if (isError) {
-      return <div>Error loading profile data</div>;
+      router.push('/')
    }
    
 

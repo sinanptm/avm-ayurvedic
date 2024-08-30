@@ -1,8 +1,8 @@
 import React from 'react'
-import SigninForm from "../../../../components/forms/patient/SigninForm";
+import SigninForm from "@/components/forms/patient/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
-import { Banners } from "../../../../constants";
+import { Banners } from "@/constants";
 
 const FromSection = () => {
 
