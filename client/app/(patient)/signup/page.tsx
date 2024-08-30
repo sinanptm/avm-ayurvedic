@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SignupForm from "@/components/common/forms/SignupForm";
+import SignupForm from "@/components/forms/patient/SignupForm";
 import { Metadata } from "next";
 import { Banners } from "@/constants";;
 

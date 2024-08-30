@@ -15,12 +15,9 @@ import {
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import { usePathname } from "next/navigation";
-import { selectPatientToken } from "@/lib/features/authSlice";
-import { useSelector } from "react-redux";
-
 export const NavBar = () => {
    const path = usePathname();
-   const patientToken = useSelector(selectPatientToken);   
+   const patientToken = '';   
 
    if (path.includes("signup") || path.includes("staff") || path.includes("signin")) {
       return null;

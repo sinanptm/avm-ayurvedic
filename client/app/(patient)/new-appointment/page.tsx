@@ -1,4 +1,4 @@
-import AppointmentForm from "@/components/common/forms/AppointmentForm";
+import AppointmentForm from "@/components/forms/AppointmentForm";
 import Image from "next/image";
 import { Metadata } from "next";
 import { Banners } from "@/constants";

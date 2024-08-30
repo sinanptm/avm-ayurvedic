@@ -7,13 +7,13 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
-import { signupFormValidation } from "@/lib/validators/userValidation";
+import { signupFormValidation } from "@/components/forms/actions/userValidation";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useToast } from "../../ui/use-toast";
-import { Button } from "../../ui/button";
-import { useSignUpPatient } from "@/lib/hooks/usePatientAuth";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { useSignUpPatient } from "@/hooks/usePatientAuth";
 
 const RegistrationForm = () => {
     const [error, setError] = useState<string>("");

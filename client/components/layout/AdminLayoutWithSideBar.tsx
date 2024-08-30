@@ -20,13 +20,10 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AdminSideBarLinks } from "@/constants";
-import { useSelector } from "react-redux";
-import { selectAdminToken, selectDoctorToken } from "@/lib/features/authSlice";
 
 const AdminLayoutWithSideBar = ({ children }: { children: ReactNode[] | ReactNode }) => {
   const pathname = usePathname();
-  const AdminToken = useSelector(selectAdminToken);
-  const DoctorToken = useSelector(selectDoctorToken);
+
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">

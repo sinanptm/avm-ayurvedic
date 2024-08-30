@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
-import { signinFormValidation } from "@/lib/validators/adminValidation";
+import { signinFormValidation } from "@/components/forms/actions/adminValidation";
 import { FormFieldType } from "@/types/fromTypes";
 
 const SigninForm = () => {

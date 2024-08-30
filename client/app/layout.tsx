@@ -7,7 +7,6 @@ import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/lib/query-provider";
-import { StoreProvider } from "@/components/layout/StoreProvider";
 
 const inter = Plus_Jakarta_Sans({
    subsets: ["latin"],
@@ -32,7 +31,6 @@ export default function RootLayout({
    return (
       <html lang="en" suppressHydrationWarning>
          <body className={cn("min-h-[600px] bg-dark-300 font-sans antialiased", inter.variable)}>
-            <StoreProvider>
                <QueryProvider>
                   <ThemeProvider attribute="class" defaultTheme="dark">
                      <NavBar />
@@ -41,8 +39,7 @@ export default function RootLayout({
                      <Footer />
                   </ThemeProvider>
                </QueryProvider>
-            </StoreProvider>
          </body>
       </html>
    );
-}
+};
