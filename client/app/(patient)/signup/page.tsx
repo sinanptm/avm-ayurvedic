@@ -1,7 +1,7 @@
 import Image from "next/image";
 import SignupForm from "@/components/common/forms/SignupForm";
 import { Metadata } from "next";
-import { Banners } from "@/constants";
+import { Banners } from "@/constants";;
 
 export const metadata: Metadata = {
    title: "SignUp",

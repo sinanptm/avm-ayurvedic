@@ -29,19 +29,6 @@ const authSlice = createSlice({
    name: "auth",
    initialState,
    reducers: {
-      setCredentials: (state, action: PayloadAction<SetCredentialsPayload>) => {
-         const { accessToken, type } = action.payload;
-         if (type === "patient") {
-            state.patientToken = accessToken;
-         } else if (type === "doctor") {
-            state.doctorToken = accessToken;
-         } else if (type === "admin") {
-            state.adminToken = accessToken;
-         }
-         if (typeof window !== "undefined") {
-            localStorage.setItem("auth", JSON.stringify(state));
-         }
-      },
       logOut: (state, action: PayloadAction<LogOutPayload>) => {
          const { type } = action.payload;
          if (type === "patient") {
@@ -58,7 +45,7 @@ const authSlice = createSlice({
    },
 });
 
-export const { setCredentials, logOut } = authSlice.actions;
+export const { logOut } = authSlice.actions;
 
 export const selectPatientToken = (state: RootState) => state.auth.patientToken;
 export const selectAdminToken = (state: RootState) => state.auth.adminToken;

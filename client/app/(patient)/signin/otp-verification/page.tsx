@@ -1,26 +1,28 @@
 "use client";
 import OtpVerificationSection from "@/components/common/forms/OtpForms";
 import Image from "next/image";
-import React, { FormEvent, useState } from "react";
-import { useValidateOtpPatient } from "@/lib/hooks/usePatinet";
+import { FormEvent, useState } from "react";
+import { useValidateOtpPatient } from "@/lib/hooks/usePatientAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Banners } from "@/constants";
+import { useDispatch } from "react-redux";
 
 const OtpVerificationPage = () => {
    const [otp, setOtp] = useState<string>("");
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
    const { toast } = useToast();
    const navigate = useRouter();
-
+   const dispatch = useDispatch();
+   
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
       validateOtp(
          { email: "muhammedsinan0549@gmail.com", otp: parseInt(otp) },
          {
-            onSuccess: (data) => {
+            onSuccess: () => {
                toast({
                   title: "Otp Verification Success ✅",
                   description: "Authentication Completed!. let's book your first appointment",
@@ -31,7 +33,7 @@ const OtpVerificationPage = () => {
                      </Button>
                   ),
                });
-               console.log(data);
+               navigate.push("/");
             },
             onError: (error) => {
                toast({

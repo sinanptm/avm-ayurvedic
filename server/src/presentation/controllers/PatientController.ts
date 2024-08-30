@@ -83,7 +83,7 @@ export default class PatientController {
    async refreshAccessToken(req: Request, res: Response, next: NextFunction) {
       try {
          const cookies = req.cookies;
-         if (!cookies?.patient_token) return res.status(401).json({ message: "Unauthorized" });
+         if (!cookies?.patient_token) return res.status(403).json({ message: "Unauthenticated" });
 
          const newAccessToken = await this.loginPatientUseCase.refreshAccessToken(cookies.patient_token);
 

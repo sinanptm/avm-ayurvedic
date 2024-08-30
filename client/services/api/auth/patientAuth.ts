@@ -1,6 +1,26 @@
+import axios from 'axios';
 import { IPatient } from "@/types";
-import axiosInstance from "./patientInstance";
 
+const axiosInstance = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/patient/auth`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials:true
+});
+
+axiosInstance.interceptors.response.use(
+   (response:any)=>{
+      if(response.data.accessToken){
+         const auth = JSON.parse(localStorage.getItem("auth")||"{}");
+         console.log(auth);
+         auth.patientToken = response.data.accessToken;
+         localStorage.setItem("auth",JSON.stringify(auth));
+         
+      }
+      return response
+   }
+)
 
 export const signUpPatient = async (patient: IPatient) => {
    const response = await axiosInstance.post(`/`, patient);

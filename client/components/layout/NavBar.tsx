@@ -20,11 +20,11 @@ import { useSelector } from "react-redux";
 
 export const NavBar = () => {
    const path = usePathname();
-   const patientToken = useSelector(selectPatientToken);
+   const patientToken = useSelector(selectPatientToken);   
 
    if (path.includes("signup") || path.includes("staff") || path.includes("signin")) {
       return null;
-   }
+   };
    
    return (
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">

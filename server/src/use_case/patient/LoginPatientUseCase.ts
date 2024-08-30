@@ -46,7 +46,7 @@ export default class LoginPatientUseCase {
 
       await this.patientRepository.update(patient!);
 
-      await this.otpRepository.deleteMany(otp,email);
+      // await this.otpRepository.deleteMany(otp,email);
 
       return { accessToken, refreshToken };
    }

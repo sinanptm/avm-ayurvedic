@@ -38,5 +38,4 @@ route.post('/logout',patientAuthMiddleWare.exec,(req,res,next)=>{
    patientController.logout(req,res,next)
 });
 
-
 export default route;

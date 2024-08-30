@@ -11,13 +11,13 @@ export default class PatientAuthMiddleware {
          const tokenString = Array.isArray(authHeader) ? authHeader[0] : authHeader;
 
          if (!tokenString?.startsWith("Bearer ")) {
-            return res.status(401).json({ message: "Unauthorized: No or invalid token provided" });
+            return res.status(401).json({ message: "Unauthorized: No or invalid Access token provided" });
          }
 
          const token = tokenString.split(" ")[1];
 
          if (!token) {
-            return res.status(401).json({ message: "Unauthorized: Token is missing" });
+            return res.status(401).json({ message: "Unauthorized: Access Token is missing" });
          }
 
          const decodedToken = this.tokenService.verifyAccessToken(token);
@@ -26,8 +26,11 @@ export default class PatientAuthMiddleware {
             id: decodedToken.id,
          };
          next();
-      } catch (error) {
-         res.status(401).json({ message: "Forbidden" });
+      } catch (error:any) {
+         if (error.message === "TokenExpired") {
+            return res.status(401).json({ message: "Access token expired" });
+         }
+         return res.status(401).json({ message: "Unauthorized: Invalid Access token" });
       }
    };
 }

@@ -1,5 +1,5 @@
 import ITokenService from "../../interface/services/ITokenService";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
 
 export default class TokenService implements ITokenService {
    private signToken(payload:object,secret:string,expiresIn:string):string{
@@ -9,6 +9,9 @@ export default class TokenService implements ITokenService {
       try {
          return jwt.verify(token,secret) as JwtPayload
       } catch (error) {
+         if(error instanceof TokenExpiredError){
+            throw new Error("Token Expired");
+         }
          throw new Error("Invalid token")
       }
    }
@@ -23,7 +26,7 @@ export default class TokenService implements ITokenService {
    }
 
    createAccessToken(email: string, id: string): string {
-      return this.signToken({ email, id }, process.env.ACCESS_TOKEN_SECRET!, "15m");
+      return this.signToken({ email, id }, process.env.ACCESS_TOKEN_SECRET!, "15m"); 
    }
 
    verifyAccessToken(token: string): { email: string; id: string } {
