@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Banners } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/services/api/patient";
+import { getPatientProfile } from "@/services/api/patientProtectedApis";
 import { ErrorResponse, IPatient } from "@/types";
 import { AxiosError } from "axios";
 import { notFound } from "next/navigation";

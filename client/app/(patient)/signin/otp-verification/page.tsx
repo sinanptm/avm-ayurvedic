@@ -9,7 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import OtpVerificationSection from "@/components/forms/patient/OtpForms";
 import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/services/api/patient";
+import { getPatientProfile } from "@/services/api/patientProtectedApis";
 import UniversalSkelton from "@/components/skeletons/Universal";
 
 const OtpVerificationPage = () => {

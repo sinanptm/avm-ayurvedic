@@ -2,7 +2,7 @@
 import NavSection from "@/components/patient/profile/NavSection";
 import { memo, ReactNode, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/services/api/patient";
+import { getPatientProfile } from "@/services/api/patientProtectedApis";
 import { ErrorResponse, IPatient } from "@/types";
 import { AxiosError } from "axios";
 import ProfileSkeleton from "@/components/skeletons/profile";

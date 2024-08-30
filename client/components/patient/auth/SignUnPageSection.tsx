@@ -3,7 +3,7 @@ import Image from "next/image";
 import SignupForm from "@/components/forms/patient/SignupForm";
 import { Banners } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/services/api/patient";
+import { getPatientProfile } from "@/services/api/patientProtectedApis";
 import UniversalSkelton from "@/components/skeletons/Universal";
 import { notFound } from "next/navigation";
 
