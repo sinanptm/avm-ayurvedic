@@ -1,7 +1,14 @@
 import Image from "next/image";
 import RegistrationForm from "@/components/forms/patient/RegistrationForm";
 import { Banners } from "@/constants";
+import { useAuth } from "@/hooks/useAuth";
+import { notFound } from "next/navigation";
 const Register = () => {
+   const {patientToken} = useAuth();
+   if(patientToken){
+      notFound();
+   }
+   
    return (
       <div className="flex h-screen max-h-screen">
          <section className="remove-scrollbar container">

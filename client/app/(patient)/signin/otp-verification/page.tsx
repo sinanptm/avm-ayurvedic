@@ -4,16 +4,21 @@ import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { useValidateOtpPatient } from "@/hooks/usePatientAuth";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Banners } from "@/constants";
+import { useAuth } from "@/hooks/useAuth";
 
 const OtpVerificationPage = () => {
    const [otp, setOtp] = useState<string>("");
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
    const { toast } = useToast();
    const navigate = useRouter();
+   const {patientToken} = useAuth();
+   if(patientToken){
+      notFound();
+   }
    
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();

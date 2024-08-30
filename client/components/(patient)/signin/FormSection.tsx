@@ -1,10 +1,18 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react';
 import SigninForm from "@/components/forms/patient/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
 import { Banners } from "@/constants";
+import { useAuth } from '@/hooks/useAuth';
+import { notFound } from 'next/navigation';
 
 const FromSection = () => {
+   const { patientToken } = useAuth();
+   
+   if (patientToken) {
+      notFound();
+   }
 
    return (
       <div className="flex h-screen max-h-screen">

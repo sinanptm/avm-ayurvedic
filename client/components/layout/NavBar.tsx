@@ -15,14 +15,18 @@ import {
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 export const NavBar = () => {
    const path = usePathname();
-   const patientToken = '';   
+   const { patientToken } = useAuth();
 
    if (path.includes("signup") || path.includes("staff") || path.includes("signin")) {
       return null;
+   }
+   const handleLogout = () => {
+      console.log("patient logout successfull");
    };
-   
+
    return (
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">
          <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -108,15 +112,17 @@ export const NavBar = () => {
                   {patientToken ? (
                      <>
                         <DropdownMenuLabel>
-                           <Link href={'/profile'} >My Account</Link>
+                           <Link href={"/profile"}>My Account</Link>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Logout</DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleLogout}>
+                           <Link href={"#"}>Logout</Link>
+                        </DropdownMenuItem>
                      </>
                   ) : (
                      <>
                         <DropdownMenuItem>
-                           <Link href={'/signin'}>SingIn</Link>
+                           <Link href={"/signin"}>SingIn</Link>
                         </DropdownMenuItem>
                      </>
                   )}
