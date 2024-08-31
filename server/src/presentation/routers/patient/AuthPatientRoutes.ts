@@ -1,7 +1,6 @@
 import express from "express";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import PasswordService from "../../../infrastructure/services/PasswordService";
-import RegisterPatientUseCase from "../../../use_case/patient/RegisterPatientUseCase";
 import PatientController from "../../controllers/PatientController";
 import AuthPatientUseCase from "../../../use_case/patient/AuthPatientUseCase";
 import EmailService from "../../../infrastructure/services/EmailService";
@@ -19,7 +18,6 @@ const passwordService = new PasswordService();
 const patientRepository = new PatientRepository();
 
 // Use Cases
-const registerPatientUseCase = new RegisterPatientUseCase(patientRepository, passwordService);
 const authPatientUseCase = new AuthPatientUseCase(
    patientRepository,
    passwordService,
@@ -29,11 +27,10 @@ const authPatientUseCase = new AuthPatientUseCase(
 );
 
 // Controllers
-const patientController = new PatientController(registerPatientUseCase, authPatientUseCase);
+const patientController = new PatientController(authPatientUseCase);
 
 // Middleware
 const patientAuthMiddleware = new PatientAuthMiddleware(tokenService);
-
 
 route.post("/register", (req, res, next) => {
    patientController.register(req, res, next);
@@ -52,6 +49,9 @@ route.get("/refresh", (req, res, next) => {
 });
 route.post("/forget-password", (req, res, next) => {
    patientController.forgetPassword(req, res, next);
+});
+route.post("/update-password", (req, res, next) => {
+   patientController.updatePassword(req, res, next);
 });
 route.post("/logout", patientAuthMiddleware.exec, (req, res, next) => {
    patientController.logout(req, res, next);

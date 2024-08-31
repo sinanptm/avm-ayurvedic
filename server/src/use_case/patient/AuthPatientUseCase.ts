@@ -15,6 +15,12 @@ export default class LoginPatientUseCase {
       private tokenService: ITokenService
    ) {}
 
+   async register(patient: IPatient) {
+      patient.password = await this.passwordService.hash(patient.password!);
+      const { _id } = await this.patientRepository.create(patient);
+      return `New Patient with id ${_id} Created`;
+   }
+
    async login(patient: IPatient): Promise<{ email: string } | null> {
       const foundedPatient = await this.patientRepository.findByEmailWithPassword(patient.email!);
       if (!foundedPatient) throw new Error("Patient Not Found");
@@ -83,7 +89,19 @@ export default class LoginPatientUseCase {
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Patient Not Found");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
-      
+
       await this.emailService.sendResetMail(email, patient.name!, `${process.env.CLIENT_URL}/signin/reset-password`!);
+   }
+
+   async updatePatientPassword(email: string, oldPassword: string, newPassword: string): Promise<void> {
+      const patient = await this.patientRepository.findByEmail(email);
+      if (!patient) throw new Error("Patient Not Found");
+      if (patient.isBlocked) throw new Error("Patient is Blocked");
+
+      if (!(await this.passwordService.compare(oldPassword, patient.password!))) throw new Error("Invalid Credentials");
+
+      patient.password = await this.passwordService.hash(newPassword);
+
+      await this.patientRepository.update(patient);
    }
 }

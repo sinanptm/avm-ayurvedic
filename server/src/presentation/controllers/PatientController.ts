@@ -1,34 +1,24 @@
-import RegisterPatientUseCase from "../../use_case/patient/RegisterPatientUseCase";
 import AuthPatientUseCase from "../../use_case/patient/AuthPatientUseCase";
 import { NextFunction, Request, Response } from "express";
 import { IPatient } from "../../domain/entities/Patient";
 import { isValidatePassword, isValidEmail } from "../validators/authValidators";
 
 export default class PatientController {
-   constructor(
-      private registerPatientUseCase: RegisterPatientUseCase,
-      private authPatientUseCase: AuthPatientUseCase
-   ) {}
+   constructor(private authPatientUseCase: AuthPatientUseCase) {}
 
    async register(req: Request, res: Response, next: NextFunction) {
       try {
          const patient: IPatient = req.body;
 
-         // email validation
+         // Input Validations
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is Required" });
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid Email Format" });
-
-         // password validation
          if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
          if (!isValidatePassword(patient.password)) return res.status(422).json({ message: "Password is too week" });
-
-         // name validation
          if (!patient.name?.trim()) return res.status(400).json({ message: "Name is required" });
-
-         // phone validation
          if (!patient.phone?.toString().trim()) return res.status(400).json({ message: "Phone number is required" });
 
-         res.status(200).json({ message: await this.registerPatientUseCase.execute(patient) });
+         res.status(200).json({ message: await this.authPatientUseCase.register(patient) });
       } catch (error) {
          next(error);
       }
@@ -98,8 +88,26 @@ export default class PatientController {
          const { email } = req.body;
          if (!email) return res.status(400).json({ message: "Email is Required" });
          await this.authPatientUseCase.sendForgetPasswordMail(email);
-         res.status(200).json({message:"Email has been sended"})
+         res.status(200).json({ message: "Email has been sended" });
       } catch (error: any) {
+         next(error);
+      }
+   }
+
+   async updatePassword(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email, oldPassword, newPassword } = req.body;
+         
+         if (!email) return res.status(400).json({message:"Email is Required"});
+         if (!oldPassword) return res.status(400).json({ message: "Old Password is required" });
+         if (!newPassword?.trim()) return res.status(400).json({ message: "New Password is required" });
+
+         if (!isValidatePassword(newPassword)) return res.status(422).json({ message: "Password is too week" });
+
+         await this.authPatientUseCase.updatePatientPassword(email, oldPassword, newPassword);
+
+         res.status(200).json({ message: "Password Updated Successfully" });
+      } catch (error) {
          next(error);
       }
    }
