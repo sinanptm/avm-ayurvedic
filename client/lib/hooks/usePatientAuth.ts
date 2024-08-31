@@ -1,11 +1,22 @@
 import { ErrorResponse, IPatient } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { forgetPassword, resendOtpPatient, signInPatient, signUpPatient, validateOtpPatient } from "@/services/api/patientAuthApis";
+import {
+   forgetPassword,
+   resendOtpPatient,
+   signInPatient,
+   signUpPatient,
+   updatePassword,
+   validateOtpPatient,
+} from "@/services/api/patientAuthApis";
 import { AxiosError } from "axios";
 import { logoutPatient } from "@/services/api/patientProtectedApis";
 
+type MessageResponse = {
+   message: string;
+};
+
 export const useSignUpPatient = () => {
-   return useMutation<{ message: string }, AxiosError<ErrorResponse>, IPatient>({
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, IPatient>({
       mutationFn: (patient) => signUpPatient(patient),
       onError: (error: AxiosError) => {
          console.log("Error in creating patient:", error);
@@ -35,29 +46,38 @@ export const useValidateOtpPatient = () => {
    });
 };
 
-export const useLogoutMutation = ()=>{
-   return useMutation<{message:string},AxiosError<ErrorResponse>,null>({
-      mutationFn:logoutPatient,
-      onError:(error)=>{
-         console.log('Error in Logout',error);
-      }
-   })
+export const useLogoutMutation = () => {
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, null>({
+      mutationFn: logoutPatient,
+      onError: (error) => {
+         console.log("Error in Logout", error);
+      },
+   });
 };
 
-export const useResendOtp = ()=>{
-   return useMutation<{message:string}, AxiosError<ErrorResponse>,{email:string}>({
-      mutationFn:({email})=>resendOtpPatient(email),
-      onError:(error)=>{
-         console.log('Error in resending otp', error);
-      }
-   })
-}
-
-export const useForgetPassword = ()=>{
-   return useMutation<{message:string},AxiosError<ErrorResponse>,{email:string}>({
-      mutationFn:({email})=>forgetPassword(email),
-      onError:(error)=>{
-         console.log('Error in Sending Reset Mail', error);
-      }
+export const useResendOtp = () => {
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, { email: string }>({
+      mutationFn: ({ email }) => resendOtpPatient(email),
+      onError: (error) => {
+         console.log("Error in resending otp", error);
+      },
    });
-}
+};
+
+export const useForgetPassword = () => {
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, { email: string }>({
+      mutationFn: ({ email }) => forgetPassword(email),
+      onError: (error) => {
+         console.log("Error in Sending Reset Mail", error);
+      },
+   });
+};
+
+export const useUpdatePassword = () => {
+   return useMutation<MessageResponse,AxiosError<ErrorResponse>,{ email: string; oldPassword: string; newPassword: string }>({
+      mutationFn: ({ email, oldPassword, newPassword }) => updatePassword(email, oldPassword, newPassword),
+      onError: (error) => {
+         console.log("Error in Updating Password", error);
+      },
+   });
+};

@@ -50,7 +50,7 @@ route.get("/refresh", (req, res, next) => {
 route.post("/forget-password", (req, res, next) => {
    patientController.forgetPassword(req, res, next);
 });
-route.post("/update-password", (req, res, next) => {
+route.patch("/update-password", (req, res, next) => {
    patientController.updatePassword(req, res, next);
 });
 route.post("/logout", patientAuthMiddleware.exec, (req, res, next) => {

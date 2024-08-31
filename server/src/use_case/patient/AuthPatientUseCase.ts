@@ -94,11 +94,12 @@ export default class LoginPatientUseCase {
    }
 
    async updatePatientPassword(email: string, oldPassword: string, newPassword: string): Promise<void> {
-      const patient = await this.patientRepository.findByEmail(email);
+      const patient = await this.patientRepository.findByEmailWithPassword(email);
       if (!patient) throw new Error("Patient Not Found");
-      if (patient.isBlocked) throw new Error("Patient is Blocked");
+      if (patient.isBlocked) throw new Error("Patient is Blocked");      
 
-      if (!(await this.passwordService.compare(oldPassword, patient.password!))) throw new Error("Invalid Credentials");
+      if (!(await this.passwordService.compare(oldPassword!, patient.password!)))
+         throw new Error("Invalid Credentials");
 
       patient.password = await this.passwordService.hash(newPassword);
 

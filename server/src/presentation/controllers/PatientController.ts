@@ -99,7 +99,7 @@ export default class PatientController {
          const { email, oldPassword, newPassword } = req.body;
          
          if (!email) return res.status(400).json({message:"Email is Required"});
-         if (!oldPassword) return res.status(400).json({ message: "Old Password is required" });
+         if (!oldPassword.trim()) return res.status(400).json({ message: "Old Password is required" });
          if (!newPassword?.trim()) return res.status(400).json({ message: "New Password is required" });
 
          if (!isValidatePassword(newPassword)) return res.status(422).json({ message: "Password is too week" });
