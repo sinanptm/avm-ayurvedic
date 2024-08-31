@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPatientProfile } from "@/services/api/patientProtectedApis";
 import { ErrorResponse, IPatient } from "@/types";
 import { AxiosError } from "axios";
-import ProfileSkeleton from "@/components/skeletons/Profile";
+import ProfileSkeleton from "@/components/skeletons/ProfilePage";
 import { notFound } from "next/navigation";
 
 interface Props {
