@@ -14,17 +14,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { NavLinks } from "@/constants";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { useLogoutMutation } from "@/lib/hooks/usePatientAuth";
+import { toast } from "../ui/use-toast";
+
 export const NavBar = () => {
    const path = usePathname();
-   const { patientToken } = useAuth();
+   const { patientToken,adminToken,doctorToken } = useAuth();
+   const {mutate:logout} = useLogoutMutation();
+   const route = useRouter();
 
    if (path.includes("signup") || path.includes("admin") || path.includes("signin")) {
       return null;
    }
    const handleLogout = () => {
-      console.log("patient logout successfull");
+      logout(null,{
+         onSuccess:({message})=>{
+            toast({
+               title:"Logout Successful",
+               description:"Sorry for our inconvenience"
+            });
+            localStorage.setItem('auth',JSON.stringify({patientToken:"",adminToken,doctorToken}));
+            route.push('/');
+         }
+      })
    };
 
    return (

@@ -11,18 +11,22 @@ import OtpVerificationSection from "@/components/forms/patient/OtpForms";
 import { useQuery } from "@tanstack/react-query";
 import { getPatientProfile } from "@/services/api/patientProtectedApis";
 import UniversalSkelton from "@/components/skeletons/Universal";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 const OtpVerificationPage = () => {
    const [otp, setOtp] = useState<string>("");
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
    const { toast } = useToast();
    const navigate = useRouter();
-   const { isError, isFetching } = useQuery({
-      queryKey: ["patientToken"],
-      queryFn: getPatientProfile,
-   });
+   const [isLoading,setLoading]= useState(true)
 
-   if (isFetching) {
+   const {patientToken} = useAuth()
+
+   setTimeout(()=>{
+      setLoading(false)
+   });
+   
+   if (isLoading) {
       <UniversalSkelton />;
    }
 
@@ -57,7 +61,7 @@ const OtpVerificationPage = () => {
 
    const handleResend = async () => {};
 
-   if (isError) {
+   if (!patientToken) {
       return (
          <div className="flex h-screen max-h-screen">
             <section className="remove-scrollbar container my-auto">

@@ -68,6 +68,6 @@ export const getPatientProfile = async () => {
 };
 
 export const logoutPatient = async ()=>{
-   const response = await axiosInstance.post("/logout");
+   const response = await axiosInstance.post("/auth/logout");
    return response.data;
 }

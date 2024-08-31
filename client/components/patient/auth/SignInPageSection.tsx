@@ -1,26 +1,26 @@
-'use client';
+"use client";
 import SigninForm from "@/components/forms/patient/SigninForm";
 import Image from "next/image";
 import Link from "next/link";
 import { Banners } from "@/constants";
-import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/services/api/patientProtectedApis";
-import { ErrorResponse, IPatient } from "@/types";
-import { AxiosError } from "axios";
 import { notFound } from "next/navigation";
 import UniversalSkeleton from "@/components/skeletons/Universal";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { useState } from "react";
 
-const FromSection = () => {
-   const { isLoading, isError } = useQuery<IPatient, AxiosError<ErrorResponse>>({
-      queryKey: ['patientProfile'],
-      queryFn: getPatientProfile
+const SignFromSection = () => {
+   const { patientToken } = useAuth();
+   let [isLoading, setLoading] = useState(true);
+
+   setTimeout(() => {
+      setLoading(false);
    });
 
    if (isLoading) {
       return <UniversalSkeleton />;
    }
 
-   if (isError) {
+   if (!patientToken) {
       return (
          <div className="flex h-screen max-h-screen">
             <section className="remove-scrollbar container my-auto">
@@ -34,27 +34,19 @@ const FromSection = () => {
                   />
                   <SigninForm />
                   <div className="text-14-regular py-12 flex justify-between">
-                     <p className="justify-items-end text-dark-600 xl:text-left">
-                        © 2024 AVM Ayurveda&apos;s
-                     </p>
+                     <p className="justify-items-end text-dark-600 xl:text-left">© 2024 AVM Ayurveda&apos;s</p>
                      <Link href={"/signup"} className="text-green-500 text-xs">
                         Staff-Login
                      </Link>
                   </div>
                </div>
             </section>
-            <Image
-               src={Banners.signin}
-               height={1000}
-               width={1000}
-               alt="patient"
-               className="side-img max-w-[50%]"
-            />
+            <Image src={Banners.signin} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
          </div>
       );
    }
 
-   notFound(); 
+   notFound();
 };
 
-export default FromSection;
+export default SignFromSection;

@@ -2,22 +2,24 @@
 import Image from "next/image";
 import SignupForm from "@/components/forms/patient/SignupForm";
 import { Banners } from "@/constants";
-import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/services/api/patientProtectedApis";
-import UniversalSkelton from "@/components/skeletons/Universal";
+import UniversalSkeleton from "@/components/skeletons/Universal";
 import { notFound } from "next/navigation";
+import { useState } from "react";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 const SignUnFormSection = () => {
-   const { isLoading, isError } = useQuery({
-      queryKey: ["patientProfile"],
-      queryFn: getPatientProfile,
-   });
+   const {patientToken} = useAuth();
+   let [isLoading,setLoading ] = useState(true)
+
+   setTimeout(()=>{
+      setLoading(false)
+   })
 
    if (isLoading) {
-      return <UniversalSkelton />;
+      return <UniversalSkeleton />;
    }
 
-   if (isError) {
+   if (!patientToken) {
       return (
          <div className="flex h-screen max-h-screen">
             <section className="remove-scrollbar container">

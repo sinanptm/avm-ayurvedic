@@ -67,7 +67,7 @@ export default class PatientController {
 
          const { refreshToken, accessToken } = await this.loginPatientUseCase.validateOtp(otp, email);
 
-         res.cookie("patient_token", refreshToken, {
+         res.cookie("patientToken", refreshToken, {
             httpOnly: true,
             secure: true,
             sameSite: "strict" as const,
@@ -83,9 +83,9 @@ export default class PatientController {
    async refreshAccessToken(req: Request, res: Response, next: NextFunction) {
       try {
          const cookies = req.cookies;
-         if (!cookies?.patient_token) return res.status(403).json({ message: "Unauthenticated" });
+         if (!cookies?.patientToken) return res.status(403).json({ message: "Unauthenticated" });
 
-         const newAccessToken = await this.loginPatientUseCase.refreshAccessToken(cookies.patient_token);
+         const newAccessToken = await this.loginPatientUseCase.refreshAccessToken(cookies.patientToken);
 
          return res.status(200).json(newAccessToken);
       } catch (error: any) {
@@ -96,13 +96,13 @@ export default class PatientController {
    logout(req: Request, res: Response, next: NextFunction) {
       try {
          const cookies = req.cookies;
-         if (!cookies?.patient_token) return res.sendStatus(204);
-         res.clearCookie("patient_token", {
+         if (!cookies?.patientToken) return res.sendStatus(204);
+         res.clearCookie("patientToken", {
             httpOnly: true,
             sameSite: "strict" as const,
             secure: true,
          });
-         res.json({ message: "cookie cleared" });
+         res.status(204).json({ message: "cookie cleared" });
       } catch (error) {
          next(error);
       }
