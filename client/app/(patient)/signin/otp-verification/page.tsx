@@ -20,19 +20,17 @@ const OtpVerificationPage = () => {
    const [isLoading, setLoading] = useState(true);
    const { patientToken } = useAuth();
    
-   if (otpMail && !patientToken) {
-      useEffect(() => {
-         const timer = setTimeout(() => {
-            setLoading(false);
-         }, 0); 
-   
-         return () => clearTimeout(timer);
-      }, []);
-   
-      if (isLoading) {
-         <UniversalSkelton />;
-      }
+   useEffect(() => {
+      const timer = setTimeout(() => {
+         setLoading(false);
+      }, 0); 
 
+      return () => clearTimeout(timer);
+   }, []);
+   if (isLoading) {
+      return  <UniversalSkelton />;
+   }
+   if (otpMail && !patientToken) {
       const handleVerify = async (e: FormEvent) => {
          e.preventDefault();
          validateOtp(
@@ -49,11 +47,10 @@ const OtpVerificationPage = () => {
                         </Button>
                      ),
                   });
+                  navigate.push("/");
                   setTimeout(() => {
                      setCredentials("patientToken", accessToken);
-                     navigate.push("/");
                   }, 200);
-                  setCredentials("otpMail", "");
                },
                onError: (error) => {
                   toast({
@@ -93,8 +90,9 @@ const OtpVerificationPage = () => {
             <Image src={Banners.otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
          </div>
       );
+   }else{
+      notFound();
    }
-   notFound();
 };
 
 export default OtpVerificationPage;
