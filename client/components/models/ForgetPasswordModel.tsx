@@ -55,7 +55,7 @@ const ForgotPasswordModal = ({ isOpen, setIsOpen }: Props) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Forgot Password</AlertDialogTitle>
           <AlertDialogDescription>
-            Enter your email address and we'll send you instructions to reset your password.
+            Enter your email address and we&apos;ll send you instructions to reset your password.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <Form {...form}>

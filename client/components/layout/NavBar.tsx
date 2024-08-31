@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Package2 } from "lucide-react";
@@ -89,7 +89,8 @@ export const NavBar = () => {
                   <span className="sr-only">Toggle navigation menu</span>
                </Button>
             </SheetTrigger>
-            <SheetContent side="left" aria-description="Nav Items">
+            <SheetContent side="left">
+               <SheetDescription>Navigation Menu</SheetDescription>
                <SheetTitle>
                   <span className="sr-only">Navigation Menu</span>
                </SheetTitle>
