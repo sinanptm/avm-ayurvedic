@@ -3,15 +3,12 @@ import { Skeleton } from "@/components/ui/skeleton"
 export default function UniversalSkelton() {
   return (
     <div className="w-full min-h-screen p-6 space-y-8">
-      {/* Header */}
       <div className="space-y-4">
         <Skeleton className="h-8 w-[200px] bg-gray-800 bg-opacity-20" />
         <Skeleton className="h-4 w-[300px] bg-gray-800 bg-opacity-20" />
       </div>
 
-      {/* Main content */}
       <div className="space-y-6">
-        {/* Section 1 */}
         <div className="space-y-4">
           <Skeleton className="h-6 w-[150px] bg-gray-800 bg-opacity-20" />
           <Skeleton className="h-4 w-full bg-gray-800 bg-opacity-20" />
@@ -32,7 +29,6 @@ export default function UniversalSkelton() {
           </div>
         </div>
 
-        {/* Section 3 */}
         <div className="space-y-4">
           <Skeleton className="h-6 w-[150px] bg-gray-800 bg-opacity-20" />
           <div className="space-y-2">

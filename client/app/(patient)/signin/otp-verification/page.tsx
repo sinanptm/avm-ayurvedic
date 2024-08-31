@@ -8,7 +8,7 @@ import { Banners } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
 import OtpVerificationSection from "@/components/forms/patient/OtpForms";
-import UniversalSkelton from "@/components/skeletons/Universal";
+import AuthSkelton from "@/components/skeletons/AuthPage";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 const OtpVerificationPage = () => {
@@ -30,7 +30,7 @@ const OtpVerificationPage = () => {
       return () => clearTimeout(timer);
    }, []);
    if (isLoading) {
-      return  <UniversalSkelton />;
+      return  <AuthSkelton />;
    }
    if (otpMail && !patientToken) {
       const handleResend = async () => {

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import SignupForm from "@/components/forms/patient/SignupForm";
 import { Banners } from "@/constants";
-import UniversalSkeleton from "@/components/skeletons/Universal";
+import AuthSkelton from "@/components/skeletons/AuthPage";
 import { notFound } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/hooks/useAuth";
@@ -20,7 +20,7 @@ const SignUnFormSection = () => {
    }, []);
 
    if (isLoading) {
-      return <UniversalSkeleton />;
+      return <AuthSkelton />;
    }
 
    if (!patientToken) {

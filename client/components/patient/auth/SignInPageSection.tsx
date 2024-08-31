@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Banners } from "@/constants";
 import { notFound } from "next/navigation";
-import UniversalSkeleton from "@/components/skeletons/Universal";
+import AuthSkelton from "@/components/skeletons/AuthPage";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useState, useEffect } from "react";
 
@@ -21,7 +21,7 @@ const SignFromSection = () => {
    }, []);
 
    if (isLoading) {
-      return <UniversalSkeleton />;
+      return <AuthSkelton />;
    }
 
    if (!patientToken) {
