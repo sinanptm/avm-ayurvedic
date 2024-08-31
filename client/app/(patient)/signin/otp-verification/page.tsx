@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useEffect, useState } from "react";
-import { useValidateOtpPatient } from "@/lib/hooks/usePatientAuth";
+import { useResendOtp, useValidateOtpPatient } from "@/lib/hooks/usePatientAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { notFound, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,8 @@ const OtpVerificationPage = () => {
    const { setCredentials, otpMail } = useAuth();
    const [otp, setOtp] = useState<string>("");
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
+   const [isSending,setSending] = useState(false);
+   const {mutate: resendOtp} = useResendOtp()
    const { toast } = useToast();
    const navigate = useRouter();
    const [isLoading, setLoading] = useState(true);
@@ -31,8 +33,29 @@ const OtpVerificationPage = () => {
       return  <UniversalSkelton />;
    }
    if (otpMail && !patientToken) {
+      const handleResend = async () => {
+         setSending(true)
+         resendOtp({email:otpMail},{
+             onSuccess:()=>{
+               setSending(false);
+               toast({
+                  title: "Otp Has sended 📩",
+                  description: "Otp has been resented to you main",
+                  variant: "info",
+               });
+             }
+         });
+      };
+
       const handleVerify = async (e: FormEvent) => {
          e.preventDefault();
+         if(otp.length<6){
+            return  toast({
+               title: "Otp Required ✖️",
+               description: "All Boxes Should be Filled",
+               variant: "warning",
+            });
+         }
          validateOtp(
             { email: otpMail, otp: parseInt(otp) },
             {
@@ -63,7 +86,6 @@ const OtpVerificationPage = () => {
          );
       };
 
-      const handleResend = async () => {};
 
       return (
          <div className="flex h-screen max-h-screen">
@@ -81,12 +103,11 @@ const OtpVerificationPage = () => {
                      otp={otp}
                      setOtp={setOtp}
                      handleVerify={handleVerify}
-                     isLoading={isPending}
-                     timer={30}
+                     isLoading={isSending}
+                     timer={20}
                   />
                </div>
             </section>
-
             <Image src={Banners.otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
          </div>
       );
