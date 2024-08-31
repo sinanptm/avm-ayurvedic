@@ -24,9 +24,9 @@ export default class LoginPatientUseCase {
 
       if (foundedPatient.isBlocked) throw new Error("Unauthorized");
 
-      let otp = parseInt(generateOTP(6));
-      while (otp.toString().length === 6) {
-         otp = parseInt(generateOTP(6));
+      let otp = parseInt(generateOTP(6),10);
+      while (otp.toString().length !== 6) {
+         otp = parseInt(generateOTP(6),10);
       }
       await this.otpRepository.create(otp, foundedPatient.email!);
 
@@ -39,9 +39,9 @@ export default class LoginPatientUseCase {
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Patient Not Found");
 
-      let otp = parseInt(generateOTP(6));
-      while (otp.toString().length === 6) {
-         otp = parseInt(generateOTP(6));
+      let otp = parseInt(generateOTP(6),10);
+      while (otp.toString().length !== 6) {
+         otp = parseInt(generateOTP(6),10);
       }
       await this.otpRepository.create(otp, email);
       await this.emailService.sendOtp(email, patient.name!, otp);
