@@ -1,5 +1,4 @@
-// for generating OTP
-export const generateOTP = (length: number)=> {
+export const generateOTP = (length: number): string => {
    let otp = "";
    const digits = "0123456789";
 
@@ -7,5 +6,6 @@ export const generateOTP = (length: number)=> {
       otp += digits[Math.floor(Math.random() * 10)];
    }
 
-   return parseInt(otp,10);
-}
+   return otp;
+};
+

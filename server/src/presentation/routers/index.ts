@@ -1,6 +1,6 @@
 import express from "express";
-import AuthRoutes from "./patient/PatientAuthRoutes";
-import ProtectedRoutes from "./patient/PatientProtectedRoutes";
+import AuthRoutes from "./patient/AuthPatientRoutes";
+import ProtectedRoutes from "./patient/ProtectedPatientRoutes";
 import { errorHandler } from "../middlewares/errorHandler";
 
 const app = express();

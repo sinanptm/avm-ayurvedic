@@ -15,7 +15,7 @@ export default class LoginPatientUseCase {
       private tokenService: ITokenService
    ) {}
 
-   async execute(patient: IPatient): Promise<{ email: string } | null> {
+   async login(patient: IPatient): Promise<{ email: string } | null> {
       const foundedPatient = await this.patientRepository.findByEmailWithPassword(patient.email!);
       if (!foundedPatient) throw new Error("Patient Not Found");
 
@@ -24,12 +24,27 @@ export default class LoginPatientUseCase {
 
       if (foundedPatient.isBlocked) throw new Error("Unauthorized");
 
-      const otp = generateOTP(6);
+      let otp = parseInt(generateOTP(6));
+      while (otp.toString().length === 6) {
+         otp = parseInt(generateOTP(6));
+      }
       await this.otpRepository.create(otp, foundedPatient.email!);
 
       await this.emailService.sendOtp(foundedPatient.email!, foundedPatient.name!, otp);
 
       return { email: foundedPatient.email! };
+   }
+
+   async resendOtp(email: string): Promise<void> {
+      const patient = await this.patientRepository.findByEmail(email);
+      if (!patient) throw new Error("Patient Not Found");
+
+      let otp = parseInt(generateOTP(6));
+      while (otp.toString().length === 6) {
+         otp = parseInt(generateOTP(6));
+      }
+      await this.otpRepository.create(otp, email);
+      await this.emailService.sendOtp(email, patient.name!, otp);
    }
 
    async validateOtp(otp: number, email: string): Promise<{ accessToken: string; refreshToken: string }> {
@@ -46,7 +61,7 @@ export default class LoginPatientUseCase {
 
       await this.patientRepository.update(patient!);
 
-      // await this.otpRepository.deleteMany(otp,email);
+      await this.otpRepository.deleteMany(otp, email);
 
       return { accessToken, refreshToken };
    }

@@ -1,6 +1,5 @@
-import UpdatePatientUseCase from "../../use_case/patient/UpdatePatientUseCase";
 import RegisterPatientUseCase from "../../use_case/patient/RegisterPatientUseCase";
-import LoginPatientUseCase from "../../use_case/patient/LoginPatientUseCase";
+import AuthPatientUseCase from "../../use_case/patient/AuthPatientUseCase";
 import { NextFunction, Request, Response } from "express";
 import { IPatient } from "../../domain/entities/Patient";
 import { isValidatePassword, isValidEmail } from "../validators/authValidators";
@@ -8,7 +7,7 @@ import { isValidatePassword, isValidEmail } from "../validators/authValidators";
 export default class PatientController {
    constructor(
       private registerPatientUseCase: RegisterPatientUseCase,
-      private loginPatientUseCase: LoginPatientUseCase
+      private authPatientUseCase: AuthPatientUseCase
    ) {}
 
    async register(req: Request, res: Response, next: NextFunction) {
@@ -43,7 +42,7 @@ export default class PatientController {
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid email format" });
          if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
 
-         const patientDetails = await this.loginPatientUseCase.execute(patient);
+         const patientDetails = await this.authPatientUseCase.login(patient);
 
          if (patientDetails) {
             res.status(200).json({
@@ -54,7 +53,20 @@ export default class PatientController {
             res.status(204).json({ message: "No further action required" });
          }
       } catch (error: any) {
-            next(error);
+         next(error);
+      }
+   }
+
+   async resendOtp(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email } = req.body;
+         if (!email) return res.status(400).json({ message: "Email is required" });
+         await this.authPatientUseCase.resendOtp(email);
+      } catch (error: any) {
+         if (error.message === "Patient Not Found") {
+            return res.status(422).json({ message: "Invalid Credentials" });
+         }
+         next(error);
       }
    }
 
@@ -65,7 +77,7 @@ export default class PatientController {
          if (!otp) return res.status(400).json({ message: "Otp is required" });
          if (!email) return res.status(400).json({ message: "Email is required" });
 
-         const { refreshToken, accessToken } = await this.loginPatientUseCase.validateOtp(otp, email);
+         const { refreshToken, accessToken } = await this.authPatientUseCase.validateOtp(otp, email);
 
          res.cookie("patientToken", refreshToken, {
             httpOnly: true,
@@ -85,7 +97,7 @@ export default class PatientController {
          const cookies = req.cookies;
          if (!cookies?.patientToken) return res.status(403).json({ message: "Unauthenticated" });
 
-         const newAccessToken = await this.loginPatientUseCase.refreshAccessToken(cookies.patientToken);
+         const newAccessToken = await this.authPatientUseCase.refreshAccessToken(cookies.patientToken);
 
          return res.status(200).json(newAccessToken);
       } catch (error: any) {
