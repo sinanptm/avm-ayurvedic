@@ -70,10 +70,10 @@ const OtpVerificationPage = () => {
                         </Button>
                      ),
                   });
-                  navigate.push("/");
                   setTimeout(() => {
                      setCredentials("patientToken", accessToken);
                   }, 200);
+                  navigate.push("/");
                },
                onError: (error) => {
                   toast({

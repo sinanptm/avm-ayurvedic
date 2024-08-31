@@ -33,7 +33,7 @@ import { useState } from "react";
 
 export const NavBar = () => {
    const path = usePathname();
-   const { patientToken, adminToken, doctorToken, logout } = useAuth();
+   const { patientToken, setCredentials, logout } = useAuth();
    const { mutate: logoutFunc } = useLogoutMutation();
    const route = useRouter();
    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -54,7 +54,7 @@ export const NavBar = () => {
                description: "We hope to see you again soon!",
                variant: "info",
             });
-            localStorage.setItem("auth", JSON.stringify({ patientToken: "", adminToken, doctorToken }));
+            setCredentials("patientToken",'');
             route.push("/");
          },
          onError: () => {
