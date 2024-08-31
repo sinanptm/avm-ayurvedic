@@ -13,12 +13,14 @@ import { FormFieldType } from "@/types/fromTypes";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useSignInPatient } from "@/lib/hooks/usePatientAuth";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 const LoginForm = () => {
    const [error, setError] = useState("");
    const { toast } = useToast();
    const router = useRouter();
    const { mutate: signIn, isPending } = useSignInPatient();
+   const {setCredentials} = useAuth()
 
    const form = useForm<z.infer<typeof signinFormValidation>>({
       resolver: zodResolver(signinFormValidation),
@@ -39,6 +41,7 @@ const LoginForm = () => {
                   variant: "default",
                });
                router.push("/signin/otp-verification");
+               setCredentials("otpMail",email);
             },
             onError(error) {
                setError(error.response?.data.message || "An error occurred during sign-in.");

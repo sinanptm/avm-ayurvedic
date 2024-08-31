@@ -1,6 +1,6 @@
 import { ErrorResponse, IPatient } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { signInPatient, signUpPatient, validateOtpPatient } from "@/services/api/patientAuthApis";
+import { resendOtpPatient, signInPatient, signUpPatient, validateOtpPatient } from "@/services/api/patientAuthApis";
 import { AxiosError } from "axios";
 import { logoutPatient } from "@/services/api/patientProtectedApis";
 
@@ -40,6 +40,15 @@ export const useLogoutMutation = ()=>{
       mutationFn:logoutPatient,
       onError:(error)=>{
          console.log('Error in Logout',error);
+      }
+   })
+};
+
+export const useResendOtp = ()=>{
+   return useMutation<{message:string}, AxiosError<ErrorResponse>,{email:string}>({
+      mutationFn:({email})=>resendOtpPatient(email),
+      onError:(error)=>{
+         console.log('Error in resending otp', error);
       }
    })
 }

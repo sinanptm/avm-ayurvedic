@@ -2,67 +2,65 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthState {
-  patientToken: string;
-  doctorToken: string;
-  adminToken: string;
+   patientToken: string;
+   doctorToken: string;
+   adminToken: string;
+   otpMail: string;
 }
 
 interface AuthContextProps extends AuthState {
-  setCredentials: (tokenType: keyof AuthState, token: string) => void;
-  logout: (tokenType: keyof AuthState) => void;
+   setCredentials: (tokenType: keyof AuthState, token: string) => void;
+   logout: (tokenType: keyof AuthState) => void;
 }
 
 const persistedAuthState: AuthState =
-  typeof window !== "undefined" ? JSON.parse(localStorage.getItem("auth") || "{}") : {};
+   typeof window !== "undefined" ? JSON.parse(localStorage.getItem("auth") || "{}") : {};
 
 const initialState: AuthState = {
-  patientToken: persistedAuthState.patientToken || "",
-  doctorToken: persistedAuthState.doctorToken || "",
-  adminToken: persistedAuthState.adminToken || "",
+   patientToken: persistedAuthState.patientToken || "",
+   doctorToken: persistedAuthState.doctorToken || "",
+   adminToken: persistedAuthState.adminToken || "",
+   otpMail: persistedAuthState.otpMail || "",
 };
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [authState, setAuthState] = useState<AuthState>(initialState);
+   const [authState, setAuthState] = useState<AuthState>(initialState);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedAuthState = JSON.parse(localStorage.getItem("auth") || "{}");
-      setAuthState((prevState) => ({
-        ...prevState,
-        ...storedAuthState,
-      }));
-    }
-  }, []);
+   useEffect(() => {
+      if (typeof window !== "undefined") {
+         const storedAuthState = JSON.parse(localStorage.getItem("auth") || "{}");
+         setAuthState((prevState) => ({
+            ...prevState,
+            ...storedAuthState,
+         }));
+      }
+   }, []);
 
-  const setCredentials = (tokenType: keyof AuthState, token: string) => {
-    const newAuthState = { ...authState, [tokenType]: token };
-    setAuthState(newAuthState);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("auth", JSON.stringify(newAuthState));
-    }
-  };
+   const setCredentials = (tokenType: keyof AuthState, token: string) => {
+      const newAuthState = { ...authState, [tokenType]: token };
+      setAuthState(newAuthState);
+      if (typeof window !== "undefined") {
+         localStorage.setItem("auth", JSON.stringify(newAuthState));
+      }
+   };
 
-  const logout = (tokenType: keyof AuthState) => {
-    const newAuthState = { ...authState, [tokenType]: "" };
-    setAuthState(newAuthState);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("auth", JSON.stringify(newAuthState));
-    }
-  };
+   const logout = (tokenType: keyof AuthState) => {
+      const newAuthState = { ...authState, [tokenType]: "" };
+      setAuthState(newAuthState);
+      if (typeof window !== "undefined") {
+         localStorage.setItem("auth", JSON.stringify(newAuthState));
+      }
+   };
 
-  return (
-    <AuthContext.Provider value={{ ...authState, setCredentials, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+   return <AuthContext.Provider value={{ ...authState, setCredentials, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
+   const context = useContext(AuthContext);
+   if (!context) {
+      throw new Error("useAuth must be used within an AuthProvider");
+   }
+   return context;
 };
