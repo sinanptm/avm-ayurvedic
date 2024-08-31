@@ -10,7 +10,7 @@ import SubmitButton from "@/components/common/SubmitButton";
 import { useUpdatePassword } from "@/lib/hooks/usePatientAuth";
 import { Form } from "@/components/ui/form";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z
@@ -65,7 +65,7 @@ export default function ResetPasswordPage() {
          {
             oldPassword: values.oldPassword,
             newPassword: values.newPassword,
-            email:"muhammedsinan0549@gmail.com",
+            email: "muhammedsinan0549@gmail.com",
          },
          {
             onSuccess: () => {
@@ -89,48 +89,50 @@ export default function ResetPasswordPage() {
       );
    };
 
-   return (
-      <div className="container max-w-md mx-auto mt-48 remove-scrollbar">
-         <Card>
-            <CardHeader>
-               <CardTitle>Reset Password</CardTitle>
-               <CardDescription>
-                  Change your account password here.
-               </CardDescription>
-            </CardHeader>
-            <Form {...form}>
-               <form onSubmit={handleSubmit(onSubmit)}>
-                  <CardContent className="space-y-4">
-                     <CustomFormField
-                        control={control}
-                        fieldType={FormFieldType.PASSWORD}
-                        name="oldPassword"
-                        placeholder="Your current password"
-                        label="Current Password"
-                     />
-                     <CustomFormField
-                        control={control}
-                        fieldType={FormFieldType.PASSWORD}
-                        name="newPassword"
-                        placeholder="Your new password"
-                        label="New Password"
-                     />
-                     <CustomFormField
-                        control={control}
-                        fieldType={FormFieldType.PASSWORD}
-                        name="confirmPassword"
-                        placeholder="Confirm your new password"
-                        label="Confirm New Password"
-                     />
-                  </CardContent>
-                  <CardFooter>
-                     <SubmitButton isLoading={isPending} variant={"secondary"}>
-                        Update Password
-                     </SubmitButton>
-                  </CardFooter>
-               </form>
-            </Form>
-         </Card>
-      </div>
-   );
+   if (otpMail) {
+      return (
+         <div className="container max-w-md mx-auto mt-48 remove-scrollbar">
+            <Card>
+               <CardHeader>
+                  <CardTitle>Reset Password</CardTitle>
+                  <CardDescription>Change your account password here.</CardDescription>
+               </CardHeader>
+               <Form {...form}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                     <CardContent className="space-y-4">
+                        <CustomFormField
+                           control={control}
+                           fieldType={FormFieldType.PASSWORD}
+                           name="oldPassword"
+                           placeholder="Your current password"
+                           label="Current Password"
+                        />
+                        <CustomFormField
+                           control={control}
+                           fieldType={FormFieldType.PASSWORD}
+                           name="newPassword"
+                           placeholder="Your new password"
+                           label="New Password"
+                        />
+                        <CustomFormField
+                           control={control}
+                           fieldType={FormFieldType.PASSWORD}
+                           name="confirmPassword"
+                           placeholder="Confirm your new password"
+                           label="Confirm New Password"
+                        />
+                     </CardContent>
+                     <CardFooter>
+                        <SubmitButton isLoading={isPending} variant={"secondary"}>
+                           Update Password
+                        </SubmitButton>
+                     </CardFooter>
+                  </form>
+               </Form>
+            </Card>
+         </div>
+      );
+   };
+
+   notFound();
 }
