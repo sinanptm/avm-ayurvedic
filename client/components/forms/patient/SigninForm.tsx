@@ -14,13 +14,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useSignInPatient } from "@/lib/hooks/usePatientAuth";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 const LoginForm = () => {
    const [error, setError] = useState("");
    const { toast } = useToast();
    const router = useRouter();
    const { mutate: signIn, isPending } = useSignInPatient();
-   const {setCredentials} = useAuth()
+   const { setCredentials } = useAuth();
 
    const form = useForm<z.infer<typeof signinFormValidation>>({
       resolver: zodResolver(signinFormValidation),
@@ -41,7 +42,7 @@ const LoginForm = () => {
                   variant: "default",
                });
                router.push("/signin/otp-verification");
-               setCredentials("otpMail",email);
+               setCredentials("otpMail", email);
             },
             onError(error) {
                setError(error.response?.data.message || "An error occurred during sign-in.");
@@ -54,6 +55,10 @@ const LoginForm = () => {
          }
       );
    };
+
+   const handleForgetPassword = ()=>{
+
+   }
 
    return (
       <Form {...form}>
@@ -86,8 +91,13 @@ const LoginForm = () => {
             />
 
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            <p className="text-dark-700 text-sm mt-2 cursor-pointer" onClick={handleForgetPassword}>
+               Forget Password?
+            </p>
 
             <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
+
+            
          </form>
       </Form>
    );

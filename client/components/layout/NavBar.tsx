@@ -13,16 +13,6 @@ import {
    DropdownMenuSeparator,
    DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import {
-   AlertDialog,
-   AlertDialogAction,
-   AlertDialogCancel,
-   AlertDialogContent,
-   AlertDialogDescription,
-   AlertDialogFooter,
-   AlertDialogHeader,
-   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import { usePathname, useRouter } from "next/navigation";
@@ -30,6 +20,7 @@ import { useAuth } from "@/lib/hooks/useAuth";
 import { useLogoutMutation } from "@/lib/hooks/usePatientAuth";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
+import LogoutModel from "../models/LogoutModel";
 
 export const NavBar = () => {
    const path = usePathname();
@@ -163,7 +154,7 @@ export const NavBar = () => {
                            <Link href={"/profile"}>My Account</Link>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={handleLogoutClick}>Logout</DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer" onSelect={handleLogoutClick}>Logout</DropdownMenuItem>
                      </>
                   ) : (
                      <>
@@ -174,23 +165,8 @@ export const NavBar = () => {
                   )}
                </DropdownMenuContent>
             </DropdownMenu>
+            <LogoutModel isLogoutDialogOpen={isLogoutDialogOpen} setIsLogoutDialogOpen={setIsLogoutDialogOpen}  handleLogoutConfirm={handleLogoutConfirm} />
          </div>
-         <AlertDialog open={isLogoutDialogOpen} onOpenChange={setIsLogoutDialogOpen}>
-            <AlertDialogContent>
-               <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                     You will be redirected to the home page after logging out.
-                  </AlertDialogDescription>
-               </AlertDialogHeader>
-               <AlertDialogFooter>
-                  <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
-                  <AlertDialogAction className="cursor-pointer" onClick={handleLogoutConfirm}>
-                     Log out
-                  </AlertDialogAction>
-               </AlertDialogFooter>
-            </AlertDialogContent>
-         </AlertDialog>
       </header>
    );
 };
