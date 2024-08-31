@@ -4,16 +4,20 @@ import SignupForm from "@/components/forms/patient/SignupForm";
 import { Banners } from "@/constants";
 import UniversalSkeleton from "@/components/skeletons/Universal";
 import { notFound } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 const SignUnFormSection = () => {
-   const {patientToken} = useAuth();
-   let [isLoading,setLoading ] = useState(true)
+   const { patientToken } = useAuth();
+   const [isLoading, setLoading] = useState(true);
 
-   setTimeout(()=>{
-      setLoading(false)
-   })
+   useEffect(() => {
+      const timer = setTimeout(() => {
+         setLoading(false);
+      }, 0); 
+
+      return () => clearTimeout(timer); 
+   }, []);
 
    if (isLoading) {
       return <UniversalSkeleton />;

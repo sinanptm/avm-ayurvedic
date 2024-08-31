@@ -1,5 +1,5 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useValidateOtpPatient } from "@/lib/hooks/usePatientAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { notFound, useRouter } from "next/navigation";
@@ -19,12 +19,16 @@ const OtpVerificationPage = () => {
    const navigate = useRouter();
    const [isLoading, setLoading] = useState(true);
    const { patientToken } = useAuth();
-
-   if (otpMail) {
-      setTimeout(() => {
-         setLoading(false);
-      });
-
+   
+   if (otpMail && !patientToken) {
+      useEffect(() => {
+         const timer = setTimeout(() => {
+            setLoading(false);
+         }, 0); 
+   
+         return () => clearTimeout(timer);
+      }, []);
+   
       if (isLoading) {
          <UniversalSkelton />;
       }
@@ -45,11 +49,11 @@ const OtpVerificationPage = () => {
                         </Button>
                      ),
                   });
-                  navigate.push("/");
-                  setImmediate(() => {
+                  setTimeout(() => {
                      setCredentials("patientToken", accessToken);
-                     setCredentials("otpMail", "");
-                  });
+                     navigate.push("/");
+                  }, 200);
+                  setCredentials("otpMail", "");
                },
                onError: (error) => {
                   toast({
@@ -64,33 +68,31 @@ const OtpVerificationPage = () => {
 
       const handleResend = async () => {};
 
-      if (!patientToken) {
-         return (
-            <div className="flex h-screen max-h-screen">
-               <section className="remove-scrollbar container my-auto">
-                  <div className="sub-container max-[496px]">
-                     <Image
-                        src={"/assets/icons/logo-full.svg"}
-                        width={1000}
-                        height={1000}
-                        alt="patient"
-                        className="mb-12 h-10 w-fit"
-                     />
-                     <OtpVerificationSection
-                        handleResend={handleResend}
-                        otp={otp}
-                        setOtp={setOtp}
-                        handleVerify={handleVerify}
-                        isLoading={isPending}
-                        timer={30}
-                     />
-                  </div>
-               </section>
+      return (
+         <div className="flex h-screen max-h-screen">
+            <section className="remove-scrollbar container my-auto">
+               <div className="sub-container max-[496px]">
+                  <Image
+                     src={"/assets/icons/logo-full.svg"}
+                     width={1000}
+                     height={1000}
+                     alt="patient"
+                     className="mb-12 h-10 w-fit"
+                  />
+                  <OtpVerificationSection
+                     handleResend={handleResend}
+                     otp={otp}
+                     setOtp={setOtp}
+                     handleVerify={handleVerify}
+                     isLoading={isPending}
+                     timer={30}
+                  />
+               </div>
+            </section>
 
-               <Image src={Banners.otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
-            </div>
-         );
-      }
+            <Image src={Banners.otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
+         </div>
+      );
    }
    notFound();
 };

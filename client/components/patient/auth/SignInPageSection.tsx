@@ -6,15 +6,19 @@ import { Banners } from "@/constants";
 import { notFound } from "next/navigation";
 import UniversalSkeleton from "@/components/skeletons/Universal";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SignFromSection = () => {
    const { patientToken } = useAuth();
-   let [isLoading, setLoading] = useState(true);
+   const [isLoading, setLoading] = useState(true);
 
-   setTimeout(() => {
-      setLoading(false);
-   });
+   useEffect(() => {
+      const timer = setTimeout(() => {
+         setLoading(false);
+      },0); 
+
+      return () => clearTimeout(timer);
+   }, []);
 
    if (isLoading) {
       return <UniversalSkeleton />;
