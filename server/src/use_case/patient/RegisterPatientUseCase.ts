@@ -10,7 +10,7 @@ export default class RegisterPatientUseCase {
 
    async execute(patient: IPatient) {
       patient.password = await this.passwordService.hash(patient.password!);
-      const {_id} =await this.patientRepository.create(patient);
-      return `New Patient with id ${_id} Created`
+      const { _id } = await this.patientRepository.create(patient);
+      return `New Patient with id ${_id} Created`;
    }
 }
