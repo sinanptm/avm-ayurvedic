@@ -83,6 +83,7 @@ export default class LoginPatientUseCase {
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Patient Not Found");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
+      
       await this.emailService.sendResetMail(email, patient.name!, `${process.env.CLIENT_URL}/signin/reset-password`!);
    }
 }

@@ -16,7 +16,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
         return res.status(401).json({ message: err.message });
     } else if (err.message === "Patient is blocked") {
         return res.status(403).json({ message: err.message });
-    }else if (err.message==="Patient not Found"){
+    }else if (err.message==="Patient Not Found"){
         return res.status(404).json({message:err.message})
     }else if (err.message===' getaddrinfo ENOTFOUND smtp.gmail.com'){
         return res.status(500).json({message:"We are Having Issue with Email Service"})

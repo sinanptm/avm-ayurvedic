@@ -93,11 +93,12 @@ export default class PatientController {
       }
    }
 
-   async resetPassword(req: Request, res: Response, next: NextFunction) {
+   async forgetPassword(req: Request, res: Response, next: NextFunction) {
       try {
          const { email } = req.body;
          if (!email) return res.status(400).json({ message: "Email is Required" });
          await this.authPatientUseCase.sendForgetPasswordMail(email);
+         res.status(200).json({message:"Email has been sended"})
       } catch (error: any) {
          next(error);
       }

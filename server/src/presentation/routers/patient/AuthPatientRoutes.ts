@@ -50,8 +50,8 @@ route.post("/otp-verification", (req, res, next) => {
 route.get("/refresh", (req, res, next) => {
    patientController.refreshAccessToken(req, res, next);
 });
-route.post("/reset-password", (req, res, next) => {
-   patientController.resetPassword(req, res, next);
+route.post("/forget-password", (req, res, next) => {
+   patientController.forgetPassword(req, res, next);
 });
 route.post("/logout", patientAuthMiddleware.exec, (req, res, next) => {
    patientController.logout(req, res, next);

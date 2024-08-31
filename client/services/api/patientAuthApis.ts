@@ -19,7 +19,7 @@ axiosInstance.interceptors.response.use((response: any) => {
 });
 
 export const validateOtpPatient = async (email: string, otp: number) => {
-   const response = await axiosInstance.post(`/otp-verification`, { email, otp });
+   const response = await axiosInstance.post("/otp-verification", { email, otp });
    return response.data;
 };
 
@@ -29,11 +29,16 @@ export const resendOtpPatient = async (email: string) => {
 };
 
 export const signUpPatient = async (patient: IPatient) => {
-   const response = await axiosInstance.post(`/`, patient);
+   const response = await axiosInstance.post("/", patient);
    return response.data;
 };
 
 export const signInPatient = async (email: string, password: string) => {
-   const response = await axiosInstance.post(`/login`, { email, password });
+   const response = await axiosInstance.post("/login", { email, password });
+   return response.data;
+};
+
+export const forgetPassword = async (email: string) => {
+   const response = await axiosInstance.post("/forget-password", { email });
    return response.data;
 };

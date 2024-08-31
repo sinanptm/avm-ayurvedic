@@ -40,7 +40,7 @@ const OtpVerificationPage = () => {
                setSending(false);
                toast({
                   title: "Otp Has sended 📩",
-                  description: "Otp has been resented to you main",
+                  description: "Otp has Resented to you Email",
                   variant: "info",
                });
              }
