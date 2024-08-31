@@ -1,6 +1,6 @@
-import IOtp from "../../../domain/entities/IOtp";
-import IOtpRepository from "../../../interface/repositories/IOtpRepository";
-import OtpModel from "../models/OtpModel";
+import IOtp from "../../domain/entities/IOtp";
+import IOtpRepository from "../../interface/repositories/IOtpRepository";
+import OtpModel from "../database/models/OtpModel";
 
 export default class OtpRepository implements IOtpRepository {
    model = OtpModel;

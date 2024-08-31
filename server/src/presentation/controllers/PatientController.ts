@@ -62,7 +62,7 @@ export default class PatientController {
          const { email } = req.body;
          if (!email) return res.status(400).json({ message: "Email is required" });
          await this.authPatientUseCase.resendOtp(email);
-         res.status(200).json({message:"Otp Sended to the mail Address"});
+         res.status(200).json({ message: "Otp Sended to the mail Address" });
       } catch (error: any) {
          if (error.message === "Patient Not Found") {
             return res.status(422).json({ message: "Invalid Credentials" });
@@ -88,6 +88,16 @@ export default class PatientController {
          });
 
          res.json({ accessToken });
+      } catch (error: any) {
+         next(error);
+      }
+   }
+
+   async resetPassword(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email } = req.body;
+         if (!email) return res.status(400).json({ message: "Email is Required" });
+         await this.authPatientUseCase.sendForgetPasswordMail(email);
       } catch (error: any) {
          next(error);
       }
