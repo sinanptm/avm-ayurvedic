@@ -8,8 +8,6 @@ import { Banners } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
 import OtpVerificationSection from "@/components/forms/patient/OtpForms";
-import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/services/api/patientProtectedApis";
 import UniversalSkelton from "@/components/skeletons/Universal";
 import { useAuth } from "@/lib/hooks/useAuth";
 
@@ -18,7 +16,9 @@ const OtpVerificationPage = () => {
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
    const { toast } = useToast();
    const navigate = useRouter();
-   const [isLoading,setLoading]= useState(true)
+   const [isLoading,setLoading]= useState(true);
+   const {setCredentials} = useAuth()
+
 
    const {patientToken} = useAuth()
 
@@ -35,7 +35,7 @@ const OtpVerificationPage = () => {
       validateOtp(
          { email: "muhammedsinan0549@gmail.com", otp: parseInt(otp) },
          {
-            onSuccess: () => {
+            onSuccess: ({accessToken}) => {
                toast({
                   title: "Otp Verification Success ✅",
                   description: "Authentication Completed!. let's book your first appointment",
@@ -47,6 +47,7 @@ const OtpVerificationPage = () => {
                   ),
                });
                navigate.push("/");
+               setCredentials("patientToken",accessToken)
             },
             onError: (error) => {
                toast({

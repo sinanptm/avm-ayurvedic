@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -12,33 +13,60 @@ import {
    DropdownMenuSeparator,
    DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import {
+   AlertDialog,
+   AlertDialogAction,
+   AlertDialogCancel,
+   AlertDialogContent,
+   AlertDialogDescription,
+   AlertDialogFooter,
+   AlertDialogHeader,
+   AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useLogoutMutation } from "@/lib/hooks/usePatientAuth";
 import { toast } from "../ui/use-toast";
+import { useState } from "react";
 
 export const NavBar = () => {
    const path = usePathname();
-   const { patientToken,adminToken,doctorToken } = useAuth();
-   const {mutate:logout} = useLogoutMutation();
+   const { patientToken, adminToken, doctorToken, logout } = useAuth();
+   const { mutate: logoutFunc } = useLogoutMutation();
    const route = useRouter();
+   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
    if (path.includes("signup") || path.includes("admin") || path.includes("signin")) {
       return null;
    }
-   const handleLogout = () => {
-      logout(null,{
-         onSuccess:({message})=>{
+
+   const handleLogoutClick = () => {
+      setIsLogoutDialogOpen(true);
+   };
+
+   const handleLogoutConfirm = () => {
+      logoutFunc(null, {
+         onSuccess: () => {
             toast({
-               title:"Logout Successful",
-               description:"Sorry for our inconvenience"
+               title: "Logout Successful",
+               description: "We hope to see you again soon!",
+               variant: "info",
             });
-            localStorage.setItem('auth',JSON.stringify({patientToken:"",adminToken,doctorToken}));
-            route.push('/');
-         }
-      })
+            localStorage.setItem("auth", JSON.stringify({ patientToken: "", adminToken, doctorToken }));
+            route.push("/");
+         },
+         onError: () => {
+            toast({
+               title: "Logout Failed",
+               description: "An error occurred during logout. Please try again.",
+               variant: "destructive",
+            });
+            logout("patientToken");
+         },
+      });
+      setIsLogoutDialogOpen(false);
    };
 
    return (
@@ -129,20 +157,32 @@ export const NavBar = () => {
                            <Link href={"/profile"}>My Account</Link>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={handleLogout}>
-                           <Link href={"#"}>Logout</Link>
-                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={handleLogoutClick}>Logout</DropdownMenuItem>
                      </>
                   ) : (
                      <>
                         <DropdownMenuItem>
-                           <Link href={"/signin"}>SingIn</Link>
+                           <Link href={"/signin"}>Sign In</Link>
                         </DropdownMenuItem>
                      </>
                   )}
                </DropdownMenuContent>
             </DropdownMenu>
          </div>
+         <AlertDialog open={isLogoutDialogOpen} onOpenChange={setIsLogoutDialogOpen}>
+            <AlertDialogContent>
+               <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                     You will be redirected to the home page after logging out.
+                  </AlertDialogDescription>
+               </AlertDialogHeader>
+               <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleLogoutConfirm}>Log out</AlertDialogAction>
+               </AlertDialogFooter>
+            </AlertDialogContent>
+         </AlertDialog>
       </header>
    );
 };

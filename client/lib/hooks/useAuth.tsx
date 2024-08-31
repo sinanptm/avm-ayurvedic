@@ -1,4 +1,3 @@
-
 "use client";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
@@ -8,7 +7,12 @@ interface AuthState {
   adminToken: string;
 }
 
-const persistedAuthState: AuthState = 
+interface AuthContextProps extends AuthState {
+  setCredentials: (tokenType: keyof AuthState, token: string) => void;
+  logout: (tokenType: keyof AuthState) => void;
+}
+
+const persistedAuthState: AuthState =
   typeof window !== "undefined" ? JSON.parse(localStorage.getItem("auth") || "{}") : {};
 
 const initialState: AuthState = {
@@ -17,7 +21,7 @@ const initialState: AuthState = {
   adminToken: persistedAuthState.adminToken || "",
 };
 
-const AuthContext = createContext<AuthState | undefined>(undefined);
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authState, setAuthState] = useState<AuthState>(initialState);
@@ -25,16 +29,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedAuthState = JSON.parse(localStorage.getItem("auth") || "{}");
-      setAuthState(storedAuthState);
+      setAuthState((prevState) => ({
+        ...prevState,
+        ...storedAuthState,
+      }));
     }
   }, []);
 
+  const setCredentials = (tokenType: keyof AuthState, token: string) => {
+    const newAuthState = { ...authState, [tokenType]: token };
+    setAuthState(newAuthState);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("auth", JSON.stringify(newAuthState));
+    }
+  };
+
+  const logout = (tokenType: keyof AuthState) => {
+    const newAuthState = { ...authState, [tokenType]: "" };
+    setAuthState(newAuthState);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("auth", JSON.stringify(newAuthState));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={authState}>
+    <AuthContext.Provider value={{ ...authState, setCredentials, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -42,4 +66,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
