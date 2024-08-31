@@ -1,11 +1,10 @@
-import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-   title: "Contact",
+   title: "Consulting",
 };
 
-const Contact = () => {
+const ConsultingPage = () => {
    return (
       <section className="mx-auto">
          
@@ -13,4 +12,4 @@ const Contact = () => {
    );
 };
 
-export default Contact;
+export default ConsultingPage;

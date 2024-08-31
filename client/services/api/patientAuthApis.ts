@@ -12,7 +12,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use((response: any) => {
    if (response.data.accessToken) {
       const auth = JSON.parse(localStorage.getItem("auth") || "{}");
-      console.log(auth);
       auth.patientToken = response.data.accessToken;
       localStorage.setItem("auth", JSON.stringify(auth));
    }

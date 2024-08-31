@@ -1,78 +1,11 @@
 import { AnimatedCardProps, NavLinkType } from "@/types";
 
-export const AppointmentTypes: { type: string; image: string }[] = [
-   {
-      type: "inpatient",
-      image: "/assets/images/IP-image.png",
-   },
-   {
-      type: "outpatient",
-      image: "/assets/images/OP-image.jpg",
-   },
-];
-export const PaymentOptions: string[] = ["online", "Op"];
-// ! from server
-export const AvailableTimes = [
-   "09:00",
-   "09:30",
-   "10:00",
-   "10:30",
-   "11:00",
-   "11:30",
-   "12:00",
-   "12:30",
-   "13:00",
-   "13:30",
-   "14:00",
-   "14:30",
-   "15:00",
-   "15:30",
-   "16:00",
-   "16:30",
-   "17:00",
-];
-
-export const GenderOptions: string[] = ["Male", "Female", "Other"];
-export const BloodTypes: string[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-export const DiseaseOptions: string[] = [
-   "none",
-   "Diabetes",
-   "Hypertension",
-   "Asthma",
-   "Cancer",
-   "Chronic Obstructive Pulmonary Disease (COPD)",
-   "Heart Disease",
-   "Stroke",
-   "Alzheimer's Disease",
-   "Parkinson's Disease",
-   "Hepatitis",
-   "HIV/AIDS",
-   "Tuberculosis",
-   "Malaria",
-   "Dengue Fever",
-   "Influenza",
-   "Pneumonia",
-   "Arthritis",
-   "Epilepsy",
-   "Multiple Sclerosis",
-   "Anemia",
-   "Leukemia",
-   "Lymphoma",
-   "Migraine",
-   "Depression",
-   "Anxiety Disorders",
-   "COVID-19",
-   "Chikungunya",
-   "Zika Virus",
-   "Meningitis",
-];
-
 
 export const NavLinks: NavLinkType[] = [
    { href: "/", label: "Home" },
    { href: "/doctors", label: "Doctors" },
    { href: "/products", label: "Products" },
-   { href: "/contact", label: "Contact" },
+   { href: "/consulting", label: "Consulting" },
    { href: "/about", label: "About" },
 ];
 
@@ -94,7 +27,7 @@ export const DoctorList = [
      patients: 120,
    },
    {
-     _id: '3',
+      _id: '3',
      name: "Dr. Mike Johnson",
     image:"/assets/images/admin.png",
      status: "on leave",
@@ -105,7 +38,7 @@ export const DoctorList = [
      _id: '4',
      name: "Dr. Sarah Williams",
     image:"/assets/images/admin.png",
-     status: "active",
+    status: "active",
      specialty: "Dermatology",
      patients: 130,
    },
@@ -120,7 +53,7 @@ export const DoctorList = [
  ];
 
 
-export const SliderImages: string[] = [
+ export const SliderImages: string[] = [
    "/assets/images/ayurveda1.jpg",
    "/assets/images/onboarding-img.png",
    // "https://images.unsplash.com/photo-1485433592409-9018e83a1f0d?q=80&w=1814&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -218,3 +151,72 @@ export const AdminSideBarLinks = [
       icon: "/assets/icons/store.svg",
    },
 ];
+
+export const AppointmentTypes: { type: string; image: string }[] = [
+   {
+      type: "inpatient",
+      image: "/assets/images/IP-image.png",
+   },
+   {
+      type: "outpatient",
+      image: "/assets/images/OP-image.jpg",
+   },
+];
+export const PaymentOptions: string[] = ["online", "Op"];
+// ! from server
+export const AvailableTimes = [
+   "09:00",
+   "09:30",
+   "10:00",
+   "10:30",
+   "11:00",
+   "11:30",
+   "12:00",
+   "12:30",
+   "13:00",
+   "13:30",
+   "14:00",
+   "14:30",
+   "15:00",
+   "15:30",
+   "16:00",
+   "16:30",
+   "17:00",
+];
+
+export const GenderOptions: string[] = ["Male", "Female", "Other"];
+export const BloodTypes: string[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+export const DiseaseOptions: string[] = [
+   "none",
+   "Diabetes",
+   "Hypertension",
+   "Asthma",
+   "Cancer",
+   "Chronic Obstructive Pulmonary Disease (COPD)",
+   "Heart Disease",
+   "Stroke",
+   "Alzheimer's Disease",
+   "Parkinson's Disease",
+   "Hepatitis",
+   "HIV/AIDS",
+   "Tuberculosis",
+   "Malaria",
+   "Dengue Fever",
+   "Influenza",
+   "Pneumonia",
+   "Arthritis",
+   "Epilepsy",
+   "Multiple Sclerosis",
+   "Anemia",
+   "Leukemia",
+   "Lymphoma",
+   "Migraine",
+   "Depression",
+   "Anxiety Disorders",
+   "COVID-19",
+   "Chikungunya",
+   "Zika Virus",
+   "Meningitis",
+];
+
+
