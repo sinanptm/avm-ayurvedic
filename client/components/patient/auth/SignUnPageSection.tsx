@@ -6,6 +6,7 @@ import AuthSkelton from "@/components/skeletons/AuthPage";
 import { notFound } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/hooks/useAuth";
+import OAuth from './OAuth'
 
 const SignUnFormSection = () => {
    const { patientToken } = useAuth();
@@ -36,6 +37,7 @@ const SignUnFormSection = () => {
                      className="mb-12 h-10 w-fit"
                   />
                   <SignupForm />
+                  <OAuth />
                   <p className="copyright py-12">© {new Date().getFullYear()} AVM Ayurvedic.</p>
                </div>
             </section>
