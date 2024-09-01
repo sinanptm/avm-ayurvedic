@@ -15,42 +15,45 @@ const OtpVerificationPage = () => {
    const { setCredentials, otpMail } = useAuth();
    const [otp, setOtp] = useState<string>("");
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
-   const [isSending,setSending] = useState(false);
-   const {mutate: resendOtp} = useResendOtp()
+   const [isSending, setSending] = useState(false);
+   const { mutate: resendOtp } = useResendOtp();
    const { toast } = useToast();
-   const navigate = useRouter();
+   const router = useRouter();
    const [isLoading, setLoading] = useState(true);
    const { patientToken } = useAuth();
-   
+
    useEffect(() => {
       const timer = setTimeout(() => {
          setLoading(false);
-      }, 0); 
+      }, 0);
 
       return () => clearTimeout(timer);
    }, []);
    if (isLoading) {
-      return  <AuthSkelton />;
+      return <AuthSkelton />;
    }
    if (otpMail && !patientToken) {
       const handleResend = async () => {
-         setSending(true)
-         resendOtp({email:otpMail},{
-             onSuccess:()=>{
-               setSending(false);
-               toast({
-                  title: "Otp Has sended 📩",
-                  description: "Otp has Resented to you Email",
-                  variant: "info",
-               });
-             }
-         });
+         setSending(true);
+         resendOtp(
+            { email: otpMail },
+            {
+               onSuccess: () => {
+                  setSending(false);
+                  toast({
+                     title: "Otp Has sended 📩",
+                     description: "Otp has Resented to you Email",
+                     variant: "info",
+                  });
+               },
+            }
+         );
       };
 
       const handleVerify = async (e: FormEvent) => {
          e.preventDefault();
-         if(otp.length<6){
-            return  toast({
+         if (otp.length < 6) {
+            return toast({
                title: "Otp Required ✖️",
                description: "All Boxes Should be Filled",
                variant: "warning",
@@ -63,17 +66,17 @@ const OtpVerificationPage = () => {
                   toast({
                      title: "Otp Verification Success ✅",
                      description: "Authentication Completed!. let's book your first appointment",
-                     variant: "default",
+                     variant: "success",
                      action: (
                         <Button variant={"outline"}>
                            <Link href={"/new-appointment"}>Book Now</Link>
                         </Button>
                      ),
                   });
+                  router.push("/");
                   setTimeout(() => {
                      setCredentials("patientToken", accessToken);
-                  }, 200);
-                  navigate.push("/");
+                  }, 220);
                },
                onError: (error) => {
                   toast({
@@ -85,7 +88,6 @@ const OtpVerificationPage = () => {
             }
          );
       };
-
 
       return (
          <div className="flex h-screen max-h-screen">
@@ -111,7 +113,7 @@ const OtpVerificationPage = () => {
             <Image src={Banners.otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
          </div>
       );
-   }else{
+   } else {
       notFound();
    }
 };

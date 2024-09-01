@@ -2,6 +2,7 @@ import { ErrorResponse, IPatient } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import {
    forgetPassword,
+   oAuthSignin,
    resendOtpPatient,
    signInPatient,
    signUpPatient,
@@ -33,6 +34,19 @@ export const useSignInPatient = () => {
       mutationFn: ({ email, password }) => signInPatient(email, password),
       onError: (error) => {
          console.log("Error in signing in:", error);
+      },
+   });
+};
+
+export const useOAuthSigninPatient = () => {
+   return useMutation<
+      { accessToken: string },
+      AxiosError<ErrorResponse>,
+      { email: string; name: string; profile?: string }
+   >({
+      mutationFn: ({ email, name, profile }) => oAuthSignin(email, name, profile),
+      onError: (error) => {
+         console.log("Error in OAuthSign :", error);
       },
    });
 };
@@ -74,7 +88,11 @@ export const useForgetPassword = () => {
 };
 
 export const useUpdatePassword = () => {
-   return useMutation<MessageResponse,AxiosError<ErrorResponse>,{ email: string; oldPassword: string; newPassword: string }>({
+   return useMutation<
+      MessageResponse,
+      AxiosError<ErrorResponse>,
+      { email: string; oldPassword: string; newPassword: string }
+   >({
       mutationFn: ({ email, oldPassword, newPassword }) => updatePassword(email, oldPassword, newPassword),
       onError: (error) => {
          console.log("Error in Updating Password", error);

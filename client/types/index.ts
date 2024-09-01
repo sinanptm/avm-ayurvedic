@@ -38,6 +38,7 @@ export interface IPatient {
    isBlocked?: false;
    address?: string;
    token?: string;
+   profile?:string;
 }
 
 

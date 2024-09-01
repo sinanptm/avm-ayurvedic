@@ -1,19 +1,54 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { app } from "@/config/firebaseConfig";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { useOAuthSigninPatient } from "@/lib/hooks/usePatientAuth";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { Link } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function GoogleSignInButton() {
+   const { mutate: oAuthSignin, isPending } = useOAuthSigninPatient();
+   const { setCredentials } = useAuth();
+   const router = useRouter();
    const handleGoogleSignIn = async () => {
       const auth = getAuth(app);
       const provider = new GoogleAuthProvider();
-
       try {
          const result = await signInWithPopup(auth, provider);
-         const user = result.user.providerData;
-         console.log(user);
+         const user: any = result.user.providerData[0];
+         oAuthSignin(
+            { email: user.email, name: user.displayName, profile: user.photoURL },
+            {
+               onSuccess: ({ accessToken }) => {
+                  toast({
+                     title: "Authentication Completed ✅",
+                     description: "Google Authentication Completed!. let's book your first appointment",
+                     variant: "success",
+                     action: (
+                        <Button variant={"outline"}>
+                           <Link href={"/new-appointment"}>Book Now</Link>
+                        </Button>
+                     ),
+                  });
+
+                  router.push("/");
+                  setTimeout(() => {
+                     setCredentials("patientToken", accessToken);
+                  }, 220);
+               },
+               onError: (error) => {
+                  toast({
+                     title: "Google Authentication Failed ❌",
+                     description: error.response?.data.message,
+                     variant: "destructive",
+                  });
+               },
+            }
+         );
       } catch (error) {
          console.error("Error during sign-in with Google: ", error);
       }
