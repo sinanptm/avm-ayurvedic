@@ -23,15 +23,15 @@ export default class PatientRepository implements IPatientRepository {
       return await this.model.findByIdAndUpdate(id, { $set: { isBlocked: !status } });
    }
    async findByEmail(email: string): Promise<IPatient | null> {
-      return await this.model.findOne({ email }).select("-password");
+      return await this.model.findOne({ email }).select(["-password","-token"]);
    }
    async findById(id: string): Promise<IPatient | null> {
       if (!isValidObjectId(id)) {
          throw new Error(`Invalid Object id : ${id}`);
       }
-      return await this.model.findById(id).select("-password");
+      return await this.model.findById(id).select(["-password","-token"]);
    }
-   async findByEmailWithPassword(email: string): Promise<IPatient | null> {
+   async findByEmailWithCredentials(email: string): Promise<IPatient | null> {
       return await this.model.findOne({ email });
    }
 }

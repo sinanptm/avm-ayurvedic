@@ -27,7 +27,7 @@ export default class LoginPatientUseCase {
    }
 
    async login(patient: IPatient): Promise<{ email: string } | null> {
-      const foundedPatient = await this.patientRepository.findByEmailWithPassword(patient.email!);
+      const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundedPatient) throw new Error("Patient Not Found");
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
@@ -73,7 +73,7 @@ export default class LoginPatientUseCase {
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw Error("Invalid Otp");
 
-      const patient = await this.patientRepository.findByEmail(email)!;
+      const patient = await this.patientRepository.findByEmailWithCredentials(email)!;
       if (patient && patient?.isBlocked) throw new Error("Unauthorized");
 
       const refreshToken = this.tokenService.createRefreshToken(patient?.email!, patient?._id!);
@@ -110,7 +110,7 @@ export default class LoginPatientUseCase {
    }
 
    async updatePatientPassword(email: string, oldPassword: string, newPassword: string): Promise<void> {
-      const patient = await this.patientRepository.findByEmailWithPassword(email);
+      const patient = await this.patientRepository.findByEmailWithCredentials(email);
       if (!patient) throw new Error("Patient Not Found");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
 
