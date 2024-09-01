@@ -1,59 +1,66 @@
 import { AnimatedCardProps, NavLinkType } from "@/types";
 
-
 export const NavLinks: NavLinkType[] = [
    { href: "/", label: "Home" },
    { href: "/doctors", label: "Doctors" },
    { href: "/products", label: "Products" },
-   { href: "/consulting", label: "Consulting" },
+   { href: "/services", label: "Services" },
    { href: "/about", label: "About" },
 ];
 
 export const DoctorList = [
    {
-     _id: '1',
-     name: "Dr. John Doe",
-    image:"/assets/images/admin.png",
-     status: "active",
-     specialty: "Cardiology",
-     patients: 150,
+      _id: "1",
+      name: "Dr. John Doe",
+      image: "/assets/images/admin.png",
+      status: "active",
+      specialty: "Cardiology",
+      patients: 150,
    },
    {
-     _id: '2',
-     name: "Dr. Jane Smith",
-    image:"/assets/images/admin.png",
-     status: "active",
-     specialty: "Pediatrics",
-     patients: 120,
+      _id: "2",
+      name: "Dr. Jane Smith",
+      image: "/assets/images/admin.png",
+      status: "active",
+      specialty: "Pediatrics",
+      patients: 120,
    },
    {
-      _id: '3',
-     name: "Dr. Mike Johnson",
-    image:"/assets/images/admin.png",
-     status: "on leave",
-     specialty: "Neurology",
-     patients: 100,
+      _id: "3",
+      name: "Dr. Mike Johnson",
+      image: "/assets/images/admin.png",
+      status: "on leave",
+      specialty: "Neurology",
+      patients: 100,
    },
    {
-     _id: '4',
-     name: "Dr. Sarah Williams",
-    image:"/assets/images/admin.png",
-    status: "active",
-     specialty: "Dermatology",
-     patients: 130,
+      _id: "4",
+      name: "Dr. Sarah Williams",
+      image: "/assets/images/admin.png",
+      status: "active",
+      specialty: "Dermatology",
+      patients: 130,
    },
    {
-     _id: '5',
-     name: "Dr. Robert Brown",
-    image:"/assets/images/admin.png",
-     status: "inactive",
-     specialty: "Orthopedics",
-     patients: 90,
+      _id: "5",
+      name: "Dr. Robert Brown",
+      image: "/assets/images/admin.png",
+      status: "inactive",
+      specialty: "Orthopedics",
+      patients: 90,
    },
- ];
+];
 
+export const OurServices = [
+   "Expert medical professionals",
+   "State-of-the-art facilities",
+   "Personalized care plans",
+   "Multidisciplinary approach",
+   "Advanced diagnostic tools",
+   "Compassionate support staff",
+];
 
- export const SliderImages: string[] = [
+export const SliderImages: string[] = [
    "/assets/images/ayurveda1.jpg",
    "/assets/images/onboarding-img.png",
    // "https://images.unsplash.com/photo-1485433592409-9018e83a1f0d?q=80&w=1814&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -121,7 +128,6 @@ export const GuaranteeListHonePage: { src: string; text: string; heading: string
    },
 ];
 
-
 export const AdminSideBarLinks = [
    {
       label: "Dashboard",
@@ -151,17 +157,33 @@ export const AdminSideBarLinks = [
       icon: "/assets/icons/store.svg",
    },
 ];
-
-export const AppointmentTypes: { type: string; image: string }[] = [
+export const AppointmentTypes = [
    {
-      type: "inpatient",
-      image: "/assets/images/IP-image.png",
+      image: "/assets/icons/wheelchair.svg",
+      type: "Outpatient",
+      title: "Outpatient Consulting",
+      description: "Specialized Ayurvedic care without overnight stay",
+      details: [
+         "Quick and efficient Ayurvedic consultations",
+         "Specialized Ayurvedic diagnostic services",
+         "Follow-up Ayurvedic care and monitoring",
+         "Minor Ayurvedic procedures and treatments",
+      ],
    },
    {
-      type: "outpatient",
-      image: "/assets/images/OP-image.jpg",
+      image: "/assets/services/ip.svg",
+      type: "Online Video Call",
+      title: "Online Video Consulting",
+      description: "Get expert Ayurvedic advice from the comfort of your home",
+      details: [
+         "Convenient and accessible Ayurvedic consultations",
+         "Personalized treatment plans",
+         "Virtual follow-up appointments",
+         "Real-time Ayurvedic diagnostic assessments",
+      ],
    },
 ];
+
 export const PaymentOptions: string[] = ["online", "Op"];
 // ! from server
 export const AvailableTimes = [
@@ -218,5 +240,3 @@ export const DiseaseOptions: string[] = [
    "Zika Virus",
    "Meningitis",
 ];
-
-
