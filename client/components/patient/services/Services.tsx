@@ -7,7 +7,7 @@ import { AppointmentTypes } from "@/constants"
 export default function Services() {
   return (
     <div className="py-8">
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-8 md:grid-cols-2">
         {AppointmentTypes.map((service, index) => (
           <Card key={index}>
             <CardHeader>
