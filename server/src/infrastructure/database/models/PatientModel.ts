@@ -14,6 +14,8 @@ const patientSchema = new Schema<IPatient>(
       isSubscribed: { type: Boolean, default: false },
       token: { type: String },
       profile: { type: String },
+      occupation: { type: String },
+      diseases: { type: [String] }
    },
    {
       timestamps: true,
