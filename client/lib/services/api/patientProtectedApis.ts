@@ -1,3 +1,4 @@
+import { IPatient } from "@/types";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -29,11 +30,10 @@ axiosInstance.interceptors.response.use(
       const originalRequest = error.config;
 
       if (error.response?.status === 401) {
-         
          try {
             const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
-            const refreshResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/patient/auth/refresh`,{
-                withCredentials:true
+            const refreshResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/patient/auth/refresh`, {
+               withCredentials: true,
             });
 
             const newAccessToken = refreshResponse.data.accessToken;
@@ -44,11 +44,10 @@ axiosInstance.interceptors.response.use(
                   ...tokens,
                   patientToken: newAccessToken,
                })
-            );            
+            );
 
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-            
             return axiosInstance(originalRequest);
          } catch (refreshError) {
             return Promise.reject(refreshError);
@@ -64,7 +63,7 @@ export const getPatientProfile = async () => {
    return response.data;
 };
 
-export const logoutPatient = async ()=>{
-   const response = await axiosInstance.post("/auth/logout");
+export const updatePatientProfile = async (patient: IPatient) => {
+   const response = await axiosInstance.put("/profile", patient);
    return response.data;
-}
+};

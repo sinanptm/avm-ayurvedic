@@ -17,7 +17,7 @@ const otpRepository = new OtpRepository();
 const passwordService = new PasswordService();
 const patientRepository = new PatientRepository();
 
-// Use Case
+// Use Cases
 const authPatientUseCase = new AuthPatientUseCase(
    patientRepository,
    passwordService,
@@ -26,33 +26,39 @@ const authPatientUseCase = new AuthPatientUseCase(
    tokenService
 );
 
-// Controller
+// Controllers
 const authPatientController = new AuthPatientController(authPatientUseCase);
 
 // Middleware
 const patientAuthMiddleware = new PatientAuthMiddleware(tokenService);
 
-const { exec: authenticate } = patientAuthMiddleware;
-const {
-   forgetPassword,
-   login,
-   logout,
-   oAuthSignin,
-   refreshAccessToken,
-   register,
-   resendOtp,
-   updatePassword,
-   validateOtp,
-} = authPatientController;
 
-route.post("/register", register);
-route.post("/login", login);
-route.post("/oauth-signin", oAuthSignin);
-route.post("/resend-otp", resendOtp);
-route.post("/otp-verification", validateOtp);
-route.get("/refresh", refreshAccessToken);
-route.post("/forget-password", forgetPassword);
-route.patch("/update-password", updatePassword);
-route.post("/logout", authenticate, logout);
+route.post("/register", (req, res, next) => {
+   authPatientController.register(req, res, next);
+});
+route.post("/login", (req, res, next) => {
+   authPatientController.login(req, res, next);
+});
+route.post("/oauth-signin",(req,res,next)=>{
+   authPatientController.oAuthSignin(req,res,next);
+})
+route.post("/resend-otp", (req, res, next) => {
+   authPatientController.resendOtp(req, res, next);
+});
+route.post("/otp-verification", (req, res, next) => {
+   authPatientController.validateOtp(req, res, next);
+});
+route.get("/refresh", (req, res, next) => {
+   authPatientController.refreshAccessToken(req, res, next);
+});
+route.post("/forget-password", (req, res, next) => {
+   authPatientController.forgetPassword(req, res, next);
+});
+route.patch("/update-password", (req, res, next) => {
+   authPatientController.updatePassword(req, res, next);
+});
+route.post("/logout", patientAuthMiddleware.exec, (req, res, next) => {
+   authPatientController.logout(req, res, next);
+});
 
 export default route;

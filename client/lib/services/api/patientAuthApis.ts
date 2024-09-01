@@ -51,3 +51,8 @@ export const updatePassword = async (email: string, oldPassword: string, newPass
    const response = await axiosInstance.patch("/update-password", { email, oldPassword, newPassword });
    return response.data;
 };
+
+export const logoutPatient = async ()=>{
+   const response = await axiosInstance.post("/auth/logout");
+   return response.data;
+}

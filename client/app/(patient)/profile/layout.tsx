@@ -21,6 +21,10 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
       return <ProfileSkeleton />;
    }
 
+   if (isError) {
+      notFound();
+   }
+
    if (typeof patientData?.bloodGroup === "undefined") {
       router.push("/register");
       toast({
@@ -29,10 +33,6 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
          variant: "warning",
       });
       return;
-   }
-
-   if (isError) {
-      notFound();
    }
 
    return (

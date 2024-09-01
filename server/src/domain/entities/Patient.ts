@@ -13,6 +13,5 @@ export interface IPatient {
    createdAt?:string;
    updatedAt?:string;
    profile?:string;
-   diseases?:string[];
    occupation?:string;
 }

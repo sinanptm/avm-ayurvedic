@@ -13,10 +13,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
 import { BloodTypes, DiseaseOptions, GenderOptions } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
-import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
+import { useGetPatientProfile, useUpdatePatientProfile } from "@/lib/hooks/patient/usePatient";
 
 const RegistrationForm = () => {
-   const { data: patientData, isLoading } = useGetPatientProfile();
    const form = useForm<z.infer<typeof registerFormValidation>>({
       resolver: zodResolver(registerFormValidation),
       defaultValues: {
@@ -28,12 +27,21 @@ const RegistrationForm = () => {
          disclosureConsent: false,
          privacyConsent: false,
          bloodType: "O+",
-         disease: "none",
          phone: "",
       },
    });
+   const { data: patientData, isLoading } = useGetPatientProfile();
+   const { mutate: registerInfo, isPending } = useUpdatePatientProfile();
 
-   const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {};
+   const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {
+      registerInfo({
+         address: values.address,
+         bloodGroup: values.bloodType,
+         dob: values.birthDate,
+         phone: values.phone.trim() !== "" ? values.phone : undefined,
+         occupation:values.occupation,
+      });
+   };
 
    return (
       <Form {...form}>
@@ -85,21 +93,6 @@ const RegistrationForm = () => {
                      <SelectItem key={blood + i} value={blood}>
                         <div className="flex cursor-pointer items-center gap-2">
                            <p>{blood}</p>
-                        </div>
-                     </SelectItem>
-                  ))}
-               </CustomFormField>
-
-               <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  control={form.control}
-                  name="disease"
-                  label="Primary Disease  *"
-                  placeholder="Select a disease">
-                  {DiseaseOptions.map((disease, i) => (
-                     <SelectItem key={disease + i} value={disease}>
-                        <div className="flex cursor-pointer items-center gap-2">
-                           <p>{disease}</p>
                         </div>
                      </SelectItem>
                   ))}
@@ -156,7 +149,7 @@ const RegistrationForm = () => {
                name="privacyConsent"
                label="I acknowledge that I have reviewed and agree to the privacy policy."
             />
-            <SubmitButton isLoading={isLoading}>Sign In</SubmitButton>
+            <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
          </form>
       </Form>
    );

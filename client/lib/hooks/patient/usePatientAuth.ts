@@ -1,4 +1,4 @@
-import { ErrorResponse, IPatient } from "@/types";
+import { ErrorResponse, IPatient, MessageResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import {
    forgetPassword,
@@ -10,11 +10,7 @@ import {
    validateOtpPatient,
 } from "@/lib/services/api/patientAuthApis";
 import { AxiosError } from "axios";
-import { logoutPatient } from "@/lib/services/api/patientProtectedApis";
-
-type MessageResponse = {
-   message: string;
-};
+import { logoutPatient } from "@/lib/services/api/patientAuthApis";
 
 export const useSignUpPatient = () => {
    return useMutation<MessageResponse, AxiosError<ErrorResponse>, IPatient>({

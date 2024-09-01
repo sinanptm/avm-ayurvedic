@@ -6,12 +6,16 @@ import PatientController from "../../controllers/PatientController";
 const routes = express();
 
 const patientRepository = new PatientRepository();
+
 const patientUseCase = new PatientUseCase(patientRepository);
+
 const patientController = new PatientController(patientUseCase);
 
-const { updateProfile, getProfile } = patientController;
-
-routes.get("/profile", getProfile);
-routes.put("/profile", updateProfile);
+routes.get("/profile", (req, res, next) => {
+   patientController.getProfile(req,res,next);
+});
+routes.put("/profile",(req,res,next)=>{
+   patientController.updateProfile(req,res,next)
+})
 
 export default routes;

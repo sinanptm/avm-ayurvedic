@@ -15,17 +15,16 @@ export default class PatientController {
       }
    }
 
-   async updateProfile(req:CustomRequest,res:Response,next:NextFunction){
+   async updateProfile(req: CustomRequest, res: Response, next: NextFunction) {
       try {
-         const {id} = req.patient!
-         const {patient} = req.body;
-         if(!patient) return res.status(400).json({message:"Patient Data is Required."})
+         const { id } = req.patient!;
+         const { patient } = req.body;
+         if (!patient) return res.status(400).json({ message: "Patient Data is Required" });
          
-         await this.patientUseCase.updateProfile(id,patient);
-
-         res.status(200).json({message:"Personal Information Added Successfully."})
+         await this.patientUseCase.updateProfile(id, patient);
+         res.status(200).json({ message: "Personal Information Added Successfully" });
       } catch (error) {
-         next(error)
+         next(error);
       }
    }
 }

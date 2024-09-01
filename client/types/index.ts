@@ -38,6 +38,7 @@ export interface IPatient {
    isBlocked?: false;
    address?: string;
    profile?:string;
+   occupation?:string;
 }
 
 
@@ -45,3 +46,7 @@ export interface ErrorResponse {
    message?:string;
    stack?:string;
 }
+
+export type MessageResponse = {
+   message: string;
+};

@@ -43,7 +43,6 @@ export const registerFormValidation = z.object({
    birthDate: z.coerce.date().max(new Date(Date.now()), "Please select a birth date before todays."),
    gender: z.enum(["Male", "Female", "Other"]),
    bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
-   disease: z.string().trim().min(1, "Primary Disease is required"),
    privacyConsent: z
       .boolean()
       .default(false)
