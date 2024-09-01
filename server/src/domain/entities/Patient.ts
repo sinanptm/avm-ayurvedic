@@ -11,5 +11,6 @@ export interface IPatient {
    address?: string;
    token?: string;
    createdAt?:string;
-   updatedAt?:string
+   updatedAt?:string;
+   profile?:string;
 }

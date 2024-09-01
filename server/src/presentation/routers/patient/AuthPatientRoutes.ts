@@ -38,6 +38,9 @@ route.post("/register", (req, res, next) => {
 route.post("/login", (req, res, next) => {
    patientController.login(req, res, next);
 });
+route.post("/oauth-signin",(req,res,next)=>{
+   patientController.oAuthSignin(req,res,next);
+})
 route.post("/resend-otp", (req, res, next) => {
    patientController.resendOtp(req, res, next);
 });

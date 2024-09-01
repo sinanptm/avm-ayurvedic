@@ -83,6 +83,26 @@ export default class PatientController {
       }
    }
 
+   async oAuthSignin(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email, name, profile } = req.body;
+         if (!email) return res.status(400).json({ message: "Email is Required" });
+         if (!name) return res.status(400).json({ message: "Name is Required" });
+         const { accessToken, refreshToken } = await this.authPatientUseCase.oAuthSignin(email, name, profile);
+
+         res.cookie("patientToken", refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict" as const,
+            maxAge: 30 * 24 * 60 * 1000,
+         });
+
+         res.json({ accessToken });
+      } catch (error) {
+         next(error);
+      }
+   }
+
    async forgetPassword(req: Request, res: Response, next: NextFunction) {
       try {
          const { email } = req.body;
@@ -97,8 +117,8 @@ export default class PatientController {
    async updatePassword(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, oldPassword, newPassword } = req.body;
-         
-         if (!email) return res.status(400).json({message:"Email is Required"});
+
+         if (!email) return res.status(400).json({ message: "Email is Required" });
          if (!oldPassword.trim()) return res.status(400).json({ message: "Old Password is required" });
          if (!newPassword?.trim()) return res.status(400).json({ message: "New Password is required" });
 

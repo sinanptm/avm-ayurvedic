@@ -6,6 +6,11 @@ import { IPasswordServiceRepository } from "../../interface/services/IPasswordSe
 import ITokenService from "../../interface/services/ITokenService";
 import { generateOTP } from "../../utils";
 
+type TokensResponse = {
+   accessToken: string;
+   refreshToken: string;
+};
+
 export default class LoginPatientUseCase {
    constructor(
       private patientRepository: IPatientRepository,
@@ -41,6 +46,17 @@ export default class LoginPatientUseCase {
       return { email: foundedPatient.email! };
    }
 
+   async oAuthSignin(email: string, name: string, profile?: string): Promise<TokensResponse> {
+      let patient = await this.patientRepository.findByEmail(email);
+      if (!patient) {
+         patient = await this.patientRepository.create({ email, name, profile } as IPatient);
+      }
+      let accessToken = this.tokenService.createAccessToken(email, patient._id!);
+      let refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
+
+      return { accessToken, refreshToken };
+   };
+
    async resendOtp(email: string): Promise<void> {
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Patient Not Found");
@@ -53,7 +69,7 @@ export default class LoginPatientUseCase {
       await this.emailService.sendOtp(email, patient.name!, otp);
    }
 
-   async validateOtp(otp: number, email: string): Promise<{ accessToken: string; refreshToken: string }> {
+   async validateOtp(otp: number, email: string): Promise<TokensResponse> {
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw Error("Invalid Otp");
 
@@ -96,7 +112,7 @@ export default class LoginPatientUseCase {
    async updatePatientPassword(email: string, oldPassword: string, newPassword: string): Promise<void> {
       const patient = await this.patientRepository.findByEmailWithPassword(email);
       if (!patient) throw new Error("Patient Not Found");
-      if (patient.isBlocked) throw new Error("Patient is Blocked");      
+      if (patient.isBlocked) throw new Error("Patient is Blocked");
 
       if (!(await this.passwordService.compare(oldPassword!, patient.password!)))
          throw new Error("Invalid Credentials");
