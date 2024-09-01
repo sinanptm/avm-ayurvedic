@@ -25,6 +25,9 @@ export default class PatientRepository implements IPatientRepository {
    async findByEmail(email: string): Promise<IPatient | null> {
       return await this.model.findOne({ email }).select(["-password","-token"]);
    }
+   async findByIdAndUpdate(id:string,patient: IPatient): Promise<IPatient | null> {
+      return await this.model.findByIdAndUpdate(id, patient, { new: true });
+   }
    async findById(id: string): Promise<IPatient | null> {
       if (!isValidObjectId(id)) {
          throw new Error(`Invalid Object id : ${id}`);

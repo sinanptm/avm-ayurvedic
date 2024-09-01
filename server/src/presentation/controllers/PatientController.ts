@@ -14,4 +14,18 @@ export default class PatientController {
          next(error);
       }
    }
+
+   async addPersonalInformation(req:CustomRequest,res:Response,next:NextFunction){
+      try {
+         const {id} = req.patient!
+         const {patient} = req.body;
+         if(!patient) return res.status(400).json({message:"Patient Data is Required."})
+         
+         await this.patientUseCase.addPersonalInformation(id,patient);
+
+         res.status(200).json({message:"Personal Information Added Successfully."})
+      } catch (error) {
+         next(error)
+      }
+   }
 }
