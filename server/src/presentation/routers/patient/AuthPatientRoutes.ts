@@ -1,7 +1,7 @@
 import express from "express";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import PasswordService from "../../../infrastructure/services/PasswordService";
-import PatientController from "../../controllers/PatientController";
+import AuthPatientController from "../../controllers/AuthPatientController";
 import AuthPatientUseCase from "../../../use_case/patient/AuthPatientUseCase";
 import EmailService from "../../../infrastructure/services/EmailService";
 import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
@@ -27,37 +27,37 @@ const authPatientUseCase = new AuthPatientUseCase(
 );
 
 // Controllers
-const patientController = new PatientController(authPatientUseCase);
+const authPatientController = new AuthPatientController(authPatientUseCase);
 
 // Middleware
 const patientAuthMiddleware = new PatientAuthMiddleware(tokenService);
 
 route.post("/register", (req, res, next) => {
-   patientController.register(req, res, next);
+   authPatientController.register(req, res, next);
 });
 route.post("/login", (req, res, next) => {
-   patientController.login(req, res, next);
+   authPatientController.login(req, res, next);
 });
 route.post("/oauth-signin",(req,res,next)=>{
-   patientController.oAuthSignin(req,res,next);
+   authPatientController.oAuthSignin(req,res,next);
 })
 route.post("/resend-otp", (req, res, next) => {
-   patientController.resendOtp(req, res, next);
+   authPatientController.resendOtp(req, res, next);
 });
 route.post("/otp-verification", (req, res, next) => {
-   patientController.validateOtp(req, res, next);
+   authPatientController.validateOtp(req, res, next);
 });
 route.get("/refresh", (req, res, next) => {
-   patientController.refreshAccessToken(req, res, next);
+   authPatientController.refreshAccessToken(req, res, next);
 });
 route.post("/forget-password", (req, res, next) => {
-   patientController.forgetPassword(req, res, next);
+   authPatientController.forgetPassword(req, res, next);
 });
 route.patch("/update-password", (req, res, next) => {
-   patientController.updatePassword(req, res, next);
+   authPatientController.updatePassword(req, res, next);
 });
 route.post("/logout", patientAuthMiddleware.exec, (req, res, next) => {
-   patientController.logout(req, res, next);
+   authPatientController.logout(req, res, next);
 });
 
 export default route;
