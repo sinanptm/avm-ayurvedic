@@ -9,8 +9,10 @@ const app = express();
 const tokenService = new TokenService();
 const authenticatePatient = new PatientAuthMiddleware(tokenService);
 
+const { exec:authenticate } = authenticatePatient;
+
 app.use("/patient/auth", AuthRoutes);
-app.use("/patient", authenticatePatient.exec, ProtectedRoutes);
+app.use("/patient", authenticate, ProtectedRoutes);
 app.use(errorHandler);
 
 export default app;

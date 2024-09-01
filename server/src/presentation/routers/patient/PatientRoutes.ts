@@ -3,16 +3,15 @@ import PatientUseCase from "../../../use_case/patient/PatientUseCases";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import PatientController from "../../controllers/PatientController";
 
-const patientRoutes = express();
+const routes = express();
 
 const patientRepository = new PatientRepository();
-
 const patientUseCase = new PatientUseCase(patientRepository);
-
 const patientController = new PatientController(patientUseCase);
 
-patientRoutes.get("/profile", (req, res, next) => {
-   patientController.getProfile(req,res,next);
-});
+const { addPersonalInformation, getProfile } = patientController;
 
-export default patientRoutes;
+routes.get("/profile", getProfile);
+routes.put("/personal-information", addPersonalInformation);
+
+export default routes;
