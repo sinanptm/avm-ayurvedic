@@ -12,7 +12,7 @@ import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useSignInPatient } from "@/lib/hooks/usePatientAuth";
+import { useSignInPatient } from "@/lib/hooks/patient/usePatientAuth";
 import { useAuth } from "@/lib/hooks/useAuth";
 import ForgetPasswordModel from "@/components/models/ForgetPasswordModel";
 

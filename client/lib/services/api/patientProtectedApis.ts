@@ -44,10 +44,7 @@ axiosInstance.interceptors.response.use(
                   ...tokens,
                   patientToken: newAccessToken,
                })
-            );
-
-            console.log('token refreshed');
-            
+            );            
 
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 

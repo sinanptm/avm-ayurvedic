@@ -1,49 +1,50 @@
-'use client';
+"use client";
 import NavSection from "@/components/patient/profile/NavSection";
 import { memo, ReactNode, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getPatientProfile } from "@/lib/services/api/patientProtectedApis";
-import { ErrorResponse, IPatient } from "@/types";
-import { AxiosError } from "axios";
 import ProfileSkeleton from "@/components/skeletons/ProfilePage";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
+import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
+import { toast } from "@/components/ui/use-toast";
 
 interface Props {
-  children: ReactNode;
-  appointments: ReactNode;
-  records: ReactNode;
+   children: ReactNode;
+   appointments: ReactNode;
+   records: ReactNode;
 }
 
 const ProfilePageLayout = ({ children, appointments, records }: Props) => {
-  const [section, setSection] = useState<"profile" | "appointments" | "records">('profile');
+   const [section, setSection] = useState<"profile" | "appointments" | "records">("profile");
+   const router = useRouter();
 
-  const { data, isLoading, isError } = useQuery<IPatient, AxiosError<ErrorResponse>>({
-    queryKey: ['patientProfile'],
-    queryFn: getPatientProfile
-  });
+   const { data: patientData, isLoading, isError } = useGetPatientProfile();
+   if (isLoading) {
+      return <ProfileSkeleton />;
+   }
 
-  if (isLoading) {
-    return <ProfileSkeleton />;
-  }
+   if (typeof patientData?.bloodGroup === "undefined") {
+      router.push("/register");
+      toast({
+         title: "Personal Information Required 📝",
+         description: "Please complete your personal information to proceed.",
+         variant: "warning",
+      });
+      return;
+   }
 
-  if (isError) {
-    notFound(); 
-  }
+   if (isError) {
+      notFound();
+   }
 
-
-  console.log(data);
-  
-
-  return (
-    <div className="min-h-screen p-4 sm:p-6 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
-        <NavSection setSection={setSection} />
-        {section === 'profile' && children}
-        {section === 'appointments' && appointments}
-        {section === 'records' && records}
+   return (
+      <div className="min-h-screen p-4 sm:p-6 md:p-8">
+         <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+            <NavSection setSection={setSection} patientData={patientData!} />
+            {section === "profile" && children}
+            {section === "appointments" && appointments}
+            {section === "records" && records}
+         </div>
       </div>
-    </div>
-  );
+   );
 };
 
 export default memo(ProfilePageLayout);

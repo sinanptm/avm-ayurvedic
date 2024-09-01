@@ -1,8 +1,14 @@
 import Image from "next/image";
 import RegistrationForm from "@/components/forms/patient/RegistrationForm";
 import { Banners } from "@/constants";
+import { Metadata } from "next";
+
+export const metadata:Metadata = {
+   title:"Registration",
+   description:"Page for Registering Users Personal Information."
+}
+
 const Register = () => {
-   
    return (
       <div className="flex h-screen max-h-screen">
          <section className="remove-scrollbar container">

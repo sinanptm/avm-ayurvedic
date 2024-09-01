@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import CustomFormField from "@/components/common/CustomFormField";
 import { FormFieldType } from "@/types/fromTypes";
 import SubmitButton from "@/components/common/SubmitButton";
-import { useUpdatePassword } from "@/lib/hooks/usePatientAuth";
+import { useUpdatePassword } from "@/lib/hooks/patient/usePatientAuth";
 import { Form } from "@/components/ui/form";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { notFound, useRouter } from "next/navigation";

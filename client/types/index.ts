@@ -37,7 +37,6 @@ export interface IPatient {
    isSubscribed?: boolean;
    isBlocked?: false;
    address?: string;
-   token?: string;
    profile?:string;
 }
 

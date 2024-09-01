@@ -17,7 +17,7 @@ import Image from "next/image";
 import { NavLinks } from "@/constants";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { useLogoutMutation } from "@/lib/hooks/usePatientAuth";
+import { useLogoutMutation } from "@/lib/hooks/patient/usePatientAuth";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";

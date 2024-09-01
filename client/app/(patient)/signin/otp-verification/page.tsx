@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useEffect, useState } from "react";
-import { useResendOtp, useValidateOtpPatient } from "@/lib/hooks/usePatientAuth";
+import { useResendOtp, useValidateOtpPatient } from "@/lib/hooks/patient/usePatientAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { notFound, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";

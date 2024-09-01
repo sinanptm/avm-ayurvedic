@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { useSignUpPatient } from "@/lib/hooks/usePatientAuth";
+import { useSignUpPatient } from "@/lib/hooks/patient/usePatientAuth";
 
 const RegistrationForm = () => {
     const [error, setError] = useState<string>("");
