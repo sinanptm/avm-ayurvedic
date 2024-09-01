@@ -7,7 +7,7 @@ import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/lib/query-provider";
-import { AuthProvider } from "@/lib/hooks/useAuth";
+import { AuthProvider } from "@/lib/auth-provider";
 
 const inter = Plus_Jakarta_Sans({
    subsets: ["latin"],
