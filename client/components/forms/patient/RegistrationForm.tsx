@@ -13,9 +13,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
 import { BloodTypes, DiseaseOptions, GenderOptions } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
+import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
 
 const RegistrationForm = () => {
-   const [isLoading, setIsLoading] = useState<boolean>(false);
+   const { data: patientData, isLoading } = useGetPatientProfile();
    const form = useForm<z.infer<typeof registerFormValidation>>({
       resolver: zodResolver(registerFormValidation),
       defaultValues: {
@@ -28,16 +29,11 @@ const RegistrationForm = () => {
          privacyConsent: false,
          bloodType: "O+",
          disease: "none",
+         phone: "",
       },
    });
 
-   const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {
-      setIsLoading(true);
-      setTimeout(() => {
-         console.log(values);
-         setIsLoading(false);
-      }, 2000);
-   };
+   const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {};
 
    return (
       <Form {...form}>
@@ -46,7 +42,6 @@ const RegistrationForm = () => {
                <h3 className="header">Personal information 🧑‍⚕️</h3>
             </section>
 
-            {/* BirthDate & Gender */}
             <div className="flex flex-col gap-6 xl:flex-row">
                <CustomFormField
                   fieldType={FormFieldType.DATE_PICKER}
@@ -110,7 +105,17 @@ const RegistrationForm = () => {
                   ))}
                </CustomFormField>
             </div>
-            {/* Address and occupation */}
+
+            {!patientData?.phone && !isLoading && (
+               <CustomFormField
+                  control={form.control}
+                  fieldType={FormFieldType.PHONE_INPUT}
+                  name="phone"
+                  label="Phone Number *"
+                  placeholder="+91 9080383948"
+               />
+            )}
+
             <div className="flex flex-col gap-6 xl:flex-row">
                <CustomFormField
                   control={form.control}
