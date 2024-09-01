@@ -38,7 +38,7 @@ const SignFromSection = () => {
                   />
                   <SigninForm />
                   <div className="text-14-regular py-12 flex justify-between">
-                     <p className="justify-items-end text-dark-600 xl:text-left">© 2024 AVM Ayurveda&apos;s</p>
+                     <p className="justify-items-end text-dark-600 xl:text-left">© {new Date().getFullYear()} AVM Ayurvedic.</p>
                      <Link href={"/admin"} className="text-green-500 text-xs">
                         Staff-Login
                      </Link>

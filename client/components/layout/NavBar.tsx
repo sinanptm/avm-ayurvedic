@@ -90,7 +90,7 @@ export const NavBar = () => {
                </Button>
             </SheetTrigger>
             <SheetContent side="left">
-               <SheetDescription>Navigation Menu</SheetDescription>
+               <SheetDescription></SheetDescription>
                <SheetTitle>
                   <span className="sr-only">Navigation Menu</span>
                </SheetTitle>

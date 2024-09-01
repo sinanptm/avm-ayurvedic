@@ -36,7 +36,7 @@ const SignUnFormSection = () => {
                      className="mb-12 h-10 w-fit"
                   />
                   <SignupForm />
-                  <p className="copyright py-12">© 2024 AVM Ayurveda&apos;ss</p>
+                  <p className="copyright py-12">© {new Date().getFullYear()} AVM Ayurvedic.</p>
                </div>
             </section>
 

@@ -21,7 +21,7 @@ const Appointment = () => {
                />
                <AppointmentForm />
 
-               <p className="copyright py-8">© 2024 AVM Ayurveda&apos;ss</p>
+               <p className="copyright py-8">© {new Date().getFullYear()} AVM Ayurvedic.</p>
             </div>
          </section>
 
