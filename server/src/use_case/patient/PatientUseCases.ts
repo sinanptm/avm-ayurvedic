@@ -11,7 +11,7 @@ export default class PatientUseCase {
       return patient;
    }
 
-   async addPersonalInformation(id: string, patient: IPatient): Promise<void> {
+   async updateProfile(id: string, patient: IPatient): Promise<void> {
       const existingInfo = await this.patientRepository.findById(id);
       if (!existingInfo) throw new Error("Patient Not Found");
       await this.patientRepository.findByIdAndUpdate(id, patient);

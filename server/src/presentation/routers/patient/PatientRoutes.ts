@@ -9,9 +9,9 @@ const patientRepository = new PatientRepository();
 const patientUseCase = new PatientUseCase(patientRepository);
 const patientController = new PatientController(patientUseCase);
 
-const { addPersonalInformation, getProfile } = patientController;
+const { updateProfile, getProfile } = patientController;
 
 routes.get("/profile", getProfile);
-routes.put("/personal-information", addPersonalInformation);
+routes.put("/profile", updateProfile);
 
 export default routes;
