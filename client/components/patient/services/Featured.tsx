@@ -87,7 +87,7 @@ const Featured = () => {
                </CardHeader>
                <CardContent>
                   <p className="mb-4">
-                     Our Ayurvedic supplements provide a natural way to support your body's health and vitality. They are 
+                     Our Ayurvedic supplements provide a natural way to support your body&apos;s health and vitality. They are 
                      crafted to enhance your overall wellness, boost immunity, and provide essential nutrients.
                   </p>
                   <Button variant={"outline"} className="cursor-pointer">
