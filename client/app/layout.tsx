@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "../styles/globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { ThemeProvider } from "@/lib/providers/ThemeProvider";
 import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
-import QueryProvider from "@/lib/query-provider";
-import { AuthProvider } from "@/lib/auth-provider";
+import QueryProvider from "@/lib/providers/query-provider";
+import { AuthProvider } from "@/lib/providers/auth-provider";
 
 const inter = Plus_Jakarta_Sans({
    subsets: ["latin"],

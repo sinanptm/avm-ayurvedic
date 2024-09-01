@@ -8,9 +8,9 @@ import {
    signUpPatient,
    updatePassword,
    validateOtpPatient,
-} from "@/services/api/patientAuthApis";
+} from "@/lib/services/api/patientAuthApis";
 import { AxiosError } from "axios";
-import { logoutPatient } from "@/services/api/patientProtectedApis";
+import { logoutPatient } from "@/lib/services/api/patientProtectedApis";
 
 type MessageResponse = {
    message: string;
