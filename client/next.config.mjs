@@ -6,6 +6,16 @@ const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   // webpack(config) {
   //   // Enable verbose logging for debugging the PackFileCache strategy
   //   config.infrastructureLogging = {

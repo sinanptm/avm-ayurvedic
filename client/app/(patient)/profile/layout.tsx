@@ -21,6 +21,9 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
       return <ProfileSkeleton />;
    }
 
+   console.log(patientData);
+   
+
    if (isError) {
       notFound();
    }

@@ -32,6 +32,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       children,
       dateFormat,
       Icon,
+      showDateText,
    } = props;
 
    const renderIcon = () => {
@@ -85,7 +86,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                      dateFormat={dateFormat ?? "dd/MM/yyyy"}
                      wrapperClassName="date-picker"
                      {...(isLimited ? { minDate: new Date() } : {})}
-                  />
+                  >
+                     <div className="text-red-700">{showDateText}</div>
+                  </ReactDatePicker>
                </FormControl>
             </div>
          );

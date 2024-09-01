@@ -64,6 +64,6 @@ export const getPatientProfile = async () => {
 };
 
 export const updatePatientProfile = async (patient: IPatient) => {
-   const response = await axiosInstance.put("/profile", patient);
+   const response = await axiosInstance.put("/profile", {patient});
    return response.data;
 };

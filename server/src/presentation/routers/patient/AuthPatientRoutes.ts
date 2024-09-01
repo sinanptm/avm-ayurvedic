@@ -29,10 +29,6 @@ const authPatientUseCase = new AuthPatientUseCase(
 // Controllers
 const authPatientController = new AuthPatientController(authPatientUseCase);
 
-// Middleware
-const patientAuthMiddleware = new PatientAuthMiddleware(tokenService);
-
-
 route.post("/register", (req, res, next) => {
    authPatientController.register(req, res, next);
 });
@@ -57,7 +53,7 @@ route.post("/forget-password", (req, res, next) => {
 route.patch("/update-password", (req, res, next) => {
    authPatientController.updatePassword(req, res, next);
 });
-route.post("/logout", patientAuthMiddleware.exec, (req, res, next) => {
+route.post("/logout", (req, res, next) => {
    authPatientController.logout(req, res, next);
 });
 

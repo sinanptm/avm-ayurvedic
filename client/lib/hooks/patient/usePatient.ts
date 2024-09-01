@@ -10,10 +10,10 @@ export const useGetPatientProfile = () => {
     });
 }
 
-export const useUpdatePatientProfile = ()=>{
-    return useMutation<MessageResponse,AxiosError<ErrorResponse>,IPatient>({
-        mutationFn: updatePatientProfile,
-        onError:(error)=>{
+export const useUpdatePatientProfile = () => {
+    return useMutation<MessageResponse, AxiosError<ErrorResponse>, IPatient>({
+        mutationFn: (patient) => updatePatientProfile(patient),
+        onError: (error) => {
             console.log('Error in Updating Patient', error);
         }
     })

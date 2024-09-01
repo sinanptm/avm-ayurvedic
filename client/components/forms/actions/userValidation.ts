@@ -63,11 +63,7 @@ export const registerFormValidation = z.object({
       }),
    address: z.string().trim().min(4, "Address is required"),
    occupation: z.string().trim().min(3, "Occupation is required"),
-   phone: z
-      .string()
-      .trim()
-      .min(10, "Phone number must be at least 10 digits")
-      .max(15, "Phone number must be at most 15 digits"),
+   phone: z.string()
 });
 
 export const appointmentFormValidation = z.object({

@@ -29,6 +29,7 @@ export interface CustomProps {
    availableTimes?: string[];
    Icon?: FC<{ className?: string }>;
    doctor?: string;
+   showDateText?:string;
 }
 
 

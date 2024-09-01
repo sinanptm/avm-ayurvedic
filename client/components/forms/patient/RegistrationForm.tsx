@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { FormFieldType } from "@/types/fromTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,9 +10,11 @@ import SubmitButton from "@/components/common/SubmitButton";
 import { registerFormValidation } from "@/components/forms/actions/userValidation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
-import { BloodTypes, DiseaseOptions, GenderOptions } from "@/constants";
+import { BloodTypes, GenderOptions } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
 import { useGetPatientProfile, useUpdatePatientProfile } from "@/lib/hooks/patient/usePatient";
+import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
 
 const RegistrationForm = () => {
    const form = useForm<z.infer<typeof registerFormValidation>>({
@@ -33,14 +34,36 @@ const RegistrationForm = () => {
    const { data: patientData, isLoading } = useGetPatientProfile();
    const { mutate: registerInfo, isPending } = useUpdatePatientProfile();
 
-   const onSubmit = async (values: z.infer<typeof registerFormValidation>) => {
-      registerInfo({
-         address: values.address,
-         bloodGroup: values.bloodType,
-         dob: values.birthDate,
-         phone: values.phone.trim() !== "" ? values.phone : undefined,
-         occupation:values.occupation,
-      });
+   const router = useRouter();
+
+   const onSubmit = (values: z.infer<typeof registerFormValidation>) => {
+      registerInfo(
+         {
+            address: values.address,
+            bloodGroup: values.bloodType,
+            dob: values.birthDate,
+            phone: values.phone.trim() !== "" ? values.phone : undefined,
+            occupation: values.occupation,
+         },
+         {
+            onSuccess: () => {
+               toast({
+                  title: "Successfully Registered ✅",
+                  description: "Your details have been updated",
+                  variant: "success",
+               });
+               router.push("/");
+            },
+            onError: (error) => {
+               toast({
+                  title: "Error in Submitting ❌",
+                  description: error.response?.data.message,
+                  variant: "destructive",
+               });
+               console.log(error);
+            },
+         }
+      );
    };
 
    return (
@@ -56,6 +79,7 @@ const RegistrationForm = () => {
                   control={form.control}
                   name="birthDate"
                   label="Date of birth *"
+                  showDateText="Please Select A Date Before Today"
                />
 
                <CustomFormField
