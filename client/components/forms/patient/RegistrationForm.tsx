@@ -44,6 +44,7 @@ const RegistrationForm = () => {
             dob: values.birthDate,
             phone: values.phone.trim() !== "" ? values.phone : undefined,
             occupation: values.occupation,
+            gender:values.gender
          },
          {
             onSuccess: () => {

@@ -39,6 +39,7 @@ export interface IPatient {
    address?: string;
    profile?:string;
    occupation?:string;
+   gender?:"Male"|"Female"|"Other"
 }
 
 

@@ -19,10 +19,7 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
    const { data: patientData, isLoading, isError } = useGetPatientProfile();
    if (isLoading) {
       return <ProfileSkeleton />;
-   }
-
-   console.log(patientData);
-   
+   }   
 
    if (isError) {
       notFound();

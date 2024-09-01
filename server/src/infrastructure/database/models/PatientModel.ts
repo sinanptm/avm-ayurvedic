@@ -15,6 +15,7 @@ const patientSchema = new Schema<IPatient>(
       token: { type: String },
       profile: { type: String },
       occupation: { type: String },
+      gender: { type: String, enum: ["Male", "Female", "Other"] },
    },
    {
       timestamps: true,

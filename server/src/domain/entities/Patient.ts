@@ -13,5 +13,6 @@ export interface IPatient {
    createdAt?:string;
    updatedAt?:string;
    profile?:string;
+   gender?:"Male"|"Female"|"Other"
    occupation?:string;
 }

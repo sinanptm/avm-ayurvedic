@@ -1,6 +1,12 @@
 import { Card, CardContent } from '@/components/ui/card'
+import { IPatient } from '@/types'
 
-const PersonalInformation = () => {
+type Props = {
+  patientData:IPatient;
+  isLoading:boolean;
+}
+
+const PersonalInformation = ({patientData,}:Props) => {
   return (
     <Card>
     <CardContent className="p-4 sm:p-6">
