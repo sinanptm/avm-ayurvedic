@@ -30,18 +30,20 @@ export default class PatientController {
 
    async updateProfileImage(req: CustomRequest, res: Response, next: NextFunction) {
       try {
-         //  const imageFile = req.file
-         //  console.log(imageFile);
-          
-         //  if (!imageFile) {
-         //      return res.status(400).json({ message: 'No image provided' });
-         //  }
-  
-         //  await this.patientUseCase.updateProfile(req.patient?.id!, imageFile);
-          res.status(200).json({ message: 'success' });
+         const file = req.file;
+         const { id } = req.patient!;
+
+         if (!file) {
+            return res.status(400).json({ message: "No file uploaded" });
+         }
+
+         const filePath = file.path;
+         
+         await this.patientUseCase.updateProfileImage(id, filePath);
+
+         res.status(200).json({ message: "Profile image updated successfully" });
       } catch (error) {
-          next(error);
+         next(error);
       }
-  }
-  
+   }
 }

@@ -18,7 +18,6 @@ export default class PatientUseCase {
    }
 
    async updateProfileImage(id:string,image:string):Promise<void>{
-      console.log(image);
       await this.patientRepository.findById(id)
    }
 }

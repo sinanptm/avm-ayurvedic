@@ -70,7 +70,7 @@ export const updatePatientProfile = async (patient: IPatient) => {
 
 export const updatePatientProfileImage = async (image: File) => {
    const formData = new FormData();
-   formData.append('image', image);
+   formData.append('profile', image);
 
    const response = await axiosInstance.put('/profile-image', formData, {
        headers: {

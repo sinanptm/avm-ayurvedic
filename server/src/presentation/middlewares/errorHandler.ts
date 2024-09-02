@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
+import { MulterError } from "multer";
 
 export default class ErrorHandler {
-   exec(err: any, req: Request, res: Response ) {
+   exec(err: any, req: Request, res: Response) {
       console.error(err);
 
       const statusCode = err.statusCode || 500;
@@ -21,6 +22,10 @@ export default class ErrorHandler {
          return res.status(404).json({ message: err.message });
       } else if (err.message === " getaddrinfo ENOTFOUND smtp.gmail.com") {
          return res.status(500).json({ message: "We are Having Issue with Email Service" });
+      }
+
+      if (err instanceof MulterError) {
+         return res.status(400).json({ message: err.message });
       }
 
       res.status(statusCode).json({
