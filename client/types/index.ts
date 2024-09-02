@@ -17,14 +17,12 @@ export type AnimatedCardProps = {
    children?: ReactNode;
 };
 
-
 export type SideBarLink = {
-   label:string;
-   href:string;
-   icon:ReactNode;
-   admin?:boolean;
+   label: string;
+   href: string;
+   icon: ReactNode;
+   admin?: boolean;
 };
-
 
 export interface IPatient {
    _id?: string;
@@ -32,20 +30,19 @@ export interface IPatient {
    email?: string;
    password?: string;
    phone?: string;
-   bloodGroup?: "A+"| "A-"| "B+"| "B-"| "O+"| "O-"| "AB+"| "AB-";
+   bloodGroup?: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
    dob?: Date;
    isSubscribed?: boolean;
    isBlocked?: false;
    address?: string;
-   profile?:string;
-   occupation?:string;
-   gender?:"Male"|"Female"|"Other"
+   profile?: string;
+   occupation?: string;
+   gender?: "Male" | "Female" | "Other";
 }
 
-
 export interface ErrorResponse {
-   message?:string;
-   stack?:string;
+   message?: string;
+   stack?: string;
 }
 
 export type MessageResponse = {

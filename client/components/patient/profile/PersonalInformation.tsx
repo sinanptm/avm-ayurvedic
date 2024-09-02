@@ -9,10 +9,11 @@ import UpdateProfilePatient from "@/components/models/UpdateProfilePatient";
 type Props = {
    patientData: IPatient;
    isLoading: boolean;
+   refetch:any;
 };
 
 
-export default function PersonalInformation({ patientData, isLoading }: Props) {
+export default function PersonalInformation({ patientData, isLoading,refetch }: Props) {
    const infoItems = [
       {
          icon: "/assets/icons/calendar.svg",
@@ -59,7 +60,7 @@ export default function PersonalInformation({ patientData, isLoading }: Props) {
                   </div>
                </div>
             ))}
-            <UpdateProfilePatient open={isOpen} setOpen={setIsOpen} patientData={patientData} isFetching={isLoading} />
+            <UpdateProfilePatient open={isOpen} setOpen={setIsOpen} patientData={patientData} refetch={refetch} />
          </CardContent>
       </Card>
    );

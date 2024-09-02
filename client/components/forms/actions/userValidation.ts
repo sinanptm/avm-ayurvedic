@@ -42,7 +42,7 @@ export const signupFormValidation = z
 export const registerFormValidation = z.object({
    birthDate: z.coerce.date().max(new Date(Date.now()), "Please select a birth date before todays."),
    gender: z.enum(["Male", "Female", "Other"]),
-   bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
+   bloodGroup: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
    privacyConsent: z
       .boolean()
       .default(false)
@@ -67,9 +67,9 @@ export const registerFormValidation = z.object({
 });
 
 export const updateProfileFormValidation = z.object({
-   birthDate: z.coerce.date().max(new Date(Date.now()), "Please select a birth date before todays."),
+   dob: z.coerce.date().max(new Date(Date.now()), "Please select a birth date before todays."),
    gender: z.enum(["Male", "Female", "Other"]),
-   bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
+   bloodGroup: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
    address: z.string().trim().min(4, "Address is required"),
    occupation: z.string().trim().min(3, "Occupation is required"),
    phone: z.string().min(6,'Please Enter a Valid Phone Number'),

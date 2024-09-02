@@ -27,7 +27,7 @@ const RegistrationForm = () => {
          concent: false,
          disclosureConsent: false,
          privacyConsent: false,
-         bloodType: "O+",
+         bloodGroup: "O+",
          phone: "",
       },
    });
@@ -40,7 +40,7 @@ const RegistrationForm = () => {
       registerInfo(
          {
             address: values.address,
-            bloodGroup: values.bloodType,
+            bloodGroup: values.bloodGroup,
             dob: values.birthDate,
             phone: values.phone.trim() !== "" ? values.phone : undefined,
             occupation: values.occupation,

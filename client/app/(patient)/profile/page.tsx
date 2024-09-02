@@ -5,10 +5,10 @@ import AllergiesAndConditions from "@/components/patient/profile/AllergiesAndCon
 import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
 
 export default function PatientProfilePage() {
-  const { data: patientData, isLoading, isError } = useGetPatientProfile();
+  const { data: patientData, isLoading, refetch } = useGetPatientProfile();
    return (
      <>
-            <PersonalInformation patientData={patientData!} isLoading={isLoading} />
+            <PersonalInformation patientData={patientData!}  isLoading={isLoading} refetch={refetch} />
             <UpcomingAppointment />
             <AllergiesAndConditions />
      </>

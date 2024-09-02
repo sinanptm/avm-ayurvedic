@@ -1,12 +1,7 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
-import {
-   AlertDialog,
-   AlertDialogContent,
-   AlertDialogHeader,
-   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Form, FormControl } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,35 +15,54 @@ import { BloodTypes, GenderOptions } from "@/constants";
 import { SelectItem } from "../ui/select";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
+import { useUpdatePatientProfile } from "@/lib/hooks/patient/usePatient";
+import { toast } from "../ui/use-toast";
 
 type Props = {
    open: boolean;
    setOpen: Dispatch<SetStateAction<boolean>>;
    patientData: IPatient;
-   isFetching: boolean;
+   refetch: any;
 };
 
-const UpdateProfilePatient = ({ open, setOpen, isFetching, patientData }: Props) => {
+const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) => {
    const form = useForm<z.infer<typeof updateProfileFormValidation>>({
       resolver: zodResolver(updateProfileFormValidation),
       defaultValues: {
          address: patientData.address,
-         birthDate: patientData.dob,
-         bloodType: patientData.bloodGroup,
+         dob: patientData.dob,
+         bloodGroup: patientData.bloodGroup,
          gender: patientData.gender,
          occupation: patientData.occupation,
          phone: patientData.phone,
          name: patientData.name,
       },
    });
+   const { mutate: updateProfile, isPending } = useUpdatePatientProfile();
    const closeModal = () => {
       setOpen(!open);
    };
-   
+
    const onSubmit = (data: z.infer<typeof updateProfileFormValidation>) => {
-      console.log(data);
-      closeModal();
-   };
+      updateProfile(data, {
+         onSuccess: () => {
+            closeModal();
+            toast({
+               title: "Profile Updated 🎉",
+               description: "Personal Information has Updated",
+               variant: "success",
+            });
+            refetch();
+         },
+         onError: (error) => {
+            toast({
+               title: "Profile Updating Failed ❌",
+               description: error.response?.data.message || "Personal Information Failed",
+               variant: "destructive",
+            });
+         },
+      });
+   };   
 
    return (
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -92,7 +106,7 @@ const UpdateProfilePatient = ({ open, setOpen, isFetching, patientData }: Props)
                            <CustomFormField
                               fieldType={FormFieldType.DATE_PICKER}
                               control={form.control}
-                              name="birthDate"
+                              name="dob"
                               label="Date of birth *"
                               showDateText="Please Select A Date Before Today"
                            />
@@ -157,7 +171,7 @@ const UpdateProfilePatient = ({ open, setOpen, isFetching, patientData }: Props)
                            />
                         </div>
                         <div className="w-full">
-                           <SubmitButton isLoading={false}>Update</SubmitButton>
+                           <SubmitButton isLoading={isPending}>Update</SubmitButton>
                         </div>
                      </div>
                   </form>
