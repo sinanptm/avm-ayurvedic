@@ -1,14 +1,11 @@
 "use client"
 
+import { useState } from "react";
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-
-interface IPatient {
-  name: string
-  phone: string
-  profile: string
-}
+import { IPatient } from "@/types"
+import { Input } from "@/components/ui/input"
 
 interface Props {
   setSection: (state: "profile" | "appointments" | "records") => void
@@ -16,8 +13,21 @@ interface Props {
 }
 
 export default function NavSection({ setSection, patientData }: Props) {
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+
   const handleClick = (path: "profile" | "appointments" | "records") => {
     setSection(path)
+  }
+
+  const handleUploadClick = () => {
+    setIsUploadVisible(!isUploadVisible);
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      
+    }
   }
 
   return (
@@ -32,13 +42,35 @@ export default function NavSection({ setSection, patientData }: Props) {
         />
         <div className="absolute inset-0 bg-black bg-opacity-40" />
         <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <Image
-            src={patientData.profile || '/assets/icons/user.svg'}
-            alt="Patient profile picture"
-            width={100}
-            height={100}
-            className="rounded-full border-4 border-white"
-          />
+          <div className="relative">
+            <Image
+              src={patientData.profile || '/assets/icons/user.svg'}
+              alt="Patient profile picture"
+              width={100}
+              height={100}
+              className="rounded-full border-4 border-white"
+            />
+            <Button
+              variant="outline"
+              className="absolute bottom-0 right-0 mb-2 mr-2 p-2 bg-white rounded-full"
+              onClick={handleUploadClick}
+            >
+              <Image
+                src="/assets/icons/upload.svg"
+                alt="Upload"
+                width={24}
+                height={24}
+              />
+            </Button>
+            {isUploadVisible && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="absolute bottom-0 right-0 mb-2 mr-2 opacity-0"
+              />
+            )}
+          </div>
           <div className="text-center sm:text-left">
             <h1 className="text-2xl font-bold">{patientData.name}</h1>
             <p>{patientData.phone}</p>

@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { IPatient } from "@/types"
 import Image from "next/image"
-import { PencilIcon } from "lucide-react"
 import { useState } from "react"
 
 type Props = {
