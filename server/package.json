@@ -6,6 +6,7 @@
    "scripts": {
       "build": "tsc",
       "start": "ts-node src/index.ts",
+      "serve":"nodemon dist/index.js",
       "dev": "nodemon src/index.ts",
       "test": "echo \"No tests specified\" && exit 0"
    },
