@@ -29,14 +29,6 @@ type Props = {
 };
 
 const UpdateProfilePatient = ({ open, setOpen, isFetching, patientData }: Props) => {
-   const closeModal = () => {
-      setOpen(!open);
-   };
-
-   if (isFetching) {
-      return <p>Loading...</p>;
-   }
-
    const form = useForm<z.infer<typeof updateProfileFormValidation>>({
       resolver: zodResolver(updateProfileFormValidation),
       defaultValues: {
@@ -49,7 +41,10 @@ const UpdateProfilePatient = ({ open, setOpen, isFetching, patientData }: Props)
          name: patientData.name,
       },
    });
-
+   const closeModal = () => {
+      setOpen(!open);
+   };
+   
    const onSubmit = (data: z.infer<typeof updateProfileFormValidation>) => {
       console.log(data);
       closeModal();
