@@ -32,7 +32,7 @@ export interface IPatient {
    email?: string;
    password?: string;
    phone?: string;
-   bloodGroup?: string;
+   bloodGroup?: "A+"| "A-"| "B+"| "B-"| "O+"| "O-"| "AB+"| "AB-";
    dob?: Date;
    isSubscribed?: boolean;
    isBlocked?: false;

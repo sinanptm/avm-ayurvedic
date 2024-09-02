@@ -66,6 +66,16 @@ export const registerFormValidation = z.object({
    phone: z.string()
 });
 
+export const updateProfileFormValidation = z.object({
+   birthDate: z.coerce.date().max(new Date(Date.now()), "Please select a birth date before todays."),
+   gender: z.enum(["Male", "Female", "Other"]),
+   bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
+   address: z.string().trim().min(4, "Address is required"),
+   occupation: z.string().trim().min(3, "Occupation is required"),
+   phone: z.string().min(6,'Please Enter a Valid Phone Number'),
+   name:z.string().min(3,"Name is Required")
+});
+
 export const appointmentFormValidation = z.object({
    appointmentType: z.enum(["outpatient", "inpatient"]),
    reason: z.string().trim().min(5, "Reason must be at least 5 characters long"),

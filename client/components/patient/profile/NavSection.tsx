@@ -5,7 +5,6 @@ import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { IPatient } from "@/types"
-import { Input } from "@/components/ui/input"
 
 interface Props {
   setSection: (state: "profile" | "appointments" | "records") => void
