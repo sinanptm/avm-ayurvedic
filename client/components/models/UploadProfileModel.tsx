@@ -8,16 +8,29 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../common/SubmitButton";
-import { useUpdatePatientProfile } from "@/lib/hooks/patient/usePatient";
 import { IPatient } from "@/types";
 import { Input } from "../ui/input";
-import { ALLOWED_FILE_TYPES, uploadProfileImageSchema } from "../forms/actions/userValidation";
 
 type Props = {
    open: boolean;
    setOpen: Dispatch<SetStateAction<boolean>>;
    patientData: IPatient;
 };
+
+
+const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+const uploadProfileImageSchema = z.object({
+   image: z
+      .instanceof(File)
+      .refine((file) => ALLOWED_FILE_TYPES.includes(file.type), {
+         message: "Only JPEG and PNG files are allowed",
+      })
+      .refine((file) => file.size <= MAX_FILE_SIZE, {
+         message: "File size should be less than 5MB",
+      }),
+});
 
 const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
    const [imagePreview, setImagePreview] = useState<string>(patientData.profile || "/assets/icons/close.svg");
