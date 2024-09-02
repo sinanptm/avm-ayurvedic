@@ -20,7 +20,7 @@ export default class PatientController {
          const { id } = req.patient!;
          const { patient } = req.body;
          if (!patient) return res.status(400).json({ message: "Patient Data is Required" });
-         
+
          await this.patientUseCase.updateProfile(id, patient);
          res.status(200).json({ message: "Personal Information Added Successfully" });
       } catch (error) {
@@ -32,18 +32,17 @@ export default class PatientController {
       try {
          const file = req.file;
          const { id } = req.patient!;
-
+   
          if (!file) {
             return res.status(400).json({ message: "No file uploaded" });
          }
-
-         const filePath = file.path;
-         
-         await this.patientUseCase.updateProfileImage(id, filePath);
-
+   
+         await this.patientUseCase.updateProfileImage(id, file.buffer, file.mimetype);
+   
          res.status(200).json({ message: "Profile image updated successfully" });
       } catch (error) {
          next(error);
       }
    }
+   
 }

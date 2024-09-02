@@ -6,14 +6,7 @@ export default class MulterMiddleware {
    private storage: StorageEngine;
 
    constructor() {
-      this.storage = multer.diskStorage({
-         destination: (req, file, cb) => {
-            cb(null, path.join(__dirname, "../../../public/uploads"));
-         },
-         filename: (req, file, cb) => {
-            cb(null, `${Date.now()}-${file.originalname}`);
-         },
-      });
+      this.storage = multer.memoryStorage();  
    }
 
    public exec() {
@@ -21,12 +14,12 @@ export default class MulterMiddleware {
          if (file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/svg+xml") {
             cb(null, true);
          } else {
-            cb(new Error(`Unsupported file type: ${file.mimetype}. Only JPEG and PNG are allowed.`));
+            cb(new Error(`Unsupported file type: ${file.mimetype}. Only JPEG, PNG, and SVG are allowed.`));
          }
       };
 
       return multer({
-         storage: this.storage,
+         storage: this.storage, 
          limits: {
             fileSize: 5 * 1024 * 1024,
          },

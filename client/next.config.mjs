@@ -14,6 +14,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'avm-ayurvedic.s3.eu-north-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   // webpack(config) {
