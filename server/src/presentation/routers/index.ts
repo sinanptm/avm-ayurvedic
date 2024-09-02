@@ -1,18 +1,20 @@
 import express from "express";
 import AuthRoutes from "./patient/AuthPatientRoutes";
 import ProtectedRoutes from "./patient/PatientRoutes";
-import { errorHandler } from "../middlewares/errorHandler";
+import ErrorHandler from "../middlewares/ErrorHandler";
 import TokenService from "../../infrastructure/services/TokenService";
 import PatientAuthMiddleware from "../middlewares/PatientAuthMiddleware";
 
 const app = express();
 const tokenService = new TokenService();
-const authenticatePatient = new PatientAuthMiddleware(tokenService);
+const authenticate = new PatientAuthMiddleware(tokenService);
+const errorHandler = new ErrorHandler();
 
-const { exec:authenticate } = authenticatePatient;
 
 app.use("/patient/auth", AuthRoutes);
-app.use("/patient", authenticate, ProtectedRoutes);
-app.use(errorHandler);
+app.use("/patient", authenticate.exec, ProtectedRoutes);
+
+
+app.use(errorHandler.exec);
 
 export default app;
