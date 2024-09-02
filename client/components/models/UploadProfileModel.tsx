@@ -2,7 +2,12 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import {
+   AlertDialog,
+   AlertDialogContent,
+   AlertDialogHeader,
+   AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Form } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,16 +22,14 @@ type Props = {
    patientData: IPatient;
 };
 
-
-const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/"];
-const MAX_FILE_SIZE = 5 * 1024 * 1024; 
-
+const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
-   const [imagePreview, setImagePreview] = useState<string>(patientData.profile || "/assets/icons/close.svg");
-   if(typeof window!=='undefined'){
-      return <div>loading.....</div>
-   }
+   const [imagePreview, setImagePreview] = useState<string>(
+      patientData.profile || "/assets/icons/close.svg"
+   );
+
    const uploadProfileImageSchema = z.object({
       image: z
          .instanceof(File)
@@ -41,13 +44,13 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
    const form = useForm<z.infer<typeof uploadProfileImageSchema>>({
       resolver: zodResolver(uploadProfileImageSchema),
    });
+
    const closeModal = () => {
       setOpen(false);
    };
 
    const onSubmit = (data: z.infer<typeof uploadProfileImageSchema>) => {
       console.log(data);
-      
    };
 
    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +60,10 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
          form.setValue("image", file);
       }
    };
+
+   if (typeof window === "undefined") {
+      return <div>loading.....</div>;
+   }
 
    return (
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -75,7 +82,10 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
                </AlertDialogTitle>
             </AlertDialogHeader>
             <Form {...form}>
-               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+               <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4"
+               >
                   <div className="flex flex-col gap-4">
                      <div className="flex flex-col gap-2">
                         <label htmlFor="image" className="font-semibold">
