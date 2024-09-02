@@ -19,20 +19,23 @@ type Props = {
 
 
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/"];
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; 
 
-const uploadProfileImageSchema = z.object({
-   image: z
-      .instanceof(File)
-      .refine((file) => ALLOWED_FILE_TYPES.includes(file.type), {
-         message: "Only JPEG and PNG files are allowed",
-      })
-      .refine((file) => file.size <= MAX_FILE_SIZE, {
-         message: "File size should be less than 5MB",
-      }),
-});
 
 const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
+   if(typeof window!=='undefined'){
+      return <div>loading.....</div>
+   }
+   const uploadProfileImageSchema = z.object({
+      image: z
+         .instanceof(File)
+         .refine((file) => ALLOWED_FILE_TYPES.includes(file.type), {
+            message: "Only JPEG and PNG files are allowed",
+         })
+         .refine((file) => file.size <= MAX_FILE_SIZE, {
+            message: "File size should be less than 5MB",
+         }),
+   });
    const [imagePreview, setImagePreview] = useState<string>(patientData.profile || "/assets/icons/close.svg");
 
    const form = useForm<z.infer<typeof uploadProfileImageSchema>>({
