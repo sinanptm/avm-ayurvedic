@@ -76,6 +76,21 @@ export const updateProfileFormValidation = z.object({
    name:z.string().min(3,"Name is Required")
 });
 
+export const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+export const uploadProfileImageSchema = z.object({
+   image: z
+      .instanceof(File)
+      .refine((file) => ALLOWED_FILE_TYPES.includes(file.type), {
+         message: "Only JPEG and PNG files are allowed",
+      })
+      .refine((file) => file.size <= MAX_FILE_SIZE, {
+         message: "File size should be less than 5MB",
+      }),
+});
+
+
 export const appointmentFormValidation = z.object({
    appointmentType: z.enum(["outpatient", "inpatient"]),
    reason: z.string().trim().min(5, "Reason must be at least 5 characters long"),

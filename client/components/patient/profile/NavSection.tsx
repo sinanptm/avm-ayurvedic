@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { IPatient } from "@/types"
+import UploadProfileModel from "@/components/models/UploadProfileModel";
 
 interface Props {
   setSection: (state: "profile" | "appointments" | "records") => void
@@ -12,22 +13,16 @@ interface Props {
 }
 
 export default function NavSection({ setSection, patientData }: Props) {
-  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const [isFileModel, setFileModel] = useState(false);
 
   const handleClick = (path: "profile" | "appointments" | "records") => {
     setSection(path)
-  }
+  };
 
   const handleUploadClick = () => {
-    setIsUploadVisible(!isUploadVisible);
-  }
+    setFileModel(!isFileModel);
+  };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      
-    }
-  }
 
   return (
     <Card className="overflow-hidden">
@@ -61,14 +56,6 @@ export default function NavSection({ setSection, patientData }: Props) {
                 height={24}
               />
             </Button>
-            {isUploadVisible && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="absolute bottom-0 right-0 mb-2 mr-2 opacity-0"
-              />
-            )}
           </div>
           <div className="text-center sm:text-left">
             <h1 className="text-2xl font-bold">{patientData.name}</h1>
@@ -89,6 +76,7 @@ export default function NavSection({ setSection, patientData }: Props) {
           </Button>
         </div>
       </CardContent>
+      <UploadProfileModel open={isFileModel} setOpen={setFileModel} patientData={patientData}  />
     </Card>
   )
 }
