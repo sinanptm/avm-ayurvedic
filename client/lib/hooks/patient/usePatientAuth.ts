@@ -84,12 +84,8 @@ export const useForgetPassword = () => {
 };
 
 export const useUpdatePassword = () => {
-   return useMutation<
-      MessageResponse,
-      AxiosError<ErrorResponse>,
-      { email: string; oldPassword: string; newPassword: string }
-   >({
-      mutationFn: ({ email, oldPassword, newPassword }) => updatePassword(email, oldPassword, newPassword),
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, { email: string; newPassword: string }>({
+      mutationFn: ({ email, newPassword }) => updatePassword(email, newPassword),
       onError: (error) => {
          console.log("Error in Updating Password", error);
       },

@@ -39,26 +39,32 @@ export const NavBar = () => {
    };
 
    const handleLogoutConfirm = () => {
-      logoutFunc(null, {
-         onSuccess: () => {
-            toast({
-               title: "Logout Successful",
-               description: "We hope to see you again soon!",
-               variant: "info",
-            });
-            setCredentials("patientToken", "");
-            route.push('/');
-         },
-         onError: () => {
-            toast({
-               title: "Logout Failed",
-               description: "An error occurred during logout. Please try again.",
-               variant: "destructive",
-            });
-            logout("patientToken");
-         },
-      });
-      setIsLogoutDialogOpen(false);
+      try {
+         logoutFunc(null, {
+            onSuccess: () => {
+               toast({
+                  title: "Logout Successful",
+                  description: "We hope to see you again soon!",
+                  variant: "info",
+               });
+               setCredentials("patientToken", "");
+               route.push('/');
+            },
+            onError: () => {
+               toast({
+                  title: "Logout Failed",
+                  description: "An error occurred during logout. Please try again.",
+                  variant: "destructive",
+               });
+               logout("patientToken");
+            },
+         });
+         setIsLogoutDialogOpen(false);
+         
+      } catch (error) {
+         console.log(error);
+         
+      }
    };
 
    const handleLinkClick = () => {

@@ -15,15 +15,6 @@ import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z
    .object({
-      oldPassword: z
-         .string()
-         .trim()
-         .min(6, "Password must be at least 6 characters long")
-         .max(25, "Password must be at most 25 characters long")
-         .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-         .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-         .regex(/[0-9]/, "Password must contain at least one number")
-         .regex(/[@$!%*?&#]/, "Password must contain at least one special character"),
       newPassword: z
          .string()
          .trim()
@@ -51,7 +42,6 @@ export default function ResetPasswordPage() {
    const form = useForm<FormValues>({
       resolver: zodResolver(formSchema),
       defaultValues: {
-         oldPassword: "",
          newPassword: "",
          confirmPassword: "",
       },
@@ -63,9 +53,8 @@ export default function ResetPasswordPage() {
    const onSubmit = async (values: FormValues) => {
       updatePassword(
          {
-            oldPassword: values.oldPassword,
             newPassword: values.newPassword,
-            email: "muhammedsinan0549@gmail.com",
+            email: otpMail,
          },
          {
             onSuccess: () => {
@@ -100,13 +89,6 @@ export default function ResetPasswordPage() {
                <Form {...form}>
                   <form onSubmit={handleSubmit(onSubmit)}>
                      <CardContent className="space-y-4">
-                        <CustomFormField
-                           control={control}
-                           fieldType={FormFieldType.PASSWORD}
-                           name="oldPassword"
-                           placeholder="Your current password"
-                           label="Current Password"
-                        />
                         <CustomFormField
                            control={control}
                            fieldType={FormFieldType.PASSWORD}

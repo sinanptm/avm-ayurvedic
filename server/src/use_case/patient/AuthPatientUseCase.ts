@@ -30,6 +30,8 @@ export default class LoginPatientUseCase {
       const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundedPatient) throw new Error("Patient Not Found");
 
+      if(!foundedPatient.password) throw new Error("Patient has no Password")
+
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
       if (!isPasswordValid) throw new Error("Invalid Credentials");
 
@@ -109,13 +111,10 @@ export default class LoginPatientUseCase {
       await this.emailService.sendResetMail(email, patient.name!, `${process.env.CLIENT_URL}/signin/reset-password`!);
    }
 
-   async updatePatientPassword(email: string, oldPassword: string, newPassword: string): Promise<void> {
+   async updatePatientPassword(email: string, newPassword: string): Promise<void> {
       const patient = await this.patientRepository.findByEmailWithCredentials(email);
       if (!patient) throw new Error("Patient Not Found");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
-
-      if (!(await this.passwordService.compare(oldPassword!, patient.password!)))
-         throw new Error("Invalid Credentials");
 
       patient.password = await this.passwordService.hash(newPassword);
 

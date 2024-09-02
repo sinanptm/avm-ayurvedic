@@ -27,6 +27,7 @@ export default class AuthPatientController {
    async login(req: Request, res: Response, next: NextFunction) {
       try {
          let patient: IPatient = req.body;
+
          // Input validations
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is required" });
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid email format" });
@@ -34,15 +35,14 @@ export default class AuthPatientController {
 
          const patientDetails = await this.authPatientUseCase.login(patient);
 
-         if (patientDetails) {
-            res.status(200).json({
-               message: `Login successful, OTP sent to email address : ${patientDetails.email}`,
-               email: patientDetails.email,
-            });
-         } else {
-            res.status(204).json({ message: "No further action required" });
-         }
+         res.status(200).json({
+            message: `Login successful, OTP sent to email address : ${patientDetails?.email}`,
+            email: patientDetails?.email,
+         });
       } catch (error: any) {
+         if (error.message === "Patient has no Password") {
+            return res.status(401).json({ message: "Please other Login Methods" });
+         }
          next(error);
       }
    }
@@ -116,15 +116,14 @@ export default class AuthPatientController {
 
    async updatePassword(req: Request, res: Response, next: NextFunction) {
       try {
-         const { email, oldPassword, newPassword } = req.body;
+         const { email, newPassword } = req.body;
 
          if (!email) return res.status(400).json({ message: "Email is Required" });
-         if (!oldPassword.trim()) return res.status(400).json({ message: "Old Password is required" });
          if (!newPassword?.trim()) return res.status(400).json({ message: "New Password is required" });
 
          if (!isValidatePassword(newPassword)) return res.status(422).json({ message: "Password is too week" });
 
-         await this.authPatientUseCase.updatePatientPassword(email, oldPassword, newPassword);
+         await this.authPatientUseCase.updatePatientPassword(email, newPassword);
 
          res.status(200).json({ message: "Password Updated Successfully" });
       } catch (error) {

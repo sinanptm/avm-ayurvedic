@@ -6,7 +6,7 @@ export interface IPatient {
    phone?: string;
    bloodGroup?: string;
    dob?: Date;
-   isSubscribed: boolean;
+   isSubscribed?: boolean;
    isBlocked?: false;
    address?: string;
    token?: string;
