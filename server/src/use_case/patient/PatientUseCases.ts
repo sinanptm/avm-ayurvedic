@@ -16,4 +16,9 @@ export default class PatientUseCase {
       if (!existingInfo) throw new Error("Patient Not Found");
       await this.patientRepository.findByIdAndUpdate(id, patient);
    }
+
+   async updateProfileImage(id:string,image:string):Promise<void>{
+      console.log(image);
+      await this.patientRepository.findById(id)
+   }
 }

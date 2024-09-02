@@ -67,3 +67,15 @@ export const updatePatientProfile = async (patient: IPatient) => {
    const response = await axiosInstance.put("/profile", {patient});
    return response.data;
 };
+
+export const updatePatientProfileImage = async (image: File) => {
+   const formData = new FormData();
+   formData.append('image', image);
+
+   const response = await axiosInstance.put('/profile-image', formData, {
+       headers: {
+           'Content-Type': 'multipart/form-data',
+       },
+   });
+   return response.data;
+}

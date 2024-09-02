@@ -2,12 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
-import {
-   AlertDialog,
-   AlertDialogContent,
-   AlertDialogHeader,
-   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Form } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../common/SubmitButton";
 import { IPatient } from "@/types";
 import { Input } from "../ui/input";
+import { useUpdatePatientProfileImage } from "@/lib/hooks/patient/usePatient";
+import { toast } from "../ui/use-toast";
 
 type Props = {
    open: boolean;
@@ -26,10 +23,6 @@ const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
-   const [imagePreview, setImagePreview] = useState<string>(
-      patientData.profile || "/assets/icons/close.svg"
-   );
-
    const uploadProfileImageSchema = z.object({
       image: z
          .instanceof(File)
@@ -40,10 +33,11 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
             message: "File size should be less than 5MB",
          }),
    });
-
    const form = useForm<z.infer<typeof uploadProfileImageSchema>>({
       resolver: zodResolver(uploadProfileImageSchema),
    });
+   const [imagePreview, setImagePreview] = useState<string>(patientData.profile || "/assets/icons/close.svg");
+   const { mutate: updateProfile, isPending } = useUpdatePatientProfileImage();
 
    const closeModal = () => {
       setOpen(false);
@@ -51,6 +45,25 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
 
    const onSubmit = (data: z.infer<typeof uploadProfileImageSchema>) => {
       console.log(data);
+      updateProfile(
+         { image: data.image },
+         {
+            onSuccess({ message }) {
+               toast({
+                  title: "Profile Update",
+                  variant: "success",
+               });
+               closeModal();
+            },
+            onError: (error) => {
+               toast({
+                  title: "Profile Update",
+                  variant: "destructive",
+                  description: error.response?.data.message,
+               });
+            },
+         }
+      );
    };
 
    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,10 +95,7 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
                </AlertDialogTitle>
             </AlertDialogHeader>
             <Form {...form}>
-               <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
-               >
+               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <div className="flex flex-col gap-4">
                      <div className="flex flex-col gap-2">
                         <label htmlFor="image" className="font-semibold">
@@ -108,7 +118,7 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
                            className="rounded-full border-4 border-white"
                         />
                      </div>
-                     <SubmitButton isLoading={false}>Update</SubmitButton>
+                     <SubmitButton isLoading={isPending}>Update</SubmitButton>
                   </div>
                </form>
             </Form>

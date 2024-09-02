@@ -27,4 +27,21 @@ export default class PatientController {
          next(error);
       }
    }
+
+   async updateProfileImage(req: CustomRequest, res: Response, next: NextFunction) {
+      try {
+         //  const imageFile = req.file
+         //  console.log(imageFile);
+          
+         //  if (!imageFile) {
+         //      return res.status(400).json({ message: 'No image provided' });
+         //  }
+  
+         //  await this.patientUseCase.updateProfile(req.patient?.id!, imageFile);
+          res.status(200).json({ message: 'success' });
+      } catch (error) {
+          next(error);
+      }
+  }
+  
 }

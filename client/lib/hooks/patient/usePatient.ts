@@ -1,4 +1,4 @@
-import { getPatientProfile, updatePatientProfile } from "@/lib/services/api/patientProtectedApis";
+import { getPatientProfile, updatePatientProfile, updatePatientProfileImage } from "@/lib/services/api/patientProtectedApis";
 import { ErrorResponse, IPatient, MessageResponse } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -17,4 +17,13 @@ export const useUpdatePatientProfile = () => {
             console.log('Error in Updating Patient', error);
         }
     })
+}
+
+export const useUpdatePatientProfileImage = () => {
+    return useMutation<MessageResponse, AxiosError<ErrorResponse>, { image: File }>({
+        mutationFn: ({ image }) => updatePatientProfileImage(image),
+        onError: (error) => {
+            console.log('Error in Uploading Profile Image', error);
+        }
+    });
 }

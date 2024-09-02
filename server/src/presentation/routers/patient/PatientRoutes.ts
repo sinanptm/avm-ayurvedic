@@ -16,6 +16,9 @@ routes.get("/profile", (req, res, next) => {
 });
 routes.put("/profile",(req,res,next)=>{
    patientController.updateProfile(req,res,next)
+});
+routes.put('/profile-image',(req,res,next)=>{
+   patientController.updateProfileImage(req,res,next);
 })
 
 export default routes;
