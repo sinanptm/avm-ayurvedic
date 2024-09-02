@@ -23,6 +23,7 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 
 const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
+   const [imagePreview, setImagePreview] = useState<string>(patientData.profile || "/assets/icons/close.svg");
    if(typeof window!=='undefined'){
       return <div>loading.....</div>
    }
@@ -36,7 +37,6 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
             message: "File size should be less than 5MB",
          }),
    });
-   const [imagePreview, setImagePreview] = useState<string>(patientData.profile || "/assets/icons/close.svg");
 
    const form = useForm<z.infer<typeof uploadProfileImageSchema>>({
       resolver: zodResolver(uploadProfileImageSchema),
