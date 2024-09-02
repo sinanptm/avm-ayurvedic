@@ -1,4 +1,3 @@
-// SignFromSection.js
 "use client";
 import SigninForm from "@/components/forms/patient/SigninForm";
 import Image from "next/image";
