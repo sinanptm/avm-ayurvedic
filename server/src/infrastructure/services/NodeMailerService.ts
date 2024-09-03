@@ -6,7 +6,7 @@ import path from "path";
 
 const readFileAsync = promisify(fs.readFile);
 
-export default class EmailService implements IEmailService {
+export default class NodeMailerService implements IEmailService {
    async sendOtp(email: string, name: string, otp: number): Promise<void> {
       let htmlTemplate = await readFileAsync(path.join(__dirname, "../../../public/otpEmailTemplate.html"), "utf-8");
 

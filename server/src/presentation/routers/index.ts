@@ -2,7 +2,7 @@ import express from "express";
 import AuthRoutes from "./patient/AuthenticationRoutes";
 import ProtectedRoutes from "./patient/PatientRoutes";
 import ErrorHandler from "../middlewares/ErrorHandler";
-import TokenService from "../../infrastructure/services/TokenService";
+import TokenService from "../../infrastructure/services/JWTService";
 import PatientAuthMiddleware from "../middlewares/PatientAuthMiddleware";
 
 const app = express();

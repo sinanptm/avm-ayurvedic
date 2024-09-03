@@ -2,16 +2,14 @@ import express from "express";
 import PatientUseCase from "../../../use_case/patient/PatientUseCases";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import PatientController from "../../controllers/patient/PatientController";
-import MulterMiddleware from "../../middlewares/MulterMiddleware";
-import ImageService from "../../../infrastructure/services/ImageService";
+import S3StorageService from "../../../infrastructure/services/S3StorageService";
 
 const router = express.Router();
 
 const patientRepository = new PatientRepository();
-const imageService = new ImageService();
-const patientUseCase = new PatientUseCase(patientRepository, imageService);
+const s3StorageService = new S3StorageService();
+const patientUseCase = new PatientUseCase(patientRepository, s3StorageService);
 const patientController = new PatientController(patientUseCase);
-const multerMiddleware = new MulterMiddleware();
 
 router.get("/profile", patientController.getProfile.bind(patientController));
 router.put("/profile", patientController.updateProfile.bind(patientController));

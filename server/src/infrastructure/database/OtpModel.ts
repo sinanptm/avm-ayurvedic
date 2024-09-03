@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import IOtp from "../../../domain/entities/IOtp";
+import IOtp from "../../domain/entities/IOtp";
 
 const otpSchema = new Schema<IOtp>(
    {

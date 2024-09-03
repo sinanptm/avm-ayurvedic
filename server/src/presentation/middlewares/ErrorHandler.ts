@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { MulterError } from "multer";
 
 export default class ErrorHandler {
    exec(err: any, req: Request, res: Response, next: NextFunction) {
@@ -29,9 +28,8 @@ export default class ErrorHandler {
          return res.status(500).json({ message: "We are Having Issue with Email Service" });
       } else if (message.includes("Patient With Email Already Exists")) {
          return res.status(409).json({ message: "Patient With Email Already Exists!" });
-      } else if (err instanceof MulterError) {
-         return res.status(400).json({ message });
-      }
+      } 
+      
       res.status(statusCode).json({
          message,
          ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),

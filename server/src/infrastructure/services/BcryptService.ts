@@ -1,7 +1,7 @@
 import { IPasswordServiceRepository } from "../../interface/services/IPasswordServiceRepository";
 import bcrypt from "bcryptjs";
 
-export default class PasswordService implements IPasswordServiceRepository {
+export default class BcryptService implements IPasswordServiceRepository {
    async hash(password: string): Promise<string> {
       return await bcrypt.hash(password, 10);
    }

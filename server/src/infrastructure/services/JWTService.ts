@@ -1,7 +1,7 @@
 import ITokenService from "../../interface/services/ITokenService";
 import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
 
-export default class TokenService implements ITokenService {
+export default class JWTService implements ITokenService {
    private signToken(payload:object,secret:string,expiresIn:string):string{
       return jwt.sign(payload,secret,{expiresIn});
    }

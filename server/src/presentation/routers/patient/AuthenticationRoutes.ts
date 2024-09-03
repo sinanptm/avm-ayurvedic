@@ -1,20 +1,20 @@
 import express from "express";
+import BcryptService from "../../../infrastructure/services/BcryptService";
+import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
+import JWTService from "../../../infrastructure/services/JWTService";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
-import PasswordService from "../../../infrastructure/services/PasswordService";
-import EmailService from "../../../infrastructure/services/EmailService";
 import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
-import TokenService from "../../../infrastructure/services/TokenService";
 import AuthenticationController from "../../controllers/patient/AuthenticationController";
 import AuthPatientUseCase from "../../../use_case/patient/AuthenticationUseCase";
 
 const route = express.Router();
 
 // Services and Repositories
+const tokenService = new JWTService();
+const passwordService = new BcryptService();
+const emailService = new NodeMailerService();
 const patientRepository = new PatientRepository();
-const passwordService = new PasswordService();
-const emailService = new EmailService();
 const otpRepository = new OtpRepository();
-const tokenService = new TokenService();
 
 const authPatientUseCase = new AuthPatientUseCase(
    patientRepository,

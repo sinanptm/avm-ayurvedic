@@ -1,11 +1,11 @@
 import { IPatient } from "../../domain/entities/Patient";
 import IPatientRepository from "../../interface/repositories/IPatientRepository";
-import IImageService from "../../interface/services/IImageService";
+import ICloudStorageService from "../../interface/services/ICloudStorageService";
 
 export default class PatientUseCase {
    constructor(
       private patientRepository: IPatientRepository,
-      private imageService: IImageService
+      private cloudStorageService: ICloudStorageService
    ) {}
 
    async getUserProfile(id: string): Promise<IPatient> {
@@ -31,7 +31,7 @@ export default class PatientUseCase {
    
    async createPreSignedUrl(id: string, expiresIn: number): Promise<{url:string,key:string}> {
       const key = `profile-images/${id}-${Date.now()}`;
-      const url = await this.imageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, expiresIn);
+      const url = await this.cloudStorageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, expiresIn);
       return {url,key};
    }
 }

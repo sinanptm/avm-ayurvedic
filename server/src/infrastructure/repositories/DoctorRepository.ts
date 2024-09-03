@@ -1,7 +1,7 @@
 import IDoctor from "../../domain/entities/IDoctor";
 import IDoctorRepository from "../../interface/repositories/IDoctorRepository";
 import { isValidObjectId } from "../database/isValidObjId";
-import DoctorModel from "../database/models/DoctorModel";
+import DoctorModel from "../database/DoctorModel";
 
 export default class DoctorRepository implements IDoctorRepository {
    model = DoctorModel;

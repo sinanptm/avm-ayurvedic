@@ -1,7 +1,7 @@
 import { IPatient } from "../../domain/entities/Patient";
 import IPatientRepository from "../../interface/repositories/IPatientRepository";
 import { isValidObjectId } from "../database/isValidObjId";
-import PatientModel from "../database/models/PatientModel";
+import PatientModel from "../database/PatientModel";
 
 export default class PatientRepository implements IPatientRepository {
    model = PatientModel;

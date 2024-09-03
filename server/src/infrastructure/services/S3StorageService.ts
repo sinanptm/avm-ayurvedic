@@ -2,10 +2,10 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Upload } from "@aws-sdk/lib-storage";
 import dotenv from 'dotenv';
-import IImageService from "../../interface/services/IImageService";
+import ICloudStorageService from "../../interface/services/ICloudStorageService";
 dotenv.config();
 
-export default class ImageService implements IImageService {
+export default class S3StorageService implements ICloudStorageService {
     private s3: S3Client;
 
     constructor() {
