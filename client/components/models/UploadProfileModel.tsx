@@ -23,7 +23,7 @@ type Props = {
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
-const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
+const UploadProfileModel = ({ open, setOpen, patientData,refetch }: Props) => {
    const uploadProfileImageSchema = z.object({
       image: z
          .instanceof(File)
@@ -49,7 +49,8 @@ const UploadProfileModel = ({ open, setOpen, patientData }: Props) => {
       updateProfile(
          { image: data.image },
          {
-            onSuccess({ message }) {
+            onSuccess() {
+               refetch();
                toast({
                   title: "Profile Update",
                   variant: "success",
