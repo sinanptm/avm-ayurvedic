@@ -28,7 +28,7 @@ export default class AuthenticationUseCase {
 
    async login(patient: IPatient): Promise<{ email: string } | null> {
       const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
-      if (!foundedPatient) throw new Error("Patient Not Found");
+      if (!foundedPatient) throw new Error("Invalid Credentials");
 
       if(!foundedPatient.password) throw new Error("Patient has no Password")
 
@@ -61,7 +61,7 @@ export default class AuthenticationUseCase {
 
    async resendOtp(email: string): Promise<void> {
       const patient = await this.patientRepository.findByEmail(email);
-      if (!patient) throw new Error("Patient Not Found");
+      if (!patient) throw new Error("Invalid Credentials");
 
       let otp = parseInt(generateOTP(6), 10);
       while (otp.toString().length !== 6) {
@@ -73,7 +73,7 @@ export default class AuthenticationUseCase {
 
    async validateOtp(otp: number, email: string): Promise<TokensResponse> {
       const isOtp = await this.otpRepository.findOne(otp, email);
-      if (!isOtp) throw Error("Invalid Otp");
+      if (!isOtp) throw Error("Invalid Credentials");
 
       const patient = await this.patientRepository.findByEmailWithCredentials(email)!;
       if (patient && patient?.isBlocked) throw new Error("Unauthorized");
@@ -105,7 +105,7 @@ export default class AuthenticationUseCase {
 
    async sendForgetPasswordMail(email: string): Promise<void> {
       const patient = await this.patientRepository.findByEmail(email);
-      if (!patient) throw new Error("Patient Not Found");
+      if (!patient) throw new Error("Invalid Credentials");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
 
       await this.emailService.sendResetMail(email, patient.name!, `${process.env.CLIENT_URL}/signin/reset-password`!);
@@ -113,7 +113,7 @@ export default class AuthenticationUseCase {
 
    async updatePatientPassword(email: string, newPassword: string): Promise<void> {
       const patient = await this.patientRepository.findByEmailWithCredentials(email);
-      if (!patient) throw new Error("Patient Not Found");
+      if (!patient) throw new Error("Invalid Credentials");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
 
       patient.password = await this.passwordService.hash(newPassword);

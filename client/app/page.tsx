@@ -5,7 +5,7 @@
 // import Loader  from "@/components/common/Loader";
 
 // const  FeaturesList = dynamic(()=>import("@/components/patient/home/FeatureList"),{
-//    loading:()=><Loader />,
+//    loading:()=><Loader />
 // })
 
 
@@ -28,3 +28,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

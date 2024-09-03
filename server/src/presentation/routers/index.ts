@@ -15,6 +15,6 @@ app.use("/patient/auth", AuthRoutes);
 app.use("/patient", authenticate.exec, ProtectedRoutes);
 
 
-app.use(errorHandler.exec);
+app.use(errorHandler.exec.bind(errorHandler));
 
 export default app;
