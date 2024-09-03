@@ -1,4 +1,4 @@
-import { getPatientProfile, updatePatientProfile, updatePatientProfileImage } from "@/lib/services/api/patientProtectedApis";
+import { getPatientProfile, updatePatientProfile, updatePatientProfileImage } from "@/lib/utils/api/patientProtectedApis";
 import { ErrorResponse, IPatient, MessageResponse } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
