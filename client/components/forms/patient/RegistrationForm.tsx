@@ -10,7 +10,7 @@ import SubmitButton from "@/components/common/SubmitButton";
 import { registerFormValidation } from "@/components/forms/actions/userValidation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
-import { BloodTypes, GenderOptions } from "@/constants";
+import { BloodGroups, GenderOptions } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
 import { useGetPatientProfile, useUpdatePatientProfile } from "@/lib/hooks/patient/usePatient";
 import { useRouter } from "next/navigation";
@@ -114,7 +114,7 @@ const RegistrationForm = () => {
                   name="bloodType"
                   label="Your blood type  *"
                   placeholder="Select blood type">
-                  {BloodTypes.map((blood, i) => (
+                  {BloodGroups.map((blood, i) => (
                      <SelectItem key={blood + i} value={blood}>
                         <div className="flex cursor-pointer items-center gap-2">
                            <p>{blood}</p>

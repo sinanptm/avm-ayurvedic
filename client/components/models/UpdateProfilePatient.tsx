@@ -11,7 +11,7 @@ import SubmitButton from "../common/SubmitButton";
 import { IPatient } from "@/types";
 import CustomFormField from "../common/CustomFormField";
 import { FormFieldType } from "@/types/fromTypes";
-import { BloodTypes, GenderOptions } from "@/constants";
+import { BloodGroups, GenderOptions } from "@/constants";
 import { SelectItem } from "../ui/select";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
@@ -43,7 +43,7 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
       setOpen(!open);
    };
 
-   const onSubmit = (data: z.infer<typeof updateProfileFormValidation>) => {
+   const onSubmit = (data: z.infer<typeof updateProfileFormValidation>) => {      
       updateProfile(data, {
          onSuccess: () => {
             closeModal();
@@ -115,10 +115,10 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
                            <CustomFormField
                               fieldType={FormFieldType.SELECT}
                               control={form.control}
-                              name="bloodType"
+                              name="bloodGroup"
                               label="Your blood type  *"
                               placeholder="Select blood type">
-                              {BloodTypes.map((blood, i) => (
+                              {BloodGroups.map((blood, i) => (
                                  <SelectItem key={blood + i} value={blood}>
                                     <div className="flex cursor-pointer items-center gap-2">
                                        <p>{blood}</p>

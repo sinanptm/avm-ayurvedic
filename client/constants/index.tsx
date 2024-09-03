@@ -207,7 +207,7 @@ export const AvailableTimes = [
 ];
 
 export const GenderOptions: string[] = ["Male", "Female", "Other"];
-export const BloodTypes: string[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+export const BloodGroups: string[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 export const DiseaseOptions: string[] = [
    "none",
    "Diabetes",
