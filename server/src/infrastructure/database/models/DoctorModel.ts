@@ -4,12 +4,14 @@ import IDoctor from "../../../domain/entities/IDoctor";
 const doctorSchema = new Schema<IDoctor>(
    {
       email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
+      password: { type: String, required: true },
       image: { type: String, default: "" },
       isBlocked: { type: Boolean, default: false },
-      name: { type: String, required: true },
-      phone: { type: String, required: true, unique: true },
+      name: { type: String, default: "" },
+      phone: { type: String, unique: true },
       role: { type: String, enum: ["admin", "doctor"], default: "doctor" },
       qualification: { type: String, default: "" },
+      token: { type: String, default: "" },
    },
    {
       timestamps: true,

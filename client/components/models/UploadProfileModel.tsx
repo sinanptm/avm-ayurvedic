@@ -31,7 +31,7 @@ type Props = {
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-const UploadProfileModel = ({ open, setOpen, patientData, refetch }: Props) => {
+const UploadProfileModel = ({ open, setOpen, refetch }: Props) => {
   const uploadProfileImageSchema = z.object({
     image: z
       .instanceof(File)
