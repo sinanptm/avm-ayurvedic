@@ -1,7 +1,8 @@
 import { ReactNode, FC } from "react";
 import AdminLayoutWithSideBar from "@/components/layout/AdminLayoutWithSideBar";
 import { Metadata } from "next";
-import { AdminSideBarLinks } from "@/constants";
+import { DoctorsSidebarLinks } from "@/constants";
+
 
 interface AdminLayoutWrapperProps {
    children: ReactNode;
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 
 const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children }) => {
    return (
-      <AdminLayoutWithSideBar sideBarLinks={AdminSideBarLinks}>
+      <AdminLayoutWithSideBar sideBarLinks={DoctorsSidebarLinks}>
          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">{children}</main>
       </AdminLayoutWithSideBar>
    );

@@ -3,7 +3,7 @@ const Dashboard = () => {
    return (
       <main className="">
          <main className="">
-            <h2 className="text-5xl font-extrabold ">Admin Dashboard</h2>
+            <h2 className="text-5xl font-extrabold ">Doctor Dashboard</h2>
          </main>
       </main>
    );

@@ -30,7 +30,7 @@ export const NavBar = () => {
    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
    const [isSheetOpen, setIsSheetOpen] = useState(false)
 
-   if (path.includes("signup") || path.includes("admin") || path.includes("signin")) {
+   if (path.includes("signup") || path.includes("admin") || path.includes("signin")||path.includes("doctor")) {
       return null;
    }
 

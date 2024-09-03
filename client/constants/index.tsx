@@ -1,5 +1,41 @@
 import { AnimatedCardProps, NavLinkType } from "@/types";
 
+export const AdminSideBarLinks:NavLinkType[] = [
+   {
+      label: "Staffs",
+      href: "/admin/staffs",
+      icon: "/assets/icons/doctor.svg",
+   },
+   {
+      label: "Patients",
+      href: "/admin/patients",
+      icon: "/assets/icons/wheelchair.svg",
+   },
+   {
+      label: "Products",
+      href: "/admin/products",
+      icon: "/assets/icons/store.svg",
+   },
+];
+
+export const DoctorsSidebarLinks:NavLinkType[] = [
+   {
+      label: "Patients",
+      href: "/doctor/patients",
+      icon: "/assets/icons/wheelchair.svg",
+   },
+   {
+      label: "Appointments",
+      href: "/doctor/appointments",
+      icon: "/assets/icons/store.svg",
+   },
+   {
+      label: "Profile",
+      href: "/doctor/profile",
+      icon: "/assets/icons/user.svg",
+   },
+]
+
 export const NavLinks: NavLinkType[] = [
    { href: "/", label: "Home" },
    { href: "/doctors", label: "Doctors" },
@@ -125,36 +161,6 @@ export const GuaranteeListHonePage: { src: string; text: string; heading: string
       src: "/assets/icons/guarantees/costEffective.svg",
       text: "We provide medical assistance on non urgent queries for free. Fee starting at ₹50 for faster response to queries.",
       heading: "Cost Effective",
-   },
-];
-
-export const AdminSideBarLinks = [
-   {
-      label: "Dashboard",
-      href: "/admin/",
-      icon: "/assets/icons/dashboard.svg",
-   },
-   {
-      label: "Profile",
-      href: "/admin/profile",
-      admin: false,
-      icon: "/assets/icons/user.svg",
-   },
-   {
-      label: "Doctors",
-      href: "/admin/doctors",
-      admin: false,
-      icon: "/assets/icons/doctor.svg",
-   },
-   {
-      label: "Patients",
-      href: "/admin/patients",
-      icon: "/assets/icons/wheelchair.svg",
-   },
-   {
-      label: "Products",
-      href: "/admin/products",
-      icon: "/assets/icons/store.svg",
    },
 ];
 export const AppointmentTypes = [

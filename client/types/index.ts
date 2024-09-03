@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 export type NavLinkType = {
    label: string;
    href: string;
+   icon?:string;
 };
 
 export type AnimatedCardProps = {
