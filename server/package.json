@@ -15,6 +15,7 @@
    "license": "ISC",
    "dependencies": {
       "@aws-sdk/lib-storage": "^3.637.0",
+      "@aws-sdk/s3-request-presigner": "^3.637.0",
       "aws-sdk": "^2.1687.0",
       "bcryptjs": "^2.4.3",
       "cookie-parser": "^1.4.6",

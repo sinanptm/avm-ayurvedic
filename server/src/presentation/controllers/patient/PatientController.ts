@@ -45,4 +45,13 @@ export default class PatientController {
       }
    }
    
+   async getUploadUrl(req: CustomRequest, res: Response, next: NextFunction) {
+      try {
+         const { id } = req.patient!;
+         const url = await this.patientUseCase.createPreSignedUrl(id, 60 * 5); // URL valid for 5 minutes
+         res.status(200).json({ url });
+      } catch (error) {
+         next(error);
+      }
+   }
 }
