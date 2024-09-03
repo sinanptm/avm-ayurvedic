@@ -21,17 +21,25 @@ export default class PatientUseCase {
       await this.patientRepository.findByIdAndUpdate(id, patient);
    }
 
-   async updateProfileImage(id: string, image: string): Promise<void> {
+   async updateProfileImage(id: string, key: string): Promise<void> {
       const patient = await this.patientRepository.findById(id);
       if (!patient) throw new Error("Patient Not Found");
-   
-      patient.profile = image;
+
+      if (patient.profile) {
+         await this.cloudStorageService.deleteFile(
+            process.env.S3_BUCKET_NAME!,
+            patient.profile.split("amazonaws.com/").pop()!
+         );
+      }
+
+      const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+      patient.profile = imageUrl;
       await this.patientRepository.update(patient);
    }
-   
-   async createPreSignedUrl(id: string, expiresIn: number): Promise<{url:string,key:string}> {
+
+   async createPreSignedUrl(id: string, expiresIn: number): Promise<{ url: string; key: string }> {
       const key = `profile-images/${id}-${Date.now()}`;
       const url = await this.cloudStorageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, expiresIn);
-      return {url,key};
+      return { url, key };
    }
 }

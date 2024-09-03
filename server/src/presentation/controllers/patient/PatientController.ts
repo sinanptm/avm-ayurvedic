@@ -47,9 +47,7 @@ export default class PatientController {
           if (!key) {
               return res.status(400).json({ message: "Image key is required" });
           }
-          const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
-          
-          await this.patientUseCase.updateProfileImage(id, imageUrl);
+          const imageUrl = await this.patientUseCase.updateProfileImage(id, key);
 
           res.status(200).json({ message: "Profile image updated successfully", imageUrl });
       } catch (error) {

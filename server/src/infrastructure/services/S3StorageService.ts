@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Upload } from "@aws-sdk/lib-storage";
 import dotenv from 'dotenv';
@@ -38,9 +38,17 @@ export default class S3StorageService implements ICloudStorageService {
         const command = new PutObjectCommand({
             Bucket: bucket,
             Key: key,
-            ContentType:'image/jpeg'
+            ContentType: 'image/jpeg',
         });
         const url = await getSignedUrl(this.s3, command, { expiresIn });
         return url;
+    }
+
+    async deleteFile(bucket: string, key: string): Promise<void> {
+        const command = new DeleteObjectCommand({
+            Bucket: bucket,
+            Key: key,
+        });
+        await this.s3.send(command);
     }
 }
