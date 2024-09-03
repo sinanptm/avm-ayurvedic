@@ -27,31 +27,33 @@ export default class PatientController {
          next(error);
       }
    }
-
-   async updateProfileImage(req: CustomRequest, res: Response, next: NextFunction) {
-      try {
-         const { url } = req.body;
-         const { id } = req.patient!;
-   
-         if (!url) {
-            return res.status(400).json({ message: "No Url Given" });
-         }
-   
-         await this.patientUseCase.updateProfileImage(id,url);
-   
-         res.status(200).json({ message: "Profile image updated successfully" });
-      } catch (error) {
-         next(error);
-      }
-   }
    
    async getUploadUrl(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const { id } = req.patient!;
-         const url = await this.patientUseCase.createPreSignedUrl(id, 60 * 5); // URL valid for 5 minutes
-         res.status(200).json({ url });
+         const {url,key} = await this.patientUseCase.createPreSignedUrl(id, 60 * 5);
+         
+         res.status(200).json({ url,key });
       } catch (error) {
          next(error);
       }
    }
+
+   async completeProfileImageUpload(req: CustomRequest, res: Response, next: NextFunction) {
+      try {
+          const { key } = req.body; 
+          const { id } = req.patient!;
+
+          if (!key) {
+              return res.status(400).json({ message: "Image key is required" });
+          }
+          const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+          
+          await this.patientUseCase.updateProfileImage(id, imageUrl);
+
+          res.status(200).json({ message: "Profile image updated successfully", imageUrl });
+      } catch (error) {
+          next(error);
+      }
+  }
 }

@@ -29,9 +29,9 @@ export default class PatientUseCase {
       await this.patientRepository.update(patient);
    }
    
-   async createPreSignedUrl(id: string, expiresIn: number): Promise<string> {
-      const key = `profile-images/patients/${id}-${Date.now()}`;
+   async createPreSignedUrl(id: string, expiresIn: number): Promise<{url:string,key:string}> {
+      const key = `profile-images/${id}-${Date.now()}`;
       const url = await this.imageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, expiresIn);
-      return url;
+      return {url,key};
    }
 }

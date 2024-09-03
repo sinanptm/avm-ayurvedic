@@ -1,8 +1,8 @@
-import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import IImageService from "../../interface/services/IImageService";
-import dotenv from 'dotenv';
 import { Upload } from "@aws-sdk/lib-storage";
+import dotenv from 'dotenv';
+import IImageService from "../../interface/services/IImageService";
 dotenv.config();
 
 export default class ImageService implements IImageService {
@@ -38,6 +38,7 @@ export default class ImageService implements IImageService {
         const command = new PutObjectCommand({
             Bucket: bucket,
             Key: key,
+            ContentType:'image/jpeg'
         });
         const url = await getSignedUrl(this.s3, command, { expiresIn });
         return url;
