@@ -8,8 +8,6 @@
 // ! Gradiant Generator
 
 
-// * https://github.com/Mohammedshibilpv0/Freelance-X-server/tree/main
-
 // ! make sure to add caching in the server side responses
 
 // https://enhanced-button.vercel.app/ enhanced buttons
