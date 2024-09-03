@@ -10,7 +10,6 @@ export default class AuthPatientController {
       try {
          const patient: IPatient = req.body;
 
-         // Input Validations
          if (!patient.email?.trim()) return res.status(400).json({ message: "Email is Required" });
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid Email Format" });
          if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });

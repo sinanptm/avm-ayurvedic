@@ -25,7 +25,7 @@ const authPatientUseCase = new AuthPatientUseCase(
 );
 const authenticationController = new AuthenticationController(authPatientUseCase);
 
-route.post("/register", authenticationController.register.bind(authenticationController));
+route.post("/", authenticationController.register.bind(authenticationController));
 route.post("/login", authenticationController.login.bind(authenticationController));
 route.post("/oauth-signin", authenticationController.oAuthSignin.bind(authenticationController));
 route.post("/resend-otp", authenticationController.resendOtp.bind(authenticationController));

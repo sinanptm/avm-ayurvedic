@@ -3,6 +3,7 @@ import { MulterError } from "multer";
 
 export default class ErrorHandler {
    exec(err: any, req: Request, res: Response) {
+      
       console.error(err);
 
       const statusCode = err.statusCode || 500;
