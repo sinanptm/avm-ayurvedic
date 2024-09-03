@@ -17,6 +17,7 @@ type Props = {
    open: boolean;
    setOpen: Dispatch<SetStateAction<boolean>>;
    patientData: IPatient;
+   refetch:any;
 };
 
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];

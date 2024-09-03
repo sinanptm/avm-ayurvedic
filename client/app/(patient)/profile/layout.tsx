@@ -16,7 +16,7 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
    const [section, setSection] = useState<"profile" | "appointments" | "records">("profile");
    const router = useRouter();
 
-   const { data: patientData, isLoading, isError } = useGetPatientProfile();
+   const { data: patientData, isLoading, isError, refetch } = useGetPatientProfile();
    if (isLoading) {
       return <ProfileSkeleton />;
    }   
@@ -38,7 +38,7 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
    return (
       <div className="min-h-screen p-4 sm:p-6 md:p-8">
          <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
-            <NavSection setSection={setSection} patientData={patientData!} />
+            <NavSection setSection={setSection} patientData={patientData!} refetch={refetch} />
             {section === "profile" && children}
             {section === "appointments" && appointments}
             {section === "records" && records}

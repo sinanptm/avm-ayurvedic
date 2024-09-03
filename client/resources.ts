@@ -19,13 +19,7 @@
 // https://nextui.org/docs/components
 // https://nextui.org/docs/components/time-input
 
-
-// 1st https://github.com/tailwindlabs/tailw...
-// 2nd https://github.com/chronark/highstorm
-// 3rd https://github.com/resendlabs/react-e...
-// 4th https://github.com/Nutlope/roomGPT
-// 5th https://github.com/steven-tey/dub
-
+// https://motion-primitives.com/
 
 // https://nextjs.org/docs/app/building-your-application/data-fetching/caching-and-revalidating/
 

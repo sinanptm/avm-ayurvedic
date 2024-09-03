@@ -9,10 +9,11 @@ import UploadProfileModel from "@/components/models/UploadProfileModel";
 
 interface Props {
   setSection: (state: "profile" | "appointments" | "records") => void
-  patientData: IPatient
+  patientData: IPatient;
+  refetch:any;
 }
 
-export default function NavSection({ setSection, patientData }: Props) {
+export default function NavSection({ setSection, patientData, refetch }: Props) {
   const [isFileModel, setFileModel] = useState(false);
 
   const handleClick = (path: "profile" | "appointments" | "records") => {
@@ -35,14 +36,14 @@ export default function NavSection({ setSection, patientData }: Props) {
           className="absolute inset-0"
         />
         <div className="absolute inset-0 bg-black bg-opacity-40" />
-        <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="absolute bottom-6 left-6 flex  flex-row items-center space-y-0 space-x-4">
           <div className="relative">
             <Image
               src={patientData.profile || '/assets/icons/user.svg'}
               alt="Patient profile picture"
               width={100}
               height={100}
-              className="rounded-full border-4 border-white"
+              className="rounded-full border-4 border-white h-32 w-32"
             />
             <Button
               variant="outline"
@@ -76,7 +77,7 @@ export default function NavSection({ setSection, patientData }: Props) {
           </Button>
         </div>
       </CardContent>
-      <UploadProfileModel open={isFileModel} setOpen={setFileModel} patientData={patientData}  />
+      <UploadProfileModel open={isFileModel} setOpen={setFileModel} patientData={patientData}  refetch={refetch} />
     </Card>
   )
 }
