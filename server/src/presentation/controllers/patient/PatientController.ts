@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
-import PatientUseCase from "../../use_case/patient/PatientUseCases";
-import { CustomRequest } from "../../types";
+import PatientUseCase from "../../../use_case/patient/PatientUseCases";
+import { CustomRequest } from "../../../types";
 
 export default class PatientController {
    constructor(private patientUseCase: PatientUseCase) {}

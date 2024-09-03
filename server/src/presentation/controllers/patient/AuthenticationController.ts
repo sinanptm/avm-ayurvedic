@@ -1,10 +1,10 @@
-import AuthPatientUseCase from "../../use_case/patient/AuthPatientUseCase";
+import AuthenticationUseCase from "../../../use_case/patient/AuthenticationUseCase";
 import { NextFunction, Request, Response } from "express";
-import { IPatient } from "../../domain/entities/Patient";
-import { isValidatePassword, isValidEmail } from "../validators/authValidators";
+import { IPatient } from "../../../domain/entities/Patient";
+import { isValidatePassword, isValidEmail } from "../../validators/authValidators";
 
 export default class AuthPatientController {
-   constructor(private authPatientUseCase: AuthPatientUseCase) {}
+   constructor(private authUseCase: AuthenticationUseCase) {}
 
    async register(req: Request, res: Response, next: NextFunction) {
       try {
@@ -18,7 +18,7 @@ export default class AuthPatientController {
          if (!patient.name?.trim()) return res.status(400).json({ message: "Name is required" });
          if (!patient.phone?.toString().trim()) return res.status(400).json({ message: "Phone number is required" });
 
-         res.status(200).json({ message: await this.authPatientUseCase.register(patient) });
+         res.status(200).json({ message: await this.authUseCase.register(patient) });
       } catch (error) {
          next(error);
       }
@@ -33,7 +33,7 @@ export default class AuthPatientController {
          if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid email format" });
          if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
 
-         const patientDetails = await this.authPatientUseCase.login(patient);
+         const patientDetails = await this.authUseCase.login(patient);
 
          res.status(200).json({
             message: `Login successful, OTP sent to email address : ${patientDetails?.email}`,
@@ -51,7 +51,7 @@ export default class AuthPatientController {
       try {
          const { email } = req.body;
          if (!email) return res.status(400).json({ message: "Email is required" });
-         await this.authPatientUseCase.resendOtp(email);
+         await this.authUseCase.resendOtp(email);
          res.status(200).json({ message: "Otp Sended to the mail Address" });
       } catch (error: any) {
          if (error.message === "Patient Not Found") {
@@ -68,7 +68,7 @@ export default class AuthPatientController {
          if (!otp) return res.status(400).json({ message: "Otp is required" });
          if (!email) return res.status(400).json({ message: "Email is required" });
 
-         const { refreshToken, accessToken } = await this.authPatientUseCase.validateOtp(otp, email);
+         const { refreshToken, accessToken } = await this.authUseCase.validateOtp(otp, email);
 
          res.cookie("patientToken", refreshToken, {
             httpOnly: true,
@@ -88,7 +88,7 @@ export default class AuthPatientController {
          const { email, name, profile } = req.body;
          if (!email) return res.status(400).json({ message: "Email is Required" });
          if (!name) return res.status(400).json({ message: "Name is Required" });
-         const { accessToken, refreshToken } = await this.authPatientUseCase.oAuthSignin(email, name, profile);
+         const { accessToken, refreshToken } = await this.authUseCase.oAuthSignin(email, name, profile);
 
          res.cookie("patientToken", refreshToken, {
             httpOnly: true,
@@ -107,7 +107,7 @@ export default class AuthPatientController {
       try {
          const { email } = req.body;
          if (!email) return res.status(400).json({ message: "Email is Required" });
-         await this.authPatientUseCase.sendForgetPasswordMail(email);
+         await this.authUseCase.sendForgetPasswordMail(email);
          res.status(200).json({ message: "Email has been sended" });
       } catch (error: any) {
          next(error);
@@ -123,7 +123,7 @@ export default class AuthPatientController {
 
          if (!isValidatePassword(newPassword)) return res.status(422).json({ message: "Password is too week" });
 
-         await this.authPatientUseCase.updatePatientPassword(email, newPassword);
+         await this.authUseCase.updatePatientPassword(email, newPassword);
 
          res.status(200).json({ message: "Password Updated Successfully" });
       } catch (error) {
@@ -136,7 +136,7 @@ export default class AuthPatientController {
          const cookies = req.cookies;
          if (!cookies?.patientToken) return res.status(403).json({ message: "Unauthenticated" });
 
-         const newAccessToken = await this.authPatientUseCase.refreshAccessToken(cookies.patientToken);
+         const newAccessToken = await this.authUseCase.refreshAccessToken(cookies.patientToken);
 
          return res.status(200).json(newAccessToken);
       } catch (error: any) {

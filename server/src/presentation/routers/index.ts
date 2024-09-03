@@ -1,5 +1,5 @@
 import express from "express";
-import AuthRoutes from "./patient/AuthPatientRoutes";
+import AuthRoutes from "./patient/AuthenticationRoutes";
 import ProtectedRoutes from "./patient/PatientRoutes";
 import ErrorHandler from "../middlewares/ErrorHandler";
 import TokenService from "../../infrastructure/services/TokenService";

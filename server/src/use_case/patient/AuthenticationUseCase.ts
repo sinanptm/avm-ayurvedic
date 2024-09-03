@@ -11,7 +11,7 @@ type TokensResponse = {
    refreshToken: string;
 };
 
-export default class LoginPatientUseCase {
+export default class AuthenticationUseCase {
    constructor(
       private patientRepository: IPatientRepository,
       private passwordService: IPasswordServiceRepository,

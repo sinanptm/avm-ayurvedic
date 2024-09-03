@@ -1,7 +1,7 @@
 import express from "express";
 import PatientUseCase from "../../../use_case/patient/PatientUseCases";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
-import PatientController from "../../controllers/PatientController";
+import PatientController from "../../controllers/patient/PatientController";
 import MulterMiddleware from "../../middlewares/MulterMiddleware";
 import ImageService from "../../../infrastructure/services/ImageService";
 
