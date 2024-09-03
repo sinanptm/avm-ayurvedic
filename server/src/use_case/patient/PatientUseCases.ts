@@ -21,19 +21,16 @@ export default class PatientUseCase {
       await this.patientRepository.findByIdAndUpdate(id, patient);
    }
 
-   async updateProfileImage(id: string, image: Buffer, contentType: string): Promise<void> {
+   async updateProfileImage(id: string, image: string): Promise<void> {
       const patient = await this.patientRepository.findById(id);
       if (!patient) throw new Error("Patient Not Found");
    
-      const key = `profile-images/${id}-${Date.now()}`;
-      const { url } = await this.imageService.uploadFile(process.env.S3_BUCKET_NAME!, key, image, contentType);
-   
-      patient.profile = url;
+      patient.profile = image;
       await this.patientRepository.update(patient);
    }
    
    async createPreSignedUrl(id: string, expiresIn: number): Promise<string> {
-      const key = `profile-images/${id}-${Date.now()}`;
+      const key = `profile-images/patients/${id}-${Date.now()}`;
       const url = await this.imageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, expiresIn);
       return url;
    }

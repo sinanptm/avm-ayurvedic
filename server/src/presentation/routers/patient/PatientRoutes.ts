@@ -15,11 +15,11 @@ const multerMiddleware = new MulterMiddleware();
 
 router.get("/profile", patientController.getProfile.bind(patientController));
 router.put("/profile", patientController.updateProfile.bind(patientController));
+router.get('/upload-url', patientController.getUploadUrl.bind(patientController));
 router.put(
-   "/profile-image",
+   "/upload-url",
    multerMiddleware.single("profile"),
    patientController.updateProfileImage.bind(patientController)
 );
-router.get('/upload-url', patientController.getUploadUrl.bind(patientController));
 
 export default router;
