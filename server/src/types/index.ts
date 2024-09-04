@@ -23,3 +23,9 @@ export enum StatusCode {
    BadGateway = 502,
    ServiceUnavailable = 503,
 }
+
+export enum Cookie {
+   Admin = "adminToken",
+   Patient = "patientToken",
+   Doctor = "doctorToken",
+}

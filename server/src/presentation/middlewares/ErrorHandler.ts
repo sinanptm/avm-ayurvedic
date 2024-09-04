@@ -30,21 +30,21 @@ export default class ErrorHandler {
       ) {
          logger.warn(`Unauthorized access attempt: ${message}`);
          return res.status(StatusCode.Unauthorized).json({ message });
-      } else if (message.includes("Patient is blocked")) {
+      } else if (message.includes("Patient is Blocked")) {
          logger.warn(`Blocked patient access attempt: ${message}`);
          return res.status(StatusCode.Forbidden).json({ message });
-      } else if (message.includes("Patient Not Found")) {
-         logger.warn(`Patient not found: ${message}`);
+      } else if (message.includes("Not Found")) {
+         logger.warn(`Not found`);
          return res.status(StatusCode.NotFound).json({ message });
       } else if (message.includes("getaddrinfo ENOTFOUND smtp.gmail.com")) {
          logger.error("Email service issue encountered.");
          return res.status(StatusCode.InternalServerError).json({
             message: "We are Having Issue with Email Service",
          });
-      } else if (message.includes("Patient With Email Already Exists")) {
-         logger.warn("Conflict: Patient with email already exists.");
+      } else if (message.includes("Email Already Exists")) {
+         logger.warn("Conflict: Email already exists.");
          return res.status(StatusCode.Conflict).json({
-            message: "Patient With Email Already Exists!",
+            message: "Email Already Exists!",
          });
       }
 

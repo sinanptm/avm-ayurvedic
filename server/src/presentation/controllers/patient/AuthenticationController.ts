@@ -2,7 +2,7 @@ import AuthenticationUseCase from "../../../use_case/patient/AuthenticationUseCa
 import { NextFunction, Request, Response } from "express";
 import { IPatient } from "../../../domain/entities/Patient";
 import { isValidatePassword, isValidEmail } from "../../validators/authValidators";
-import { StatusCode } from "../../../types";
+import { Cookie, StatusCode } from "../../../types";
 
 export default class AuthPatientController {
    constructor(private authUseCase: AuthenticationUseCase) {}
@@ -79,7 +79,7 @@ export default class AuthPatientController {
          await this.authUseCase.resendOtp(email);
          return res.status(StatusCode.Success).json({ message: "OTP sent to the email address" });
       } catch (error: any) {
-         if (error.message === "Patient Not Found") {
+         if (error.message === "Not Found") {
             return res.status(StatusCode.UnprocessableEntity).json({ message: "Invalid credentials" });
          }
          next(error);
@@ -97,7 +97,7 @@ export default class AuthPatientController {
          const { refreshToken, accessToken } = await this.authUseCase.validateOtp(otp, email);
 
          // Set refresh token in cookie
-         res.cookie("patientToken", refreshToken, {
+         res.cookie(Cookie.Patient, refreshToken, {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
@@ -121,7 +121,7 @@ export default class AuthPatientController {
          const { accessToken, refreshToken } = await this.authUseCase.oAuthSignin(email, name, profile);
 
          // Set refresh token in cookie
-         res.cookie("patientToken", refreshToken, {
+         res.cookie(Cookie.Patient, refreshToken, {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
@@ -186,7 +186,7 @@ export default class AuthPatientController {
          const { patientToken } = req.cookies;
          if (!patientToken) return res.sendStatus(StatusCode.NoContent);
 
-         res.clearCookie("patientToken", {
+         res.clearCookie(Cookie.Patient, {
             httpOnly: true,
             sameSite: "strict",
             secure: true,

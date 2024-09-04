@@ -11,7 +11,7 @@ export default class PatientRepository implements IPatientRepository {
          return await patientModel.save();
       } catch (error: any) {
          if (error.code === 11000) {
-            throw new Error("Patient With Email Already Exists");
+            throw new Error("Email Already Exists");
          }
          throw error;
       }

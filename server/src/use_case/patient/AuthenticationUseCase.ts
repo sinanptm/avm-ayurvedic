@@ -85,7 +85,7 @@ export default class AuthenticationUseCase {
 
       await this.patientRepository.update(patient!);
 
-      await this.otpRepository.deleteMany(otp, email);
+      await this.otpRepository.deleteMany(email);
 
       return { accessToken, refreshToken };
    }

@@ -11,7 +11,7 @@ export default class OtpRepository implements IOtpRepository {
       return await this.model.findOne({ otp, email });
    }
   
-   async deleteMany(otp: number, email: string): Promise<void> {
-      await this.model.deleteMany({otp,email});
+   async deleteMany(email: string): Promise<void> {
+      await this.model.deleteMany({email});
    }
 }
