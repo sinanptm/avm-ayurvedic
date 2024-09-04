@@ -22,3 +22,8 @@ export const resendOptAdmin = async (email: string) => {
    const response = await axiosInstance.post("/resend-otp", { email });
    return response.data;
 };
+
+export const logoutAdmin = async ()=>{
+   const response = await axiosInstance.post("/logout");
+   return response.data;
+}

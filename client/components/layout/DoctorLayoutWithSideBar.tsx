@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Package2, PanelLeft, Search } from "lucide-react";
+import { LogOut, Package2, PanelLeft, Search, Settings } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +24,7 @@ import { useLogoutAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { toast } from "../ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
 
-const AdminLayoutWithSideBar = ({
+const DoctorLayoutWithSideBar = ({
    children,
    sideBarLinks,
 }: {
@@ -32,26 +32,26 @@ const AdminLayoutWithSideBar = ({
    sideBarLinks: NavLinkType[];
 }) => {
    const pathname = usePathname();
-   const { mutate: logout } = useLogoutAdmin();
-   const { setCredentials } = useAuth();
-   const handleLogout = () => {
-      logout(null, {
-         onSuccess: () => {
+   const {mutate:logout} = useLogoutAdmin();
+   const {setCredentials}  = useAuth()
+   const handleLogout = ()=>{
+      logout(null,{
+         onSuccess:()=>{
             toast({
-               title: "Logout Successfully👋",
-               variant: "success",
+               title:"Logout Successfully👋",
+               variant:"success"
             });
-            setCredentials("adminToken", "");
+            setCredentials('adminToken','');
          },
-         onError: (error) => {
+         onError:(error)=>{
             toast({
-               title: "Logout Failed ❌",
-               description: error.response?.data.message || "An Unknown Error Occurred",
-               variant: "destructive",
+               title:"Logout Failed ❌",
+               description:error.response?.data.message||"An Unknown Error Occurred",
+               variant:"destructive"
             });
-         },
-      });
-   };
+         }
+      })
+   }
 
    return (
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -111,22 +111,17 @@ const AdminLayoutWithSideBar = ({
                         <TooltipContent side="right">Settings</TooltipContent>
                      </Tooltip>
                      <DropdownMenuContent align="end">
-                        {/* <DropdownMenuItem>
-                           <Link href="/admin/logout" className="flex items-center">
+                        <DropdownMenuItem>
+                           <Link href="/settings" className="flex items-center">
                               <Settings className="mr-2 h-4 w-4" />
                               <span>Settings</span>
                            </Link>
-                        </DropdownMenuItem> */}
+                        </DropdownMenuItem>
                         <DropdownMenuItem>
-                           <button className="flex items-center w-full text-left" onClick={handleLogout}>
-                              {/* <LogOut/> */}
-                              <Image
-                                 src={"/assets/icons/logout.svg"}
-                                 className="mr-2 h-4 w-4"
-                                 alt="Logout"
-                                 width={23}
-                                 height={23}
-                              />
+                           <button
+                              className="flex items-center w-full text-left"
+                              onClick={handleLogout}>
+                              <LogOut className="mr-2 h-4 w-4" />
                               <span>Logout</span>
                            </button>
                         </DropdownMenuItem>
@@ -207,4 +202,4 @@ const AdminLayoutWithSideBar = ({
    );
 };
 
-export default AdminLayoutWithSideBar;
+export default DoctorLayoutWithSideBar;

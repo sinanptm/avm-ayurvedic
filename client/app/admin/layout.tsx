@@ -9,7 +9,7 @@ interface AdminLayoutWrapperProps {
 
 export const metadata: Metadata = {
    title: {
-      template: "Admin Dashboard | %s",
+      template: "Admin | %s",
       default: "Admin Dashboard"
    },
 };
