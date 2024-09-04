@@ -2,157 +2,197 @@ import AuthenticationUseCase from "../../../use_case/patient/AuthenticationUseCa
 import { NextFunction, Request, Response } from "express";
 import { IPatient } from "../../../domain/entities/Patient";
 import { isValidatePassword, isValidEmail } from "../../validators/authValidators";
+import { StatusCode } from "../../../types";
 
 export default class AuthPatientController {
    constructor(private authUseCase: AuthenticationUseCase) {}
 
+   // Register a new patient
    async register(req: Request, res: Response, next: NextFunction) {
       try {
          const patient: IPatient = req.body;
 
-         if (!patient.email?.trim()) return res.status(400).json({ message: "Email is Required" });
-         if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid Email Format" });
-         if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
-         if (!isValidatePassword(patient.password)) return res.status(422).json({ message: "Password is too week" });
-         if (!patient.name?.trim()) return res.status(400).json({ message: "Name is required" });
-         if (!patient.phone?.toString().trim()) return res.status(400).json({ message: "Phone number is required" });
+         // Validation
+         if (!patient.email?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+         }
+         if (!isValidEmail(patient.email)) {
+            return res.status(StatusCode.UnprocessableEntity).json({ message: "Invalid email format" });
+         }
+         if (!patient.password?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "Password is required" });
+         }
+         if (!isValidatePassword(patient.password)) {
+            return res.status(StatusCode.UnprocessableEntity).json({ message: "Password is too weak" });
+         }
+         if (!patient.name?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "Name is required" });
+         }
+         if (!patient.phone?.toString().trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "Phone number is required" });
+         }
 
-         res.status(200).json({ message: await this.authUseCase.register(patient) });
+         // Register the patient
+         const result = await this.authUseCase.register(patient);
+         return res.status(StatusCode.Created).json({ message: result });
       } catch (error) {
          next(error);
       }
    }
 
+   // Login a patient
    async login(req: Request, res: Response, next: NextFunction) {
       try {
-         let patient: IPatient = req.body;
+         const patient: IPatient = req.body;
 
          // Input validations
-         if (!patient.email?.trim()) return res.status(400).json({ message: "Email is required" });
-         if (!isValidEmail(patient.email)) return res.status(422).json({ message: "Invalid email format" });
-         if (!patient.password?.trim()) return res.status(400).json({ message: "Password is required" });
+         if (!patient.email?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+         }
+         if (!isValidEmail(patient.email)) {
+            return res.status(StatusCode.UnprocessableEntity).json({ message: "Invalid email format" });
+         }
+         if (!patient.password?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "Password is required" });
+         }
 
+         // Login the patient
          const patientDetails = await this.authUseCase.login(patient);
-
-         res.status(200).json({
-            message: `Login successful, OTP sent to email address : ${patientDetails?.email}`,
+         return res.status(StatusCode.Success).json({
+            message: `Login successful, OTP sent to email address: ${patientDetails?.email}`,
             email: patientDetails?.email,
          });
       } catch (error: any) {
          if (error.message === "Patient has no Password") {
-            return res.status(401).json({ message: "Please other Login Methods" });
+            return res.status(StatusCode.Unauthorized).json({ message: "Please use other login methods" });
          }
          next(error);
       }
    }
 
+   // Resend OTP to the patient's email
    async resendOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { email } = req.body;
-         if (!email) return res.status(400).json({ message: "Email is required" });
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+
          await this.authUseCase.resendOtp(email);
-         res.status(200).json({ message: "Otp Sended to the mail Address" });
+         return res.status(StatusCode.Success).json({ message: "OTP sent to the email address" });
       } catch (error: any) {
          if (error.message === "Patient Not Found") {
-            return res.status(422).json({ message: "Invalid Credentials" });
+            return res.status(StatusCode.UnprocessableEntity).json({ message: "Invalid credentials" });
          }
          next(error);
       }
    }
 
+   // Validate the OTP
    async validateOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { otp, email } = req.body;
 
-         if (!otp) return res.status(400).json({ message: "Otp is required" });
-         if (!email) return res.status(400).json({ message: "Email is required" });
+         if (!otp) return res.status(StatusCode.BadRequest).json({ message: "OTP is required" });
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
 
          const { refreshToken, accessToken } = await this.authUseCase.validateOtp(otp, email);
 
+         // Set refresh token in cookie
          res.cookie("patientToken", refreshToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "strict" as const,
-            maxAge: 30 * 24 * 60 * 1000,
+            sameSite: "strict",
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
          });
 
-         res.json({ accessToken });
+         return res.status(StatusCode.Success).json({ accessToken });
       } catch (error: any) {
          next(error);
       }
    }
 
+   // OAuth sign-in
    async oAuthSignin(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, name, profile } = req.body;
-         if (!email) return res.status(400).json({ message: "Email is Required" });
-         if (!name) return res.status(400).json({ message: "Name is Required" });
+
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+         if (!name) return res.status(StatusCode.BadRequest).json({ message: "Name is required" });
+
          const { accessToken, refreshToken } = await this.authUseCase.oAuthSignin(email, name, profile);
 
+         // Set refresh token in cookie
          res.cookie("patientToken", refreshToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "strict" as const,
-            maxAge: 30 * 24 * 60 * 1000,
+            sameSite: "strict",
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
          });
 
-         res.json({ accessToken });
+         return res.status(StatusCode.Success).json({ accessToken });
       } catch (error) {
          next(error);
       }
    }
 
+   // Send password reset email
    async forgetPassword(req: Request, res: Response, next: NextFunction) {
       try {
          const { email } = req.body;
-         if (!email) return res.status(400).json({ message: "Email is Required" });
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+
          await this.authUseCase.sendForgetPasswordMail(email);
-         res.status(200).json({ message: "Email has been sended" });
+         return res.status(StatusCode.Success).json({ message: "Email has been sent" });
       } catch (error: any) {
          next(error);
       }
    }
 
+   // Update patient's password
    async updatePassword(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, newPassword } = req.body;
 
-         if (!email) return res.status(400).json({ message: "Email is Required" });
-         if (!newPassword?.trim()) return res.status(400).json({ message: "New Password is required" });
-
-         if (!isValidatePassword(newPassword)) return res.status(422).json({ message: "Password is too week" });
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+         if (!newPassword?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "New password is required" });
+         }
+         if (!isValidatePassword(newPassword)) {
+            return res.status(StatusCode.UnprocessableEntity).json({ message: "Password is too weak" });
+         }
 
          await this.authUseCase.updatePatientPassword(email, newPassword);
-
-         res.status(200).json({ message: "Password Updated Successfully" });
+         return res.status(StatusCode.Success).json({ message: "Password updated successfully" });
       } catch (error) {
          next(error);
       }
    }
 
+   // Refresh access token using refresh token
    async refreshAccessToken(req: Request, res: Response, next: NextFunction) {
       try {
-         const cookies = req.cookies;
-         if (!cookies?.patientToken) return res.status(403).json({ message: "Unauthenticated" });
+         const { patientToken } = req.cookies;
+         if (!patientToken) return res.status(StatusCode.Forbidden).json({ message: "Unauthenticated" });
 
-         const newAccessToken = await this.authUseCase.refreshAccessToken(cookies.patientToken);
-
-         return res.status(200).json(newAccessToken);
+         const newAccessToken = await this.authUseCase.refreshAccessToken(patientToken);
+         return res.status(StatusCode.Success).json({ accessToken: newAccessToken });
       } catch (error: any) {
          next(error);
       }
    }
 
+   // Logout patient and clear cookie
    logout(req: Request, res: Response, next: NextFunction) {
       try {
-         const cookies = req.cookies;
-         if (!cookies?.patientToken) return res.sendStatus(204);
+         const { patientToken } = req.cookies;
+         if (!patientToken) return res.sendStatus(StatusCode.NoContent);
+
          res.clearCookie("patientToken", {
             httpOnly: true,
-            sameSite: "strict" as const,
+            sameSite: "strict",
             secure: true,
          });
-         res.status(204).json({ message: "cookie cleared" });
+
+         return res.status(StatusCode.NoContent).json({ message: "Cookie cleared" });
       } catch (error) {
          next(error);
       }
