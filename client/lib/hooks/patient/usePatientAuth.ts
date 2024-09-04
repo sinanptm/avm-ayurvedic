@@ -8,9 +8,9 @@ import {
    signUpPatient,
    updatePassword,
    validateOtpPatient,
-} from "@/lib/utils/api/patient/Authentication";
+} from "@/lib/api/patient/Authentication";
 import { AxiosError } from "axios";
-import { logoutPatient } from "@/lib/utils/api/patient/Authentication";
+import { logoutPatient } from "@/lib/api/patient/Authentication";
 
 export const useSignUpPatient = () => {
    return useMutation<MessageResponse, AxiosError<ErrorResponse>, IPatient>({
