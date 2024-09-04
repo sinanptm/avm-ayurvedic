@@ -1,4 +1,3 @@
-import { emit } from "process";
 import IDoctorRepository from "../../interface/repositories/IDoctorRepository";
 import IOtpRepository from "../../interface/repositories/IOtpRepository";
 import IEmailService from "../../interface/services/IEmailService";
@@ -15,7 +14,7 @@ export default class AuthenticationUseCase {
    ) {}
 
    async login(email: string, password: string): Promise<void> {
-      const doctor = await this.adminRepository.findByEmail(email);
+      const doctor = await this.adminRepository.findByEmailWithCredentials(email);
       if (!doctor) throw new Error("Admin Not Found");
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new Error("Invalid Credentials");
 
@@ -36,8 +35,8 @@ export default class AuthenticationUseCase {
       const admin = await this.adminRepository.findByEmailWithCredentials(email);
       if (!admin) throw new Error("Not Found");
 
-      const accessToken = this.tokenService.createAccessToken(email, admin?._id!);
-      const refreshToken = this.tokenService.createRefreshToken(email, admin?._id!);
+      const accessToken = this.tokenService.createAccessToken(email, admin._id!);
+      const refreshToken = this.tokenService.createRefreshToken(email, admin._id!);
 
       admin!.token = refreshToken;
       await this.adminRepository.findByIdAndUpdate(admin);

@@ -6,6 +6,8 @@ interface AuthState {
    doctorToken: string;
    adminToken: string;
    otpMail: string;
+   otpMailAdmin:string;
+   otpMailDoctor:string;
 }
 
 interface AuthContextProps extends AuthState {
@@ -21,6 +23,8 @@ const initialState: AuthState = {
    doctorToken: persistedAuthState.doctorToken || "",
    adminToken: persistedAuthState.adminToken || "",
    otpMail: persistedAuthState.otpMail || "",
+   otpMailAdmin:persistedAuthState.otpMailAdmin || "",
+   otpMailDoctor:persistedAuthState.otpMailDoctor || ""
 };
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);

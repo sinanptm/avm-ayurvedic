@@ -26,7 +26,7 @@ export default class DoctorRepository implements IDoctorRepository {
       }
    }
    async findByIdAndUpdate(doctor: IDoctor): Promise<void> {
-      if (isValidObjectId(doctor._id!)) throw new Error("Invalid Object Id");
+      if (!isValidObjectId(doctor._id!)) throw new Error("Invalid Object Id");
       await this.model.findByIdAndUpdate(doctor._id, doctor, { new: true });
    }
 }

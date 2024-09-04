@@ -13,8 +13,8 @@ export const useSigninAdmin =()=>{
     })
 }
 
-export const useValidateOtp = ()=>{
-    return useMutation<MessageResponse,AxiosError<ErrorResponse>,{email:string,otp:number}>({
+export const useVerifyOtpAdmin = ()=>{
+    return useMutation<{accessToken:string},AxiosError<ErrorResponse>,{email:string,otp:number}>({
         mutationFn:({email,otp})=>validateOtpAdmin(email,otp),
         onError:(error)=>{
             console.log("error in otp verification",error);
@@ -22,7 +22,7 @@ export const useValidateOtp = ()=>{
     })
 }
 
-export const useResendOtp = ()=>{
+export const useResendOtpAdmin = ()=>{
     return useMutation<MessageResponse,AxiosError<ErrorResponse>,{email:string}>({
         mutationFn:({email})=>resendOptAdmin(email),
         onError:(error)=>{

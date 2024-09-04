@@ -1,8 +1,9 @@
-'use client'
+"use client";
 import AdminLayoutWithSideBar from "@/components/layout/AdminLayoutWithSideBar";
+import UniversalSkelton from "@/components/skeletons/Universal";
 import { AdminSideBarLinks } from "@/constants";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 type Props = {
    children: ReactNode;
@@ -11,6 +12,18 @@ type Props = {
 
 const Layout = ({ children, signin }: Props) => {
    const { adminToken } = useAuth();
+   const [isLoading, setLoading] = useState(true);
+
+   useEffect(() => {
+      const timer = setTimeout(() => {
+         setLoading(false);
+      }, 0);
+      return () => clearTimeout(timer);
+   });
+
+   if (isLoading) {
+      return <UniversalSkelton />;
+   }
 
    return (
       <>

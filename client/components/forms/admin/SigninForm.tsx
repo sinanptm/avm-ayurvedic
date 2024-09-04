@@ -9,9 +9,12 @@ import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
 import { signinFormValidation } from "@/components/forms/actions/adminValidation";
 import { FormFieldType } from "@/types/fromTypes";
+import { useSigninAdmin } from "@/lib/hooks/admin/useAdminAuth";
+import { toast } from "@/components/ui/use-toast";
+import {useRouter} from 'next/navigation'
+import { useAuth } from "@/lib/hooks/useAuth";
 
 const AdminSigninForm = () => {
-   const [isLoading, setIsLoading] = useState<boolean>(false);
    const form = useForm<z.infer<typeof signinFormValidation>>({
       resolver: zodResolver(signinFormValidation),
       defaultValues: {
@@ -19,13 +22,29 @@ const AdminSigninForm = () => {
          password: "",
       },
    });
+   const {mutate:signin,isPending}= useSigninAdmin();
+   const router = useRouter();
+   const {setCredentials} = useAuth()
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
-      setIsLoading(true);
-      setTimeout(()=>{
-
-         setIsLoading(false);
-      },3234)
+      signin(values,{
+         onSuccess:({message})=>{
+            toast({
+               title:"Signin Succuss! ✅",
+               description:"Please Check Your Email for Further Instructions",
+               variant:"success"
+            });
+            setCredentials('otpMailAdmin',values.email);
+            router.push('/admin/otp-verification');
+         },
+         onError:(error)=>{
+            toast({
+               title:"Signin failed! ❌",
+               description:error.response?.data.message||"Error Occurred Please try Again",
+               variant:"destructive"
+            })
+         }
+      });
    };
 
    return (
@@ -56,7 +75,7 @@ const AdminSigninForm = () => {
                placeholder="Enter your password"
             />
 
-            <SubmitButton isLoading={isLoading}>Sign In</SubmitButton>
+            <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
          </form>
       </Form>
    );
