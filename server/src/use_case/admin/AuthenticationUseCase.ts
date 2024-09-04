@@ -55,7 +55,14 @@ export default class AuthenticationUseCase {
       }
 
       await this.otpRepository.create(otp, email);
-
       await this.emailService.sendOtp(email, "Admin", otp);
+   }
+
+   async refreshAccessToken(token: string): Promise<{ accessToken: string }> {
+      const { id, email } = this.tokenService.verifyRefreshToken(token);
+      const admin = await this.adminRepository.findByEmail(email);
+      if (!admin) throw new Error("Unauthorized");
+      const accessToken = this.tokenService.createAccessToken(admin.email!, id);
+      return { accessToken };
    }
 }

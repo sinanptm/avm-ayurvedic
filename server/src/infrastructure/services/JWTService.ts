@@ -1,5 +1,6 @@
 import ITokenService from "../../interface/services/ITokenService";
 import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
+import logger from "../../utils/logger";
 
 export default class JWTService implements ITokenService {
    private signToken(payload:object,secret:string,expiresIn:string):string{
@@ -12,6 +13,7 @@ export default class JWTService implements ITokenService {
          if(error instanceof TokenExpiredError){
             throw new Error("Token Expired");
          }
+         logger.info(error)
          throw new Error("Invalid token")
       }
    }

@@ -15,11 +15,19 @@ const passwordService = new BcryptService();
 const tokenService = new JWTService();
 const emailService = new NodeMailerService();
 
-const authUseCase = new AuthenticationUseCase(adminRepository, passwordService, tokenService, emailService, otpRepository);
+const authUseCase = new AuthenticationUseCase(
+   adminRepository,
+   passwordService,
+   tokenService,
+   emailService,
+   otpRepository
+);
 const authController = new AuthenticationController(authUseCase);
 
 route.post("/", authController.login.bind(authController));
 route.post("/otp-verification", authController.validateOtp.bind(authController));
 route.post("/resend-otp", authController.resendOtp.bind(authController));
+route.get("/refresh", authController.refreshAccessToken.bind(authController));
+route.post("/logout",authController.logout.bind(authController));
 
 export default route;

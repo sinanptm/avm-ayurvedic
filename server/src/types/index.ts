@@ -5,6 +5,14 @@ export interface CustomRequest extends Request {
       email: string;
       id: string;
    };
+   admin?:{
+      email:string;
+      id:string;
+   }
+   doctor?:{
+      email:string;
+      id:string;
+   }
 }
 
 export enum StatusCode {

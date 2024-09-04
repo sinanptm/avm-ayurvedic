@@ -27,7 +27,6 @@ export default class NodeMailerService implements IEmailService {
          subject: "No Reply Mail: Otp Verification",
          html: htmlTemplate,
       });
-      
    }
 
    async sendResetMail(email: string, name: string, resetLink: string): Promise<void> {
@@ -47,12 +46,11 @@ export default class NodeMailerService implements IEmailService {
          },
       });
 
-      const mail = await transporter.sendMail({
+      await transporter.sendMail({
          from: process.env.SENDER_MAIL,
          to: email,
          subject: "No Reply Mail: Password Reset",
          html: htmlTemplate,
       });
-      
-   };
+   }
 }

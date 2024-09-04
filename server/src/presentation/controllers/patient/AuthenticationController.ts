@@ -192,7 +192,7 @@ export default class AuthPatientController {
             secure: true,
          });
 
-         return res.status(StatusCode.NoContent).json({ message: "Cookie cleared" });
+         return res.status(StatusCode.Success).json({ message: "Cookie cleared" });
       } catch (error) {
          next(error);
       }
