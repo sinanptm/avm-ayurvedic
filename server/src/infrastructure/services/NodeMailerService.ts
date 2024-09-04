@@ -21,14 +21,12 @@ export default class NodeMailerService implements IEmailService {
          },
       });
 
-      const id =  await transporter.sendMail({
+      await transporter.sendMail({
          from: process.env.SENDER_MAIL,
          to: email,
          subject: "No Reply Mail: Otp Verification",
          html: htmlTemplate,
       });
-
-      console.log(id.messageId);
       
    }
 

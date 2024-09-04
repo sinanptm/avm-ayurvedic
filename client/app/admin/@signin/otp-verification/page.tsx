@@ -2,7 +2,7 @@
 import OtpForm from "@/components/forms/patient/OtpForms";
 import { toast } from "@/components/ui/use-toast";
 import { Banners } from "@/constants";
-import { useVerifyOtpAdmin } from "@/lib/hooks/admin/useAdminAuth";
+import { useResendOtpAdmin, useVerifyOtpAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { useAuth } from "@/lib/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { FormEvent, useState } from "react";
 const OtpVerificationPage = () => {
    const [otp, setOtp] = useState<string>("");
    const { mutate: verify, isPending } = useVerifyOtpAdmin();
+   const { mutate: resend } = useResendOtpAdmin();
    const { otpMailAdmin, setCredentials } = useAuth();
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
@@ -41,7 +42,27 @@ const OtpVerificationPage = () => {
       }
    };
 
-   const handleResend = async () => {};
+   const handleResend = async () => {
+      resend(
+         { email: otpMailAdmin },
+         {
+            onSuccess: () => {
+               toast({
+                  title: "Otp Resented! ✅",
+                  description: "Please Verify Before it Expires",
+                  variant: "success",
+               });
+            },
+            onError: (error) => {
+               toast({
+                  title: "Otp Resending Failed! ❌",
+                  description: error.response?.data.message || "Unknown Error Occurred ",
+                  variant: "destructive",
+               });
+            },
+         }
+      );
+   };
    if (otpMailAdmin) {
       return (
          <div>
