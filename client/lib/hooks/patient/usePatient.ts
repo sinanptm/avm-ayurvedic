@@ -1,7 +1,7 @@
 import {
    getPatientProfile,
    updatePatientProfile,
-} from "@/lib/utils/api/patientProtectedApis";
+} from "@/lib/utils/api/patient/Autherisation";
 import { ErrorResponse, IPatient, MessageResponse } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -10,6 +10,7 @@ export const useGetPatientProfile = () => {
    return useQuery<IPatient, AxiosError<ErrorResponse>>({
       queryKey: ["patientProfile"],
       queryFn: getPatientProfile,
+      refetchInterval:15000
    });
 };
 

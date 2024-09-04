@@ -15,7 +15,7 @@ import getCroppedImg from "@/lib/utils/cropImage";
 import CropImage from "@/components/common/CropImage";
 import useCrop from "@/lib/hooks/useCrop";
 import axios from "axios";
-import { getUpdateProfileUrl, updateProfileImage } from "@/lib/utils/api/patientProtectedApis";
+import { getUpdateProfileUrl, updateProfileImage } from "@/lib/utils/api/patient/Autherisation";
 
 type Props = {
    open: boolean;
