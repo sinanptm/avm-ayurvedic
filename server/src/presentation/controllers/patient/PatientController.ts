@@ -31,7 +31,7 @@ export default class PatientController {
    async getUploadUrl(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const { id } = req.patient!;
-         const {url,key} = await this.patientUseCase.createPreSignedUrl(id, 60 * 5);
+         const {url,key} = await this.patientUseCase.createPreSignedUrl(id);
          
          res.status(200).json({ url,key });
       } catch (error) {

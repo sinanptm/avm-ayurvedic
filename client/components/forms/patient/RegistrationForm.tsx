@@ -16,7 +16,7 @@ import { useGetPatientProfile, useUpdatePatientProfile } from "@/lib/hooks/patie
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 
-const RegistrationForm = () => {
+const RegistrationForm = ({refetch}:{refetch:any}) => {
    const form = useForm<z.infer<typeof registerFormValidation>>({
       resolver: zodResolver(registerFormValidation),
       defaultValues: {
@@ -53,6 +53,7 @@ const RegistrationForm = () => {
                   description: "Your details have been updated",
                   variant: "success",
                });
+               refetch();
                router.push("/");
             },
             onError: (error) => {

@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import AuthSkelton from "@/components/skeletons/AuthPage";
 
 const Register = () => {
-   const { data, isError, isLoading } = useGetPatientProfile();
+   const { data, isError, isLoading, refetch } = useGetPatientProfile();
 
    if(isLoading){
       return <AuthSkelton />
@@ -27,7 +27,7 @@ const Register = () => {
                      className="mb-12 h-10 w-fit"
                   />
 
-                  <RegistrationForm />
+                  <RegistrationForm refetch={refetch} />
 
                   <p className="copyright py-12">© {new Date().getFullYear()} AVM Ayurvedic.</p>
                </div>
