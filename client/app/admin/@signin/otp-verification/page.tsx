@@ -15,7 +15,6 @@ const OtpVerificationPage = () => {
          
       } catch (error) {
          console.log(error);
-         
       }
    };
 

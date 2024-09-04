@@ -19,7 +19,7 @@ export const metadata: Metadata = {
    title: {
       absolute: "",
       template: "AVM | %s",
-      default: "AVM Ayurveda's",
+      default: "AVM Ayurveda",
    },
    description: "Appointment booking and video call consultation, an ayurveda hospital",
 };

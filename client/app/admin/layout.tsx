@@ -8,7 +8,10 @@ interface AdminLayoutWrapperProps {
 }
 
 export const metadata: Metadata = {
-   title: "Admin Dashboard",
+   title: {
+      template: "Admin Dashboard | %s",
+      default: "Admin Dashboard"
+   },
 };
 
 const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children , signin}) => {
