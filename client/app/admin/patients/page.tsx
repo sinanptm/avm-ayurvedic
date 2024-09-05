@@ -9,7 +9,6 @@ export const metadata:Metadata = {
 const page = () => {
   return (
     <main>
-      <h1 className='text-5xl font-extrabold '>page</h1>
       <PatientsTable />
     </main>
   )

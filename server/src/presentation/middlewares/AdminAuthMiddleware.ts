@@ -28,8 +28,11 @@ export default class AdminAuthMiddleware {
          req.admin = { email, id };
 
          next();
-      } catch (error) {
-         next(error);
+      } catch (error:any) {
+         if (error.message === "Token Expired") {
+            return res.status(StatusCode.Unauthorized).json({ message: "Access token expired" });
+         }
+         return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Invalid Access token" });
       }
    }
 }

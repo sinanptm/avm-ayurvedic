@@ -6,7 +6,7 @@ import { useResendOtpAdmin, useVerifyOtpAdmin } from "@/lib/hooks/admin/useAdmin
 import { useAuth } from "@/lib/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 const OtpVerificationPage = () => {
@@ -14,6 +14,7 @@ const OtpVerificationPage = () => {
    const { mutate: verify, isPending } = useVerifyOtpAdmin();
    const { mutate: resend } = useResendOtpAdmin();
    const { otpMailAdmin, setCredentials } = useAuth();
+   const router = useRouter()
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
       try {
@@ -26,7 +27,9 @@ const OtpVerificationPage = () => {
                      description: "Opt Verification has Completed",
                      variant: "success",
                   });
+                  setCredentials('otpMail','');
                   setCredentials("adminToken", accessToken);
+                  router.push('/admin')
                },
                onError: (error) => {
                   toast({

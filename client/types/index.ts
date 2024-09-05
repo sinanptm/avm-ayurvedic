@@ -49,3 +49,13 @@ export interface ErrorResponse {
 export type MessageResponse = {
    message: string;
 };
+
+
+export interface PaginatedResult<T> {
+   items: T[];
+   totalItems: number;
+   currentPage: number;
+   totalPages: number;
+   hasNextPage: boolean;
+   hasPreviousPage: boolean;
+}

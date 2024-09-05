@@ -55,7 +55,7 @@ export default class AuthenticationController {
          const { adminToken } = req.cookies;
          if (!adminToken) return res.status(StatusCode.Forbidden).json({ message: "Unauthenticated" });
          const { accessToken } = await this.authUseCase.refreshAccessToken(adminToken);
-         res.status(200).json(accessToken);
+         res.status(StatusCode.Success).json(accessToken);
       } catch (error) {
          next(error);
       }

@@ -59,10 +59,14 @@ export default class AuthenticationUseCase {
    }
 
    async refreshAccessToken(token: string): Promise<{ accessToken: string }> {
-      const { id, email } = this.tokenService.verifyRefreshToken(token);
-      const admin = await this.adminRepository.findByEmail(email);
-      if (!admin) throw new Error("Unauthorized");
-      const accessToken = this.tokenService.createAccessToken(admin.email!, id);
-      return { accessToken };
+         const { id, email } = this.tokenService.verifyRefreshToken(token);
+   
+         const admin = await this.adminRepository.findByEmail(email);
+         if (!admin) {
+            throw new Error("Unauthorized");
+         }
+         const accessToken = this.tokenService.createAccessToken(admin.email!, id);
+   
+         return { accessToken };
    }
 }

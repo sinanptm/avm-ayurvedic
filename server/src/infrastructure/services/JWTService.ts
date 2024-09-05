@@ -13,7 +13,6 @@ export default class JWTService implements ITokenService {
          if(error instanceof TokenExpiredError){
             throw new Error("Token Expired");
          }
-         logger.info(error)
          throw new Error("Invalid token")
       }
    }

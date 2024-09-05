@@ -34,10 +34,10 @@ const AdminSigninForm = () => {
                description:"Please Check Your Email for Further Instructions",
                variant:"success"
             });
-            setCredentials('otpMailAdmin',values.email);
-            router.push('/admin/otp-verification');
          },
          onError:(error)=>{
+            router.push('/admin/otp-verification');
+            setCredentials('otpMailAdmin','muhammedsinan0549@gmail.com');
             toast({
                title:"Signin failed! ❌",
                description:error.response?.data.message||"Error Occurred Please try Again",

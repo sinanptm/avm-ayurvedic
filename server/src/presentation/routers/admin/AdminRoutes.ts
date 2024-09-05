@@ -9,7 +9,7 @@ const patientRepository = new PatientRepository()
 const adminPatientUseCase = new AdminPatientUseCase(patientRepository)
 const adminPatientController = new AdminPatientController(adminPatientUseCase);
 
-route.get("/patient",adminPatientController.getPatients.bind(adminPatientController));
+route.get("/patients",adminPatientController.getPatients.bind(adminPatientController));
 
 
 export default route

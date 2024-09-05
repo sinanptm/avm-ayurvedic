@@ -29,7 +29,7 @@ export default class PatientAuthMiddleware {
          };
          next();
       } catch (error: any) {
-         if (error.message === "TokenExpired") {
+         if (error.message === "Token Expired") {
             return res.status(StatusCode.Unauthorized).json({ message: "Access token expired" });
          }
          return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Invalid Access token" });

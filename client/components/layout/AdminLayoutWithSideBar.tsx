@@ -18,9 +18,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { NavLinkType } from "@/types";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLogoutAdmin } from "@/lib/hooks/admin/useAdminAuth";
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { toast } from "../ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
 
@@ -104,22 +105,14 @@ const AdminLayoutWithSideBar = ({
                                     height={21}
                                     className="h-5 w-5"
                                  />
-                                 <span className="sr-only">Settings</span>
                               </Button>
                            </DropdownMenuTrigger>
                         </TooltipTrigger>
                         <TooltipContent side="right">Settings</TooltipContent>
                      </Tooltip>
                      <DropdownMenuContent align="end">
-                        {/* <DropdownMenuItem>
-                           <Link href="/admin/logout" className="flex items-center">
-                              <Settings className="mr-2 h-4 w-4" />
-                              <span>Settings</span>
-                           </Link>
-                        </DropdownMenuItem> */}
                         <DropdownMenuItem>
                            <button className="flex items-center w-full text-left" onClick={handleLogout}>
-                              {/* <LogOut/> */}
                               <Image
                                  src={"/assets/icons/logout.svg"}
                                  className="mr-2 h-4 w-4"
@@ -144,7 +137,10 @@ const AdminLayoutWithSideBar = ({
                         <span className="sr-only">Toggle Menu</span>
                      </Button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="w-64 p-0">
+                  <SheetTitle>
+      <VisuallyHidden>Navigation Menu</VisuallyHidden>
+    </SheetTitle>
+                  <SheetContent side="left" className="w-64 p-0" aria-label="Navigation menu">
                      <nav className="grid gap-6 p-6 text-lg font-medium">
                         <Link
                            href="/"
