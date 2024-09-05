@@ -1,4 +1,4 @@
-import { signinAdmin, resendOptAdmin, validateOtpAdmin, logoutAdmin } from "@/lib/api/admin/Authentication";
+import { signinAdmin, resendOptAdmin, validateOtpAdmin, logoutAdmin } from "@/lib/api/admin/authenticationRoutes";
 import { ErrorResponse, MessageResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";

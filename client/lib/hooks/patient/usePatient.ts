@@ -1,7 +1,7 @@
 import {
    getPatientProfile,
    updatePatientProfile,
-} from "@/lib/api/patient/Autherisation";
+} from "@/lib/api/patient/authorizedRoutes";
 import { ErrorResponse, IPatient, MessageResponse } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
