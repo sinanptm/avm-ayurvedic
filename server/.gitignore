@@ -5,9 +5,6 @@
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
 
 # Environment variables
 .env
@@ -21,21 +18,6 @@ pnpm-debug.log*
 /build
 /dist
 
-# Optional npm cache directory
-.npm
 
 # Optional eslint cache
 .eslintcache
-
-# Optional REPL history
-.node_repl_history
-
-# IDE and Editor settings
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Mac
-.vercel

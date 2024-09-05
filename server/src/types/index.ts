@@ -37,3 +37,12 @@ export enum Cookie {
    Patient = "patientToken",
    Doctor = "doctorToken",
 }
+
+export interface PaginatedResult<T> {
+   items: T[];
+   totalItems: number;
+   currentPage: number;
+   totalPages: number;
+   hasNextPage: boolean;
+   hasPreviousPage: boolean;
+}
