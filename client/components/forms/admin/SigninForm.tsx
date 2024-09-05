@@ -28,16 +28,16 @@ const AdminSigninForm = () => {
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
       signin(values,{
-         onSuccess:({message})=>{
+         onSuccess:()=>{
             toast({
                title:"Signin Succuss! ✅",
                description:"Please Check Your Email for Further Instructions",
                variant:"success"
             });
-         },
-         onError:(error)=>{
             router.push('/admin/otp-verification');
             setCredentials('otpMailAdmin','muhammedsinan0549@gmail.com');
+         },
+         onError:(error)=>{
             toast({
                title:"Signin failed! ❌",
                description:error.response?.data.message||"Error Occurred Please try Again",

@@ -36,14 +36,10 @@ axiosInstance.interceptors.response.use(
             const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
             const refreshResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/auth/refresh`, {
                withCredentials: true,
-            });
-            console.log('refresh startred');
-            
+            });            
 
             const newAccessToken = refreshResponse.data.accessToken;
 
-            console.log('Got token: ',refreshResponse);
-            
 
             localStorage.setItem(
                "auth",
@@ -56,9 +52,7 @@ axiosInstance.interceptors.response.use(
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
             return axiosInstance(originalRequest);
-         } catch (refreshError) {
-            console.log('Got error in refreshing',error);
-            
+         } catch (refreshError) {            
             return Promise.reject(refreshError);
          }
       }
