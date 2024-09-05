@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import ITokenService from "../../interface/services/ITokenService";
 import { CustomRequest, StatusCode } from "../../types";
+import logger from "../../utils/logger";
 
 export default class AdminAuthMiddleware {
    constructor(private tokenService: ITokenService) {}
@@ -19,6 +20,11 @@ export default class AdminAuthMiddleware {
             return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Access Token is missing" });
          }
          const { id, email } = this.tokenService.verifyAccessToken(token);
+         if (!id || !email) {
+            logger.warn("Unauthorized: Invalid Access Token Attempt")
+            return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Invalid Access Token" });
+         }
+
          req.admin = { email, id };
 
          next();

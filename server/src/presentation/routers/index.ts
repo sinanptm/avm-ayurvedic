@@ -20,7 +20,7 @@ app.use("/patient/auth", patientAuthentication);
 app.use("/patient", authorizePatient.exec.bind(authorizePatient), protectedRoutes);
 
 app.use("/admin/auth", adminAuthentication);
-app.get("/admin/", authorizeAdmin.exec.bind(authorizeAdmin), protectedAdminRoutes);
+app.use("/admin", authorizeAdmin.exec.bind(authorizeAdmin), protectedAdminRoutes);
 
 app.use(errorHandler.exec.bind(errorHandler));
 
