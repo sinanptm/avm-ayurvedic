@@ -34,7 +34,7 @@ export interface IPatient {
    bloodGroup?: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
    dob?: Date;
    isSubscribed?: boolean;
-   isBlocked?: false;
+   isBlocked?: boolean;
    address?: string;
    profile?: string;
    occupation?: string;

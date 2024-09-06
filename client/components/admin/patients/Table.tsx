@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ListFilter, MoreHorizontal, PlusCircle } from "lucide-react";
+import { ListFilter, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
    DropdownMenu,
    DropdownMenuCheckboxItem,
    DropdownMenuContent,
-   DropdownMenuItem,
    DropdownMenuLabel,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
@@ -23,11 +22,11 @@ import AdminPatientProfileModel from "@/components/models/admin/AdminPatientProf
 
 export default function PatientsTable() {
    const [currentPage, setCurrentPage] = useState(0);
-   const itemsPerPage = 10;
+   const itemsPerPage = 6;
    const [isModelOpen, setModelOpen] = useState(false);
-   const [selectedPatient, setSelectedPatient] = useState({})
+   const [selectedPatient, setSelectedPatient] = useState({});
 
-   const { data, isLoading, error } = useGetPatientsAdmin(currentPage, itemsPerPage);
+   const { data, isLoading, error,refetch } = useGetPatientsAdmin(currentPage, itemsPerPage);
 
    if (isLoading) return <h2 className="text-primary">Loading....</h2>;
    if (error) return <h2 className="text-destructive">Error loading patients.</h2>;
@@ -39,7 +38,7 @@ export default function PatientsTable() {
       setCurrentPage(pageIndex);
    };
 
-   const handleViewProfile = (patient:IPatient) => {
+   const handleViewProfile = (patient: IPatient) => {
       setSelectedPatient(patient);
       setModelOpen(true);
    };
@@ -119,50 +118,26 @@ export default function PatientsTable() {
                                     <TableCell>{patient.phone}</TableCell>
                                     <TableCell>{patient.bloodGroup}</TableCell>
                                     <TableCell className="text-right">
-                                       <DropdownMenu modal>
-                                          <DropdownMenuTrigger asChild>
-                                             <Button variant="ghost" size="sm">
-                                                <MoreHorizontal className="h-4 w-4" />
-                                                <span className="sr-only">Open menu</span>
-                                             </Button>
-                                          </DropdownMenuTrigger>
-                                          <DropdownMenuContent
-                                             className="bg-green-700 bg-opacity-55 border-white cursor-pointer"
-                                             align="end">
-                                             <DropdownMenuItem
-                                                className="cursor-pointer"
-                                                onSelect={() => handleViewProfile(patient)}>
-                                                View Profile
-                                             </DropdownMenuItem>
-                                             {patient.isBlocked ? (
-                                                <DropdownMenuItem className="text-destructive cursor-pointer">
-                                                   Unblock Patient
-                                                </DropdownMenuItem>
-                                             ) : (
-                                                <DropdownMenuItem className="text-destructive cursor-pointer">
-                                                   Block Patient
-                                                </DropdownMenuItem>
-                                             )}
-                                          </DropdownMenuContent>
-                                       </DropdownMenu>
+                                       <Button variant="link" size="sm" onClick={() => handleViewProfile(patient)}>
+                                          View Profile
+                                       </Button>
                                     </TableCell>
                                  </TableRow>
                               ))}
                            </TableBody>
                         </Table>
                      </CardContent>
-                     <CardFooter className="flex items-center justify-between">
-                        <PaginationComponent
-                           currentPage={currentPage}
-                           handlePageChange={handlePageChange}
-                           totalPages={totalPages}
-                        />
-                     </CardFooter>
                   </Card>
                </TabsContent>
             </Tabs>
+            <PaginationComponent
+               currentPage={currentPage}
+               handlePageChange={handlePageChange}
+               totalPages={totalPages}
+               className="mt-11"
+            />
          </div>
-         <AdminPatientProfileModel open={isModelOpen} setOpen={setModelOpen} patient={selectedPatient} />
+         <AdminPatientProfileModel open={isModelOpen} setOpen={setModelOpen} patient={selectedPatient} refetch={refetch} />
       </main>
    );
 }

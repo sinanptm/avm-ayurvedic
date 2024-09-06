@@ -7,7 +7,7 @@ export interface IPatient {
    bloodGroup?: string;
    dob?: Date;
    isSubscribed?: boolean;
-   isBlocked?: false;
+   isBlocked?: boolean;
    address?: string;
    token?: string;
    createdAt?:string;

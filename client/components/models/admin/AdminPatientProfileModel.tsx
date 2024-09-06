@@ -13,16 +13,41 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { IPatient } from "@/types";
+import { useChangeStatusAdmin } from "@/lib/hooks/admin/useAdminPatients";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  patient: IPatient;
+  patient: IPatient; 
+  refetch:any;
 };
 
-const AdminPatientProfileModel = ({ open, setOpen, patient }: Props) => {
+const AdminPatientProfileModel = ({ open, setOpen, patient,refetch }: Props) => {
+  const {mutate:handleBock,isPending} = useChangeStatusAdmin()
   const closeModal = () => {
     setOpen(false);
+  };
+
+  const handleChangeStatus = () => {
+    console.log("Patient ID:", patient._id);
+    console.log("Current Status:", patient.isBlocked);
+    handleBock(
+      { id: patient._id!, isBlocked: patient.isBlocked! },
+      {
+        onSuccess: () => {
+          refetch();
+          toast({
+            title: "Patient Status Updated ✅",
+            variant: "success",
+          });
+          patient.isBlocked = !patient.isBlocked
+        },
+        onError: (error) => {
+          console.log(error.response?.data || error.message);
+        },
+      }
+    );
   };
 
   if (!patient) return null;
@@ -56,8 +81,8 @@ const AdminPatientProfileModel = ({ open, setOpen, patient }: Props) => {
             <div>
               <h3 className="text-2xl font-semibold">{patient.name}</h3>
               <p className="text-muted-foreground">{patient.gender || "Not specified"}</p>
-              {!patient.isBlocked && (
-                <span className="mt-2 inline-block rounded-full bg-destructive px-2 py-1 text-xs font-semibold text-white">
+              {patient.isBlocked && (
+                <span className="mt-2 inline-block rounded-full font-semibold text-sm text-red-700">
                   Blocked
                 </span>
               )}
@@ -141,13 +166,13 @@ const AdminPatientProfileModel = ({ open, setOpen, patient }: Props) => {
           </div>
         </div>
         <AlertDialogFooter className="flex justify-between">
-          <Button variant="outline" onClick={closeModal}>
+          <Button variant="outline" onClick={closeModal} disabled={isPending} >
             Close
           </Button>
           {patient.isBlocked ? (
-            <Button variant="success">Unblock Patient</Button>
+            <Button variant="success" onClick={handleChangeStatus}>Unblock Patient</Button>
           ) : (
-            <Button variant="outline" className="bg-red-900">Block Patient</Button>
+            <Button variant="outline" onClick={handleChangeStatus} className="bg-red-900">Block Patient</Button>
           )}
         </AlertDialogFooter>
       </AlertDialogContent>

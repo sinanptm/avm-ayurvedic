@@ -10,6 +10,7 @@ const adminPatientUseCase = new AdminPatientUseCase(patientRepository)
 const adminPatientController = new AdminPatientController(adminPatientUseCase);
 
 route.get("/patients",adminPatientController.getPatients.bind(adminPatientController));
+route.patch("/patients",adminPatientController.updatePatient.bind(adminPatientController));
 
 
 export default route

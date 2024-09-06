@@ -66,4 +66,9 @@ export const getPatients = async (offset: number, limit: number) => {
    return response.data;
 };
 
+export const blockPatient = async (id:string,isBlocked:boolean)=>{
+   const response = await axiosInstance.patch('/patients',{id,isBlocked});
+   return response.data;
+}
+
 export default axiosInstance;

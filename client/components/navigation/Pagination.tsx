@@ -1,50 +1,94 @@
 import {
+   Pagination,
    PaginationContent,
+   PaginationEllipsis,
    PaginationItem,
    PaginationLink,
    PaginationNext,
    PaginationPrevious,
-   Pagination
-} from "@/components/ui/pagination";
-
-type Props = {
-    handlePageChange:(pageIndex:number)=>void,
-    currentPage:number,
-    totalPages:number,
-    
-}
-
-const PaginationComponent = ({currentPage, handlePageChange, totalPages}:Props) => {
+ } from "@/components/ui/pagination"
+ 
+ type Props = {
+   handlePageChange: (pageIndex: number) => void;
+   currentPage: number;
+   totalPages: number;
+   className?: string;
+ };
+ 
+ export default function PaginationComponent({ currentPage, handlePageChange, totalPages, className }: Props) {
+   const getPageRange = () => {
+     const delta = 2;
+     const range = [];
+     const rangeWithDots = [];
+     let l;
+ 
+     range.push(1);
+ 
+     for (let i = currentPage - delta; i <= currentPage + delta; i++) {
+       if (i < totalPages && i > 1) {
+         range.push(i);
+       }
+     }
+ 
+     range.push(totalPages);
+ 
+     for (let i of range) {
+       if (l) {
+         if (i - l === 2) {
+           rangeWithDots.push(l + 1);
+         } else if (i - l !== 1) {
+           rangeWithDots.push('...');
+         }
+       }
+       rangeWithDots.push(i);
+       l = i;
+     }
+ 
+     return rangeWithDots;
+   }
+ 
    return (
-      <Pagination>
-         <PaginationContent>
-            <PaginationItem>
-               <PaginationPrevious
-                  href="#"
-                  onClick={() => handlePageChange(Math.max(currentPage - 1, 0))}
-                  isActive={currentPage !== 0}
-               />
-            </PaginationItem>
-            {Array.from({ length: totalPages }, (_, index) => (
-               <PaginationItem key={index}>
-                  <PaginationLink
-                     href="#"
-                     onClick={() => handlePageChange(index)}
-                     className={index === currentPage ? "font-bold" : ""}>
-                     {index + 1}
-                  </PaginationLink>
-               </PaginationItem>
-            ))}
-            <PaginationItem>
-               <PaginationNext
-                  href="#"
-                  onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages - 1))}
-                  isActive={currentPage !== totalPages - 1}
-               />
-            </PaginationItem>
-         </PaginationContent>
-      </Pagination>
-   );
-};
-
-export default PaginationComponent;
+     <Pagination className={className}>
+       <PaginationContent>
+         <PaginationItem>
+           <PaginationPrevious
+             href="#"
+             onClick={(e) => {
+               e.preventDefault();
+               handlePageChange(Math.max(currentPage - 1, 0));
+             }}
+             aria-disabled={currentPage === 0}
+           />
+         </PaginationItem>
+         {getPageRange().map((page, index) => (
+           <PaginationItem key={index}>
+             {page === '...' ? (
+               <PaginationEllipsis />
+             ) : (
+               <PaginationLink
+                 href="#"
+                 onClick={(e) => {
+                   e.preventDefault();
+                   handlePageChange(Number(page) - 1);
+                 }}
+                 isActive={currentPage === Number(page) - 1}
+               >
+                 {page}
+               </PaginationLink>
+             )}
+           </PaginationItem>
+         ))}
+         <PaginationItem>
+           <PaginationNext
+             href="#"
+             onClick={(e) => {
+               e.preventDefault();
+               handlePageChange(Math.min(currentPage + 1, totalPages - 1));
+             }}
+             aria-disabled={currentPage === totalPages - 1}
+           />
+         </PaginationItem>
+       </PaginationContent>
+     </Pagination>
+   )
+ }
