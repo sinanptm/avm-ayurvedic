@@ -27,7 +27,7 @@ export const NavBar = () => {
    const route = useRouter();
    const { mutate: logoutFunc } = useLogoutMutation();
    const { patientToken, setCredentials, logout } = useAuth();
-   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+   const [isLogoutModelOpen, setLogoutModelOpen] = useState(false);
    const [isSheetOpen, setIsSheetOpen] = useState(false)
 
    if (path.includes("signup") || path.includes("admin") || path.includes("signin")||path.includes("doctor")) {
@@ -35,7 +35,7 @@ export const NavBar = () => {
    }
 
    const handleLogoutClick = () => {
-      setIsLogoutDialogOpen(true);
+      setLogoutModelOpen(true);
    };
 
    const handleLogoutConfirm = () => {
@@ -59,7 +59,7 @@ export const NavBar = () => {
                logout("patientToken");
             },
          });
-         setIsLogoutDialogOpen(false);
+         setLogoutModelOpen(false);
          
       } catch (error) {
          console.log(error);
@@ -172,7 +172,7 @@ export const NavBar = () => {
                   )}
                </DropdownMenuContent>
             </DropdownMenu>
-            <LogoutModel isLogoutDialogOpen={isLogoutDialogOpen} setIsLogoutDialogOpen={setIsLogoutDialogOpen}  handleLogoutConfirm={handleLogoutConfirm} />
+            <LogoutModel open={isLogoutModelOpen} setOpen={setLogoutModelOpen}  handleLogoutConfirm={handleLogoutConfirm} />
          </div>
       </header>
    );

@@ -3,7 +3,7 @@
 import { ReactNode, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Package2, PanelLeft, Search } from "lucide-react";
 
@@ -24,6 +24,7 @@ import { useLogoutAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { toast } from "../ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
+import LogoutModel from "../models/LogoutModel";
 
 const AdminLayoutWithSideBar = ({
    children,
@@ -34,8 +35,10 @@ const AdminLayoutWithSideBar = ({
 }) => {
    const pathname = usePathname();
    const [open,setOpen] = useState<boolean>(false)
+   const [isLogoutOpen,setLogoutOpen] = useState(false)
    const { mutate: logout } = useLogoutAdmin();
    const { setCredentials } = useAuth();
+   const router = useRouter()
    const handleLogout = () => {
       logout(null, {
          onSuccess: () => {
@@ -44,6 +47,7 @@ const AdminLayoutWithSideBar = ({
                variant: "success",
             });
             setCredentials("adminToken", "");
+            router.push('/admin');
          },
          onError: (error) => {
             toast({
@@ -113,7 +117,7 @@ const AdminLayoutWithSideBar = ({
                      </Tooltip>
                      <DropdownMenuContent align="end">
                         <DropdownMenuItem>
-                           <button className="flex items-center w-full text-left" onClick={handleLogout}>
+                           <button className="flex items-center w-full text-left" onClick={()=>setLogoutOpen(!isLogoutOpen)}>
                               <Image
                                  src={"/assets/icons/logout.svg"}
                                  className="mr-2 h-4 w-4"
@@ -194,13 +198,14 @@ const AdminLayoutWithSideBar = ({
                      <DropdownMenuContent align="end" className="cursor-pointer">
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+                        <DropdownMenuItem onClick={()=>setLogoutOpen(!isLogoutOpen)}>Logout</DropdownMenuItem>
                      </DropdownMenuContent>
                   </DropdownMenu>
                </div>
             </header>
             {children}
          </div>
+         <LogoutModel handleLogoutConfirm={handleLogout} open={isLogoutOpen} setOpen={setLogoutOpen} />
       </div>
    );
 };

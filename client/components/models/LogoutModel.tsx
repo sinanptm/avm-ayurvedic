@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import {
    AlertDialog,
-   AlertDialogAction,
    AlertDialogCancel,
    AlertDialogContent,
    AlertDialogDescription,
@@ -9,16 +8,17 @@ import {
    AlertDialogHeader,
    AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "../ui/button";
 
 interface Props {
-   isLogoutDialogOpen: boolean;
-   setIsLogoutDialogOpen: Dispatch<SetStateAction<boolean>>;
+   open: boolean;
+   setOpen: Dispatch<SetStateAction<boolean>>;
    handleLogoutConfirm: () => void;
 }
 
-const LogoutModel = ({ isLogoutDialogOpen, setIsLogoutDialogOpen, handleLogoutConfirm }: Props) => {
+const LogoutModel = ({ open, setOpen, handleLogoutConfirm }: Props) => {
    return (
-      <AlertDialog open={isLogoutDialogOpen} onOpenChange={setIsLogoutDialogOpen}>
+      <AlertDialog open={open} onOpenChange={setOpen}>
          <AlertDialogContent>
             <AlertDialogHeader>
                <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
@@ -28,9 +28,9 @@ const LogoutModel = ({ isLogoutDialogOpen, setIsLogoutDialogOpen, handleLogoutCo
             </AlertDialogHeader>
             <AlertDialogFooter>
                <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
-               <AlertDialogAction className="cursor-pointer" onClick={handleLogoutConfirm}>
+               <Button variant={"destructive"} onClick={handleLogoutConfirm}>
                   Log out
-               </AlertDialogAction>
+               </Button>
             </AlertDialogFooter>
          </AlertDialogContent>
       </AlertDialog>

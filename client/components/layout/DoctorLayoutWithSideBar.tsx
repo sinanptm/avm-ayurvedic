@@ -32,25 +32,9 @@ const DoctorLayoutWithSideBar = ({
    sideBarLinks: NavLinkType[];
 }) => {
    const pathname = usePathname();
-   const {mutate:logout} = useLogoutAdmin();
    const {setCredentials}  = useAuth()
    const handleLogout = ()=>{
-      logout(null,{
-         onSuccess:()=>{
-            toast({
-               title:"Logout Successfully👋",
-               variant:"success"
-            });
-            setCredentials('adminToken','');
-         },
-         onError:(error)=>{
-            toast({
-               title:"Logout Failed ❌",
-               description:error.response?.data.message||"An Unknown Error Occurred",
-               variant:"destructive"
-            });
-         }
-      })
+    
    }
 
    return (
