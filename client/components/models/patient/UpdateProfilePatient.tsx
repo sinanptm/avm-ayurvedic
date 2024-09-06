@@ -2,21 +2,21 @@
 import { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Form, FormControl } from "../ui/form";
+import { Form, FormControl } from "../../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { updateProfileFormValidation } from "@/components/forms/actions/userValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import SubmitButton from "../common/SubmitButton";
+import SubmitButton from "../../common/SubmitButton";
 import { IPatient } from "@/types";
-import CustomFormField from "../common/CustomFormField";
+import CustomFormField from "../../common/CustomFormField";
 import { FormFieldType } from "@/types/fromTypes";
 import { BloodGroups, GenderOptions } from "@/constants";
-import { SelectItem } from "../ui/select";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Label } from "../ui/label";
+import { SelectItem } from "../../ui/select";
+import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../ui/label";
 import { useUpdatePatientProfile } from "@/lib/hooks/patient/usePatient";
-import { toast } from "../ui/use-toast";
+import { toast } from "../../ui/use-toast";
 
 type Props = {
    open: boolean;

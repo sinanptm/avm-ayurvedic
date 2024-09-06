@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { IPatient } from "@/types"
-import UploadProfileModel from "@/components/models/UploadProfileModel";
+import UploadProfileModel from "@/components/models/patient/UploadProfileModel";
 
 interface Props {
   setSection: (state: "profile" | "appointments" | "records") => void

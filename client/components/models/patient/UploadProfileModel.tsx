@@ -3,14 +3,14 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Form } from "../ui/form";
+import { Form } from "../../ui/form";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import SubmitButton from "../common/SubmitButton";
+import SubmitButton from "../../common/SubmitButton";
 import { IPatient } from "@/types";
-import { Input } from "../ui/input";
-import { toast } from "../ui/use-toast";
+import { Input } from "../../ui/input";
+import { toast } from "../../ui/use-toast";
 import getCroppedImg from "@/lib/utils/cropImage";
 import CropImage from "@/components/common/CropImage";
 import useCrop from "@/lib/hooks/useCrop";

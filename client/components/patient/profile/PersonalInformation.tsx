@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { IPatient } from "@/types";
 import Image from "next/image";
 import { useState } from "react";
-import UpdateProfilePatient from "@/components/models/UpdateProfilePatient";
+import UpdateProfilePatient from "@/components/models/patient/UpdateProfilePatient";
 
 type Props = {
    patientData: IPatient;

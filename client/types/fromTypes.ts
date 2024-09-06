@@ -42,9 +42,3 @@ export interface OtpFromProps {
    setOtp:(value:string)=>void;
 }
 
-export type OptModelProps = {
-   returnRoute:string;
-   timer:number;
-   handleResend:()=>void;
-   handleVerify:(e:FormEvent)=>void;
-}

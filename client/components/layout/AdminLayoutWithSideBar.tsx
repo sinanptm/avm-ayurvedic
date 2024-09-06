@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLogoutAdmin } from "@/lib/hooks/admin/useAdminAuth";
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { toast } from "../ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
 
@@ -33,6 +33,7 @@ const AdminLayoutWithSideBar = ({
    sideBarLinks: NavLinkType[];
 }) => {
    const pathname = usePathname();
+   const [open,setOpen] = useState<boolean>(false)
    const { mutate: logout } = useLogoutAdmin();
    const { setCredentials } = useAuth();
    const handleLogout = () => {
@@ -86,7 +87,7 @@ const AdminLayoutWithSideBar = ({
                         </TooltipTrigger>
                         <TooltipContent
                            side="right"
-                           className="bg-green-700 bg-opacity-35 text-white border-white hover:border-green-600 transition-colors duration-200">
+                           className=" bg-green-700 bg-opacity-55 border-white cursor-pointer hover:border-green-600 transition-colors duration-200">
                            {item.label}
                         </TooltipContent>
                      </Tooltip>
@@ -108,7 +109,7 @@ const AdminLayoutWithSideBar = ({
                               </Button>
                            </DropdownMenuTrigger>
                         </TooltipTrigger>
-                        <TooltipContent side="right">Settings</TooltipContent>
+                        <TooltipContent side="right" className=" bg-green-700 bg-opacity-55 border-white cursor-pointer">Settings</TooltipContent>
                      </Tooltip>
                      <DropdownMenuContent align="end">
                         <DropdownMenuItem>
@@ -130,16 +131,16 @@ const AdminLayoutWithSideBar = ({
          </TooltipProvider>
          <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
             <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-               <Sheet>
+               <Sheet open={open} onOpenChange={setOpen}>
                   <SheetTrigger asChild>
                      <Button size="icon" variant="outline" className="sm:hidden">
-                        <PanelLeft className="h-5 w-5" />
+                        <PanelLeft className="h-5 w-5" onClick={()=>setOpen(!open)} />
                         <span className="sr-only">Toggle Menu</span>
                      </Button>
                   </SheetTrigger>
                   <SheetTitle>
-      <VisuallyHidden>Navigation Menu</VisuallyHidden>
-    </SheetTitle>
+                     <VisuallyHidden>Navigation Menu</VisuallyHidden>
+                  </SheetTitle>
                   <SheetContent side="left" className="w-64 p-0" aria-label="Navigation menu">
                      <nav className="grid gap-6 p-6 text-lg font-medium">
                         <Link
@@ -152,6 +153,7 @@ const AdminLayoutWithSideBar = ({
                            <Link
                               key={item.href}
                               href={item.href}
+                              onClick={()=>setOpen(false)}
                               className={cn(
                                  "flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground",
                                  pathname === item.href && "text-foreground"

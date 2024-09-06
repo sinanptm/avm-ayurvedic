@@ -14,11 +14,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import SubmitButton from "../common/SubmitButton";
-import CustomFormField from "../common/CustomFormField";
+import SubmitButton from "../../common/SubmitButton";
+import CustomFormField from "../../common/CustomFormField";
 import { FormFieldType } from "@/types/fromTypes";
 import { useForgetPassword } from "@/lib/hooks/patient/usePatientAuth";
-import { toast } from "../ui/use-toast";
+import { toast } from "../../ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 type Props = {

@@ -26,10 +26,7 @@ const AnimatedCard = ({
             <CardItem as="p" translateZ="60" className="text-sm mt-2">
                {text}
             </CardItem>
-            <CardItem
-               translateZ="100"
-               className={`w-full mt-4 ${imageClassName}`}
-            >
+            <CardItem translateZ="100" className={`w-full mt-4 ${imageClassName}`}>
                <Image
                   src={image}
                   priority
@@ -46,8 +43,7 @@ const AnimatedCard = ({
                   <CardItem
                      translateZ={20}
                      as="button"
-                     className="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 dark:bg-white dark:text-black text-white text-sm font-bold transition-colors"
-                  >
+                     className="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 dark:bg-white dark:text-black text-white text-sm font-bold transition-colors">
                      <Link href={link}>{linkText}</Link>
                   </CardItem>
                )}

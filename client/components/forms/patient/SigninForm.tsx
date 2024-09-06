@@ -14,7 +14,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useSignInPatient } from "@/lib/hooks/patient/usePatientAuth";
 import { useAuth } from "@/lib/hooks/useAuth";
-import ForgetPasswordModel from "@/components/models/ForgetPasswordModel";
+import ForgetPasswordModel from "@/components/models/patient/ForgetPasswordModel";
 
 const LoginForm = () => {
    const [error, setError] = useState("");
