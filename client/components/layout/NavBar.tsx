@@ -155,7 +155,7 @@ export const NavBar = () => {
                   </Button>
                </DropdownMenuTrigger>
                <DropdownMenuContent align="end" className="mt-3">
-                  {patientToken ? (
+                  {patientToken!=='' ? (
                      <>
                         <DropdownMenuLabel className="cursor-pointer">
                            <Link href={"/profile"}>My Account</Link>

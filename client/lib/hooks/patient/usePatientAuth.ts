@@ -30,6 +30,9 @@ export const useSignInPatient = () => {
       mutationFn: ({ email, password }) => signInPatient(email, password),
       onError: (error) => {
          console.log("Error in signing in:", error);
+         if(error.response?.status===403){
+             return "Patient is Blocked"
+         }
       },
    });
 };
@@ -43,6 +46,9 @@ export const useOAuthSigninPatient = () => {
       mutationFn: ({ email, name, profile }) => oAuthSignin(email, name, profile),
       onError: (error) => {
          console.log("Error in OAuthSign :", error);
+         if(error.response?.status===403){
+            return "Patient is Blocked"
+         }
       },
    });
 };

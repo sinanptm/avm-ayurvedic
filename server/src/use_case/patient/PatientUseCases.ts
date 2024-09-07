@@ -11,13 +11,14 @@ export default class PatientUseCase {
    async getUserProfile(id: string): Promise<IPatient> {
       const patient = await this.patientRepository.findById(id);
       if (!patient) throw new Error("Not Found");
-      if (patient.isBlocked) throw new Error("Patient Is Blocked");
+      if (patient.isBlocked) throw new Error("Patient is Blocked");
       return patient;
    }
 
    async updateProfile(id: string, patient: IPatient): Promise<void> {
       const existingInfo = await this.patientRepository.findById(id);
       if (!existingInfo) throw new Error("Not Found");
+      if (existingInfo.isBlocked) throw new Error("Patient is Blocked");
       await this.patientRepository.findByIdAndUpdate(id, patient);
    }
 
@@ -30,6 +31,7 @@ export default class PatientUseCase {
    async updateProfileImage(id: string, key: string): Promise<void> {
       const patient = await this.patientRepository.findById(id);
       if (!patient) throw new Error("Not Found");
+      if (patient.isBlocked) throw new Error("Patient is Blocked");
 
       if (patient.profile) {
          await this.cloudStorageService.deleteFile(

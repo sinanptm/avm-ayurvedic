@@ -1,6 +1,19 @@
 import { IPatient } from "@/types";
 import axios from "axios";
 
+const getAuthTokens = () => {
+   try {
+      return JSON.parse(localStorage.getItem("auth") || "{}");
+   } catch (e) {
+      console.error("Failed to parse auth tokens", e);
+      return {};
+   }
+};
+
+const setAuthTokens = (tokens: Record<string, string>) => {
+   localStorage.setItem("auth", JSON.stringify(tokens));
+};
+
 const axiosInstance = axios.create({
    baseURL: `${process.env.NEXT_PUBLIC_API_URL}/patient`,
    headers: {
@@ -11,47 +24,41 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
    (config) => {
-      const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
+      const tokens = getAuthTokens();
       if (tokens.patientToken) {
          config.headers.Authorization = `Bearer ${tokens.patientToken}`;
       }
       return config;
    },
-   (error) => {
-      return Promise.reject(error);
-   }
+   (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
-   (response) => {
-      return response;
-   },
+   (response) => response,
    async (error: any) => {
       const originalRequest = error.config;
+      const tokens = getAuthTokens();
 
+      if (error.response?.status === 403) {
+         setAuthTokens({ ...tokens, patientToken: "" });
+         return Promise.reject(error);
+      }
       if (error.response?.status === 401 && !originalRequest._retry) {
          originalRequest._retry = true;
-
          try {
-            const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
             const refreshResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/patient/auth/refresh`, {
                withCredentials: true,
             });
 
             const newAccessToken = refreshResponse.data.accessToken;
-
-            localStorage.setItem(
-               "auth",
-               JSON.stringify({
-                  ...tokens,
-                  patientToken: newAccessToken,
-               })
-            );
+            setAuthTokens({ ...tokens, patientToken: newAccessToken });
 
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
             return axiosInstance(originalRequest);
-         } catch (refreshError) {
+         } catch (refreshError: any) {
+            if (refreshError.response?.status === 401 || 403) {
+               setAuthTokens({ ...tokens, patientToken: "" });
+            }
             return Promise.reject(refreshError);
          }
       }

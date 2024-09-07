@@ -34,8 +34,8 @@ const AdminSigninForm = () => {
                description:"Please Check Your Email for Further Instructions",
                variant:"success"
             });
-            router.push('/admin/otp-verification');
             setCredentials('otpMailAdmin','muhammedsinan0549@gmail.com');
+            router.push('/admin/otp-verification');
          },
          onError:(error)=>{
             toast({

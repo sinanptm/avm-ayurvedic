@@ -5,6 +5,7 @@ import ProfileSkeleton from "@/components/skeletons/ProfilePage";
 import { notFound, useRouter } from "next/navigation";
 import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
 import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 interface Props {
    children: ReactNode;
@@ -15,15 +16,27 @@ interface Props {
 const ProfilePageLayout = ({ children, appointments, records }: Props) => {
    const [section, setSection] = useState<"profile" | "appointments" | "records">("profile");
    const router = useRouter();
+   const {setCredentials} = useAuth()
 
-   const { data: patientData, isLoading, isError, refetch } = useGetPatientProfile();
+   const { data: patientData, isLoading, isError, refetch , error} = useGetPatientProfile();
    if (isLoading) {
       return <ProfileSkeleton />;
    }   
 
    if (isError) {
+      if(error.response?.status===403){
+         setTimeout(()=>{
+            toast({
+               title: "You Have Been Blocked",
+               description: "Your Blocked By Admin Please Contact Our Customer Care Service",
+               variant: "destructive",
+            });
+            setCredentials('patientToken','');
+         },20)
+      }
       notFound();
    }
+
 
    if (typeof patientData?.bloodGroup === "undefined") {
       router.push("/register");

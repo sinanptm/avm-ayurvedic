@@ -30,7 +30,11 @@ export default class AuthenticationUseCase {
       const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundedPatient) throw new Error("Invalid Credentials");
 
-      if(!foundedPatient.password) throw new Error("Patient has no Password")
+      if(!foundedPatient.password) throw new Error("Patient has no Password");
+
+      if(foundedPatient.isBlocked){
+         throw new Error("Patient is Blocked");
+      }
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
       if (!isPasswordValid) throw new Error("Invalid Credentials");
@@ -52,6 +56,9 @@ export default class AuthenticationUseCase {
       let patient = await this.patientRepository.findByEmail(email);
       if (!patient) {
          patient = await this.patientRepository.create({ email, name, profile } as IPatient);
+      }
+      if(patient.isBlocked){
+         throw new Error("Patient is Blocked");
       }
       let accessToken = this.tokenService.createAccessToken(email, patient._id!);
       let refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
@@ -96,7 +103,7 @@ export default class AuthenticationUseCase {
       const patient = await this.patientRepository.findById(id);
       if (!patient) throw new Error("Unauthorized");
 
-      if (patient.isBlocked) throw new Error("Patient is blocked");
+      if (patient.isBlocked) throw new Error("Patient is Blocked");
 
       const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!);
 
