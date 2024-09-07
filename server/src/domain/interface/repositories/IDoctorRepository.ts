@@ -1,4 +1,4 @@
-import IDoctor from "../../domain/entities/IDoctor";
+import IDoctor from "../../entities/IDoctor";
 
 export default interface IDoctorRepository{
     findByEmail(email:string):Promise<IDoctor|null>;

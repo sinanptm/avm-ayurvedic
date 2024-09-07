@@ -1,4 +1,4 @@
-import { IPatient } from "../../domain/entities/Patient";
+import { IPatient } from "../../entities/Patient";
 
 export default interface ITokenService {
    createRefreshToken(email: string, id: string): string;

@@ -1,4 +1,4 @@
-import ITokenService from "../../interface/services/ITokenService";
+import ITokenService from "../../domain/interface/services/ITokenService";
 import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
 import logger from "../../utils/logger";
 

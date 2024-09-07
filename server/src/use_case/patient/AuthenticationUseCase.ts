@@ -1,9 +1,9 @@
 import { IPatient } from "../../domain/entities/Patient";
-import IOtpRepository from "../../interface/repositories/IOtpRepository";
-import IPatientRepository from "../../interface/repositories/IPatientRepository";
-import IEmailService from "../../interface/services/IEmailService";
-import { IPasswordServiceRepository } from "../../interface/services/IPasswordServiceRepository";
-import ITokenService from "../../interface/services/ITokenService";
+import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
+import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
+import IEmailService from "../../domain/interface/services/IEmailService";
+import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
+import ITokenService from "../../domain/interface/services/ITokenService";
 import { generateOTP } from "../../utils";
 
 type TokensResponse = {

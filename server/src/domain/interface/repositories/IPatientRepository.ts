@@ -1,5 +1,5 @@
-import { IPatient } from "../../domain/entities/Patient";
-import { PaginatedResult } from "../../types";
+import { IPatient } from "../../entities/Patient";
+import { PaginatedResult } from "../../../types";
 
 export default interface IPatientRepository {
    create(patient: IPatient): Promise<IPatient|never>;

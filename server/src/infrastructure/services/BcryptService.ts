@@ -1,4 +1,4 @@
-import { IPasswordServiceRepository } from "../../interface/services/IPasswordServiceRepository";
+import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import bcrypt from "bcryptjs";
 
 export default class BcryptService implements IPasswordServiceRepository {

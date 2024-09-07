@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import ITokenService from "../../interface/services/ITokenService";
+import ITokenService from "../../domain/interface/services/ITokenService";
 import { CustomRequest, StatusCode } from "../../types";
 import logger from "../../utils/logger";
 

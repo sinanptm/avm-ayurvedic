@@ -1,4 +1,4 @@
-import IEmailService from "../../interface/services/IEmailService";
+import IEmailService from "../../domain/interface/services/IEmailService";
 import nodemailer from "nodemailer";
 import { promisify } from "util";
 import fs from "fs";

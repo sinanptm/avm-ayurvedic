@@ -1,8 +1,8 @@
-import IDoctorRepository from "../../interface/repositories/IDoctorRepository";
-import IOtpRepository from "../../interface/repositories/IOtpRepository";
-import IEmailService from "../../interface/services/IEmailService";
-import { IPasswordServiceRepository } from "../../interface/services/IPasswordServiceRepository";
-import ITokenService from "../../interface/services/ITokenService";
+import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
+import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
+import IEmailService from "../../domain/interface/services/IEmailService";
+import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
+import ITokenService from "../../domain/interface/services/ITokenService";
 import { generateOTP } from "../../utils";
 export default class AuthenticationUseCase {
    constructor(
