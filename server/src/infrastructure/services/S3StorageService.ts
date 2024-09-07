@@ -18,22 +18,6 @@ export default class S3StorageService implements ICloudStorageService {
         });
     }
 
-    async uploadFile(bucket: string, key: string, body: Buffer, contentType: string): Promise<{ url: string }> {
-        const upload = new Upload({
-            client: this.s3,
-            params: {
-                Bucket: bucket,
-                Key: key,
-                Body: body,
-                ContentType: contentType,
-            },
-        });
-
-        await upload.done();
-
-        return { url: `https://${bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}` };
-    }
-
     async generatePreSignedUrl(bucket: string, key: string, expiresIn: number): Promise<string> {
         const command = new PutObjectCommand({
             Bucket: bucket,
