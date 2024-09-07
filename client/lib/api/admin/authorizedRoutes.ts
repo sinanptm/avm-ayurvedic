@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
       return config;
    },
    (error) => {
-      return Promise.reject(error); 
+      return Promise.reject(error);
    }
 );
 
@@ -30,16 +30,15 @@ axiosInstance.interceptors.response.use(
       const originalRequest = error.config;
 
       if (error.response?.status === 401 && !originalRequest._retry) {
-         originalRequest._retry = true; 
+         originalRequest._retry = true;
 
          try {
             const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
             const refreshResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/auth/refresh`, {
                withCredentials: true,
-            });            
+            });
 
             const newAccessToken = refreshResponse.data.accessToken;
-
 
             localStorage.setItem(
                "auth",
@@ -52,12 +51,19 @@ axiosInstance.interceptors.response.use(
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
             return axiosInstance(originalRequest);
-         } catch (refreshError) {            
+         } catch (refreshError: any) {
+            if (refreshError.response.status===401) {
+               const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
+               localStorage.setItem("auth", {
+                  ...tokens,
+                  adminToken: "",
+               });
+            }
             return Promise.reject(refreshError);
          }
       }
 
-      return Promise.reject(error); 
+      return Promise.reject(error);
    }
 );
 
@@ -66,9 +72,9 @@ export const getPatients = async (offset: number, limit: number) => {
    return response.data;
 };
 
-export const blockPatient = async (id:string,isBlocked:boolean)=>{
-   const response = await axiosInstance.patch('/patients',{id,isBlocked});
+export const blockPatient = async (id: string, isBlocked: boolean) => {
+   const response = await axiosInstance.patch("/patients", { id, isBlocked });
    return response.data;
-}
+};
 
 export default axiosInstance;

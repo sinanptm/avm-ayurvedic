@@ -2,16 +2,18 @@ import PatientsTable from '@/components/admin/patients/Table'
 import { Metadata } from 'next'
 import React from 'react'
 
-export const metadata:Metadata = {
-  title:"Patients"
+export const metadata: Metadata = {
+  title: "Patients",
 }
 
-const page = () => {
+const Page = ({ searchParams }: { searchParams: {page:number} }) => {
+  const page = searchParams.page||1; 
+
   return (
     <main>
-      <PatientsTable />
+      <PatientsTable page={page} />
     </main>
   )
 }
 
-export default page
+export default Page
