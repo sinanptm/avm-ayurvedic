@@ -3,7 +3,7 @@ export default interface IDoctor {
    name?: string;
    phone?: string;
    password?:string;
-   qualification?: string;
+   qualification?: string[];
    role?: "admin" | "doctor";
    isBlocked?: boolean;
    image?: string;

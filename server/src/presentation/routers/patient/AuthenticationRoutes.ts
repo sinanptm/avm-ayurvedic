@@ -7,7 +7,7 @@ import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
 import AuthenticationController from "../../controllers/patient/AuthenticationController";
 import AuthPatientUseCase from "../../../use_case/patient/AuthenticationUseCase";
 
-const route = express.Router();
+const router = express.Router();
 
 // Services and Repositories
 const tokenService = new JWTService();
@@ -25,14 +25,14 @@ const authPatientUseCase = new AuthPatientUseCase(
 );
 const authenticationController = new AuthenticationController(authPatientUseCase);
 
-route.post("/", authenticationController.register.bind(authenticationController));
-route.post("/login", authenticationController.login.bind(authenticationController));
-route.post("/oauth-signin", authenticationController.oAuthSignin.bind(authenticationController));
-route.post("/resend-otp", authenticationController.resendOtp.bind(authenticationController));
-route.post("/otp-verification", authenticationController.validateOtp.bind(authenticationController));
-route.get("/refresh", authenticationController.refreshAccessToken.bind(authenticationController));
-route.post("/forget-password", authenticationController.forgetPassword.bind(authenticationController));
-route.patch("/update-password", authenticationController.updatePassword.bind(authenticationController));
-route.post("/logout", authenticationController.logout.bind(authenticationController));
+router.post("/", authenticationController.register.bind(authenticationController));
+router.post("/login", authenticationController.login.bind(authenticationController));
+router.post("/oauth-signin", authenticationController.oAuthSignin.bind(authenticationController));
+router.post("/resend-otp", authenticationController.resendOtp.bind(authenticationController));
+router.post("/otp-verification", authenticationController.validateOtp.bind(authenticationController));
+router.get("/refresh", authenticationController.refreshAccessToken.bind(authenticationController));
+router.post("/forget-password", authenticationController.forgetPassword.bind(authenticationController));
+router.patch("/update-password", authenticationController.updatePassword.bind(authenticationController));
+router.post("/logout", authenticationController.logout.bind(authenticationController));
 
-export default route;
+export default router;

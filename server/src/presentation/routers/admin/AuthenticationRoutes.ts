@@ -7,7 +7,7 @@ import JWTService from "../../../infrastructure/services/JWTService";
 import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
 import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
 
-const route = express.Router();
+const router = express.Router();
 
 const adminRepository = new DoctorRepository();
 const otpRepository = new OtpRepository();
@@ -24,10 +24,10 @@ const authUseCase = new AuthenticationUseCase(
 );
 const authController = new AuthenticationController(authUseCase);
 
-route.post("/", authController.login.bind(authController));
-route.post("/otp-verification", authController.validateOtp.bind(authController));
-route.post("/resend-otp", authController.resendOtp.bind(authController));
-route.get("/refresh", authController.refreshAccessToken.bind(authController));
-route.post("/logout",authController.logout.bind(authController));
+router.post("/", authController.login.bind(authController));
+router.post("/otp-verification", authController.validateOtp.bind(authController));
+router.post("/resend-otp", authController.resendOtp.bind(authController));
+router.get("/refresh", authController.refreshAccessToken.bind(authController));
+router.post("/logout",authController.logout.bind(authController));
 
-export default route;
+export default router;

@@ -17,13 +17,7 @@ export default class DoctorRepository implements IDoctorRepository {
       return await this.model.findOne({ email });
    }
    async create(doctor: IDoctor): Promise<void> {
-      try {
-         await this.model.create(doctor);
-      } catch (error: any) {
-         if (error.code === 11000) {
-            throw new Error("Doctor with Email Already Exists");
-         }
-      }
+      await this.model.create(doctor);
    }
    async findByIdAndUpdate(doctor: IDoctor): Promise<void> {
       if (!isValidObjectId(doctor._id!)) throw new Error("Invalid Object Id");

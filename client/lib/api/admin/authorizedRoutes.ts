@@ -68,12 +68,12 @@ axiosInstance.interceptors.response.use(
 );
 
 export const getPatients = async (offset: number, limit: number) => {
-   const response = await axiosInstance.get(`/patients?limit=${limit}&offset=${offset}`);
+   const response = await axiosInstance.get(`/patient?limit=${limit}&offset=${offset}`);
    return response.data;
 };
 
 export const blockPatient = async (id: string, isBlocked: boolean) => {
-   const response = await axiosInstance.patch("/patients", { id, isBlocked });
+   const response = await axiosInstance.patch("/patient", { id, isBlocked });
    return response.data;
 };
 
