@@ -1,3 +1,4 @@
+import { PaginatedResult } from "../../../types";
 import IDoctor from "../../entities/IDoctor";
 
 export default interface IDoctorRepository{
@@ -6,4 +7,5 @@ export default interface IDoctorRepository{
     findByEmailWithCredentials(email:string):Promise<IDoctor|null>
     create(doctor:IDoctor):Promise<void>;
     findByIdAndUpdate(doctor:IDoctor):Promise<void>;
+    findMany(offset:number,limit:number):Promise<PaginatedResult<IDoctor>>;
 }

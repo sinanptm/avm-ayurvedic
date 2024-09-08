@@ -15,7 +15,8 @@ export default class AuthenticationUseCase {
 
    async login(email: string, password: string): Promise<void> {
       const doctor = await this.adminRepository.findByEmailWithCredentials(email);
-      if (!doctor) throw new Error("Admin Not Found");
+      if (!doctor) throw new Error("Invalid Credentials");
+      if(doctor?.role!=='doctor') throw new Error("Invalid Credentials");
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new Error("Invalid Credentials");
 
       let otp = parseInt(generateOTP(6), 10);

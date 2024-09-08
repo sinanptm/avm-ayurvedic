@@ -15,8 +15,13 @@ const adminPatientController = new AdminPatientController(adminPatientUseCase);
 const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository);
 const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
 
-router.get("/patient", adminPatientController.getPatients.bind(adminPatientController));
-router.patch("/patient", adminPatientController.updatePatient.bind(adminPatientController));
-router.post("/doctor",adminDoctorController.create.bind(adminDoctorController));
+router
+   .route("/patient")
+   .get(adminPatientController.getPatients.bind(adminPatientController))
+   .post(adminPatientController.updatePatient.bind(adminPatientController));
+router
+   .route("/doctor")
+   .post(adminDoctorController.create.bind(adminDoctorController))
+   .get(adminDoctorController.getDoctors.bind(adminDoctorController));
 
 export default router;
