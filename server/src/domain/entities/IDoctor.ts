@@ -11,4 +11,5 @@ export default interface IDoctor {
    updatedAt?: string;
    createdAt?: string;
    token?:string;
+   isVerified?:boolean;
 }

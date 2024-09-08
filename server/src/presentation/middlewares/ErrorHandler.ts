@@ -18,7 +18,7 @@ export default class ErrorHandler {
       if (err.code && err.code === 11000) {
          logger.warn("Duplicate key error encountered.");
          return res.status(StatusCode.Conflict).json({
-            message: "Duplicate key error. The resource already exists.",
+            message: "The resource already exists.",
             error: message,
          });
       }

@@ -16,7 +16,7 @@ export default class AdminDoctorController {
 
          await this.doctorUseCase.create(email);
 
-         res.status(StatusCode.Success).json({message:"Doctor has Created"})
+         res.status(StatusCode.Success).json({ message: "Doctor has Created" });
       } catch (error) {
          next(error);
       }

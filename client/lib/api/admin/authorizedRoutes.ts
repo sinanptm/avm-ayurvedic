@@ -77,4 +77,7 @@ export const blockPatient = async (id: string, isBlocked: boolean) => {
    return response.data;
 };
 
-export default axiosInstance;
+export const addDoctor = async (email:string)=>{
+   const response = await axiosInstance.post('/doctor',{email});
+   return response.data;
+}

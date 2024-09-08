@@ -8,10 +8,11 @@ const doctorSchema = new Schema<IDoctor>(
       image: { type: String, default: "" },
       isBlocked: { type: Boolean, default: false },
       name: { type: String, default: "" },
-      phone: { type: String, unique: true },
+      phone: { type: String },
       role: { type: String, enum: ["admin", "doctor"], default: "doctor" },
       qualification: { type: [String] },
       token: { type: String, default: "" },
+      isVerified: { type: Boolean, default: false },
    },
    {
       timestamps: true,
