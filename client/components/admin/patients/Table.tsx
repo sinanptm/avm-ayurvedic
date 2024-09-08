@@ -57,7 +57,7 @@ export default function PatientsTable({page}:Props) {
                            {["Name", "Email", "Phone", "Blood Group"].map((head, i) => (
                               <TableHead key={i}>{head}</TableHead>
                            ))}
-                           <TableHead className="text-right">Actions</TableHead>
+                           <TableHead className="text-right pr-10">Actions</TableHead>
                         </TableRow>
                      </TableHeader>
                      <TableBody>

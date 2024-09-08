@@ -10,6 +10,8 @@ export default class AdminDoctorUseCase {
    }
 
    async getAll(offset:number,limit:number):Promise<PaginatedResult<IDoctor>>{
-      return await this.doctorRepository.findMany(offset,limit);
+      const data = await this.doctorRepository.findMany(offset,limit);
+      data.items= data.items.filter((doctor)=>doctor.role!=='admin')
+      return data;
    }
 }

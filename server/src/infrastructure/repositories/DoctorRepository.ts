@@ -26,7 +26,7 @@ export default class DoctorRepository implements IDoctorRepository {
    }
    async findMany(offset: number, limit: number): Promise<PaginatedResult<IDoctor>> {
       const totalItems = await this.model.countDocuments();
-      const items = await this.model.find().skip(offset).limit(limit).select(['-password','token']);
+      const items = await this.model.find().skip(offset).limit(limit).select(['-password','-token']);
 
       const currentPage = Math.floor(limit/offset)+1;
       const totalPages = Math.ceil(totalItems / limit);

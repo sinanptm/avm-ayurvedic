@@ -59,3 +59,17 @@ export interface PaginatedResult<T> {
    hasNextPage: boolean;
    hasPreviousPage: boolean;
 }
+
+export default interface IDoctor {
+   _id?: string;
+   name?: string;
+   phone?: string;
+   password?:string;
+   qualification?: string[];
+   isBlocked?: boolean;
+   image?: string;
+   email?: string;
+   updatedAt?: string;
+   createdAt?: string;
+   isVerified?:boolean;
+}
