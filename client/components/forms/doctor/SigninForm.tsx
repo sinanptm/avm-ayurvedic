@@ -35,8 +35,8 @@ const AdminSigninForm = () => {
          >
             <section className="mb-12 space-y-4">
                <h1 className="header">Doctor Signin</h1>
-               <p className="text-dark-700">Signing in for the First Time  
-                  <Link href={'#'} className="text-sky-600"> Verify</Link>
+               <p className="text-dark-700"> Don&apos;t  have an account?{" "}
+                  <Link href={'/doctor/signup'} className="text-sky-600">Signup</Link>
                </p>
             </section>
 

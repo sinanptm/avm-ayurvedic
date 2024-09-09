@@ -137,8 +137,9 @@ export const Banners = {
    otp: "/assets/images/onboarding-img.png",
    patient_register: "/assets/images/register-img.png",
    patient_newAppointment: "/assets/images/appointment-img.png",
-   staff_signin: "/assets/images/onboarding-img.png",
-   staff_otp: "/assets/images/onboarding-img.png",
+   doctor_signin: "/assets/images/onboarding-img.png",
+   doctor_otp: "/assets/images/onboarding-img.png",
+   doctor_signup: "/assets/images/onboarding-img.png"
 };
 
 export const GuaranteeListHonePage: { src: string; text: string; heading: string }[] = [

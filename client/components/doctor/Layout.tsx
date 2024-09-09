@@ -7,10 +7,10 @@ import { ReactNode, useEffect, useState } from "react";
 
 type Props = {
    children: ReactNode;
-   signin: ReactNode;
+   auth: ReactNode;
 };
 
-const Layout = ({ children, signin }: Props) => {
+const Layout = ({ children, auth }: Props) => {
    const { doctorToken } = useAuth();
    const [isLoading, setLoading] = useState(true);
 
@@ -32,7 +32,7 @@ const Layout = ({ children, signin }: Props) => {
                <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">{children}</main>
             </DoctorLayoutWithSideBar>
          ) : (
-            signin
+            auth
          )}
       </>
    );

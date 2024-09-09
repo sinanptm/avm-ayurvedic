@@ -1,7 +1,13 @@
 import SigninForm from "@/components/forms/doctor/SigninForm";
 import { Banners } from "@/constants";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata:Metadata ={
+   title:"Signin"
+}
+
 const SignIn = () => {
    return (
       <div className="flex h-screen max-h-screen">
@@ -27,7 +33,7 @@ const SignIn = () => {
          </section>
 
          <Image
-            src={Banners.staff_signin}
+            src={Banners.doctor_signin}
             height={1000}
             width={1000}
             alt="patient"

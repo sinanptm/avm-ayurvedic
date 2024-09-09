@@ -33,7 +33,7 @@ const SignIn = () => {
          </section>
 
          <Image
-            src={Banners.staff_signin}
+            src={Banners.doctor_signin}
             height={1000}
             width={1000}
             alt="patient"

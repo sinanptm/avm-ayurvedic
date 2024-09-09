@@ -4,7 +4,7 @@ import Layout from "@/components/doctor/Layout";
 
 interface AdminLayoutWrapperProps {
    children: ReactNode;
-   signin: ReactNode;
+   auth: ReactNode;
 }
 
 export const metadata: Metadata = {
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
       default: "Doctor Dashboard"
    },
 };
-const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children, signin }) => {
-   return <Layout signin={signin}>{children}</Layout>;
+const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children, auth }) => {
+   return <Layout auth={auth}>{children}</Layout>;
 };
 
 export default AdminLayoutWrapper;

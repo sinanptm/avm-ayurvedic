@@ -19,7 +19,7 @@ const RegistrationForm = () => {
     const [error, setError] = useState<string>("");
     const router = useRouter();
     const { toast } = useToast();
-    const { mutate: signUpPatient, isPending,  } = useSignUpPatient();
+    const { mutate: signUpPatient, isPending, error: SignUpError } = useSignUpPatient();
 
     const form = useForm<z.infer<typeof signupFormValidation>>({
         resolver: zodResolver(signupFormValidation),
@@ -65,7 +65,7 @@ const RegistrationForm = () => {
                     <h1 className="header">Hi There👋</h1>
                     <p className="text-dark-700">
                         Already have an account?{" "}
-                        <Link href="/signin" className="text-blue-400">
+                        <Link href="/doctor" className="text-blue-400">
                             Sign In
                         </Link>
                     </p>
