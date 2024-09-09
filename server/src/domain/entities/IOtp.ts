@@ -1,5 +1,5 @@
 export default interface IOtp {
-   _id?: string;
+   readonly _id?: string;
    otp?: number;
    email?: string;
    createdAt?: string;

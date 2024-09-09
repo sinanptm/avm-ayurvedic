@@ -1,4 +1,4 @@
-import { IPatient } from "../../entities/Patient";
+import { IPatient } from "../../entities/IPatient";
 import { PaginatedResult } from "../../../types";
 
 export default interface IPatientRepository {

@@ -27,12 +27,7 @@ export default function GoogleSignInButton() {
                   toast({
                      title: "Authentication Completed ✅",
                      description: "Google Authentication Completed!. let's book your first appointment",
-                     variant: "success",
-                     action: (
-                        <Button variant={"outline"}>
-                           <Link href={"/new-appointment"}>Book Now</Link>
-                        </Button>
-                     ),
+                     variant: "success"
                   });
 
                   router.push("/");

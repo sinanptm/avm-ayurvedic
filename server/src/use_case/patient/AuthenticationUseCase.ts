@@ -1,4 +1,4 @@
-import { IPatient } from "../../domain/entities/Patient";
+import { IPatient } from "../../domain/entities/IPatient";
 import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";

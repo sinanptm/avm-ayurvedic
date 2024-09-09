@@ -9,6 +9,7 @@ import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
 import { signinFormValidation } from "@/components/forms/actions/adminValidation";
 import { FormFieldType } from "@/types/fromTypes";
+import Link from "next/link";
 
 const AdminSigninForm = () => {
    const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -22,7 +23,7 @@ const AdminSigninForm = () => {
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
       setIsLoading(true);
-      console.log("clicked");
+      console.log("clicked", values);
       setIsLoading(false);
    };
 
@@ -33,8 +34,10 @@ const AdminSigninForm = () => {
             className="space-y-6 flex-1"
          >
             <section className="mb-12 space-y-4">
-               <h1 className="header">Staffs Signin</h1>
-               <p className="text-dark-700">Please signin to go to dashboard</p>
+               <h1 className="header">Doctor Signin</h1>
+               <p className="text-dark-700">Sign in for the First Time  
+                  <Link href={'#'} className="text-sky-700"> Verify</Link>
+               </p>
             </section>
 
             <CustomFormField

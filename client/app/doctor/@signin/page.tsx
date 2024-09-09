@@ -1,4 +1,4 @@
-import SigninForm from "@/components/forms/admin/SigninForm";
+import SigninForm from "@/components/forms/doctor/SigninForm";
 import { Banners } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,8 +19,8 @@ const SignIn = () => {
                   <p className="justify-items-end text-dark-600 xl:text-left">
                   © {new Date().getFullYear()} AVM Ayurvedic.
                   </p>
-                  <Link href={"/admin/otp-verification"} className="text-green-500">
-                     OTP
+                  <Link href={"/admin"} className="text-green-500">
+                     Admin
                   </Link>
                </div>
             </div>

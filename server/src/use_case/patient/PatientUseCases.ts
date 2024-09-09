@@ -1,4 +1,4 @@
-import { IPatient } from "../../domain/entities/Patient";
+import { IPatient } from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
 

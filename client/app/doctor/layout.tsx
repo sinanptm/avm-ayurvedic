@@ -1,23 +1,20 @@
 import { ReactNode, FC } from "react";
-import DoctorLayoutWithSideBar from "@/components/layout/DoctorLayoutWithSideBar";
 import { Metadata } from "next";
-import { DoctorsSidebarLinks } from "@/constants";
-
+import Layout from "@/components/doctor/Layout";
 
 interface AdminLayoutWrapperProps {
    children: ReactNode;
+   signin: ReactNode;
 }
 
 export const metadata: Metadata = {
-   title: "Dashboard",
+   title: {
+      template: "Doctor | %s",
+      default: "Doctor Dashboard"
+   },
 };
-
-const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children }) => {
-   return (
-      <DoctorLayoutWithSideBar sideBarLinks={DoctorsSidebarLinks}>
-         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">{children}</main>
-      </DoctorLayoutWithSideBar>
-   );
+const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children, signin }) => {
+   return <Layout signin={signin}>{children}</Layout>;
 };
 
 export default AdminLayoutWrapper;

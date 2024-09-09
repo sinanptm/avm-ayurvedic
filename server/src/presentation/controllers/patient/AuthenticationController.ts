@@ -1,6 +1,5 @@
 import AuthenticationUseCase from "../../../use_case/patient/AuthenticationUseCase";
 import { NextFunction, Request, Response } from "express";
-import { IPatient } from "../../../domain/entities/Patient";
 import { isValidatePassword, isValidEmail } from "../../validators/authValidators";
 import { Cookie, StatusCode } from "../../../types";
 
@@ -10,7 +9,7 @@ export default class AuthPatientController {
    // Register a new patient
    async register(req: Request, res: Response, next: NextFunction) {
       try {
-         const patient: IPatient = req.body;
+         const patient = req.body;
 
          // Validation
          if (!patient.email?.trim()) {
@@ -43,7 +42,7 @@ export default class AuthPatientController {
    // Login a patient
    async login(req: Request, res: Response, next: NextFunction) {
       try {
-         const patient: IPatient = req.body;
+         const patient = req.body;
 
          // Input validations
          if (!patient.email?.trim()) {
