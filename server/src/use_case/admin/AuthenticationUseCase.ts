@@ -23,10 +23,9 @@ export default class AuthenticationUseCase {
       while (otp.toString().length !== 6) {
          otp = parseInt(generateOTP(6), 10);
       }
-
-      await this.otpRepository.create(otp, email);
-
       await this.emailService.sendOtp(email, "Admin", otp);
+      
+      await this.otpRepository.create(otp, email);
    }
 
    async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {

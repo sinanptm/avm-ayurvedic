@@ -18,7 +18,7 @@ export default function OtpVerificationSection({
       <form className="space-y-6 flex-1" onSubmit={(e: FormEvent) => handleVerify(e)}>
          <section className="mb-12 space-y-4">
             <h1 className="header">OTP Verification </h1>
-            <p className="text-dark-700">Please enter the OTP sent to your registered mobile number.</p>
+            <p className="text-dark-700">Please enter the OTP sent to your registered Email Address.</p>
          </section>
          <InputOTP maxLength={6} value={otp} onChange={(value) => setOtp(value)} className="mb-6">
             <InputOTPGroup className="shad-otp">
