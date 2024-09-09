@@ -18,13 +18,6 @@ export type AnimatedCardProps = {
    children?: ReactNode;
 };
 
-export type SideBarLink = {
-   label: string;
-   href: string;
-   icon: ReactNode;
-   admin?: boolean;
-};
-
 export interface IPatient {
    _id?: string;
    name?: string;

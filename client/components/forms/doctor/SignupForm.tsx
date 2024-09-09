@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
-import { signupFormValidation } from "@/components/forms/actions/userValidation";
+import { doctorSignupFormValidation } from "@/components/forms/actions/userValidation";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -21,8 +21,8 @@ const RegistrationForm = () => {
     const { toast } = useToast();
     const { mutate: signUpPatient, isPending, error: SignUpError } = useSignUpPatient();
 
-    const form = useForm<z.infer<typeof signupFormValidation>>({
-        resolver: zodResolver(signupFormValidation),
+    const form = useForm<z.infer<typeof doctorSignupFormValidation>>({
+        resolver: zodResolver(doctorSignupFormValidation),
         defaultValues: {
             phone: "",
             password: "",
@@ -32,7 +32,7 @@ const RegistrationForm = () => {
         },
     });
 
-    const onSubmit = (formData: z.infer<typeof signupFormValidation>) => {
+    const onSubmit = (formData: z.infer<typeof doctorSignupFormValidation>) => {
         signUpPatient(formData, {
             onSuccess: () => {
                 toast({
