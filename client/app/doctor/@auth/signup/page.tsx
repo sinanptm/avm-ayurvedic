@@ -4,7 +4,7 @@ import { Banners } from "@/constants";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-   title: "SignUp",
+   title: "Signup",
 };
 
 const Register = () => {

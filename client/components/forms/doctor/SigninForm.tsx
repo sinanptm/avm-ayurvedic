@@ -4,15 +4,18 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form } from "@/components/ui/form";
+import { Form, FormMessage } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
 import { signinFormValidation } from "@/components/forms/actions/adminValidation";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
+import { useSignInDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
+import { toast } from "@/components/ui/use-toast";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const AdminSigninForm = () => {
-   const [isLoading, setIsLoading] = useState<boolean>(false);
    const form = useForm<z.infer<typeof signinFormValidation>>({
       resolver: zodResolver(signinFormValidation),
       defaultValues: {
@@ -20,11 +23,32 @@ const AdminSigninForm = () => {
          password: "",
       },
    });
+   const {mutate:signin, isPending} = useSignInDoctor();
+   const {setCredentials} = useAuth();
+   const router = useRouter()
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
-      setIsLoading(true);
-      console.log("clicked", values);
-      setIsLoading(false);
+      signin(values,{
+         onSuccess:()=>{
+            toast({
+               title:"Signin Successful",
+               description:"Please check you email for otp",
+               variant:"success"
+            });
+            setCredentials("otpMailDoctor",values.email);
+            router.push('/doctor/otp-verification');
+         },
+         onError:(error)=>{
+            toast({
+               title:"Error in Signin",
+               description: error.response?.data.message||"Unknown Error Occurred",
+               variant:"destructive"
+            })
+            form.setError('email',{
+               message: error.response?.data.message||"Unknown Error Occurred",
+            })
+         }
+      })
    };
 
    return (
@@ -57,7 +81,9 @@ const AdminSigninForm = () => {
                placeholder="Enter your password"
             />
 
-            <SubmitButton isLoading={isLoading}>Sign In</SubmitButton>
+            <FormMessage className="shad-error" />
+
+            <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
          </form>
       </Form>
    );

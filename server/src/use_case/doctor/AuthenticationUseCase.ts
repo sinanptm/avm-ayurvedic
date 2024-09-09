@@ -24,7 +24,7 @@ export default class AuthenticationUseCase {
       if (doctor.role !== "doctor") throw new Error("Invalid Credentials");
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new Error("Invalid Credentials");
 
-      let otp = parseInt(generateOTP(6), 10);
+      let otp = +generateOTP(6);
       while (otp.toString().length !== 6) {
          otp = parseInt(generateOTP(6), 10);
       }

@@ -73,12 +73,13 @@ type FormValues = z.infer<typeof doctorSignupFormValidation>;
 
 const SignUpForm = () => {
    const [error, setError] = useState<string>("");
+   const [isLoading, setLoading] = useState(false);
    const [imageSrc, setImageSrc] = useState<string | null>(null);
    const [file, setFile] = useState<File | null>(null);
-   const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfileImageDoctor();
+   const { mutate: updateProfile } = useUpdateProfileImageDoctor();
    const router = useRouter();
    const { toast } = useToast();
-   const { mutate: signupDoctor, isPending } = useSignUpDoctor();
+   const { mutate: signupDoctor } = useSignUpDoctor();
    const {
       crop,
       zoom,
@@ -110,12 +111,16 @@ const SignUpForm = () => {
    });
 
    const onSubmit = async (formData: FormValues) => {
+      setError("");
+      setLoading(true);
+
       if (!file) {
          toast({
             title: "No Image",
             description: "Please upload a profile image",
             variant: "destructive",
          });
+         setLoading(false);
          return;
       }
 
@@ -149,27 +154,30 @@ const SignUpForm = () => {
                            onSuccess: () => {
                               toast({
                                  title: "Registration Successful ✅",
-                                 description:
-                                    "You have successfully registered and your profile image has been uploaded.",
+                                 description: "You have successfully registered and your profile image has been uploaded.",
                                  variant: "success",
                               });
                               router.push("/doctor");
                            },
                            onError: (uploadError) => {
+                              setError(uploadError.message || "Failed to upload profile image");
                               toast({
                                  title: "Profile Image Upload Failed",
                                  description: uploadError.message || "Failed to upload profile image",
                                  variant: "destructive",
                               });
+                              setLoading(false);
                            },
                         }
                      );
                   } catch (uploadError) {
+                     setError("An error occurred while uploading the profile image.");
                      toast({
                         title: "Image Upload Error",
                         description: "An error occurred while uploading the profile image.",
                         variant: "destructive",
                      });
+                     setLoading(false);
                   }
                },
                onError: (error) => {
@@ -179,16 +187,18 @@ const SignUpForm = () => {
                      description: error.response?.data.message || "Please try again later.",
                      variant: "destructive",
                   });
+                  setLoading(false);
                },
             }
          );
       } catch (error) {
+         setError("An error occurred while cropping the image.");
          toast({
             title: "Profile Image Error",
             description: "An error occurred while cropping the image",
             variant: "destructive",
          });
-         console.error("Image crop error:", error);
+         setLoading(false);
       }
    };
 
@@ -317,7 +327,7 @@ const SignUpForm = () => {
                            Add
                         </Button>
                      </div>
-                     <FormMessage />
+                     <FormMessage className="shad-error" />
                   </FormItem>
                )}
             />
@@ -337,10 +347,10 @@ const SignUpForm = () => {
                label="Confirm Password *"
                placeholder="Re-enter your password"
             />
+            {error && <p className="shad-error">{error}</p>}
+            <FormMessage className="shad-error" />
 
-            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-
-            <SubmitButton isLoading={isPending || isUpdating}>Sign Up</SubmitButton>
+            <SubmitButton isLoading={isLoading}>Sign Up</SubmitButton>
          </form>
       </Form>
    );
