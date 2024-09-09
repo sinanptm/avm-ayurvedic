@@ -65,7 +65,7 @@ export const doctorSignupFormValidation = z
          .regex(/[@$!%*?&#]/, "Password must contain at least one special character"),
       confirmPassword: z.string().trim().min(6, "Password must be at least 6 characters long"),
       image: z
-      .instanceof(File)
+      .instanceof(globalThis.File)  
       .refine((file) => ALLOWED_FILE_TYPES.includes(file.type), {
          message: "Only JPEG and PNG files are allowed",
       })
