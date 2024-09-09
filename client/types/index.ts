@@ -46,7 +46,7 @@ export interface ErrorResponse {
    stack?: string;
 }
 
-export type MessageResponse = {
+export interface MessageResponse  {
    message: string;
 };
 
@@ -60,7 +60,7 @@ export interface PaginatedResult<T> {
    hasPreviousPage: boolean;
 }
 
-export default interface IDoctor {
+export interface IDoctor {
    _id?: string;
    name?: string;
    phone?: string;

@@ -29,13 +29,10 @@ const router = express.Router();
 
 router.post("/",authDoctorController.signup.bind(authDoctorController));
 router.post("/signin",authDoctorController.signin.bind(authDoctorController));
-// router.post("/resend-otp",authDoctorController..bind(authDoctorController));
 router.post("/otp-verification",authDoctorController.validateOtp.bind(authDoctorController));
 router.get("/refresh",authDoctorController.refreshAccessToken.bind(authDoctorController));
-// router.post("/forget-password");
-// router.patch("/update-password");
 router.post("/upload-url",authDoctorController.uploadProfileImage.bind(authDoctorController))
-router.post("/logout",authDoctorController.logout.bind(authDoctorController));
 router.get("/upload-url",authDoctorController.getUploadUrl.bind(authDoctorController))
+router.post("/logout",authDoctorController.logout.bind(authDoctorController));
 
 export default router;

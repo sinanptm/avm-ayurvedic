@@ -77,11 +77,6 @@ export const blockPatient = async (id: string, isBlocked: boolean) => {
    return response.data;
 };
 
-export const addDoctor = async (email:string)=>{
-   const response = await axiosInstance.post('/doctor',{email});
-   return response.data;
-};
-
 export const getDoctors = async(offset:number,limit:number)=>{
    const response = await axiosInstance.get(`/doctor?offset=${offset}&limit=${limit}`);
    return response.data;

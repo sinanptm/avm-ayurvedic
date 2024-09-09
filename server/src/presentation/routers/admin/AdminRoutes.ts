@@ -21,7 +21,6 @@ router
    .post(adminPatientController.updatePatient.bind(adminPatientController));
 router
    .route("/doctor")
-   .post(adminDoctorController.create.bind(adminDoctorController))
    .get(adminDoctorController.getDoctors.bind(adminDoctorController));
 
 export default router;
