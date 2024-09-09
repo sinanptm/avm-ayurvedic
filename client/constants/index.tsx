@@ -1,6 +1,6 @@
 import { AnimatedCardProps, NavLinkType } from "@/types";
 
-export const AdminSideBarLinks:NavLinkType[] = [
+export const AdminSideBarLinks: NavLinkType[] = [
    {
       label: "Dcotors",
       href: "/admin/doctors",
@@ -18,7 +18,7 @@ export const AdminSideBarLinks:NavLinkType[] = [
    },
 ];
 
-export const DoctorsSidebarLinks:NavLinkType[] = [
+export const DoctorsSidebarLinks: NavLinkType[] = [
    {
       label: "Patients",
       href: "/doctor/patients",
@@ -34,7 +34,7 @@ export const DoctorsSidebarLinks:NavLinkType[] = [
       href: "/doctor/profile",
       icon: "/assets/icons/user.svg",
    },
-]
+];
 
 export const NavLinks: NavLinkType[] = [
    { href: "/", label: "Home" },
@@ -132,14 +132,18 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
 ];
 
 export const Banners = {
-   signin: "/assets/images/onboarding-img.png",
-   signup: "/assets/images/register-img.png",
-   otp: "/assets/images/onboarding-img.png",
+   patient_signin: "/assets/images/onboarding-img.png",
+   patient_signup: "/assets/images/register-img.png",
+   patient_otp: "/assets/images/onboarding-img.png",
    patient_register: "/assets/images/register-img.png",
    patient_newAppointment: "/assets/images/appointment-img.png",
-   doctor_signin: "/assets/images/onboarding-img.png",
+
+   doctor_signin: "/assets/images/appointment-img.png",
    doctor_otp: "/assets/images/onboarding-img.png",
-   doctor_signup: "/assets/images/onboarding-img.png"
+   doctor_signup: "/assets/images/register-img.png",
+
+   admin_signin: "/assets/images/onboarding-img.png",
+   admin_otp: "/assets/images/onboarding-img.png",
 };
 
 export const GuaranteeListHonePage: { src: string; text: string; heading: string }[] = [

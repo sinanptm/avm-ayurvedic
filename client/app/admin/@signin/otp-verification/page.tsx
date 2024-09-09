@@ -97,7 +97,7 @@ const OtpVerificationPage = () => {
                </section>
 
                <Image
-                  src={Banners.staff_otp}
+                  src={Banners.admin_otp}
                   height={1000}
                   width={1000}
                   alt="patient"

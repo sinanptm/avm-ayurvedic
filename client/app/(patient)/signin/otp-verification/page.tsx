@@ -110,7 +110,7 @@ const OtpVerificationPage = () => {
                   />
                </div>
             </section>
-            <Image src={Banners.otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
+            <Image src={Banners.patient_otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
          </div>
       );
    } else {
