@@ -47,7 +47,7 @@ export default class AuthDoctorController {
          if (!doctor.phone?.toString().trim()) {
             return res.status(StatusCode.BadRequest).json({ message: "Phone number is required" });
          }
-         if (doctor.qualifications && doctor.qualifications?.length > 0) {
+         if (!doctor.qualifications || doctor.qualifications?.length < 1) {
             return res.status(StatusCode.BadRequest).json({ message: "Qualifications is required" });
          }
 

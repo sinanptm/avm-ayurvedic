@@ -49,7 +49,7 @@ export default class AuthenticationUseCase {
    async updateProfileImage(key: string, id: string): Promise<void> {
       const doctor = await this.doctorRepository.findByID(id);
       if (!doctor) throw new Error("Not Found");
-      if (!doctor.isBlocked) throw new Error("Doctor is Blocked");
+      if (doctor.isBlocked) throw new Error("Doctor is Blocked");
 
       if (doctor.image) {
          await this.cloudService.deleteFile(process.env.S3_BUCKET_NAME!, doctor.image.split("amazonaws.com/").pop()!);

@@ -10,7 +10,7 @@ export default class DoctorRepository implements IDoctorRepository {
       return await this.model.findOne({ email }).select(["-token", "-password"]);
    }
    async findByID(id: string): Promise<IDoctor | null> {
-      if (isValidObjectId(id)) throw new Error("Invalid Object Id");
+      if (!isValidObjectId(id)) throw new Error("Invalid Object Id");
 
       return await this.model.findById(id).select(["-token", "-password"]);
    }

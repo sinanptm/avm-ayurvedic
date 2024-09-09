@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Form } from "../../ui/form";
+import { Form, FormLabel } from "../../ui/form";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -85,7 +85,7 @@ const UploadProfileModel = ({ open, setOpen, refetch }: Props) => {
             title: "Profile Update",
             variant: "success",
          });
-         
+
          setIsLoading(false);
          refetch();
          closeModal();
@@ -140,9 +140,7 @@ const UploadProfileModel = ({ open, setOpen, refetch }: Props) => {
                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <div className="flex flex-col gap-4">
                      <div className="flex flex-col gap-2">
-                        <label htmlFor="image" className="font-semibold">
-                           Profile Image *
-                        </label>
+                        <FormLabel htmlFor="image">Profile Image *</FormLabel>
                         <Input
                            type="file"
                            id="image"

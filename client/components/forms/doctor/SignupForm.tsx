@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form } from "@/components/ui/form";
+import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/common/SubmitButton";
 import { FormFieldType } from "@/types/fromTypes";
@@ -12,59 +12,87 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { useSignUpPatient } from "@/lib/hooks/patient/usePatientAuth";
+import { useSignUpDoctor, useUpdateProfileImageDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
+import useCrop from "@/lib/hooks/useCrop";
+import CropImage from "@/components/common/CropImage";
+import getCroppedImg from "@/lib/utils/cropImage";
+import { Input } from "@/components/ui/input";
+import { getPresignedUrlDoctor } from "@/lib/api/doctor/authenticationRoutes";
+import axios from "axios";
+import { PlusCircle, X } from "lucide-react";
 
-const RegistrationForm = () => {
+const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+const doctorSignupFormValidation = z
+   .object({
+      name: z
+         .string()
+         .trim()
+         .min(3, "Full Name must be at least 3 characters long")
+         .max(50, "Name must be at most 50 characters."),
+      email: z.string().trim().email("Invalid email address"),
+      qualifications: z
+         .array(z.string().min(1, "Qualification cannot be empty"))
+         .min(1, "At least one qualification is required"),
+      phone: z
+         .string()
+         .trim()
+         .min(10, "Phone number must be at least 10 digits")
+         .max(15, "Phone number must be at most 15 digits"),
+      password: z
+         .string()
+         .trim()
+         .min(6, "Password must be at least 6 characters long")
+         .max(25, "Password must be at most 25 characters long")
+         .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+         .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+         .regex(/[0-9]/, "Password must contain at least one number")
+         .regex(/[@$!%*?&#]/, "Password must contain at least one special character"),
+      confirmPassword: z.string().trim().min(6, "Password must be at least 6 characters long"),
+      image: z
+         .instanceof(globalThis.File)
+         .refine((file) => ALLOWED_FILE_TYPES.includes(file.type), {
+            message: "Only JPEG and PNG files are allowed",
+         })
+         .refine((file) => file.size <= MAX_FILE_SIZE, {
+            message: "File size should be less than 5MB",
+         }),
+   })
+   .superRefine(({ confirmPassword, password }, ctx) => {
+      if (confirmPassword !== password) {
+         ctx.addIssue({
+            code: "custom",
+            message: "The Password did not match",
+            path: ["confirmPassword"],
+         });
+      }
+   });
+
+type FormValues = z.infer<typeof doctorSignupFormValidation>;
+
+const SignUpForm = () => {
    const [error, setError] = useState<string>("");
+   const [imageSrc, setImageSrc] = useState<string | null>(null);
+   const [file, setFile] = useState<File | null>(null);
+   const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfileImageDoctor();
    const router = useRouter();
    const { toast } = useToast();
-   const { mutate: signUpPatient, isPending, error: SignUpError } = useSignUpPatient();
+   const { mutate: signupDoctor, isPending } = useSignUpDoctor();
+   const {
+      crop,
+      zoom,
+      aspectRatio,
+      rotation,
+      croppedArea,
+      setCrop,
+      setZoom,
+      setAspectRatio,
+      setRotation,
+      onCropComplete,
+   } = useCrop();
 
-   const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
-   const MAX_FILE_SIZE = 5 * 1024 * 1024;
-   const doctorSignupFormValidation = z
-      .object({
-         name: z
-            .string()
-            .trim()
-            .min(3, "Full Name must be at least 3 characters long")
-            .max(50, "Name must be at most 50 characters."),
-         email: z.string().trim().email("Invalid email address"),
-         phone: z
-            .string()
-            .trim()
-            .min(10, "Phone number must be at least 10 digits")
-            .max(15, "Phone number must be at most 15 digits"),
-         password: z
-            .string()
-            .trim()
-            .min(6, "Password must be at least 6 characters long")
-            .max(25, "Password must be at most 25 characters long")
-            .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-            .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-            .regex(/[0-9]/, "Password must contain at least one number")
-            .regex(/[@$!%*?&#]/, "Password must contain at least one special character"),
-         confirmPassword: z.string().trim().min(6, "Password must be at least 6 characters long"),
-         image: z
-            .instanceof(globalThis.File)
-            .refine((file) => ALLOWED_FILE_TYPES.includes(file.type), {
-               message: "Only JPEG and PNG files are allowed",
-            })
-            .refine((file) => file.size <= MAX_FILE_SIZE, {
-               message: "File size should be less than 5MB",
-            }),
-      })
-      .superRefine(({ confirmPassword, password }, ctx) => {
-         if (confirmPassword !== password) {
-            ctx.addIssue({
-               code: "custom",
-               message: "The Password did not match",
-               path: ["confirmPassword"],
-            });
-         }
-      });
-
-   const form = useForm<z.infer<typeof doctorSignupFormValidation>>({
+   const form = useForm<FormValues>({
       resolver: zodResolver(doctorSignupFormValidation),
       defaultValues: {
          phone: "",
@@ -72,33 +100,111 @@ const RegistrationForm = () => {
          name: "",
          email: "",
          confirmPassword: "",
+         qualifications: [""],
       },
    });
 
-   const onSubmit = (formData: z.infer<typeof doctorSignupFormValidation>) => {
-      signUpPatient(formData, {
-         onSuccess: () => {
-            toast({
-               title: "Registration Successful ✅",
-               description: "You have successfully registered. Please sign in.",
-               variant: "default",
-            });
-            router.push("/signin");
-         },
-         onError: (error) => {
-            setError(error.response?.data.message || "An error occurred during registration");
-            toast({
-               title: "Registration Failed ❌",
-               description: error.response?.data.message || "Please try again later.",
-               variant: "destructive",
-               action: (
-                  <Button variant={"link"}>
-                     <Link href="/signin">Sign In</Link>
-                  </Button>
-               ),
-            });
-         },
-      });
+   const { fields, append, remove } = useFieldArray({
+      control: form.control,
+      name: "qualifications" as never,
+   });
+
+   const onSubmit = async (formData: FormValues) => {
+      if (!file) {
+         toast({
+            title: "No Image",
+            description: "Please upload a profile image",
+            variant: "destructive",
+         });
+         return;
+      }
+
+      try {
+         const croppedImage = await getCroppedImg(imageSrc as string, croppedArea);
+         const croppedFile = new File([croppedImage], file.name, { type: file.type });
+
+         signupDoctor(
+            {
+               doctor: {
+                  email: formData.email,
+                  password: formData.password,
+                  phone: formData.phone,
+                  name: formData.name,
+                  qualifications: formData.qualifications,
+               },
+            },
+            {
+               onSuccess: async ({ id }) => {
+                  try {
+                     const { url, key } = await getPresignedUrlDoctor(id);
+                     await axios.put(url, croppedFile, {
+                        headers: {
+                           "Content-Type": croppedFile.type,
+                        },
+                     });
+
+                     updateProfile(
+                        { key, id },
+                        {
+                           onSuccess: () => {
+                              toast({
+                                 title: "Registration Successful ✅",
+                                 description:
+                                    "You have successfully registered and your profile image has been uploaded.",
+                                 variant: "success",
+                              });
+                              router.push("/doctor");
+                           },
+                           onError: (uploadError) => {
+                              toast({
+                                 title: "Profile Image Upload Failed",
+                                 description: uploadError.message || "Failed to upload profile image",
+                                 variant: "destructive",
+                              });
+                           },
+                        }
+                     );
+                  } catch (uploadError) {
+                     toast({
+                        title: "Image Upload Error",
+                        description: "An error occurred while uploading the profile image.",
+                        variant: "destructive",
+                     });
+                  }
+               },
+               onError: (error) => {
+                  setError(error.response?.data.message || "An error occurred during registration");
+                  toast({
+                     title: "Registration Failed ❌",
+                     description: error.response?.data.message || "Please try again later.",
+                     variant: "destructive",
+                  });
+               },
+            }
+         );
+      } catch (error) {
+         toast({
+            title: "Profile Image Error",
+            description: "An error occurred while cropping the image",
+            variant: "destructive",
+         });
+         console.error("Image crop error:", error);
+      }
+   };
+
+   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+         const reader = new FileReader();
+         reader.onload = () => {
+            if (reader.result) {
+               setImageSrc(reader.result as string);
+               setFile(file);
+               form.setValue("image", file);
+            }
+         };
+         reader.readAsDataURL(file);
+      }
    };
 
    return (
@@ -112,11 +218,6 @@ const RegistrationForm = () => {
                      Sign In
                   </Link>
                </p>
-            </section>
-            <section className="mb-12 space-y-4">
-               <div className="mb-9 space-y-1">
-                  <h2 className="sub-header">Personal Information</h2>
-               </div>
             </section>
 
             <CustomFormField
@@ -147,6 +248,80 @@ const RegistrationForm = () => {
                />
             </div>
 
+            <div className="space-y-4">
+               <div className="flex flex-col gap-2">
+                  <FormLabel htmlFor="image">Profile Image *</FormLabel>
+                  <Input
+                     type="file"
+                     id="image"
+                     accept={ALLOWED_FILE_TYPES.join(", ")}
+                     onChange={handleImageChange}
+                     className="shad-input"
+                  />
+               </div>
+
+               {imageSrc && (
+                  <CropImage
+                     imageSrc={imageSrc}
+                     crop={crop}
+                     zoom={zoom}
+                     aspectRatio={aspectRatio!}
+                     rotation={rotation}
+                     setCrop={setCrop}
+                     setZoom={setZoom}
+                     setAspectRatio={setAspectRatio}
+                     setRotation={setRotation}
+                     onCropComplete={onCropComplete}
+                  />
+               )}
+            </div>
+
+            <FormField
+               control={form.control}
+               name="qualifications"
+               render={() => (
+                  <FormItem className="space-y-4">
+                     <FormLabel>Qualifications *</FormLabel>
+                     <div className="flex flex-wrap items-center gap-2">
+                        {fields.map((field, index) => (
+                           <div key={field.id} className="flex items-center bg-secondary rounded-full pl-3 pr-1 py-1">
+                              <Controller
+                                 name={`qualifications.${index}`}
+                                 control={form.control}
+                                 render={({ field }) => (
+                                    <Input
+                                       {...field}
+                                       placeholder="Enter qualification"
+                                       className="border-none bg-transparent p-0 h-auto text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+                                    />
+                                 )}
+                              />
+                              <Button
+                                 type="button"
+                                 variant="ghost"
+                                 size="sm"
+                                 className="h-auto p-1 hover:bg-secondary-foreground/10 rounded-full"
+                                 onClick={() => remove(index)}
+                                 aria-label="Remove qualification">
+                                 <X className="h-4 w-4" />
+                              </Button>
+                           </div>
+                        ))}
+                        <Button
+                           type="button"
+                           variant="outline"
+                           size="sm"
+                           onClick={() => append("")}
+                           className="rounded-full">
+                           <PlusCircle className="h-4 w-4 mr-2" />
+                           Add
+                        </Button>
+                     </div>
+                     <FormMessage />
+                  </FormItem>
+               )}
+            />
+
             <CustomFormField
                control={form.control}
                fieldType={FormFieldType.PASSWORD}
@@ -154,20 +329,21 @@ const RegistrationForm = () => {
                label="Password *"
                placeholder="Enter your password"
             />
+
             <CustomFormField
                fieldType={FormFieldType.PASSWORD}
                control={form.control}
                name="confirmPassword"
-               label="Confirm Password"
+               label="Confirm Password *"
                placeholder="Re-enter your password"
             />
 
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-            <SubmitButton isLoading={isPending}>Sign Up</SubmitButton>
+            <SubmitButton isLoading={isPending || isUpdating}>Sign Up</SubmitButton>
          </form>
       </Form>
    );
 };
 
-export default RegistrationForm;
+export default SignUpForm;

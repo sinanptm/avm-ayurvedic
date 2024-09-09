@@ -44,16 +44,8 @@ export const useLogoutDoctor = () => {
     });
 };
 
-export const useGetPresignedUrlDoctor = () => {
-    return useMutation<{ url: string }, AxiosError<ErrorResponse>, { id: string }>({
-        mutationFn: ({ id }) => getPresignedUrlDoctor(id),
-        onError: (error) => {
-            console.log('Error in getting presigned URL:', error);
-        },
-    });
-};
 
-export const useUpdateProfileImage = () => {
+export const useUpdateProfileImageDoctor = () => {
     return useMutation<MessageResponse, AxiosError<ErrorResponse>, { key: string, id: string }>({
         mutationFn: ({ key, id }) => updateProfileImage(key, id),
         onError: (error) => {
