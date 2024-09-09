@@ -39,7 +39,7 @@ export default class AuthenticationUseCase {
       const refreshToken = this.tokenService.createRefreshToken(email, admin._id!);
 
       admin!.token = refreshToken;
-      await this.adminRepository.findByIdAndUpdate(admin);
+      await this.adminRepository.update(admin);
       await this.otpRepository.deleteMany(email);
 
       return { accessToken, refreshToken };

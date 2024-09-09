@@ -43,11 +43,12 @@ export default class PatientRepository implements IPatientRepository {
       return await this.model.findOne({ email }).select(["-password", "-token"]);
    }
    async findByIdAndUpdate(id: string, patient: IPatient): Promise<IPatient | null> {
+      if(!isValidObjectId(id))throw new Error("Invalid Object Id")
       return await this.model.findByIdAndUpdate(id, patient, { new: true });
    }
    async findById(id: string): Promise<IPatient | null> {
       if (!isValidObjectId(id)) {
-         throw new Error(`Invalid Object id : ${id}`);
+         throw new Error(`Invalid Object Id`);
       }
       return await this.model.findById(id).select(["-password", "-token"]);
    }

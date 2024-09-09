@@ -10,7 +10,7 @@ const doctorSchema = new Schema<IDoctor>(
       name: { type: String, default: "" },
       phone: { type: String },
       role: { type: String, enum: ["admin", "doctor"], default: "doctor" },
-      qualification: { type: [String] },
+      qualifications: { type: [String] },
       token: { type: String, default: "" },
       isVerified: { type: Boolean, default: false },
    },

@@ -65,7 +65,7 @@ export default interface IDoctor {
    name?: string;
    phone?: string;
    password?:string;
-   qualification?: string[];
+   qualifications?: string[];
    isBlocked?: boolean;
    image?: string;
    email?: string;

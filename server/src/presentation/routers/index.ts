@@ -7,6 +7,7 @@ import TokenService from "../../infrastructure/services/JWTService";
 import PatientAuthMiddleware from "../middlewares/PatientAuthMiddleware";
 import AdminAuthMiddleware from "../middlewares/AdminAuthMiddleware";
 import protectedAdminRoutes from "./admin/AdminRoutes";
+import doctorAuthentication from "./doctor/AuthenticationRoutes";
 
 const app = express();
 const tokenService = new TokenService();
@@ -21,6 +22,8 @@ app.use("/patient", authorizePatient.exec.bind(authorizePatient), protectedRoute
 
 app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec.bind(authorizeAdmin), protectedAdminRoutes);
+
+app.use('/doctor/auth', doctorAuthentication);
 
 app.use(errorHandler.exec.bind(errorHandler));
 

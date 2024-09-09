@@ -23,6 +23,8 @@ export default class PatientUseCase {
    }
 
    async createPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
+      const patient = await this.patientRepository.findById(id)
+      if(!patient)throw new Error("Not Found");
       const key = `profile-images/${id}-${Date.now()}`;
       const url = await this.cloudStorageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
       return { url, key };

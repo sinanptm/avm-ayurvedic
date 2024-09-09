@@ -31,7 +31,10 @@ export default class ErrorHandler {
          logger.warn(`Unauthorized access attempt: ${message}`);
          return res.status(StatusCode.Unauthorized).json({ message });
       } else if (message.includes("Patient is Blocked")) {
-         logger.warn(`Blocked patient access attempt: ${message}`);
+         logger.warn(`Blocked patient access attempt`);
+         return res.status(StatusCode.Forbidden).json({ message });
+      } else if (message.includes("Doctor is Blocked")) {
+         logger.warn(`Blocked Doctor access attempt`);
          return res.status(StatusCode.Forbidden).json({ message });
       } else if (message.includes("Not Found")) {
          logger.warn(`Not found`);
@@ -46,6 +49,8 @@ export default class ErrorHandler {
          return res.status(StatusCode.Conflict).json({
             message: "Email Already Exists!",
          });
+      } else if (message.includes("Invalid Object Id")) {
+         return res.status(StatusCode.UnprocessableEntity).json({ message });
       }
 
       res.status(statusCode).json({
