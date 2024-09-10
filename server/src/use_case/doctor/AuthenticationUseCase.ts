@@ -3,8 +3,8 @@ import IDoctorRepository from "../../domain/interface/repositories/IDoctorReposi
 import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
 import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
 import IEmailService from "../../domain/interface/services/IEmailService";
-import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import ITokenService from "../../domain/interface/services/ITokenService";
+import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { generateOTP } from "../../utils";
 
 export default class AuthenticationUseCase {

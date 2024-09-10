@@ -1,6 +1,6 @@
-import { IPatient } from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
+import { IPatient } from "../../domain/entities/IPatient";
 
 export default class PatientUseCase {
    constructor(
