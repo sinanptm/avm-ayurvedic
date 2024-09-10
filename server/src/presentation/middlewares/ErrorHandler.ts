@@ -30,7 +30,7 @@ export default class ErrorHandler {
       ) {
          logger.warn(`Unauthorized access attempt: ${message}`);
          return res.status(StatusCode.Unauthorized).json({ message });
-      } else if (message.includes("Patient is Blocked")) {
+      } else if (message.includes("Patient is Blocked") || message.includes("Not Verified")) {
          logger.warn(`Blocked patient access attempt`);
          return res.status(StatusCode.Forbidden).json({ message });
       } else if (message.includes("Doctor is Blocked")) {

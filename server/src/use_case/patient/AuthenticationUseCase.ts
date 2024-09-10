@@ -41,14 +41,14 @@ export default class AuthenticationUseCase {
 
       if (foundedPatient.isBlocked) throw new Error("Unauthorized");
 
-      let otp = parseInt(generateOTP(6), 10);
+      let otp = +generateOTP(6);
       while (otp.toString().length !== 6) {
-         otp = parseInt(generateOTP(6), 10);
+         otp = +generateOTP(6);
       }
       await this.otpRepository.create(otp, foundedPatient.email!);
 
       await this.emailService.sendMail({
-         email:foundedPatient.email!,
+         email: foundedPatient.email!,
          name: foundedPatient.name!,
          otp,
          pathOfTemplate: "../../../public/otpEmailTemplate.html",
@@ -76,9 +76,9 @@ export default class AuthenticationUseCase {
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Invalid Credentials");
 
-      let otp = parseInt(generateOTP(6), 10);
+      let otp = +generateOTP(6);
       while (otp.toString().length !== 6) {
-         otp = parseInt(generateOTP(6), 10);
+         otp = +generateOTP(6);
       }
       await this.emailService.sendMail({
          email,

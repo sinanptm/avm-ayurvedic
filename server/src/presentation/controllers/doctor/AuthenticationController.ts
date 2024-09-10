@@ -21,9 +21,6 @@ export default class AuthDoctorController {
          await this.authDoctorUseCase.signin(email, password);
          res.status(StatusCode.Success).json({ message: "OTP has been sent to your email" });
       } catch (error: any) {
-         if(error.message==='Not Verified'){
-            return res.status(StatusCode.Forbidden).json({message:error.message})
-         }
          next(error);
       }
    }
@@ -101,6 +98,17 @@ export default class AuthDoctorController {
          });
 
          return res.status(StatusCode.Success).json({ accessToken });
+      } catch (error) {
+         next(error);
+      }
+   }
+
+   async resendOtp(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email } = req.body;
+         if (email) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
+         await this.authDoctorUseCase.resendOtp(email);
+         res.status(StatusCode.Success).json({ message: "Otp Has Sended to email Address" });
       } catch (error) {
          next(error);
       }

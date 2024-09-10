@@ -6,7 +6,6 @@ import { Cookie, StatusCode } from "../../../types";
 export default class AuthPatientController {
    constructor(private authUseCase: AuthenticationUseCase) {}
 
-   // Register a new patient
    async register(req: Request, res: Response, next: NextFunction) {
       try {
          const patient = req.body;
@@ -31,7 +30,6 @@ export default class AuthPatientController {
             return res.status(StatusCode.BadRequest).json({ message: "Phone number is required" });
          }
 
-         // Register the patient
          const result = await this.authUseCase.register(patient);
          return res.status(StatusCode.Created).json({ message: result });
       } catch (error) {
@@ -39,7 +37,6 @@ export default class AuthPatientController {
       }
    }
 
-   // Login a patient
    async login(req: Request, res: Response, next: NextFunction) {
       try {
          const patient = req.body;
@@ -55,7 +52,6 @@ export default class AuthPatientController {
             return res.status(StatusCode.BadRequest).json({ message: "Password is required" });
          }
 
-         // Login the patient
          const patientDetails = await this.authUseCase.login(patient);
          return res.status(StatusCode.Success).json({
             message: `Login successful, OTP sent to email address: ${patientDetails?.email}`,
@@ -69,7 +65,6 @@ export default class AuthPatientController {
       }
    }
 
-   // Resend OTP to the patient's email
    async resendOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { email } = req.body;
@@ -78,14 +73,10 @@ export default class AuthPatientController {
          await this.authUseCase.resendOtp(email);
          return res.status(StatusCode.Success).json({ message: "OTP sent to the email address" });
       } catch (error: any) {
-         if (error.message === "Not Found") {
-            return res.status(StatusCode.UnprocessableEntity).json({ message: "Invalid credentials" });
-         }
          next(error);
       }
    }
 
-   // Validate the OTP
    async validateOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { otp, email } = req.body;

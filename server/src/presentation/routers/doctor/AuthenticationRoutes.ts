@@ -27,12 +27,13 @@ const authDoctorController = new AuthDoctorController(authUseCase);
 
 const router = express.Router();
 
-router.post("/",authDoctorController.signup.bind(authDoctorController));
-router.post("/signin",authDoctorController.signin.bind(authDoctorController));
-router.post("/otp-verification",authDoctorController.validateOtp.bind(authDoctorController));
-router.get("/refresh",authDoctorController.refreshAccessToken.bind(authDoctorController));
-router.post("/upload-url",authDoctorController.uploadProfileImage.bind(authDoctorController))
-router.get("/upload-url",authDoctorController.getUploadUrl.bind(authDoctorController))
-router.post("/logout",authDoctorController.logout.bind(authDoctorController));
+router.post("/", authDoctorController.signup.bind(authDoctorController));
+router.post("/signin", authDoctorController.signin.bind(authDoctorController));
+router.post("/otp-verification", authDoctorController.validateOtp.bind(authDoctorController));
+router.get("/refresh", authDoctorController.refreshAccessToken.bind(authDoctorController));
+router.post("/resend-otp", authDoctorController.resendOtp.bind(authDoctorController));
+router.post("/upload-url", authDoctorController.uploadProfileImage.bind(authDoctorController));
+router.get("/upload-url", authDoctorController.getUploadUrl.bind(authDoctorController));
+router.post("/logout", authDoctorController.logout.bind(authDoctorController));
 
 export default router;

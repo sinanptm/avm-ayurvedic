@@ -27,11 +27,11 @@ export default class AuthenticationUseCase {
 
       let otp = +generateOTP(6);
       while (otp.toString().length !== 6) {
-         otp = parseInt(generateOTP(6), 10);
+         otp = +generateOTP(6);
       }
       await this.emailService.sendMail({
          email,
-         name:  doctor.name!,
+         name: doctor.name!,
          otp,
          pathOfTemplate: "../../../public/otpEmailTemplate.html",
          subject: "No Reply Mail: Otp Verification",
@@ -65,6 +65,25 @@ export default class AuthenticationUseCase {
       const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
       doctor.image = imageUrl;
       await this.doctorRepository.update(doctor);
+   }
+
+   async resendOtp(email: string) {
+      const doctor = await this.doctorRepository.findByEmail(email);
+      if (!doctor) throw new Error("Invalid Credentials");
+
+      let otp = +generateOTP(6);
+      while (otp.toString().length !== 6) {
+         otp = +generateOTP(6);
+      }
+      await this.emailService.sendMail({
+         email,
+         name: doctor.name!,
+         otp,
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         subject: "No Reply Mail: Otp Verification",
+      });
+
+      await this.otpRepository.create(otp, email);
    }
 
    async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
