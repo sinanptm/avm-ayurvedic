@@ -24,6 +24,67 @@ export default class AuthDoctorController {
          next(error);
       }
    }
+   async validateOtp(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { otp, email } = req.body;
+         if (!otp) return res.status(StatusCode.BadRequest).json({ message: "OTP is required" });
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+
+         const { accessToken, refreshToken } = await this.authDoctorUseCase.validateOtp(email, otp);
+
+         res.cookie(Cookie.Doctor, refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+         });
+
+         return res.status(StatusCode.Success).json({ accessToken });
+      } catch (error) {
+         next(error);
+      }
+   }
+
+   async resendOtp(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email } = req.body;
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
+         await this.authDoctorUseCase.resendOtp(email);
+         res.status(StatusCode.Success).json({ message: "Otp Has Sended to email Address" });
+      } catch (error) {
+         next(error);
+      }
+   }
+
+   async forgotPassword(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email } = req.body;
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
+         await this.authDoctorUseCase.sendForgotPasswordMail(email);
+         
+         res.status(StatusCode.Success).json({ message: "Instruction has sended to email" });
+      } catch (error) {
+         next(error);
+      }
+   }
+   async updatePassword(req: Request, res: Response, next: NextFunction) {
+      try {
+         const { email, newPassword } = req.body;
+
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
+         if (!newPassword?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "New password is required" });
+         }
+         if (!isValidatePassword(newPassword)) {
+            return res.status(StatusCode.UnprocessableEntity).json({ message: "Password is too weak" });
+         }
+
+         await this.authDoctorUseCase.updatePassword(email, newPassword);
+         res.status(StatusCode.Success).json({ message: "Password has updated" });
+      } catch (error) {
+         next(error);
+      }
+   }
 
    async signup(req: Request, res: Response, next: NextFunction) {
       try {
@@ -77,38 +138,6 @@ export default class AuthDoctorController {
             return res.status(StatusCode.BadRequest).json({ message: "Id and Key is Required" });
          await this.authDoctorUseCase.updateProfileImage(key, id);
          res.status(StatusCode.Success).json({ message: "Profile image updated successfully" });
-      } catch (error) {
-         next(error);
-      }
-   }
-
-   async validateOtp(req: Request, res: Response, next: NextFunction) {
-      try {
-         const { otp, email } = req.body;
-         if (!otp) return res.status(StatusCode.BadRequest).json({ message: "OTP is required" });
-         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
-
-         const { accessToken, refreshToken } = await this.authDoctorUseCase.validateOtp(email, otp);
-
-         res.cookie(Cookie.Doctor, refreshToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "strict",
-            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-         });
-
-         return res.status(StatusCode.Success).json({ accessToken });
-      } catch (error) {
-         next(error);
-      }
-   }
-
-   async resendOtp(req: Request, res: Response, next: NextFunction) {
-      try {
-         const { email } = req.body;
-         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
-         await this.authDoctorUseCase.resendOtp(email);
-         res.status(StatusCode.Success).json({ message: "Otp Has Sended to email Address" });
       } catch (error) {
          next(error);
       }

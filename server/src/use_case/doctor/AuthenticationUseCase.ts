@@ -40,6 +40,66 @@ export default class AuthenticationUseCase {
       await this.otpRepository.create(otp, email);
    }
 
+   async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
+      const isOtp = await this.otpRepository.findOne(otp, email);
+      if (!isOtp) throw Error("Invalid Credentials");
+
+      const doctor = await this.doctorRepository.findByEmailWithCredentials(email)!;
+      if (!doctor) throw new Error("Unauthorized");
+
+      const refreshToken = this.tokenService.createRefreshToken(doctor?.email!, doctor?._id!);
+      const accessToken = this.tokenService.createAccessToken(doctor?.email!, doctor?._id!);
+
+      doctor!.token = refreshToken;
+
+      await this.doctorRepository.update(doctor!);
+
+      await this.otpRepository.deleteMany(email);
+
+      return { accessToken, refreshToken };
+   }
+
+   async resendOtp(email: string) {
+      const doctor = await this.doctorRepository.findByEmail(email);
+      if (!doctor) throw new Error("Invalid Credentials");
+
+      let otp = +generateOTP(6);
+      while (otp.toString().length !== 6) {
+         otp = +generateOTP(6);
+      }
+      await this.emailService.sendMail({
+         email,
+         name: doctor.name!,
+         otp,
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         subject: "No Reply Mail: Otp Verification",
+      });
+
+      await this.otpRepository.create(otp, email);
+   }
+
+   async sendForgotPasswordMail(email: string): Promise<void> {
+      const doctor = await this.doctorRepository.findByEmail(email);
+      if (!doctor) throw new Error("Invalid Credentials");
+      if (doctor.isBlocked) throw new Error("Doctor is Blocked");
+      await this.emailService.sendMail({
+         email,
+         name: doctor.name!,
+         pathOfTemplate: "../../../public/resetPasswordTemplate.html",
+         subject: "No Reply Mail: Password Reset",
+         link: `${process.env.CLIENT_URL}/doctor/reset-password`,
+      });
+   }
+
+   async updatePassword(email: string, password: string): Promise<void> {
+      const doctor = await this.doctorRepository.findByEmail(email);
+      if (!doctor) throw new Error("Invalid Credentials");
+      if (doctor.isBlocked) throw new Error("Doctor is Blocked");
+
+      doctor.password = await this.passwordService.hash(password);
+      await this.doctorRepository.update(doctor);
+   }
+
    async register(doctor: IDoctor): Promise<string> {
       doctor.password = await this.passwordService.hash(doctor.password!);
       const id = await this.doctorRepository.create(doctor);
@@ -65,44 +125,6 @@ export default class AuthenticationUseCase {
       const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
       doctor.image = imageUrl;
       await this.doctorRepository.update(doctor);
-   }
-
-   async resendOtp(email: string) {
-      const doctor = await this.doctorRepository.findByEmail(email);
-      if (!doctor) throw new Error("Invalid Credentials");
-
-      let otp = +generateOTP(6);
-      while (otp.toString().length !== 6) {
-         otp = +generateOTP(6);
-      }
-      await this.emailService.sendMail({
-         email,
-         name: doctor.name!,
-         otp,
-         pathOfTemplate: "../../../public/otpEmailTemplate.html",
-         subject: "No Reply Mail: Otp Verification",
-      });
-
-      await this.otpRepository.create(otp, email);
-   }
-
-   async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
-      const isOtp = await this.otpRepository.findOne(otp, email);
-      if (!isOtp) throw Error("Invalid Credentials");
-
-      const doctor = await this.doctorRepository.findByEmailWithCredentials(email)!;
-      if (!doctor) throw new Error("Unauthorized");
-
-      const refreshToken = this.tokenService.createRefreshToken(doctor?.email!, doctor?._id!);
-      const accessToken = this.tokenService.createAccessToken(doctor?.email!, doctor?._id!);
-
-      doctor!.token = refreshToken;
-
-      await this.doctorRepository.update(doctor!);
-
-      await this.otpRepository.deleteMany(email);
-
-      return { accessToken, refreshToken };
    }
 
    async refresh(token: string): Promise<{ accessToken: string }> {
