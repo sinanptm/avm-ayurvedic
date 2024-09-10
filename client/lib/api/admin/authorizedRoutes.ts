@@ -81,3 +81,8 @@ export const getDoctors = async(offset:number,limit:number)=>{
    const response = await axiosInstance.get(`/doctor?offset=${offset}&limit=${limit}`);
    return response.data;
 }
+
+export const verifyDoctor = async (id:string)=>{
+   const response = await axiosInstance.patch('/doctor',{id});
+   return response.data;
+}
