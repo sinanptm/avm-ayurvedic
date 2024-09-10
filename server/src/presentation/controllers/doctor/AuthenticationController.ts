@@ -106,7 +106,7 @@ export default class AuthDoctorController {
    async resendOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { email } = req.body;
-         if (email) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
+         if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
          await this.authDoctorUseCase.resendOtp(email);
          res.status(StatusCode.Success).json({ message: "Otp Has Sended to email Address" });
       } catch (error) {

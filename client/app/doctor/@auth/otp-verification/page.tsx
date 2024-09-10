@@ -2,7 +2,7 @@
 import OtpForm from "@/components/forms/patient/OtpForms";
 import { toast } from "@/components/ui/use-toast";
 import { Banners } from "@/constants";
-import { useValidateOtpDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
+import { useResendOtpDoctor, useValidateOtpDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 import { useAuth } from "@/lib/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,7 @@ const OtpVerificationPage = () => {
    const [otp, setOtp] = useState("");
    const { otpMailDoctor, setMultipleCredentials } = useAuth();
    const { mutate: validate, isPending } = useValidateOtpDoctor();
+   const { mutate: resendOtp, isPending: isSending } = useResendOtpDoctor()
    const router = useRouter();
 
    const handleVerify = async (e: FormEvent) => {
@@ -29,7 +30,7 @@ const OtpVerificationPage = () => {
                router.push("/doctor");
                setTimeout(() => {
                   setMultipleCredentials({ doctorToken: accessToken, otpMailDoctor: "" });
-               }, 100); 
+               }, 100);
             },
             onError(error) {
                toast({
@@ -41,9 +42,29 @@ const OtpVerificationPage = () => {
          }
       );
    };
-   
 
-   const handleResend = async () => {};
+
+   const handleResend = async () => {
+      resendOtp(
+         { email: otpMailDoctor },
+         {
+            onSuccess: () => {
+               toast({
+                  title: "Otp Has sended 📩",
+                  description: "Otp has Resented to you Email",
+                  variant: "info",
+               });
+            },
+            onError: (error) => {
+               toast({
+                  title: "Error in Sending Otp",
+                  description: error.response?.data.message || "Unknown Error Occurred",
+                  variant: "destructive",
+               });
+            }
+         }
+      );
+   };
 
    if (otpMailDoctor) {
       return (
@@ -62,7 +83,7 @@ const OtpVerificationPage = () => {
                         handleResend={handleResend}
                         timer={30}
                         handleVerify={handleVerify}
-                        isLoading={isPending}
+                        isLoading={isPending || isSending}
                         otp={otp}
                         setOtp={setOtp}
                      />

@@ -8,14 +8,6 @@ const axiosInstance = axios.create({
    },
    withCredentials: true,
 });
-axiosInstance.interceptors.response.use((response: any) => {
-   if (response.data.accessToken) {
-      const auth = JSON.parse(localStorage.getItem("auth") || "{}");
-      auth.doctorToken = response.data.accessToken;
-      localStorage.setItem("auth", JSON.stringify(auth));
-   }
-   return response;
-});
 
 export const signUpDoctor = async (doctor: IDoctor) => {
    const response = await axiosInstance.post("/", doctor);
@@ -42,7 +34,12 @@ export const getPresignedUrlDoctor = async (id: string) => {
    return response.data;
 };
 
-export const updateProfileImage = async (key: string, id: string) => {
+export const updateProfileImageDoctor = async (key: string, id: string) => {
    const response = await axiosInstance.post("/upload-url", { key, id });
+   return response.data;
+};
+
+export const resendOtpDoctor = async (email: string) => {
+   const response = await axiosInstance.post("/resend-otp", { email });
    return response.data;
 };
