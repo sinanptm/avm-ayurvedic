@@ -84,6 +84,7 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
                 {patient.isBlocked ? "Blocked" : "Not Blocked"}
               </Badge>
             </div>
+            
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Card>

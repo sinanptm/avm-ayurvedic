@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, memo } from "react";
+import { Dispatch, SetStateAction, memo, useState } from "react";
 import Image from "next/image";
 import {
   AlertDialog,
@@ -16,6 +16,7 @@ import { IDoctor } from "@/types";
 import { useUpdateDoctorAdmin } from "@/lib/hooks/admin/useAdminDoctor";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
+import ConfirmVerifyDoctor from "./ConfirmVerifyDoctor";
 
 type Props = {
   open: boolean;
@@ -26,12 +27,12 @@ type Props = {
 
 const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
   const { mutate: handleUpdate, isPending } = useUpdateDoctorAdmin();
-
+  const [isVerifyModelOpen, setVerifyModelOpen] = useState(false)
   const closeModal = () => {
     setOpen(false);
   };
 
-  const handleChangeStatus = () => {
+  const handleBlock = () => {
     handleUpdate(
       { doctor: { _id: doctor._id, isBlocked: !doctor.isBlocked } },
       {
@@ -46,13 +47,38 @@ const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
         onError: (error: Error) => {
           toast({
             title: "Error updating doctor status",
-            description: error.message,
+            description: error.message || "Unknown Error Occurred",
             variant: "destructive",
           });
         },
       }
     );
   };
+
+  const handleVerify = () => {
+    handleUpdate(
+      { doctor: { _id: doctor._id, isVerified: true } },
+      {
+        onSuccess: () => {
+          refetch();
+          toast({
+            title: "Doctor Has Verified Updated ✅",
+            description: "Notification mail has sended to doctor",
+            variant: "success",
+          });
+          doctor.isVerified = true;
+          setVerifyModelOpen(false);
+        },
+        onError: (error: Error) => {
+          toast({
+            title: "Error Verifying Doctor",
+            description: error.message || "Unknown Error Occurred",
+            variant: "destructive",
+          });
+        },
+      }
+    );
+  }
 
   if (!doctor) return null;
 
@@ -86,7 +112,18 @@ const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
               className="rounded-full object-cover"
             />
             <div>
-              <h3 className="text-2xl font-semibold">{doctor.name}</h3>
+              <h3 className="text-2xl font-semibold flex items-center justify-between">
+                {doctor.name}
+                {doctor.isVerified && (
+                  <Image
+                    src="/assets/icons/utils/verified.svg"
+                    width={20}
+                    height={20}
+                    alt="Verification Status"
+                    className="mr-2 h-5 w-5"
+                  />
+                )}
+              </h3>
               <p className="text-muted-foreground">{doctor.email}</p>
               <Badge variant={doctor.isBlocked ? "destructive" : "success"}>
                 {doctor.isBlocked ? "Blocked" : "Active"}
@@ -135,29 +172,30 @@ const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
                     />
                     Qualifications: {doctor.qualifications?.join(", ") || "Not provided"}
                   </li>
-                  <li className="flex items-center">
-                    <Image
-                      src="/assets/icons/utils/verified.svg"
-                      width={20}
-                      height={20}
-                      alt="Verification Status"
-                      className="mr-2 h-5 w-5"
-                    />
-                    Verification Status: {doctor.isVerified ? "Verified" : "Not Verified"}
-                  </li>
                 </ul>
               </CardContent>
             </Card>
           </div>
         </div>
-        <AlertDialogFooter className="flex justify-between">
-          <Button variant="outline" onClick={closeModal} disabled={isPending}>
-            Close
+        <AlertDialogFooter className="flex justify-between ">
+          <Button variant="outline" className="my-1" onClick={closeModal} disabled={isPending}>
+            {isPending ? (
+              <div className="flex items-center gap-4">
+                <Image src="/assets/icons/loader.svg" alt="loader" width={27} height={27} />
+              </div>
+            ) : (
+              <>Cancel</>
+            )}
           </Button>
-          <Button 
-            disabled={isPending} 
+          {!doctor.isVerified && (
+            <Button variant={'info'} className="my-1" disabled={isPending} onClick={() => setVerifyModelOpen(true)} >
+              Verify Doctor
+            </Button>
+          )}
+          <Button
+            disabled={isPending} className="my-1"
             variant={doctor.isBlocked ? "success" : "destructive"}
-            onClick={handleChangeStatus}
+            onClick={handleBlock}
           >
             {isPending ? (
               <div className="flex items-center gap-4">
@@ -169,6 +207,7 @@ const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
+      <ConfirmVerifyDoctor open={isVerifyModelOpen} setOpen={setVerifyModelOpen} handleConfirmVerify={handleVerify} isSubmitting={isPending} />
     </AlertDialog>
   );
 };

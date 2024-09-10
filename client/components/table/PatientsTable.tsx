@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useGetPatientsAdmin } from "@/lib/hooks/admin/useAdminPatients";
 import PaginationComponent from "@/components/navigation/Pagination";
 import { IPatient } from "@/types";
-import AdminPatientProfileModel from "@/components/models/admin/AdminPatientProfileModel";
+import AdminPatientProfileModel from "@/components/models/admin/PatientProfileModel";
 import { useRouter } from "next/navigation";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 

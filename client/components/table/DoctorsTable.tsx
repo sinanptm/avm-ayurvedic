@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useGetDoctorsAdmin } from "@/lib/hooks/admin/useAdminDoctor";
 import { getDefault } from "@/lib/utils";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
-import AdminDoctorProfileModel from "../models/admin/AdminDoctorProfileModel";
+import AdminDoctorProfileModel from "../models/admin/DoctorProfileModel";
 import { useState } from "react";
 import { IDoctor } from "@/types";
 

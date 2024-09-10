@@ -53,4 +53,28 @@ export default class NodeMailerService implements IEmailService {
          html: htmlTemplate,
       });
    }
+
+   async notifyVerified(email: string, name: string, link: string): Promise<void> {
+      let htmlTemplate = await readFileAsync(
+         path.join(__dirname, "../../../public/notifyVerificationTemplate.html"),
+         "utf-8"
+      );
+      htmlTemplate = htmlTemplate.replace("{{name}}", name);
+      htmlTemplate = htmlTemplate.replace("{{link}}", link);
+
+      const transporter = nodemailer.createTransport({
+         service: "gmail",
+         auth: {
+            user: process.env.SENDER_EMAIL,
+            pass: process.env.NODEMAILER_PASSKEY,
+         },
+      });
+
+      await transporter.sendMail({
+         from: process.env.SENDER_MAIL,
+         to: email,
+         subject: "No Reply Mail: Doctor Verification Notification",
+         html: htmlTemplate,
+      });
+   }
 }

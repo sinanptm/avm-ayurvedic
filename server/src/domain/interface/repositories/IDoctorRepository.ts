@@ -6,6 +6,6 @@ export default interface IDoctorRepository{
     findByID(id:string):Promise<IDoctor|null>;
     findByEmailWithCredentials(email:string):Promise<IDoctor|null>
     create(doctor:IDoctor):Promise<string>;
-    update(doctor:IDoctor):Promise<void>;
+    update(doctor:IDoctor):Promise<IDoctor|null>;
     findMany(offset:number,limit:number):Promise<PaginatedResult<IDoctor>>;
 }
