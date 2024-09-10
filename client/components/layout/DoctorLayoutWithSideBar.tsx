@@ -20,9 +20,6 @@ import { NavLinkType } from "@/types";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useLogoutAdmin } from "@/lib/hooks/admin/useAdminAuth";
-import { toast } from "../ui/use-toast";
-import { useAuth } from "@/lib/hooks/useAuth";
 
 const DoctorLayoutWithSideBar = ({
    children,
@@ -32,7 +29,6 @@ const DoctorLayoutWithSideBar = ({
    sideBarLinks: NavLinkType[];
 }) => {
    const pathname = usePathname();
-   const {setCredentials}  = useAuth()
    const handleLogout = ()=>{
     
    }

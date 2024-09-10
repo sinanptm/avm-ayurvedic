@@ -8,6 +8,14 @@ const axiosInstance = axios.create({
    },
    withCredentials: true,
 });
+axiosInstance.interceptors.response.use((response: any) => {
+   if (response.data.accessToken) {
+      const auth = JSON.parse(localStorage.getItem("auth") || "{}");
+      auth.doctorToken = response.data.accessToken;
+      localStorage.setItem("auth", JSON.stringify(auth));
+   }
+   return response;
+});
 
 export const signUpDoctor = async (doctor: IDoctor) => {
    const response = await axiosInstance.post("/", doctor);

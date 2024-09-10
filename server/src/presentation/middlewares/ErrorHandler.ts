@@ -39,7 +39,10 @@ export default class ErrorHandler {
       } else if (message.includes("Not Found")) {
          logger.warn(`Not found`);
          return res.status(StatusCode.NotFound).json({ message });
-      } else if (message.includes("getaddrinfo ENOTFOUND smtp.gmail.com")) {
+      } else if (
+         message.includes("getaddrinfo ENOTFOUND smtp.gmail.com") ||
+         message.includes("queryA ETIMEOUT smtp.gmail.com")
+      ) {
          logger.error("Email service issue encountered.");
          return res.status(StatusCode.InternalServerError).json({
             message: "We are Having Issue with Email Service",

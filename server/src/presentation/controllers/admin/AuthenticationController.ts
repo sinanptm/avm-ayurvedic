@@ -8,7 +8,7 @@ export default class AuthenticationController {
    async login(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, password } = req.body;
-         if (!email?.trim() || !password?.trim()) throw new Error("Invalid Credentials");
+         if (!email?.trim() || !password?.trim()) res.status(StatusCode.BadRequest).json({message:"Email and Password id Required"});
 
          await this.authUseCase.login(email, password);
 

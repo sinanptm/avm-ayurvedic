@@ -13,8 +13,8 @@ const OtpVerificationPage = () => {
    const [otp, setOtp] = useState<string>("");
    const { mutate: verify, isPending } = useVerifyOtpAdmin();
    const { mutate: resend } = useResendOtpAdmin();
-   const { otpMailAdmin, setCredentials } = useAuth();
-   const router = useRouter()
+   const { otpMailAdmin, setMultipleCredentials } = useAuth();
+   const router = useRouter();
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
       try {
@@ -27,9 +27,8 @@ const OtpVerificationPage = () => {
                      description: "Opt Verification has Completed",
                      variant: "success",
                   });
-                  setCredentials('otpMail','');
-                  setCredentials("adminToken", accessToken);
-                  router.push('/admin')
+                  setMultipleCredentials({ adminToken: accessToken, otpMailAdmin: "" });
+                  router.push("/admin");
                },
                onError: (error) => {
                   toast({

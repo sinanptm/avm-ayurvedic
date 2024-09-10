@@ -1,18 +1,19 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthState {
    patientToken: string;
    doctorToken: string;
    adminToken: string;
    otpMail: string;
-   otpMailAdmin:string;
-   otpMailDoctor:string;
+   otpMailAdmin: string;
+   otpMailDoctor: string;
 }
 
 interface AuthContextProps extends AuthState {
    setCredentials: (tokenType: keyof AuthState, token: string) => void;
    logout: (tokenType: keyof AuthState) => void;
+   setMultipleCredentials: (newState: Partial<AuthState>) => void;
 }
 
 const persistedAuthState: AuthState =
@@ -23,8 +24,8 @@ const initialState: AuthState = {
    doctorToken: persistedAuthState.doctorToken || "",
    adminToken: persistedAuthState.adminToken || "",
    otpMail: persistedAuthState.otpMail || "",
-   otpMailAdmin:persistedAuthState.otpMailAdmin || "",
-   otpMailDoctor:persistedAuthState.otpMailDoctor || ""
+   otpMailAdmin: persistedAuthState.otpMailAdmin || "",
+   otpMailDoctor: persistedAuthState.otpMailDoctor || "",
 };
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -43,20 +44,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    }, []);
 
    const setCredentials = (tokenType: keyof AuthState, token: string) => {
-      const newAuthState = { ...authState, [tokenType]: token };
-      setAuthState(newAuthState);
-      if (typeof window !== "undefined") {
-         localStorage.setItem("auth", JSON.stringify(newAuthState));
-      }
+      setAuthState((prevState) => {
+         const newAuthState = { ...prevState, [tokenType]: token };
+         if (typeof window !== "undefined") {
+            localStorage.setItem("auth", JSON.stringify(newAuthState));
+         }
+         return newAuthState;
+      });
    };
 
    const logout = (tokenType: keyof AuthState) => {
-      const newAuthState = { ...authState, [tokenType]: "" };
-      setAuthState(newAuthState);
-      if (typeof window !== "undefined") {
-         localStorage.setItem("auth", JSON.stringify(newAuthState));
-      }
+      setAuthState((prevState) => {
+         const newAuthState = { ...prevState, [tokenType]: "" };
+         if (typeof window !== "undefined") {
+            localStorage.setItem("auth", JSON.stringify(newAuthState));
+         }
+         return newAuthState;
+      });
    };
 
-   return <AuthContext.Provider value={{ ...authState, setCredentials, logout }}>{children}</AuthContext.Provider>;
+   const setMultipleCredentials = (newState: Partial<AuthState>) => {
+      setAuthState((prevState) => {
+         const updatedState = { ...prevState, ...newState };
+         if (typeof window !== "undefined") {
+            localStorage.setItem("auth", JSON.stringify(updatedState));
+         }
+         return updatedState; 
+      });
+   };
+
+   return (
+      <AuthContext.Provider value={{ ...authState, setCredentials, logout, setMultipleCredentials }}>
+         {children}
+      </AuthContext.Provider>
+   );
 };

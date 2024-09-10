@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Layout = ({ children, auth }: Props) => {
-   const { doctorToken } = useAuth();
+   const { doctorToken, setCredentials, otpMailDoctor } = useAuth();
    const [isLoading, setLoading] = useState(true);
 
    useEffect(() => {

@@ -1,23 +1,47 @@
 "use client";
 import OtpForm from "@/components/forms/patient/OtpForms";
+import { toast } from "@/components/ui/use-toast";
 import { Banners } from "@/constants";
+import { useValidateOtpDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 import { useAuth } from "@/lib/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 const OtpVerificationPage = () => {
    const [otp, setOtp] = useState("");
-   const [isLoading, setLoading] = useState(false);
-   const { otpMailDoctor } = useAuth();
+   const { otpMailDoctor, setMultipleCredentials } = useAuth();
+   const { mutate: validate, isPending } = useValidateOtpDoctor();
+   const router = useRouter();
+
    const handleVerify = async (e: FormEvent) => {
       e.preventDefault();
-      try {
-      } catch (error) {
-         console.log(error);
-      }
+      validate(
+         { email: otpMailDoctor, otp: +otp },
+         {
+            onSuccess({ accessToken }) {
+               toast({
+                  title: "Authentication Success ✅",
+                  description: "Your authentication process has been completed ",
+                  variant: "success",
+               });
+               router.push("/doctor");
+               setTimeout(() => {
+                  setMultipleCredentials({ doctorToken: accessToken, otpMailDoctor: "" });
+               }, 100); 
+            },
+            onError(error) {
+               toast({
+                  title: "Authentication Failed ❌",
+                  description: error.response?.data.message || "Unknown error occurred",
+                  variant: "destructive",
+               });
+            },
+         }
+      );
    };
+   
 
    const handleResend = async () => {};
 
@@ -38,7 +62,7 @@ const OtpVerificationPage = () => {
                         handleResend={handleResend}
                         timer={30}
                         handleVerify={handleVerify}
-                        isLoading={isLoading}
+                        isLoading={isPending}
                         otp={otp}
                         setOtp={setOtp}
                      />
@@ -53,6 +77,7 @@ const OtpVerificationPage = () => {
 
                <Image
                   src={Banners.doctor_otp}
+                  priority
                   height={1000}
                   width={1000}
                   alt="patient"

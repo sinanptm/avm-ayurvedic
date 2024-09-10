@@ -16,7 +16,7 @@ export default class AuthenticationUseCase {
    async login(email: string, password: string): Promise<void> {
       const doctor = await this.adminRepository.findByEmailWithCredentials(email);
       if (!doctor) throw new Error("Invalid Credentials");
-      if(doctor?.role!=='doctor') throw new Error("Invalid Credentials");
+      if (doctor?.role !== "admin") throw new Error("Invalid Credentials");
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new Error("Invalid Credentials");
 
       let otp = parseInt(generateOTP(6), 10);
@@ -24,7 +24,7 @@ export default class AuthenticationUseCase {
          otp = parseInt(generateOTP(6), 10);
       }
       await this.emailService.sendOtp(email, "Admin", otp);
-      
+
       await this.otpRepository.create(otp, email);
    }
 
@@ -59,14 +59,14 @@ export default class AuthenticationUseCase {
    }
 
    async refreshAccessToken(token: string): Promise<{ accessToken: string }> {
-         const { email } = this.tokenService.verifyRefreshToken(token);
-   
-         const admin = await this.adminRepository.findByEmail(email);
-         if (!admin) {
-            throw new Error("Unauthorized");
-         }
-         const accessToken = this.tokenService.createAccessToken(admin.email!, admin._id!);
-   
-         return { accessToken };
+      const { email } = this.tokenService.verifyRefreshToken(token);
+
+      const admin = await this.adminRepository.findByEmail(email);
+      if (!admin) {
+         throw new Error("Unauthorized");
+      }
+      const accessToken = this.tokenService.createAccessToken(admin.email!, admin._id!);
+
+      return { accessToken };
    }
 }

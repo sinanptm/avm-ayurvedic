@@ -12,7 +12,7 @@ import AuthSkelton from "@/components/skeletons/AuthPage";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 const OtpVerificationPage = () => {
-   const { setCredentials, otpMail } = useAuth();
+   const { setMultipleCredentials, otpMail } = useAuth();
    const [otp, setOtp] = useState<string>("");
    const { mutate: validateOtp, isPending } = useValidateOtpPatient();
    const [isSending, setSending] = useState(false);
@@ -60,7 +60,7 @@ const OtpVerificationPage = () => {
             });
          }
          validateOtp(
-            { email: otpMail, otp: parseInt(otp) },
+            { email: otpMail, otp: +otp },
             {
                onSuccess: ({ accessToken }) => {
                   toast({
@@ -75,7 +75,7 @@ const OtpVerificationPage = () => {
                   });
                   router.push("/");
                   setTimeout(() => {
-                     setCredentials("patientToken", accessToken);
+                     setMultipleCredentials({patientToken:accessToken,otpMail:''})
                   }, 220);
                },
                onError: (error) => {

@@ -1,12 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { PlusCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useState } from "react";
 import { useGetDoctorsAdmin } from "@/lib/hooks/admin/useAdminDoctor";
 import { getDefault } from "@/lib/utils";
 
@@ -45,20 +43,20 @@ export default function DoctorsPage() {
                                  <TableCell>
                                     <Image
                                        src={getDefault(doctor.image, "/assets/images/admin.png")}
-                                       alt={getDefault(doctor.name, "No Given")}
+                                       alt={doctor.name!}
                                        width={64}
                                        height={64}
                                        className="rounded-full object-cover"
                                     />
                                  </TableCell>
                                  <TableCell className="font-medium">
-                                    {getDefault(doctor.name, "Unknown Name")}
+                                    {doctor.name}
                                  </TableCell>
-                                 <TableCell>{getDefault(doctor.phone, "No phone")}</TableCell>
-                                 <TableCell>{getDefault(doctor.email, "No email")}</TableCell>
+                                 <TableCell>{doctor.phone}</TableCell>
+                                 <TableCell>{doctor.email}</TableCell>
                                  <TableCell>
                                     <Badge variant="default">
-                                       {getDefault(doctor.isVerified ? "Verified" : "Not Verified", "Unknown")}
+                                       {doctor.isVerified ? "Verified" : "Not Verified"}
                                     </Badge>
                                  </TableCell>
                                  <TableCell>{doctor.isBlocked ? "Yes" : "No"}</TableCell>
