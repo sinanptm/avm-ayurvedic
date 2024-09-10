@@ -43,3 +43,8 @@ export const resendOtpDoctor = async (email: string) => {
    const response = await axiosInstance.post("/resend-otp", { email });
    return response.data;
 };
+
+export const forgotPasswordDoctor=  async (email:string)=>{
+   const response = await axiosInstance.post('/forgot-password',{email});
+   return response.data;
+}

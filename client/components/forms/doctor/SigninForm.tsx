@@ -13,6 +13,8 @@ import { useSignInDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 import { toast } from "@/components/ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import ForgotPasswordModalDoctor from "./ForgetPasswordForm";
 
 const AdminSigninForm = () => {
    const form = useForm<z.infer<typeof signinFormValidation>>({
@@ -25,6 +27,7 @@ const AdminSigninForm = () => {
    const { mutate: signin, isPending } = useSignInDoctor();
    const { setCredentials } = useAuth();
    const router = useRouter()
+   const [isForgetPasswordModelOpen, setForgetPasswordModelOpen] = useState(false)
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
       signin(values, {
@@ -54,7 +57,7 @@ const AdminSigninForm = () => {
                form.setError("email", {
                   message: errorMessage,
                });
-              
+
             }
          },
       })
@@ -89,10 +92,16 @@ const AdminSigninForm = () => {
                label="Password *"
                placeholder="Enter your password"
             />
+            <p
+               className="text-dark-700 text-sm mt-2 cursor-pointer"
+               onClick={() => setForgetPasswordModelOpen(!isForgetPasswordModelOpen)}>
+               Forget Password?
+            </p>
 
             <FormMessage className="shad-error" />
 
             <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
+            <ForgotPasswordModalDoctor isOpen={isForgetPasswordModelOpen} setIsOpen={setForgetPasswordModelOpen} />
          </form>
       </Form>
    );

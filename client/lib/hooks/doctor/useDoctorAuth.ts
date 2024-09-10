@@ -1,11 +1,11 @@
 import {
    signUpDoctor,
-   getPresignedUrlDoctor,
    logoutDoctor,
    signInDoctor,
    updateProfileImageDoctor,
    validateOtpDoctor,
    resendOtpDoctor,
+   forgotPasswordDoctor,
 } from "@/lib/api/doctor/authenticationRoutes";
 import { IDoctor, ErrorResponse, MessageResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -51,7 +51,7 @@ export const useLogoutDoctor = () => {
    });
 };
 
-export const useUpdateProfileImageDoctorDoctor = () => {
+export const useUpdateProfileImageDoctor = () => {
    return useMutation<MessageResponse, AxiosError<ErrorResponse>, { key: string; id: string }>({
       mutationFn: ({ key, id }) => updateProfileImageDoctor(key, id),
       onError: (error) => {
@@ -65,6 +65,15 @@ export const useResendOtpDoctor = () => {
       mutationFn: ({ email }) => resendOtpDoctor(email),
       onError: (error) => {
          console.log("Error in resending otp:", error);
+      },
+   });
+};
+
+export const useForgotPassword = () => {
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, { email: string }>({
+      mutationFn: ({ email }) => forgotPasswordDoctor(email),
+      onError: (error) => {
+         console.log("Error in sending forgot password mail:", error);
       },
    });
 };
