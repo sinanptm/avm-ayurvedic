@@ -1,5 +1,12 @@
+export type SendMailProps = {
+   email: string;
+   name: string;
+   subject:string;
+   pathOfTemplate: string;
+   otp?: number;
+   link?: string;
+};
+
 export default interface IEmailService {
-   sendOtp(email: string, name: string, otp: number): Promise<void>;
-   sendResetMail(email: string, name: string, resetLink: string): Promise<void>;
-   notifyVerified(email: string, name: string, link: string): Promise<void>;
+   sendMail({ email, name, pathOfTemplate, link, otp }: SendMailProps): Promise<void>;
 }

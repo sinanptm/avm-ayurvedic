@@ -1,4 +1,4 @@
-import IEmailService from "../../domain/interface/services/IEmailService";
+import IEmailService, { SendMailProps } from "../../domain/interface/services/IEmailService";
 import nodemailer from "nodemailer";
 import { promisify } from "util";
 import fs from "fs";
@@ -7,11 +7,18 @@ import path from "path";
 const readFileAsync = promisify(fs.readFile);
 
 export default class NodeMailerService implements IEmailService {
-   async sendOtp(email: string, name: string, otp: number): Promise<void> {
-      let htmlTemplate = await readFileAsync(path.join(__dirname, "../../../public/otpEmailTemplate.html"), "utf-8");
+   async sendMail({ email, name, pathOfTemplate, link, otp, subject }: SendMailProps): Promise<void> {
+      let htmlTemplate = await readFileAsync(path.join(__dirname, pathOfTemplate), "utf-8");
 
       htmlTemplate = htmlTemplate.replace("{{name}}", name);
-      htmlTemplate = htmlTemplate.replace("{{otp}}", otp.toString());
+
+      if (otp) {
+         htmlTemplate = htmlTemplate.replace("{{otp}}", otp.toString());
+      }
+
+      if (link) {
+         htmlTemplate = htmlTemplate.replace("{{link}}", link);
+      }
 
       const transporter = nodemailer.createTransport({
          service: "gmail",
@@ -22,58 +29,9 @@ export default class NodeMailerService implements IEmailService {
       });
 
       await transporter.sendMail({
-         from: process.env.SENDER_MAIL,
+         from: process.env.SENDER_EMAIL,
          to: email,
-         subject: "No Reply Mail: Otp Verification",
-         html: htmlTemplate,
-      });
-   }
-
-   async sendResetMail(email: string, name: string, resetLink: string): Promise<void> {
-      let htmlTemplate = await readFileAsync(
-         path.join(__dirname, "../../../public/resetPasswordTemplate.html"),
-         "utf-8"
-      );
-
-      htmlTemplate = htmlTemplate.replace("{{name}}", name);
-      htmlTemplate = htmlTemplate.replace("{{resetLink}}", resetLink);
-
-      const transporter = nodemailer.createTransport({
-         service: "gmail",
-         auth: {
-            user: process.env.SENDER_EMAIL,
-            pass: process.env.NODEMAILER_PASSKEY,
-         },
-      });
-
-      await transporter.sendMail({
-         from: process.env.SENDER_MAIL,
-         to: email,
-         subject: "No Reply Mail: Password Reset",
-         html: htmlTemplate,
-      });
-   }
-
-   async notifyVerified(email: string, name: string, link: string): Promise<void> {
-      let htmlTemplate = await readFileAsync(
-         path.join(__dirname, "../../../public/notifyVerificationTemplate.html"),
-         "utf-8"
-      );
-      htmlTemplate = htmlTemplate.replace("{{name}}", name);
-      htmlTemplate = htmlTemplate.replace("{{link}}", link);
-
-      const transporter = nodemailer.createTransport({
-         service: "gmail",
-         auth: {
-            user: process.env.SENDER_EMAIL,
-            pass: process.env.NODEMAILER_PASSKEY,
-         },
-      });
-
-      await transporter.sendMail({
-         from: process.env.SENDER_MAIL,
-         to: email,
-         subject: "No Reply Mail: Doctor Verification Notification",
+         subject: subject || "No Reply Mail",
          html: htmlTemplate,
       });
    }

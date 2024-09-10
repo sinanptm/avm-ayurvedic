@@ -23,7 +23,13 @@ export default class AuthenticationUseCase {
       while (otp.toString().length !== 6) {
          otp = parseInt(generateOTP(6), 10);
       }
-      await this.emailService.sendOtp(email, "Admin", otp);
+      await this.emailService.sendMail({
+         email,
+         name: "Admin",
+         otp,
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         subject: "No Reply Mail: Otp Verification",
+      });
 
       await this.otpRepository.create(otp, email);
    }
@@ -55,7 +61,13 @@ export default class AuthenticationUseCase {
       }
 
       await this.otpRepository.create(otp, email);
-      await this.emailService.sendOtp(email, "Admin", otp);
+      await this.emailService.sendMail({
+         email,
+         name: "Admin",
+         otp,
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         subject: "No Reply Mail: Otp Verification",
+      });
    }
 
    async refreshAccessToken(token: string): Promise<{ accessToken: string }> {

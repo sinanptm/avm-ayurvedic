@@ -29,19 +29,26 @@ export default class AuthenticationUseCase {
       while (otp.toString().length !== 6) {
          otp = parseInt(generateOTP(6), 10);
       }
-      await this.emailService.sendOtp(email, doctor.name!, otp);
+      await this.emailService.sendMail({
+         email,
+         name:  doctor.name!,
+         otp,
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         subject: "No Reply Mail: Otp Verification",
+      });
+
       await this.otpRepository.create(otp, email);
    }
 
    async register(doctor: IDoctor): Promise<string> {
       doctor.password = await this.passwordService.hash(doctor.password!);
-      const id =  await this.doctorRepository.create(doctor);
-      return id
+      const id = await this.doctorRepository.create(doctor);
+      return id;
    }
 
    async getPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
-      const doctor = await this.doctorRepository.findByID(id)
-      if(!doctor)throw new Error("Not Found")
+      const doctor = await this.doctorRepository.findByID(id);
+      if (!doctor) throw new Error("Not Found");
       const key = `profile-images/${id}-${Date.now()}`;
       const url = await this.cloudService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
       return { url, key };
@@ -60,7 +67,7 @@ export default class AuthenticationUseCase {
       await this.doctorRepository.update(doctor);
    }
 
-   async validateOtp(email:string,otp:number):Promise<{accessToken:string,refreshToken:string}>{
+   async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw Error("Invalid Credentials");
 
@@ -79,17 +86,16 @@ export default class AuthenticationUseCase {
       return { accessToken, refreshToken };
    }
 
-   async refresh(token:string):Promise<{accessToken:string}>{
-      const {id} =this.tokenService.verifyAccessToken(token);
+   async refresh(token: string): Promise<{ accessToken: string }> {
+      const { id } = this.tokenService.verifyAccessToken(token);
 
       const doctor = await this.doctorRepository.findByID(id);
-      if(!doctor) throw new Error("Unauthorized");
+      if (!doctor) throw new Error("Unauthorized");
 
       if (doctor.isBlocked) throw new Error("Doctor is Blocked");
 
       const accessToken = this.tokenService.createAccessToken(doctor.email!, doctor._id!);
 
       return { accessToken };
-      
    }
 }

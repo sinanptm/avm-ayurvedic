@@ -18,12 +18,14 @@ export default class AdminDoctorUseCase {
    async update(doctor: IDoctor): Promise<void> {
       const updatedDoctor = await this.doctorRepository.update(doctor);
       if (!updatedDoctor) throw new Error("Not Found");
-      if (updatedDoctor?.isVerified!&&doctor.isVerified) {
-         await this.emailService.notifyVerified(
-            updatedDoctor.email!,
-            updatedDoctor.name!,
-            `${process.env.CLIENT_URL}/doctor`!
-         );
+      if (updatedDoctor?.isVerified! && doctor.isVerified) {
+         await this.emailService.sendMail({
+            email:updatedDoctor.email!,
+            name: "Admin",
+            pathOfTemplate: "../../../public/otpEmailTemplate.html",
+            subject: "No Reply Mail: Doctor Verification Notification",
+            link:`${process.env.CLIENT_URL}/doctor`
+         });
       }
    }
 }

@@ -30,9 +30,9 @@ export default class AuthenticationUseCase {
       const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundedPatient) throw new Error("Invalid Credentials");
 
-      if(!foundedPatient.password) throw new Error("Patient has no Password");
+      if (!foundedPatient.password) throw new Error("Patient has no Password");
 
-      if(foundedPatient.isBlocked){
+      if (foundedPatient.isBlocked) {
          throw new Error("Patient is Blocked");
       }
 
@@ -47,7 +47,13 @@ export default class AuthenticationUseCase {
       }
       await this.otpRepository.create(otp, foundedPatient.email!);
 
-      await this.emailService.sendOtp(foundedPatient.email!, foundedPatient.name!, otp);
+      await this.emailService.sendMail({
+         email:foundedPatient.email!,
+         name: foundedPatient.name!,
+         otp,
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         subject: "No Reply Mail: Otp Verification",
+      });
 
       return { email: foundedPatient.email! };
    }
@@ -57,14 +63,14 @@ export default class AuthenticationUseCase {
       if (!patient) {
          patient = await this.patientRepository.create({ email, name, profile } as IPatient);
       }
-      if(patient.isBlocked){
+      if (patient.isBlocked) {
          throw new Error("Patient is Blocked");
       }
       let accessToken = this.tokenService.createAccessToken(email, patient._id!);
       let refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
 
       return { accessToken, refreshToken };
-   };
+   }
 
    async resendOtp(email: string): Promise<void> {
       const patient = await this.patientRepository.findByEmail(email);
@@ -74,8 +80,15 @@ export default class AuthenticationUseCase {
       while (otp.toString().length !== 6) {
          otp = parseInt(generateOTP(6), 10);
       }
+      await this.emailService.sendMail({
+         email,
+         name: patient.name!,
+         otp,
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         subject: "No Reply Mail: Otp Verification",
+      });
+
       await this.otpRepository.create(otp, email);
-      await this.emailService.sendOtp(email, patient.name!, otp);
    }
 
    async validateOtp(otp: number, email: string): Promise<TokensResponse> {
@@ -115,7 +128,13 @@ export default class AuthenticationUseCase {
       if (!patient) throw new Error("Invalid Credentials");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
 
-      await this.emailService.sendResetMail(email, patient.name!, `${process.env.CLIENT_URL}/signin/reset-password`!);
+      await this.emailService.sendMail({
+         email,
+         name: patient.name!,
+         pathOfTemplate: "../../../public/resetPasswordTemplate.html",
+         subject: "No Reply Mail: Password Reset",
+         link: `${process.env.CLIENT_URL}/signin/reset-password`,
+      });
    }
 
    async updatePatientPassword(email: string, newPassword: string): Promise<void> {
