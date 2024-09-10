@@ -36,7 +36,7 @@ export const useValidateOtpDoctor = () => {
 };
 
 export const useLogoutDoctor = () => {
-    return useMutation<MessageResponse, AxiosError<ErrorResponse>>({
+    return useMutation<MessageResponse, AxiosError<ErrorResponse>,{}>({
         mutationFn: () => logoutDoctor(),
         onError: (error) => {
             console.log('Error in Doctor Logout:', error);

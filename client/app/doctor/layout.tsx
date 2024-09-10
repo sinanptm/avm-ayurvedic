@@ -1,6 +1,6 @@
 import { ReactNode, FC } from "react";
 import { Metadata } from "next";
-import Layout from "@/components/doctor/Layout";
+import Layout from "@/components/layout/DoctorLayout";
 
 interface AdminLayoutWrapperProps {
    children: ReactNode;
