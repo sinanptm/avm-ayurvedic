@@ -19,8 +19,11 @@ export default class AuthDoctorController {
          }
 
          await this.authDoctorUseCase.signin(email, password);
-         res.status(200).json({ message: "OTP has been sent to your email" });
+         res.status(StatusCode.Success).json({ message: "OTP has been sent to your email" });
       } catch (error: any) {
+         if(error.message==='Not Verified'){
+            return res.status(StatusCode.Forbidden).json({message:error.message})
+         }
          next(error);
       }
    }
@@ -52,7 +55,7 @@ export default class AuthDoctorController {
          }
 
          const id = await this.authDoctorUseCase.register(doctor);
-         res.status(200).json({ message: "Signup successful", id });
+         res.status(StatusCode.Success).json({ message: "Signup successful", id });
       } catch (error: any) {
          next(error);
       }
@@ -76,7 +79,7 @@ export default class AuthDoctorController {
          if (!id.trim() || !key.trim())
             return res.status(StatusCode.BadRequest).json({ message: "Id and Key is Required" });
          await this.authDoctorUseCase.updateProfileImage(key, id);
-         res.status(200).json({ message: "Profile image updated successfully" });
+         res.status(StatusCode.Success).json({ message: "Profile image updated successfully" });
       } catch (error) {
          next(error);
       }

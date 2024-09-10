@@ -23,6 +23,7 @@ export default class AuthenticationUseCase {
       if (doctor.isBlocked) throw new Error("Doctor is Blocked");
       if (doctor.role !== "doctor") throw new Error("Invalid Credentials");
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new Error("Invalid Credentials");
+      if (!doctor.isVerified) throw new Error("Not Verified");
 
       let otp = +generateOTP(6);
       while (otp.toString().length !== 6) {

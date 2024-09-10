@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,31 +22,41 @@ const AdminSigninForm = () => {
          password: "",
       },
    });
-   const {mutate:signin, isPending} = useSignInDoctor();
-   const {setCredentials} = useAuth();
+   const { mutate: signin, isPending } = useSignInDoctor();
+   const { setCredentials } = useAuth();
    const router = useRouter()
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
-      signin(values,{
-         onSuccess:()=>{
+      signin(values, {
+         onSuccess: () => {
             toast({
-               title:"Signin Successful",
-               description:"Please check you email for otp",
-               variant:"success"
+               title: "Signin Successful",
+               description: "Please check you email for otp",
+               variant: "success"
             });
-            setCredentials("otpMailDoctor",values.email);
+            setCredentials("otpMailDoctor", values.email);
             router.push('/doctor/otp-verification');
          },
-         onError:(error)=>{
-            toast({
-               title:"Error in Signin",
-               description: error.response?.data.message||"Unknown Error Occurred",
-               variant:"destructive"
-            })
-            form.setError('email',{
-               message: error.response?.data.message||"Unknown Error Occurred",
-            })
-         }
+         onError: (error) => {
+            if (error.response?.data.message === "Not Verified") {
+               toast({
+                  title: "Account Not Verified",
+                  description: "Your account is not verified yet. We will notify you via email once it's verified.",
+                  variant: "info",
+               });
+            } else {
+               const errorMessage = error.response?.data.message || "Unknown Error Occurred";
+               toast({
+                  title: "Error in Signin",
+                  description: errorMessage,
+                  variant: "destructive",
+               });
+               form.setError("email", {
+                  message: errorMessage,
+               });
+              
+            }
+         },
       })
    };
 
