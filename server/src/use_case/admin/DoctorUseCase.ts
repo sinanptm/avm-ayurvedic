@@ -11,7 +11,7 @@ export default class AdminDoctorUseCase {
       return data;
    }
 
-   async verify(id:string):Promise<void>{
-      await this.doctorRepository.update({_id:id,isVerified:true});
+   async update(doctor:IDoctor):Promise<void>{
+      await this.doctorRepository.update(doctor);
    }
 }

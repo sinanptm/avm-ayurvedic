@@ -12,50 +12,56 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { IPatient } from "@/types";
-import { useChangeStatusAdmin } from "@/lib/hooks/admin/useAdminPatients";
+import { IDoctor } from "@/types";
+import { useUpdateDoctorAdmin } from "@/lib/hooks/admin/useAdminDoctor";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  patient: IPatient;
-  refetch: any;
+  doctor: IDoctor;
+  refetch: () => void;
 };
 
-const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) => {
-  const { mutate: handleBlock, isPending } = useChangeStatusAdmin()
+const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
+  const { mutate: handleUpdate, isPending } = useUpdateDoctorAdmin();
+
   const closeModal = () => {
     setOpen(false);
   };
 
   const handleChangeStatus = () => {
-    handleBlock(
-      { id: patient._id!, isBlocked: patient.isBlocked! },
+    handleUpdate(
+      { doctor: { _id: doctor._id, isBlocked: !doctor.isBlocked } },
       {
         onSuccess: () => {
           refetch();
           toast({
-            title: "Patient Status Updated ✅",
+            title: "Doctor Status Updated ✅",
             variant: "success",
           });
-          patient.isBlocked = !patient.isBlocked
+          doctor.isBlocked = !doctor.isBlocked
         },
-        onError: (error) => {
-          console.log(error.response?.data || error.message);
+        onError: (error: Error) => {
+          toast({
+            title: "Error updating doctor status",
+            description: error.message,
+            variant: "destructive",
+          });
         },
       }
     );
   };
 
-  if (!patient) return null;
+  if (!doctor) return null;
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className="max-w-3xl">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center justify-between">
+            Doctor Profile
             <Button variant="ghost" size="icon" onClick={closeModal}>
               <Image
                 src="/assets/icons/close.svg"
@@ -67,21 +73,23 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
             </Button>
           </AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogDescription></AlertDialogDescription>
+        <AlertDialogDescription>
+          View and manage doctor details
+        </AlertDialogDescription>
         <div className="space-y-6">
           <div className="flex items-center space-x-6">
             <Image
-              src={patient.profile || "/assets/icons/user.svg?height=128&width=128"}
-              alt={patient.name || "Profile"}
+              src={doctor.image || "/placeholder.svg?height=128&width=128"}
+              alt={doctor.name || "Doctor Profile"}
               width={128}
               height={128}
               className="rounded-full object-cover"
             />
             <div>
-              <h3 className="text-2xl font-semibold">{patient.name}</h3>
-              <p className="text-muted-foreground">{patient.gender || "Not specified"}</p>
-              <Badge variant={`${patient.isBlocked ? "destructive" : "success"}`}>
-                {patient.isBlocked ? "Blocked" : "Not Blocked"}
+              <h3 className="text-2xl font-semibold">{doctor.name}</h3>
+              <p className="text-muted-foreground">{doctor.email}</p>
+              <Badge variant={doctor.isBlocked ? "destructive" : "success"}>
+                {doctor.isBlocked ? "Blocked" : "Active"}
               </Badge>
             </div>
           </div>
@@ -92,70 +100,50 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
                 <ul className="space-y-2">
                   <li className="flex items-center">
                     <Image
-                      src="/assets/icons/email.svg"
-                      width={20}
-                      height={20}
-                      alt="Email"
-                      className="mr-2 h-5 w-5"
-                    />
-                    {patient.email}
-                  </li>
-                  <li className="flex items-center">
-                    <Image
                       src="/assets/icons/phone.svg"
                       width={20}
                       height={20}
                       alt="Phone"
                       className="mr-2 h-5 w-5"
                     />
-                    {patient.phone || "Not provided"}
+                    {doctor.phone || "Not provided"}
                   </li>
                   <li className="flex items-center">
                     <Image
-                      src="/assets/icons/map.svg"
+                      src="/assets/icons/email.svg"
                       width={20}
                       height={20}
-                      alt="Address"
+                      alt="Email"
                       className="mr-2 h-5 w-5"
                     />
-                    {patient.address || "Not provided"}
+                    {doctor.email}
                   </li>
                 </ul>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <h4 className="mb-4 text-lg font-semibold">Personal Information</h4>
+                <h4 className="mb-4 text-lg font-semibold">Professional Information</h4>
                 <ul className="space-y-2">
                   <li className="flex items-center">
                     <Image
-                      src="/assets/icons/calendar.svg"
+                      src="/assets/icons/utils/certificate.svg"
                       width={20}
                       height={20}
-                      alt="DOB"
+                      alt="Qualifications"
                       className="mr-2 h-5 w-5"
                     />
-                    DOB: {patient.dob ? new Date(patient.dob).toLocaleDateString() : "Not provided"}
+                    Qualifications: {doctor.qualifications?.join(", ") || "Not provided"}
                   </li>
                   <li className="flex items-center">
                     <Image
-                      src="/assets/icons/utils/droplet.svg"
+                      src="/assets/icons/utils/verified.svg"
                       width={20}
                       height={20}
-                      alt="Blood Group"
+                      alt="Verification Status"
                       className="mr-2 h-5 w-5"
                     />
-                    Blood Group: {patient.bloodGroup || "Not provided"}
-                  </li>
-                  <li className="flex items-center">
-                    <Image
-                      src="/assets/icons/user.svg"
-                      width={20}
-                      height={20}
-                      alt="Occupation"
-                      className="mr-2 h-5 w-5"
-                    />
-                    Occupation: {patient.occupation || "Not provided"}
+                    Verification Status: {doctor.isVerified ? "Verified" : "Not Verified"}
                   </li>
                 </ul>
               </CardContent>
@@ -163,22 +151,21 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
           </div>
         </div>
         <AlertDialogFooter className="flex justify-between">
-          <Button variant="outline" onClick={closeModal} disabled={isPending} >
+          <Button variant="outline" onClick={closeModal} disabled={isPending}>
             Close
           </Button>
-          <Button disabled={isPending} variant={`${patient.isBlocked ? "destructive" : "success"}`}
-            onClick={handleChangeStatus}>
-              {isPending?(
-                 <div className="flex items-center gap-4">
-                 <Image src="/assets/icons/loader.svg" alt="loader" width={27} height={27} />
+          <Button 
+            disabled={isPending} 
+            variant={doctor.isBlocked ? "success" : "destructive"}
+            onClick={handleChangeStatus}
+          >
+            {isPending ? (
+              <div className="flex items-center gap-4">
+                <Image src="/assets/icons/loader.svg" alt="loader" width={27} height={27} />
               </div>
-              ):(
-                patient.isBlocked ? (
-                  <>Unblock Patient</>
-                ) : (
-                  <>Block Patient</>
-                )
-              )}
+            ) : (
+              doctor.isBlocked ? "Unblock Doctor" : "Block Doctor"
+            )}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -186,4 +173,4 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
   );
 };
 
-export default memo(AdminPatientProfileModel);
+export default memo(AdminDoctorProfileModal);

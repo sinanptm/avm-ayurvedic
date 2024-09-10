@@ -17,6 +17,6 @@ export const useGetPatientsAdmin = (offset: number, limit: number) => {
 export const useChangeStatusAdmin = ()=>{
     return useMutation<MessageResponse,AxiosError<ErrorResponse>,{id:string, isBlocked:boolean}>({
         mutationFn:({id,isBlocked})=>blockPatient(id,isBlocked),
-        onError:error=>console.log('error in Login ',error)
+        onError:error=>console.log('error in changing status of patient ',error)
     })
 }

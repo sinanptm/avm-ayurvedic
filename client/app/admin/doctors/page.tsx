@@ -1,4 +1,4 @@
-import DoctorTable from "@/components/admin/doctors/DoctorTable";
+import DoctorTable from "@/components/table/DoctorsTable";
 import { Metadata } from "next";
 
 export const metadata:Metadata = {

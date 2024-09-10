@@ -2,6 +2,7 @@ import express from "express";
 import AdminPatientController from "../../controllers/admin/PatientController";
 import AdminPatientUseCase from "../../../use_case/admin/PatientUseCase";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
+
 import AdminDoctorController from "../../controllers/admin/DoctorController";
 import AdminDoctorUseCase from "../../../use_case/admin/DoctorUseCase";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
@@ -18,10 +19,10 @@ const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
 router
    .route("/patient")
    .get(adminPatientController.getPatients.bind(adminPatientController))
-   .post(adminPatientController.updatePatient.bind(adminPatientController));
+   .put(adminPatientController.updatePatient.bind(adminPatientController));
 router
    .route("/doctor")
    .get(adminDoctorController.getDoctors.bind(adminDoctorController))
-   .patch(adminDoctorController.verifyDoctor.bind(adminDoctorController));
+   .put(adminDoctorController.updateDoctor.bind(adminDoctorController));
 
 export default router;

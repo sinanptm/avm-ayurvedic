@@ -8,6 +8,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useGetDoctorsAdmin } from "@/lib/hooks/admin/useAdminDoctor";
 import { getDefault } from "@/lib/utils";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
+import AdminDoctorProfileModel from "../models/admin/AdminDoctorProfileModel";
+import { useState } from "react";
+import { IDoctor } from "@/types";
 
 const columns = [
    { name: "Image", width: "w-[80px]" },
@@ -19,9 +22,15 @@ const columns = [
 ];
 
 export default function DoctorsPage() {
-   const { data, isLoading } = useGetDoctorsAdmin(0, 10);
-
+   const { data, isLoading, refetch } = useGetDoctorsAdmin(0, 10);
+   const [isModelOpen,setModelOpen ] =useState(false);
+   const [selectedDoctor,setSelectedDoctor] = useState({});
    const doctors = data?.items || [];
+
+   const handleViewProfile = (doctor:IDoctor)=>{
+      setSelectedDoctor(doctor);
+      setModelOpen(true);
+   }
 
    return (
       <main className="flex-1 space-y-4 p-4 md:p-6">
@@ -68,12 +77,16 @@ export default function DoctorsPage() {
                                     <TableCell className="font-medium">{doctor.name}</TableCell>
                                     <TableCell>{doctor.email}</TableCell>
                                     <TableCell>
-                                       <Badge variant="default">
+                                       <Badge variant={`${doctor.isVerified?"default":"destructive"}`}>
                                           {doctor.isVerified ? "Verified" : "Not Verified"}
                                        </Badge>
                                     </TableCell>
-                                    <TableCell>{doctor.isBlocked ? "Yes" : "No"}</TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell>
+                                       <Badge variant={`${doctor.isBlocked?"destructive":"success"}`}>
+                                          {doctor.isBlocked ? "Yes" : "No"}
+                                       </Badge>
+                                    </TableCell>
+                                    <TableCell className="text-right cursor-pointer" onClick={()=>handleViewProfile(doctor)}>
                                        <Button variant="ghost" size="sm">
                                           View Profile
                                        </Button>
@@ -90,6 +103,7 @@ export default function DoctorsPage() {
                         </TableBody>
                      </Table>
                   </CardContent>
+                  <AdminDoctorProfileModel  open={isModelOpen} setOpen={setModelOpen} doctor={selectedDoctor} refetch={refetch} />
                </Card>
             )}
          </div>

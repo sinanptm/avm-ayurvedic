@@ -1,3 +1,4 @@
+import { IDoctor } from "@/types";
 import axios from "axios";
 
 // Create an axios instance with base URL and default headers
@@ -73,7 +74,7 @@ export const getPatients = async (offset: number, limit: number) => {
 };
 
 export const blockPatient = async (id: string, isBlocked: boolean) => {
-   const response = await axiosInstance.patch("/patient", { id, isBlocked });
+   const response = await axiosInstance.put("/patient", { id, isBlocked });
    return response.data;
 };
 
@@ -82,7 +83,7 @@ export const getDoctors = async(offset:number,limit:number)=>{
    return response.data;
 }
 
-export const verifyDoctor = async (id:string)=>{
-   const response = await axiosInstance.patch('/doctor',{id});
+export const updateDoctor = async (doctor:IDoctor)=>{
+   const response = await axiosInstance.put('/doctor',doctor);
    return response.data;
 }
