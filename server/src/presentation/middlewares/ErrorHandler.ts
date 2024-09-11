@@ -54,6 +54,8 @@ export default class ErrorHandler {
          });
       } else if (message.includes("Invalid Object Id")) {
          return res.status(StatusCode.UnprocessableEntity).json({ message });
+      }else if (message.includes("Invalid Filter")){
+         return res.status(StatusCode.BadRequest).json({message})
       }
 
       res.status(statusCode).json({

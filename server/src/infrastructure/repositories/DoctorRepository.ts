@@ -24,14 +24,20 @@ export default class DoctorRepository implements IDoctorRepository {
       if (!isValidObjectId(doctor._id!)) throw new Error("Invalid Object Id");
       return await this.model.findByIdAndUpdate(doctor._id, doctor, { new: true });
    }
-   async findMany(offset: number, limit: number): Promise<PaginatedResult<IDoctor>> {
-      const totalItems = await this.model.countDocuments();
-      const items = await this.model.find().skip(offset).limit(limit).select(["-password", "-token"]);
+   async findMany(offset: number, limit: number, isVerified: boolean, isBlocked: boolean): Promise<PaginatedResult<IDoctor>> {
+      const totalItems = await this.model.countDocuments({ isVerified, isBlocked });
+      const items = await this.model
+         .find({ isVerified, isBlocked })
+         .skip(offset)
+         .limit(limit)
+         .select('-password -token');
 
-      const currentPage = Math.floor(limit / offset) + 1;
+      const currentPage = Math.floor(offset / limit) + 1;
       const totalPages = Math.ceil(totalItems / limit);
       const hasNextPage = currentPage < totalPages;
       const hasPreviousPage = currentPage > 1;
+
+
       return {
          currentPage,
          hasNextPage,

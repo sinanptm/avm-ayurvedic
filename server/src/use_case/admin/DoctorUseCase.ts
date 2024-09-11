@@ -1,17 +1,25 @@
 import IDoctor from "../../domain/entities/IDoctor";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
-import { PaginatedResult } from "../../types";
+import { DoctorsFilter, PaginatedResult } from "../../types";
 
 export default class AdminDoctorUseCase {
    constructor(
       private doctorRepository: IDoctorRepository,
       private emailService: IEmailService
-   ) {}
+   ) { }
 
-   async getAll(offset: number, limit: number): Promise<PaginatedResult<IDoctor>> {
-      const data = await this.doctorRepository.findMany(offset, limit);
-      data.items = data.items.filter((doctor) => doctor.role !== "admin");
+   async getAll(offset: number, limit: number, type: DoctorsFilter): Promise<PaginatedResult<IDoctor>> {
+      const filters = {
+         [DoctorsFilter.VERIFIED]: { isVerified: true, isBlocked: false },
+         [DoctorsFilter.NOT_VERIFIED]: { isVerified: false, isBlocked: false },
+         [DoctorsFilter.BLOCKED]: { isVerified: true, isBlocked: true }
+      }
+
+      const { isBlocked, isVerified } = filters[type]
+      let data = await this.doctorRepository.findMany(offset, limit, isVerified, isBlocked);
+
+      data.items = data.items.filter(doctor => doctor.role !== 'admin')
       return data;
    }
 

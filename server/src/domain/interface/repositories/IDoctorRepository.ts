@@ -1,4 +1,4 @@
-import { PaginatedResult } from "../../../types";
+import { DoctorsFilter, PaginatedResult } from "../../../types";
 import IDoctor from "../../entities/IDoctor";
 
 export default interface IDoctorRepository {
@@ -7,5 +7,5 @@ export default interface IDoctorRepository {
    findByEmailWithCredentials(email: string): Promise<IDoctor | null>;
    create(doctor: IDoctor): Promise<string>;
    update(doctor: IDoctor): Promise<IDoctor | null>;
-   findMany(offset: number, limit: number): Promise<PaginatedResult<IDoctor>>;
+   findMany(offset: number, limit: number, isVerified: boolean, isBlocked: boolean): Promise<PaginatedResult<IDoctor>>;
 }

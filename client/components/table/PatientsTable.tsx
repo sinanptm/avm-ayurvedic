@@ -73,36 +73,43 @@ export default function PatientsTable({ page }: Props) {
                               </TableRow>
                            </TableHeader>
                            <TableBody>
-                              {patients.map((patient) => (
-                                 <TableRow key={patient._id}>
-                                    <TableCell>
-                                       <div
-                                          className={`relative w-16 h-16 rounded-full ${
-                                             patient.isBlocked
+                              {patients.length >= 1 ? (
+                                 patients.map((patient) => (
+                                    <TableRow key={patient._id}>
+                                       <TableCell>
+                                          <div
+                                             className={`relative w-16 h-16 rounded-full ${patient.isBlocked
                                                 ? "border-4 border-destructive"
                                                 : "border-4 border-primary"
-                                          }`}
-                                       >
-                                          <Image
-                                             src={patient.profile || "/placeholder.svg?height=64&width=64"}
-                                             alt={patient.name || "Profile"}
-                                             width={64}
-                                             height={64}
-                                             className="rounded-full object-cover"
-                                          />
-                                       </div>
-                                    </TableCell>
-                                    <TableCell className="font-medium">{patient.name}</TableCell>
-                                    <TableCell>{patient.email}</TableCell>
-                                    <TableCell>{patient.phone}</TableCell>
-                                    <TableCell>{patient.bloodGroup}</TableCell>
-                                    <TableCell className="text-right">
-                                       <Button variant="link" size="sm" onClick={() => handleViewProfile(patient)}>
-                                          View Profile
-                                       </Button>
+                                                }`}
+                                          >
+                                             <Image
+                                                src={patient.profile || "/placeholder.svg?height=64&width=64"}
+                                                alt={patient.name || "Profile"}
+                                                width={64}
+                                                height={64}
+                                                className="rounded-full object-cover"
+                                             />
+                                          </div>
+                                       </TableCell>
+                                       <TableCell className="font-medium">{patient.name}</TableCell>
+                                       <TableCell>{patient.email}</TableCell>
+                                       <TableCell>{patient.phone}</TableCell>
+                                       <TableCell>{patient.bloodGroup}</TableCell>
+                                       <TableCell className="text-right">
+                                          <Button variant="link" size="sm" onClick={() => handleViewProfile(patient)}>
+                                             View Profile
+                                          </Button>
+                                       </TableCell>
+                                    </TableRow>
+                                 ))
+                              ) : (
+                                 <TableRow>
+                                    <TableCell colSpan={9} className="text-center">
+                                       No Patients found.
                                     </TableCell>
                                  </TableRow>
-                              ))}
+                              )}
                            </TableBody>
                         </Table>
                      </CardContent>

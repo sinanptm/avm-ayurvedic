@@ -1,10 +1,12 @@
+import { UserRole } from "aws-sdk/clients/workmail";
+
 export default interface IDoctor {
    readonly _id?: string;
    name?: string;
    phone?: string;
    password?: string;
    qualifications?: string[];
-   role?: "admin" | "doctor";
+   role?: UserRole;
    isBlocked?: boolean;
    image?: string;
    email?: string;

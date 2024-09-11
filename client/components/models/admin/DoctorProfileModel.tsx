@@ -195,22 +195,24 @@ const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
                      Verify Doctor
                   </Button>
                )}
-               <Button
-                  disabled={isPending}
-                  className="my-1"
-                  variant={doctor.isBlocked ? "success" : "destructive"}
-                  onClick={handleBlock}
-               >
-                  {isPending ? (
-                     <div className="flex items-center gap-4">
-                        <Image src="/assets/icons/loader.svg" alt="loader" width={27} height={27} />
-                     </div>
-                  ) : doctor.isBlocked ? (
-                     "Unblock Doctor"
-                  ) : (
-                     "Block Doctor"
-                  )}
-               </Button>
+               {doctor.isVerified && (
+                  <Button
+                     disabled={isPending}
+                     className="my-1"
+                     variant={doctor.isBlocked ? "success" : "destructive"}
+                     onClick={handleBlock}
+                  >
+                     {isPending ? (
+                        <div className="flex items-center gap-4">
+                           <Image src="/assets/icons/loader.svg" alt="loader" width={27} height={27} />
+                        </div>
+                     ) : doctor.isBlocked ? (
+                        "Unblock Doctor"
+                     ) : (
+                        "Block Doctor"
+                     )}
+                  </Button>
+               )}
             </AlertDialogFooter>
          </AlertDialogContent>
          <ConfirmVerifyDoctor

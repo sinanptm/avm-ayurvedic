@@ -65,3 +65,9 @@ export interface IDoctor {
    createdAt?: string;
    isVerified?: boolean;
 }
+
+export enum DoctorsFilter {
+   BLOCKED = 'blocked',
+   NOT_VERIFIED = 'not-verified',
+   VERIFIED = 'verified'
+}
