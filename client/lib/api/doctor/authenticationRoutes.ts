@@ -44,7 +44,12 @@ export const resendOtpDoctor = async (email: string) => {
    return response.data;
 };
 
-export const forgotPasswordDoctor=  async (email:string)=>{
-   const response = await axiosInstance.post('/forgot-password',{email});
+export const forgotPasswordDoctor = async (email: string) => {
+   const response = await axiosInstance.post("/forgot-password", { email });
    return response.data;
-}
+};
+
+export const updatePasswordDoctor = async (email: string, password: string) => {
+   const response = await axiosInstance.post("/update-password", { email, password });
+   return response.data;
+};

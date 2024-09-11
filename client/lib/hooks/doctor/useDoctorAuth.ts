@@ -6,6 +6,7 @@ import {
    validateOtpDoctor,
    resendOtpDoctor,
    forgotPasswordDoctor,
+   updatePasswordDoctor,
 } from "@/lib/api/doctor/authenticationRoutes";
 import { IDoctor, ErrorResponse, MessageResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -69,11 +70,20 @@ export const useResendOtpDoctor = () => {
    });
 };
 
-export const useForgotPassword = () => {
+export const useForgotPasswordDoctor = () => {
    return useMutation<MessageResponse, AxiosError<ErrorResponse>, { email: string }>({
       mutationFn: ({ email }) => forgotPasswordDoctor(email),
       onError: (error) => {
          console.log("Error in sending forgot password mail:", error);
       },
+   });
+};
+
+export const useUpdatePasswordDoctor = () => {
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, { email: string; password: string }>({
+      mutationFn:({email,password})=>updatePasswordDoctor(email,password),
+      onError: (error) => {
+         console.log("Error in updating password mail:", error);
+      }
    });
 };
