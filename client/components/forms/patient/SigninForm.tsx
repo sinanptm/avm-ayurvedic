@@ -42,8 +42,8 @@ const LoginForm = () => {
                   description: "Please check your email for the OTP.",
                   variant: "default",
                });
-               router.push("/signin/otp-verification");
                setCredentials("otpMail", email);
+               router.push("/signin/otp-verification");
             },
             onError(error) {
                setError(error.response?.data.message || "An error occurred during sign-in.");

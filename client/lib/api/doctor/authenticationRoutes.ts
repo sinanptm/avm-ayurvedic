@@ -50,6 +50,6 @@ export const forgotPasswordDoctor = async (email: string) => {
 };
 
 export const updatePasswordDoctor = async (email: string, password: string) => {
-   const response = await axiosInstance.post("/update-password", { email, password });
+   const response = await axiosInstance.patch("/update-password", { email, password });
    return response.data;
 };

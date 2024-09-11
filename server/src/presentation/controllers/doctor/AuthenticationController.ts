@@ -69,17 +69,17 @@ export default class AuthDoctorController {
    }
    async updatePassword(req: Request, res: Response, next: NextFunction) {
       try {
-         const { email, newPassword } = req.body;
+         const { email, password } = req.body;
 
          if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is required" });
-         if (!newPassword?.trim()) {
-            return res.status(StatusCode.BadRequest).json({ message: "New password is required" });
+         if (!password?.trim()) {
+            return res.status(StatusCode.BadRequest).json({ message: "password is required" });
          }
-         if (!isValidatePassword(newPassword)) {
+         if (!isValidatePassword(password)) {
             return res.status(StatusCode.UnprocessableEntity).json({ message: "Password is too weak" });
          }
 
-         await this.authDoctorUseCase.updatePassword(email, newPassword);
+         await this.authDoctorUseCase.updatePassword(email, password);
          res.status(StatusCode.Success).json({ message: "Password has updated" });
       } catch (error) {
          next(error);

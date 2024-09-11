@@ -5,7 +5,6 @@ export function cn(...inputs: ClassValue[]) {
    return twMerge(clsx(inputs));
 }
 
-
 export const getDefault = (value: any, fallback: string) => {
    return value ? value : fallback;
- };
+};

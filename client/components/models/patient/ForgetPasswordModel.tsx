@@ -56,7 +56,7 @@ const ForgotPasswordModal = ({ isOpen, setIsOpen }: Props) => {
                   variant: "success",
                });
                setIsOpen(false)
-               setCredentials("otpMail",data.email);
+               setCredentials("resetMailPatient",data.email);
                form.reset();
             },
             onError:(error)=>{

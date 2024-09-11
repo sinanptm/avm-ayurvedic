@@ -17,9 +17,9 @@ import { Form } from "@/components/ui/form";
 import SubmitButton from "../../common/SubmitButton";
 import CustomFormField from "../../common/CustomFormField";
 import { FormFieldType } from "@/types/fromTypes";
-import { useForgetPassword } from "@/lib/hooks/patient/usePatientAuth";
 import { toast } from "../../ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { useForgotPasswordDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 
 type Props = {
    isOpen: boolean;
@@ -43,33 +43,41 @@ const ForgotPasswordModalDoctor = ({ isOpen, setIsOpen }: Props) => {
       control,
       handleSubmit,
    } = form;
-   const { mutate: forgetPassword,isPending } = useForgetPassword();
-   const {setCredentials} = useAuth()
+   const { mutate: forgetPassword, isPending } = useForgotPasswordDoctor();
+   const { setCredentials } = useAuth()
    const onSubmit = async (data: FormValues) => {
-      forgetPassword(
-         { email: data.email },
-         {
-            onSuccess: () => {
-               toast({
-                  title: "Email Sended 📩",
-                  description: "Please Check Your Email for further instructions",
-                  variant: "success",
-               });
-               setIsOpen(false)
-               setCredentials("otpMail",data.email);
-               form.reset();
-            },
-            onError:(error)=>{
-              if(error.status===404){
-                toast({
-                  title:"Invalid Email Address",
-                  description:"Please Verify Your Email Address",
-                  variant:"destructive"
-                });
-              }
+      if (isOpen) {
+         forgetPassword(
+            { email: data.email },
+            {
+               onSuccess: () => {
+                  toast({
+                     title: "Email Sended 📩",
+                     description: "Please Check Your Email for further instructions",
+                     variant: "success",
+                  });
+                  setIsOpen(false)
+                  setCredentials("resetMailDoctor", data.email);
+                  form.reset();
+               },
+               onError: (error) => {
+                  if (error.status === 404) {
+                     toast({
+                        title: "Invalid Email Address",
+                        description: "Please Verify Your Email Address",
+                        variant: "destructive"
+                     });
+                  } else {
+                     toast({
+                        title: "Action Failed",
+                        description: error.response?.data.message || "Unknown Error Occurred",
+                        variant: "destructive"
+                     });
+                  }
+               }
             }
-         }
-      );
+         );
+      }
    };
 
    return (

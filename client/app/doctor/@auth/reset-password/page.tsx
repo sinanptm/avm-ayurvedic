@@ -12,6 +12,7 @@ import { Form } from "@/components/ui/form";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { notFound, useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
+import { useUpdatePasswordDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 
 const formSchema = z
    .object({
@@ -47,14 +48,14 @@ export default function ResetPasswordPage() {
       },
    });
    const route = useRouter();
-   const { mutate: updatePassword, isPending } = useUpdatePassword();
+   const { mutate: updatePassword, isPending } = useUpdatePasswordDoctor();
    const { control, handleSubmit } = form;
-   const { resetMailPatient, setCredentials } = useAuth();
+   const { resetMailDoctor, setCredentials } = useAuth();
    const onSubmit = async (values: FormValues) => {
       updatePassword(
          {
-            newPassword: values.newPassword,
-            email: resetMailPatient,
+            password: values.newPassword,
+            email: resetMailDoctor,
          },
          {
             onSuccess: () => {
@@ -62,9 +63,9 @@ export default function ResetPasswordPage() {
                   title: "Password Updated ✅",
                   description: "Password Updated Successfully",
                });
-               route.push("/signin");
+               route.push("/doctor");
                setTimeout(() => {
-                  setCredentials("resetMailPatient", "");
+                  setCredentials("resetMailDoctor", "");
                }, 2000);
             },
             onError: (error) => {
@@ -78,7 +79,7 @@ export default function ResetPasswordPage() {
       );
    };
 
-   if (resetMailPatient) {
+   if (resetMailDoctor) {
       return (
          <div className="container max-w-md mx-auto mt-48 remove-scrollbar">
             <Card>
