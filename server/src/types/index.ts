@@ -15,12 +15,6 @@ export interface CustomRequest extends Request {
    };
 }
 
-export enum DoctorsFilter {
-   BLOCKED = 'blocked',
-   NOT_VERIFIED = 'not-verified',
-   VERIFIED = 'verified'
-}
-
 
 export enum StatusCode {
    Success = 200,
@@ -58,4 +52,13 @@ export enum UserRole {
    Admin = 'admin',
    Doctor = 'doctor',
    Patient = 'patient',
+}
+
+
+// Filters
+
+export enum DoctorsFilter {
+   BLOCKED = 'blocked',
+   NOT_VERIFIED = 'not-verified',
+   VERIFIED = 'verified'
 }
