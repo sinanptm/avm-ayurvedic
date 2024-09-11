@@ -13,37 +13,30 @@ type Props = {
    currentPage: number;
    totalPages: number;
    className?: string;
+   hasPrevPage: boolean;
+   hasNextPage: boolean;
 };
 
-export default function PaginationComponent({ currentPage, handlePageChange, totalPages, className }: Props) {
+export default function PaginationComponent({ currentPage, handlePageChange, totalPages, className, hasNextPage, hasPrevPage }: Props) {
+   if (totalPages <= 1) return null;
+
    const getPageRange = () => {
       const delta = 2;
       const range = [];
-      const rangeWithDots = [];
-      let l;
-
-      range.push(1);
-
-      for (let i = currentPage - delta; i <= currentPage + delta; i++) {
-         if (i < totalPages && i > 1) {
-            range.push(i);
-         }
+      for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+         range.push(i);
       }
-
-      range.push(totalPages);
-      for (let i of range) {
-         if (l) {
-            if (i - l === 2) {
-               rangeWithDots.push(l + 1);
-            } else if (i - l !== 1) {
-               rangeWithDots.push("...");
-            }
-         }
-         rangeWithDots.push(i);
-         l = i;
+      if (range[0] > 2) range.unshift("...");
+      const lastItem = range[range.length - 1];
+      if (typeof lastItem === "number" && lastItem < totalPages - 1) {
+         range.push("...");
       }
+      return [1, ...range, totalPages];
+   };
 
-      return rangeWithDots;
+   const handleClick = (e: React.MouseEvent, page: number) => {
+      e.preventDefault();
+      if (page !== currentPage) handlePageChange(page);
    };
 
    return (
@@ -52,11 +45,8 @@ export default function PaginationComponent({ currentPage, handlePageChange, tot
             <PaginationItem>
                <PaginationPrevious
                   href="#"
-                  onClick={(e) => {
-                     e.preventDefault();
-                     handlePageChange(Math.max(currentPage - 1, 1));
-                  }}
-                  aria-disabled={currentPage === 1}
+                  onClick={(e) => handleClick(e, currentPage - 1)}
+                  aria-disabled={!hasPrevPage || currentPage <= 1}
                />
             </PaginationItem>
             {getPageRange().map((page, index) => (
@@ -66,11 +56,8 @@ export default function PaginationComponent({ currentPage, handlePageChange, tot
                   ) : (
                      <PaginationLink
                         href="#"
-                        onClick={(e) => {
-                           e.preventDefault();
-                           handlePageChange(Number(page));
-                        }}
-                        isActive={currentPage === Number(page)}
+                        onClick={(e) => handleClick(e, Number(page))}
+                        isActive={currentPage === page}
                      >
                         {page}
                      </PaginationLink>
@@ -80,11 +67,8 @@ export default function PaginationComponent({ currentPage, handlePageChange, tot
             <PaginationItem>
                <PaginationNext
                   href="#"
-                  onClick={(e) => {
-                     e.preventDefault();
-                     handlePageChange(Math.min(currentPage + 1, totalPages));
-                  }}
-                  aria-disabled={currentPage === totalPages}
+                  onClick={(e) => handleClick(e, currentPage + 1)}
+                  aria-disabled={!hasNextPage || currentPage >= totalPages}
                />
             </PaginationItem>
          </PaginationContent>

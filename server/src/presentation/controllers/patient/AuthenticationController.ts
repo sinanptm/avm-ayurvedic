@@ -4,7 +4,7 @@ import { isValidatePassword, isValidEmail } from "../../validators/entitieValida
 import { Cookie, StatusCode } from "../../../types";
 
 export default class AuthPatientController {
-   constructor(private authUseCase: AuthenticationUseCase) {}
+   constructor(private authUseCase: AuthenticationUseCase) { }
 
    async register(req: Request, res: Response, next: NextFunction) {
       try {
@@ -163,8 +163,8 @@ export default class AuthPatientController {
          const { patientToken } = req.cookies;
          if (!patientToken) return res.status(StatusCode.Forbidden).json({ message: "Unauthenticated" });
 
-         const newAccessToken = await this.authUseCase.refreshAccessToken(patientToken);
-         return res.status(StatusCode.Success).json({ accessToken: newAccessToken });
+         const { accessToken } = await this.authUseCase.refreshAccessToken(patientToken);
+         return res.status(StatusCode.Success).json({ accessToken });
       } catch (error: any) {
          next(error);
       }

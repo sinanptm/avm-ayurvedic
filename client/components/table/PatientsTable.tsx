@@ -22,7 +22,7 @@ export default function PatientsTable({ page }: Props) {
    const [isModelOpen, setModelOpen] = useState(false);
    const [selectedPatient, setSelectedPatient] = useState({});
    const router = useRouter();
-   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage, itemsPerPage);
+   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage-1, itemsPerPage);
    const columns = [
       { name: "Image", width: "w-[80px]" },
       { name: "Name", width: "" },
@@ -33,7 +33,6 @@ export default function PatientsTable({ page }: Props) {
    ];
 
    const patients = data?.items!;
-   const totalPages = data?.totalPages!;
 
    const handlePageChange = (pageIndex: number) => {
       setCurrentPage(pageIndex);
@@ -112,8 +111,10 @@ export default function PatientsTable({ page }: Props) {
                   <PaginationComponent
                      currentPage={currentPage}
                      handlePageChange={handlePageChange}
-                     totalPages={totalPages}
+                     totalPages={data?.totalPages!}
                      className="mt-11"
+                     hasNextPage={data?.hasNextPage!}
+                     hasPrevPage={data?.hasPreviousPage!}
                   />
                </>
             )}

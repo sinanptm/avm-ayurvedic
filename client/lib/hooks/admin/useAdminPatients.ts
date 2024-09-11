@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 
 export const useGetPatientsAdmin = (offset: number, limit: number) => {
    return useQuery<PaginatedResult<IPatient>, AxiosError<ErrorResponse>>({
-      queryKey: ["patients", { offset, limit }],
+      queryKey: ["patient", { offset, limit }],
       queryFn: () => getPatients(offset, limit),
       retry: false,
       refetchOnWindowFocus: false,

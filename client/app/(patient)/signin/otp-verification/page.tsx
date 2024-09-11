@@ -14,7 +14,7 @@ import { useAuth } from "@/lib/hooks/useAuth";
 const OtpVerificationPage = () => {
    const { setMultipleCredentials, otpMail } = useAuth();
    const [otp, setOtp] = useState<string>("");
-   const { mutate: validateOtp, isPending } = useValidateOtpPatient();
+   const { mutate: validateOtp } = useValidateOtpPatient();
    const [isSending, setSending] = useState(false);
    const { mutate: resendOtp } = useResendOtp();
    const { toast } = useToast();
