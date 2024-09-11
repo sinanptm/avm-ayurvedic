@@ -1,8 +1,0 @@
-{
-   "trailingComma": "es5",
-   "tabWidth": 3,
-   "semi": true,
-   "printWidth": 120,
-   "arrowParens": "always",
-   "jsxBracketSameLine": true
-}
