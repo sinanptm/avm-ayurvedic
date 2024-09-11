@@ -5,8 +5,11 @@ export const metadata: Metadata = {
    title: "Doctors",
 };
 
-const DoctorsPage = () => {
-   return <DoctorTable />;
+
+const Page = ({ searchParams }: { searchParams: { page: number } }) => {
+   const page = searchParams.page || 0;
+
+   return <DoctorTable page={page} />;
 };
 
-export default DoctorsPage;
+export default Page;

@@ -11,6 +11,8 @@ import TableSkeleton from "@/components/skeletons/TableSkelton";
 import AdminDoctorProfileModel from "../models/admin/DoctorProfileModel";
 import { useState } from "react";
 import { IDoctor } from "@/types";
+import Pagination from "../navigation/Pagination";
+import { useRouter } from "next/navigation";
 
 const columns = [
    { name: "Image", width: "w-[80px]" },
@@ -21,15 +23,27 @@ const columns = [
    { name: "Actions", width: "w-1/6 text-right pr-10" },
 ];
 
-export default function DoctorsPage() {
-   const { data, isLoading, refetch } = useGetDoctorsAdmin(0, 10);
-   const [isModelOpen, setModelOpen] = useState(false);
+type Props = {
+   page: number;
+}
+
+export default function DoctorsPage({ page }: Props) {
+   let [currentPage, setCurrentPage] = useState(page);
    const [selectedDoctor, setSelectedDoctor] = useState({});
+   const [isModelOpen, setModelOpen] = useState(false);
+   const router = useRouter();
+   const { data, isLoading, refetch } = useGetDoctorsAdmin(currentPage, 7);
    const doctors = data?.items || [];
 
    const handleViewProfile = (doctor: IDoctor) => {
       setSelectedDoctor(doctor);
       setModelOpen(true);
+   };
+
+   const handlePageChange = (pageIndex: number) => {
+      setCurrentPage(pageIndex);
+      router.push(`/admin/doctors?page=${pageIndex}`);
+      refetch();
    };
 
    return (
@@ -106,6 +120,14 @@ export default function DoctorsPage() {
                         </TableBody>
                      </Table>
                   </CardContent>
+                  <Pagination
+                     currentPage={currentPage}
+                     handlePageChange={handlePageChange}
+                     totalPages={data?.totalPages!}
+                     className="mt-11"
+                     hasNextPage={data?.hasNextPage!}
+                     hasPrevPage={data?.hasPreviousPage!}
+                  />
                   <AdminDoctorProfileModel
                      open={isModelOpen}
                      setOpen={setModelOpen}

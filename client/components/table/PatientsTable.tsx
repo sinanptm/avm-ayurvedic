@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetPatientsAdmin } from "@/lib/hooks/admin/useAdminPatients";
-import PaginationComponent from "@/components/navigation/Pagination";
+import Pagination from "@/components/navigation/Pagination";
 import { IPatient } from "@/types";
 import AdminPatientProfileModel from "@/components/models/admin/PatientProfileModel";
 import { useRouter } from "next/navigation";
@@ -18,11 +18,10 @@ type Props = {
 
 export default function PatientsTable({ page }: Props) {
    const [currentPage, setCurrentPage] = useState(page);
-   const itemsPerPage = 7;
    const [isModelOpen, setModelOpen] = useState(false);
    const [selectedPatient, setSelectedPatient] = useState({});
    const router = useRouter();
-   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage-1, itemsPerPage);
+   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage, 7);
    const columns = [
       { name: "Image", width: "w-[80px]" },
       { name: "Name", width: "" },
@@ -108,7 +107,7 @@ export default function PatientsTable({ page }: Props) {
                         </Table>
                      </CardContent>
                   </Card>
-                  <PaginationComponent
+                  <Pagination
                      currentPage={currentPage}
                      handlePageChange={handlePageChange}
                      totalPages={data?.totalPages!}

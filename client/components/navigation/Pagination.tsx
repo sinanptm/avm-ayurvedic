@@ -1,5 +1,5 @@
 import {
-   Pagination,
+   Pagination as PaginationSection,
    PaginationContent,
    PaginationEllipsis,
    PaginationItem,
@@ -17,7 +17,7 @@ type Props = {
    hasNextPage: boolean;
 };
 
-export default function PaginationComponent({ currentPage, handlePageChange, totalPages, className, hasNextPage, hasPrevPage }: Props) {
+export default function Pagination({ currentPage, handlePageChange, totalPages, className, hasNextPage, hasPrevPage }: Props) {
    if (totalPages <= 1) return null;
 
    const getPageRange = () => {
@@ -40,7 +40,7 @@ export default function PaginationComponent({ currentPage, handlePageChange, tot
    };
 
    return (
-      <Pagination className={className}>
+      <PaginationSection className={className}>
          <PaginationContent>
             <PaginationItem>
                <PaginationPrevious
@@ -72,6 +72,6 @@ export default function PaginationComponent({ currentPage, handlePageChange, tot
                />
             </PaginationItem>
          </PaginationContent>
-      </Pagination>
+      </PaginationSection>
    );
 }
