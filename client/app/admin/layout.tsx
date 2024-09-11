@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children, signin }) => {
-   return <Layout signin={signin}>{children}</Layout>;
+   return <Layout auth={signin}>{children}</Layout>;
 };
 
 export default AdminLayoutWrapper;

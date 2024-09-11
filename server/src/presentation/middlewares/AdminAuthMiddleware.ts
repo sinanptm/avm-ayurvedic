@@ -30,9 +30,6 @@ export default class AdminAuthMiddleware {
          }
          req.admin = { email, id };
 
-         console.log(role);
-         
-
          next();
       } catch (error: any) {
          if (error.message === "Token Expired") {

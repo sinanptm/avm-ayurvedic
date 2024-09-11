@@ -3,6 +3,7 @@ import DoctorLayoutWithSideBar from "@/components/layout/DoctorLayoutWithSideBar
 import UniversalSkelton from "@/components/skeletons/Universal";
 import { DoctorsSidebarLinks } from "@/constants";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
 type Props = {
@@ -11,15 +12,21 @@ type Props = {
 };
 
 const Layout = ({ children, auth }: Props) => {
-   const { doctorToken, setCredentials, otpMailDoctor } = useAuth();
+   const { doctorToken } = useAuth();
    const [isLoading, setLoading] = useState(true);
-
+   const path = usePathname();
+   const router = useRouter()
+   useEffect(() => {
+      if (doctorToken && (path.includes('/otp-verification') || path.includes('/signup') || path.includes('/reset-password'))) {
+         router.replace('/doctor');
+      }
+   }, [doctorToken, path, router]);
    useEffect(() => {
       const timer = setTimeout(() => {
          setLoading(false);
       }, 0);
       return () => clearTimeout(timer);
-   });
+   }, []);
 
    if (isLoading) {
       return <UniversalSkelton />;
