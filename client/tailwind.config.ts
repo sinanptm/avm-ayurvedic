@@ -3,12 +3,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
    darkMode: ["class"],
-   content: [
-      "./pages/**/*.{ts,tsx}",
-      "./components/**/*.{ts,tsx}",
-      "./app/**/*.{ts,tsx}",
-      "./src/**/*.{ts,tsx}",
-   ],
+   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
    prefix: "",
    theme: {
       container: {
@@ -18,12 +13,12 @@ const config = {
             "2xl": "1400px",
          },
       },
-      toolTip:" bg-green-700 bg-opacity-55 border-white cursor-pointer",
+      toolTip: " bg-green-700 bg-opacity-55 border-white cursor-pointer",
       extend: {
-         screens:{
-            'md':"732px",
-            'md-cus':"930px",
-            "admin-nav":"635px"
+         screens: {
+            md: "732px",
+            "md-cus": "930px",
+            "admin-nav": "635px",
          },
          colors: {
             green: {

@@ -28,9 +28,9 @@ export const NavBar = () => {
    const { mutate: logoutFunc } = useLogoutMutation();
    const { patientToken, setCredentials, logout } = useAuth();
    const [isLogoutModelOpen, setLogoutModelOpen] = useState(false);
-   const [isSheetOpen, setIsSheetOpen] = useState(false)
+   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-   if (path.includes("signup") || path.includes("admin") || path.includes("signin")||path.includes("doctor")) {
+   if (path.includes("signup") || path.includes("admin") || path.includes("signin") || path.includes("doctor")) {
       return null;
    }
 
@@ -48,7 +48,7 @@ export const NavBar = () => {
                   variant: "info",
                });
                setCredentials("patientToken", "");
-               route.push('/');
+               route.push("/");
             },
             onError: () => {
                toast({
@@ -60,16 +60,14 @@ export const NavBar = () => {
             },
          });
          setLogoutModelOpen(false);
-         
       } catch (error) {
          console.log(error);
-         
       }
    };
 
    const handleLinkClick = () => {
-      setIsSheetOpen(false); 
-  };
+      setIsSheetOpen(false);
+   };
 
    return (
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">
@@ -83,7 +81,8 @@ export const NavBar = () => {
                   href={link.href}
                   key={link.label + link.href}
                   className="text-muted-foreground transition-colors hover:text-foreground"
-                  prefetch={false}>
+                  prefetch={false}
+               >
                   {link.label}
                </Link>
             ))}
@@ -117,7 +116,8 @@ export const NavBar = () => {
                         key={link.label + link.href}
                         onClick={handleLinkClick}
                         className="text-muted-foreground hover:text-foreground"
-                        prefetch={false}>
+                        prefetch={false}
+                     >
                         {link.label}
                      </Link>
                   ))}
@@ -155,13 +155,15 @@ export const NavBar = () => {
                   </Button>
                </DropdownMenuTrigger>
                <DropdownMenuContent align="end" className="mt-3">
-                  {patientToken!=='' ? (
+                  {patientToken !== "" ? (
                      <>
                         <DropdownMenuLabel className="cursor-pointer">
                            <Link href={"/profile"}>My Account</Link>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="cursor-pointer" onSelect={handleLogoutClick}>Logout</DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer" onSelect={handleLogoutClick}>
+                           Logout
+                        </DropdownMenuItem>
                      </>
                   ) : (
                      <>
@@ -172,7 +174,11 @@ export const NavBar = () => {
                   )}
                </DropdownMenuContent>
             </DropdownMenu>
-            <LogoutModel open={isLogoutModelOpen} setOpen={setLogoutModelOpen}  handleLogoutConfirm={handleLogoutConfirm} />
+            <LogoutModel
+               open={isLogoutModelOpen}
+               setOpen={setLogoutModelOpen}
+               handleLogoutConfirm={handleLogoutConfirm}
+            />
          </div>
       </header>
    );

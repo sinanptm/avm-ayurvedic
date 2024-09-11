@@ -16,27 +16,26 @@ interface Props {
 const ProfilePageLayout = ({ children, appointments, records }: Props) => {
    const [section, setSection] = useState<"profile" | "appointments" | "records">("profile");
    const router = useRouter();
-   const {setCredentials} = useAuth()
+   const { setCredentials } = useAuth();
 
-   const { data: patientData, isLoading, isError, refetch , error} = useGetPatientProfile();
+   const { data: patientData, isLoading, isError, refetch, error } = useGetPatientProfile();
    if (isLoading) {
       return <ProfileSkeleton />;
-   }   
+   }
 
    if (isError) {
-      if(error.response?.status===403){
-         setTimeout(()=>{
+      if (error.response?.status === 403) {
+         setTimeout(() => {
             toast({
                title: "You Have Been Blocked",
                description: "Your Blocked By Admin Please Contact Our Customer Care Service",
                variant: "destructive",
             });
-            setCredentials('patientToken','');
-         },20)
+            setCredentials("patientToken", "");
+         }, 20);
       }
       notFound();
    }
-
 
    if (typeof patientData?.bloodGroup === "undefined") {
       router.push("/register");

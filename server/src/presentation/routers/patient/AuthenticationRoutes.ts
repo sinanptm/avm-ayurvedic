@@ -9,7 +9,6 @@ import AuthPatientUseCase from "../../../use_case/patient/AuthenticationUseCase"
 
 const router = express.Router();
 
-// Services and Repositories
 const tokenService = new JWTService();
 const passwordService = new BcryptService();
 const emailService = new NodeMailerService();

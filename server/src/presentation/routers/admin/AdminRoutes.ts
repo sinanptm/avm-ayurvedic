@@ -12,10 +12,11 @@ const router = express.Router();
 
 const patientRepository = new PatientRepository();
 const doctorRepository = new DoctorRepository();
-const emailService = new NodeMailerService()
+const emailService = new NodeMailerService();
 const adminPatientUseCase = new AdminPatientUseCase(patientRepository);
 const adminPatientController = new AdminPatientController(adminPatientUseCase);
-const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository,emailService);
+
+const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository, emailService);
 const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
 
 router

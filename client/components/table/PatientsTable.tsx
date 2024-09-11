@@ -16,7 +16,6 @@ type Props = {
    page: number;
 };
 
-
 export default function PatientsTable({ page }: Props) {
    const [currentPage, setCurrentPage] = useState(page);
    const itemsPerPage = 7;
@@ -80,8 +79,12 @@ export default function PatientsTable({ page }: Props) {
                                  <TableRow key={patient._id}>
                                     <TableCell>
                                        <div
-                                          className={`relative w-16 h-16 rounded-full ${patient.isBlocked ? "border-4 border-destructive" : "border-4 border-primary"
-                                             }`}>
+                                          className={`relative w-16 h-16 rounded-full ${
+                                             patient.isBlocked
+                                                ? "border-4 border-destructive"
+                                                : "border-4 border-primary"
+                                          }`}
+                                       >
                                           <Image
                                              src={patient.profile || "/placeholder.svg?height=64&width=64"}
                                              alt={patient.name || "Profile"}

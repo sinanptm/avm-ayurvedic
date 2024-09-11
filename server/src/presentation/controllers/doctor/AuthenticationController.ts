@@ -61,7 +61,7 @@ export default class AuthDoctorController {
          const { email } = req.body;
          if (!email) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
          await this.authDoctorUseCase.sendForgotPasswordMail(email);
-         
+
          res.status(StatusCode.Success).json({ message: "Instruction has sended to email" });
       } catch (error) {
          next(error);

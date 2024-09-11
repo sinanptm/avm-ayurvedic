@@ -20,11 +20,11 @@ export default class AdminDoctorUseCase {
       if (!updatedDoctor) throw new Error("Not Found");
       if (updatedDoctor?.isVerified! && doctor.isVerified) {
          await this.emailService.sendMail({
-            email:updatedDoctor.email!,
+            email: updatedDoctor.email!,
             name: "Admin",
-            pathOfTemplate: "../../../public/otpEmailTemplate.html",
+            pathOfTemplate: "../../../public/notifyVerificationTemplate.html",
             subject: "No Reply Mail: Doctor Verification Notification",
-            link:`${process.env.CLIENT_URL}/doctor`
+            link: `${process.env.CLIENT_URL}/doctor`,
          });
       }
    }

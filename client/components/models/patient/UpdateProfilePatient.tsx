@@ -43,7 +43,7 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
       setOpen(!open);
    };
 
-   const onSubmit = (data: z.infer<typeof updateProfileFormValidation>) => {      
+   const onSubmit = (data: z.infer<typeof updateProfileFormValidation>) => {
       updateProfile(data, {
          onSuccess: () => {
             closeModal();
@@ -62,7 +62,7 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
             });
          },
       });
-   };   
+   };
 
    return (
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -117,7 +117,8 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
                               control={form.control}
                               name="bloodGroup"
                               label="Your blood type  *"
-                              placeholder="Select blood type">
+                              placeholder="Select blood type"
+                           >
                               {BloodGroups.map((blood, i) => (
                                  <SelectItem key={blood + i} value={blood}>
                                     <div className="flex cursor-pointer items-center gap-2">
@@ -138,7 +139,8 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
                                     <RadioGroup
                                        className="flex h-11 gap-6 xl:justify-between"
                                        onValueChange={field.onChange}
-                                       defaultValue={field.value}>
+                                       defaultValue={field.value}
+                                    >
                                        {GenderOptions.map((option, i) => (
                                           <div key={option} className="radio-group">
                                              <RadioGroupItem value={option} id={option} />

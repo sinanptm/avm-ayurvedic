@@ -16,7 +16,7 @@ import { useGetPatientProfile, useUpdatePatientProfile } from "@/lib/hooks/patie
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 
-const RegistrationForm = ({refetch}:{refetch:any}) => {
+const RegistrationForm = ({ refetch }: { refetch: any }) => {
    const form = useForm<z.infer<typeof registerFormValidation>>({
       resolver: zodResolver(registerFormValidation),
       defaultValues: {
@@ -44,7 +44,7 @@ const RegistrationForm = ({refetch}:{refetch:any}) => {
             dob: values.birthDate,
             phone: values.phone.trim() !== "" ? values.phone : undefined,
             occupation: values.occupation,
-            gender:values.gender
+            gender: values.gender,
          },
          {
             onSuccess: () => {
@@ -94,7 +94,8 @@ const RegistrationForm = ({refetch}:{refetch:any}) => {
                         <RadioGroup
                            className="flex h-11 gap-6 xl:justify-between"
                            onValueChange={field.onChange}
-                           defaultValue={field.value}>
+                           defaultValue={field.value}
+                        >
                            {GenderOptions.map((option, i) => (
                               <div key={option} className="radio-group">
                                  <RadioGroupItem value={option} id={option} />
@@ -114,7 +115,8 @@ const RegistrationForm = ({refetch}:{refetch:any}) => {
                   control={form.control}
                   name="bloodType"
                   label="Your blood type  *"
-                  placeholder="Select blood type">
+                  placeholder="Select blood type"
+               >
                   {BloodGroups.map((blood, i) => (
                      <SelectItem key={blood + i} value={blood}>
                         <div className="flex cursor-pointer items-center gap-2">

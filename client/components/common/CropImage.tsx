@@ -53,10 +53,7 @@ const CropImage = ({
             <div className="flex flex-col gap-4 mt-4 text-neutral-800 dark:text-neutral-200">
                <div className="flex flex-col gap-2">
                   <label className="font-semibold">Aspect Ratio</label>
-                  <Select
-                     value={aspectRatio.toString()}
-                     onValueChange={(value) => setAspectRatio(Number(value))}
-                  >
+                  <Select value={aspectRatio.toString()} onValueChange={(value) => setAspectRatio(Number(value))}>
                      <SelectTrigger className="bg-neutral-200 dark:bg-neutral-700">
                         <SelectValue placeholder="Select Aspect Ratio" />
                      </SelectTrigger>

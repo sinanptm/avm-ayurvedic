@@ -11,7 +11,7 @@ import { signinFormValidation } from "@/components/forms/actions/adminValidation
 import { FormFieldType } from "@/types/fromTypes";
 import { useSigninAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { toast } from "@/components/ui/use-toast";
-import {useRouter} from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 const AdminSigninForm = () => {
@@ -22,37 +22,34 @@ const AdminSigninForm = () => {
          password: "",
       },
    });
-   const {mutate:signin,isPending}= useSigninAdmin();
+   const { mutate: signin, isPending } = useSigninAdmin();
    const router = useRouter();
-   const {setCredentials} = useAuth()
+   const { setCredentials } = useAuth();
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
-      signin(values,{
-         onSuccess:()=>{
+      signin(values, {
+         onSuccess: () => {
             toast({
-               title:"Signin Succuss! ✅",
-               description:"Please Check Your Email for Further Instructions",
-               variant:"success"
+               title: "Signin Succuss! ✅",
+               description: "Please Check Your Email for Further Instructions",
+               variant: "success",
             });
-            setCredentials('otpMailAdmin','muhammedsinan0549@gmail.com');
-            router.push('/admin/otp-verification');
+            setCredentials("otpMailAdmin", "muhammedsinan0549@gmail.com");
+            router.push("/admin/otp-verification");
          },
-         onError:(error)=>{
+         onError: (error) => {
             toast({
-               title:"Signin failed! ❌",
-               description:error.response?.data.message||"Error Occurred Please try Again",
-               variant:"destructive"
-            })
-         }
+               title: "Signin failed! ❌",
+               description: error.response?.data.message || "Error Occurred Please try Again",
+               variant: "destructive",
+            });
+         },
       });
    };
 
    return (
       <Form {...form}>
-         <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 flex-1"
-         >
+         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
             <section className="mb-12 space-y-4">
                <h1 className="header">Admin Signin</h1>
                <p className="text-dark-700">Please signin to go to dashboard</p>

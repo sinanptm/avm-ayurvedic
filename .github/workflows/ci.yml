@@ -1,79 +1,79 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+   push:
+      branches:
+         - main
+   pull_request:
+      branches:
+         - main
 
 jobs:
-  build-client:
-    runs-on: ubuntu-latest
+   build-client:
+      runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+         - name: Set up Node.js
+           uses: actions/setup-node@v3
+           with:
+              node-version: "18"
 
-      - name: Cache Node.js dependencies for client
-        uses: actions/cache@v3
-        with:
-          path: client/node_modules
-          key: client-node-modules-${{ hashFiles('client/package-lock.json') }}
-          restore-keys: |
-            client-node-modules-
+         - name: Cache Node.js dependencies for client
+           uses: actions/cache@v3
+           with:
+              path: client/node_modules
+              key: client-node-modules-${{ hashFiles('client/package-lock.json') }}
+              restore-keys: |
+                 client-node-modules-
 
-      - name: Install dependencies for client
-        run: npm install
-        working-directory: client
+         - name: Install dependencies for client
+           run: npm install
+           working-directory: client
 
-      - name: Run lint for client
-        run: npm run lint
-        working-directory: client
+         - name: Run lint for client
+           run: npm run lint
+           working-directory: client
 
-      - name: Build client project
-        run: npm run build
-        working-directory: client
+         - name: Build client project
+           run: npm run build
+           working-directory: client
 
-      - name: Run tests for client
-        run: npm test
-        working-directory: client
+         - name: Run tests for client
+           run: npm test
+           working-directory: client
 
-  build-server:
-    runs-on: ubuntu-latest
-    needs: build-client
+   build-server:
+      runs-on: ubuntu-latest
+      needs: build-client
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+         - name: Set up Node.js
+           uses: actions/setup-node@v3
+           with:
+              node-version: "18"
 
-      - name: Cache Node.js dependencies for server
-        uses: actions/cache@v3
-        with:
-          path: server/node_modules
-          key: server-node-modules-${{ hashFiles('server/package-lock.json') }}
-          restore-keys: |
-            server-node-modules-
+         - name: Cache Node.js dependencies for server
+           uses: actions/cache@v3
+           with:
+              path: server/node_modules
+              key: server-node-modules-${{ hashFiles('server/package-lock.json') }}
+              restore-keys: |
+                 server-node-modules-
 
-      - name: Install dependencies for server
-        run: npm install
-        working-directory: server
+         - name: Install dependencies for server
+           run: npm install
+           working-directory: server
 
-      - name: Build server project
-        run: npm run build
-        working-directory: server
+         - name: Build server project
+           run: npm run build
+           working-directory: server
 
-      - name: Run tests for server
-        run: npm test
-        working-directory: server
+         - name: Run tests for server
+           run: npm test
+           working-directory: server

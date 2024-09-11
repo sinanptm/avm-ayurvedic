@@ -25,25 +25,21 @@ export const ImagesSlider = ({
    const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
    const handleNext = () => {
-      setCurrentIndex(prevIndex =>
-         prevIndex + 1 === images.length ? 0 : prevIndex + 1,
-      );
+      setCurrentIndex((prevIndex) => (prevIndex + 1 === images.length ? 0 : prevIndex + 1));
    };
 
    const handlePrevious = () => {
-      setCurrentIndex(prevIndex =>
-         prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
-      );
+      setCurrentIndex((prevIndex) => (prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1));
    };
 
    useEffect(() => {
       loadImages();
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    const loadImages = () => {
       setLoading(true);
-      const loadPromises = images.map(image => {
+      const loadPromises = images.map((image) => {
          return new Promise((resolve, reject) => {
             const img = new Image();
             img.src = image;
@@ -53,11 +49,11 @@ export const ImagesSlider = ({
       });
 
       Promise.all(loadPromises)
-         .then(loadedImages => {
+         .then((loadedImages) => {
             setLoadedImages(loadedImages as string[]);
             setLoading(false);
          })
-         .catch(error => console.error("Failed to load images", error));
+         .catch((error) => console.error("Failed to load images", error));
    };
    useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {
@@ -82,7 +78,7 @@ export const ImagesSlider = ({
          window.removeEventListener("keydown", handleKeyDown);
          clearInterval(interval);
       };
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    const slideVariants = {
@@ -120,23 +116,13 @@ export const ImagesSlider = ({
 
    return (
       <div
-         className={cn(
-            "overflow-hidden h-full w-full relative flex items-center justify-center",
-            className,
-         )}
+         className={cn("overflow-hidden h-full w-full relative flex items-center justify-center", className)}
          style={{
             perspective: "1000px",
          }}
       >
          {areImagesLoaded && children}
-         {areImagesLoaded && overlay && (
-            <div
-               className={cn(
-                  "absolute inset-0 bg-black/60 z-40",
-                  overlayClassName,
-               )}
-            />
-         )}
+         {areImagesLoaded && overlay && <div className={cn("absolute inset-0 bg-black/60 z-40", overlayClassName)} />}
 
          {areImagesLoaded && (
             <AnimatePresence>

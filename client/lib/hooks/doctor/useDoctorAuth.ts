@@ -81,9 +81,9 @@ export const useForgotPasswordDoctor = () => {
 
 export const useUpdatePasswordDoctor = () => {
    return useMutation<MessageResponse, AxiosError<ErrorResponse>, { email: string; password: string }>({
-      mutationFn:({email,password})=>updatePasswordDoctor(email,password),
+      mutationFn: ({ email, password }) => updatePasswordDoctor(email, password),
       onError: (error) => {
          console.log("Error in updating password mail:", error);
-      }
+      },
    });
 };

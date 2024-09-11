@@ -4,14 +4,14 @@ import { connectDB } from "./config/connectDB";
 import routes from "./presentation/routers/index";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import helmet from 'helmet'
+import helmet from "helmet";
 
 dotenv.config();
 
-const port = process.env.PORT ||8080;
+const port = process.env.PORT || 8080;
 
 const app = express();
-app.use(helmet())
+app.use(helmet());
 app.use(
    cors({
       origin: process.env.CLIENT_URL,

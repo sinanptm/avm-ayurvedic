@@ -8,8 +8,8 @@ interface AuthState {
    otpMail: string;
    otpMailAdmin: string;
    otpMailDoctor: string;
-   resetMailDoctor:string;
-   resetMailPatient:string;
+   resetMailDoctor: string;
+   resetMailPatient: string;
 }
 
 interface AuthContextProps extends AuthState {
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
          if (typeof window !== "undefined") {
             localStorage.setItem("auth", JSON.stringify(updatedState));
          }
-         return updatedState; 
+         return updatedState;
       });
    };
 

@@ -53,7 +53,7 @@ axiosInstance.interceptors.response.use(
 
             return axiosInstance(originalRequest);
          } catch (refreshError: any) {
-            if (refreshError.response.status===401) {
+            if (refreshError.response.status === 401) {
                const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
                localStorage.setItem("auth", {
                   ...tokens,
@@ -78,12 +78,12 @@ export const blockPatient = async (id: string, isBlocked: boolean) => {
    return response.data;
 };
 
-export const getDoctors = async(offset:number,limit:number)=>{
+export const getDoctors = async (offset: number, limit: number) => {
    const response = await axiosInstance.get(`/doctor?offset=${offset}&limit=${limit}`);
    return response.data;
-}
+};
 
-export const updateDoctor = async (doctor:IDoctor)=>{
-   const response = await axiosInstance.put('/doctor',doctor);
+export const updateDoctor = async (doctor: IDoctor) => {
+   const response = await axiosInstance.put("/doctor", doctor);
    return response.data;
-}
+};

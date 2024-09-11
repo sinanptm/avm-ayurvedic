@@ -35,29 +35,32 @@ const AdminLayoutWithSideBar = ({
    sideBarLinks: NavLinkType[];
 }) => {
    const pathname = usePathname();
-   const [open,setOpen] = useState<boolean>(false)
-   const [isLogoutOpen,setLogoutOpen] = useState(false)
+   const [open, setOpen] = useState<boolean>(false);
+   const [isLogoutOpen, setLogoutOpen] = useState(false);
    const { mutate: logout } = useLogoutDoctor();
    const { setCredentials } = useAuth();
-   const router = useRouter()
+   const router = useRouter();
    const handleLogout = () => {
-      logout({}, {
-         onSuccess: () => {
-            toast({
-               title: "Logout Successfully👋",
-               variant: "success",
-            });
-            setCredentials("doctorToken", "");
-            router.push('/doctor');
-         },
-         onError: (error) => {
-            toast({
-               title: "Logout Failed ❌",
-               description: error.response?.data.message || "An Unknown Error Occurred",
-               variant: "destructive",
-            });
-         },
-      });
+      logout(
+         {},
+         {
+            onSuccess: () => {
+               toast({
+                  title: "Logout Successfully👋",
+                  variant: "success",
+               });
+               setCredentials("doctorToken", "");
+               router.push("/doctor");
+            },
+            onError: (error) => {
+               toast({
+                  title: "Logout Failed ❌",
+                  description: error.response?.data.message || "An Unknown Error Occurred",
+                  variant: "destructive",
+               });
+            },
+         }
+      );
    };
 
    return (
@@ -67,7 +70,8 @@ const AdminLayoutWithSideBar = ({
                <nav className="flex flex-1 flex-col items-center gap-4 px-2 py-5">
                   <Link
                      href="/admin"
-                     className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base">
+                     className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+                  >
                      <Package2 className="h-6 w-6 transition-all group-hover:scale-110" />
                      <span className="sr-only">AVM</span>
                   </Link>
@@ -79,7 +83,8 @@ const AdminLayoutWithSideBar = ({
                               className={cn(
                                  "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
                                  pathname === item.href && "bg-accent text-accent-foreground"
-                              )}>
+                              )}
+                           >
                               <Image
                                  src={item.icon!}
                                  width={21}
@@ -92,7 +97,8 @@ const AdminLayoutWithSideBar = ({
                         </TooltipTrigger>
                         <TooltipContent
                            side="right"
-                           className=" bg-green-700 bg-opacity-55 border-white cursor-pointer hover:border-green-600 transition-colors duration-200">
+                           className=" bg-green-700 bg-opacity-55 border-white cursor-pointer hover:border-green-600 transition-colors duration-200"
+                        >
                            {item.label}
                         </TooltipContent>
                      </Tooltip>
@@ -114,11 +120,19 @@ const AdminLayoutWithSideBar = ({
                               </Button>
                            </DropdownMenuTrigger>
                         </TooltipTrigger>
-                        <TooltipContent side="right" className=" bg-green-700 bg-opacity-55 border-white cursor-pointer">Settings</TooltipContent>
+                        <TooltipContent
+                           side="right"
+                           className=" bg-green-700 bg-opacity-55 border-white cursor-pointer"
+                        >
+                           Settings
+                        </TooltipContent>
                      </Tooltip>
                      <DropdownMenuContent align="end">
                         <DropdownMenuItem>
-                           <button className="flex items-center w-full text-left" onClick={()=>setLogoutOpen(!isLogoutOpen)}>
+                           <button
+                              className="flex items-center w-full text-left"
+                              onClick={() => setLogoutOpen(!isLogoutOpen)}
+                           >
                               <Image
                                  src={"/assets/icons/logout.svg"}
                                  className="mr-2 h-4 w-4"
@@ -139,7 +153,7 @@ const AdminLayoutWithSideBar = ({
                <Sheet open={open} onOpenChange={setOpen}>
                   <SheetTrigger asChild>
                      <Button size="icon" variant="outline" className="sm:hidden">
-                        <PanelLeft className="h-5 w-5" onClick={()=>setOpen(!open)} />
+                        <PanelLeft className="h-5 w-5" onClick={() => setOpen(!open)} />
                         <span className="sr-only">Toggle Menu</span>
                      </Button>
                   </SheetTrigger>
@@ -150,7 +164,8 @@ const AdminLayoutWithSideBar = ({
                      <nav className="grid gap-6 p-6 text-lg font-medium">
                         <Link
                            href="/"
-                           className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base">
+                           className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+                        >
                            <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
                            <span className="sr-only">AVM Ayurvedic</span>
                         </Link>
@@ -158,11 +173,12 @@ const AdminLayoutWithSideBar = ({
                            <Link
                               key={item.href}
                               href={item.href}
-                              onClick={()=>setOpen(false)}
+                              onClick={() => setOpen(false)}
                               className={cn(
                                  "flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground",
                                  pathname === item.href && "text-foreground"
-                              )}>
+                              )}
+                           >
                               <Image
                                  src={item.icon!}
                                  width={21}
@@ -199,7 +215,7 @@ const AdminLayoutWithSideBar = ({
                      <DropdownMenuContent align="end" className="cursor-pointer">
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={()=>setLogoutOpen(!isLogoutOpen)}>Logout</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setLogoutOpen(!isLogoutOpen)}>Logout</DropdownMenuItem>
                      </DropdownMenuContent>
                   </DropdownMenu>
                </div>

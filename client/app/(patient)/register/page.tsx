@@ -9,12 +9,11 @@ import AuthSkelton from "@/components/skeletons/AuthPage";
 const Register = () => {
    const { data, isError, isLoading, refetch } = useGetPatientProfile();
 
-   if(isLoading){
-      return <AuthSkelton />
+   if (isLoading) {
+      return <AuthSkelton />;
    }
 
-
-   if (!data?.bloodGroup&&!isError) {
+   if (!data?.bloodGroup && !isError) {
       return (
          <div className="flex h-screen max-h-screen">
             <section className="remove-scrollbar container">
@@ -43,7 +42,7 @@ const Register = () => {
          </div>
       );
    }
-   notFound()
+   notFound();
 };
 
 export default Register;

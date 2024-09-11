@@ -10,7 +10,7 @@ interface AdminLayoutWrapperProps {
 export const metadata: Metadata = {
    title: {
       template: "Doctor | %s",
-      default: "Doctor Dashboard"
+      default: "Doctor Dashboard",
    },
 };
 const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children, auth }) => {

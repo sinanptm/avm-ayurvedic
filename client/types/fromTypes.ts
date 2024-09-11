@@ -29,16 +29,14 @@ export interface CustomProps {
    availableTimes?: string[];
    Icon?: FC<{ className?: string }>;
    doctor?: string;
-   showDateText?:string;
+   showDateText?: string;
 }
-
 
 export interface OtpFromProps {
-   handleVerify:(e:FormEvent)=>void;
-   handleResend:()=>void;
-   timer:number;
-   isLoading:boolean;
-   otp:string;
-   setOtp:(value:string)=>void;
+   handleVerify: (e: FormEvent) => void;
+   handleResend: () => void;
+   timer: number;
+   isLoading: boolean;
+   otp: string;
+   setOtp: (value: string) => void;
 }
-

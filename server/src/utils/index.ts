@@ -8,4 +8,3 @@ export const generateOTP = (length: number): string => {
 
    return otp;
 };
-

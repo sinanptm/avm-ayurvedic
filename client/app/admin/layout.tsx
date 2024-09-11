@@ -4,17 +4,17 @@ import Layout from "@/components/layout/AdminLayout";
 
 interface AdminLayoutWrapperProps {
    children: ReactNode;
-   signin:ReactNode;
+   signin: ReactNode;
 }
 
 export const metadata: Metadata = {
    title: {
       template: "Admin | %s",
-      default: "Admin Dashboard"
+      default: "Admin Dashboard",
    },
 };
 
-const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children , signin}) => {
+const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children, signin }) => {
    return <Layout signin={signin}>{children}</Layout>;
 };
 

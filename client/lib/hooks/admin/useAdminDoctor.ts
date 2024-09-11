@@ -11,7 +11,7 @@ export const useGetDoctorsAdmin = (offset: number, limit: number) => {
 };
 
 export const useUpdateDoctorAdmin = () => {
-   return useMutation<MessageResponse, AxiosError<ErrorResponse>, { doctor:IDoctor }>({
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, { doctor: IDoctor }>({
       mutationFn: ({ doctor }) => updateDoctor(doctor),
       onError: (error) => {
          console.log("Error in verifying doctor, ", error);

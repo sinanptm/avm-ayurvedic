@@ -1,36 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Verification Notification</title>
-    <style>
-        body {
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Doctor Verification Notification</title>
+      <style>
+         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-        }
-        .email-container {
+         }
+         .email-container {
             max-width: 600px;
             margin: 40px auto;
             background-color: #ffffff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
+         }
+         h1 {
             color: #2c3e50;
             font-size: 26px;
             margin-bottom: 20px;
-        }
-        p {
+         }
+         p {
             color: #7f8c8d;
             font-size: 16px;
             line-height: 1.6;
-        }
-        .verification-badge {
+         }
+         .verification-badge {
             display: inline-block;
             padding: 10px 20px;
             font-size: 16px;
@@ -39,25 +39,31 @@
             border-radius: 5px;
             text-decoration: none;
             margin: 20px 0;
-        }
-        .footer {
+         }
+         .footer {
             margin-top: 30px;
             font-size: 14px;
             color: #95a5a6;
             text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="email-container">
-        <h1>Congratulations, Dr. {{name}}!</h1>
-        <p>We are pleased to inform you that your profile has been successfully verified as a doctor at <strong>AVM Ayurvedic</strong>.</p>
-        <a href="{{link}}" class="verification-badge">Access Your Dashboard</a>
-        <p>Thank you for joining our team. We are excited to work with you to provide excellent Ayurvedic care to our patients.</p>
-        <p>If you have any questions, feel free to reach out to our support team.</p>
-        <div class="footer">
-            <p>Best regards,<br><strong>AVM Ayurvedic Team</strong></p>
-        </div>
-    </div>
-</body>
+         }
+      </style>
+   </head>
+   <body>
+      <div class="email-container">
+         <h1>Congratulations, Dr. {{name}}!</h1>
+         <p>
+            We are pleased to inform you that your profile has been successfully verified as a doctor at
+            <strong>AVM Ayurvedic</strong>.
+         </p>
+         <a href="{{link}}" class="verification-badge">Access Your Dashboard</a>
+         <p>
+            Thank you for joining our team. We are excited to work with you to provide excellent Ayurvedic care to our
+            patients.
+         </p>
+         <p>If you have any questions, feel free to reach out to our support team.</p>
+         <div class="footer">
+            <p>Best regards,<br /><strong>AVM Ayurvedic Team</strong></p>
+         </div>
+      </div>
+   </body>
 </html>

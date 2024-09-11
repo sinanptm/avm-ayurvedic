@@ -154,7 +154,8 @@ const SignUpForm = () => {
                            onSuccess: () => {
                               toast({
                                  title: "Registration Successful ✅",
-                                 description: "You have successfully registered and your profile image has been uploaded.",
+                                 description:
+                                    "You have successfully registered and your profile image has been uploaded.",
                                  variant: "success",
                               });
                               router.push("/doctor");
@@ -312,7 +313,8 @@ const SignUpForm = () => {
                                  size="sm"
                                  className="h-auto p-1 hover:bg-secondary-foreground/10 rounded-full"
                                  onClick={() => remove(index)}
-                                 aria-label="Remove qualification">
+                                 aria-label="Remove qualification"
+                              >
                                  <X className="h-4 w-4" />
                               </Button>
                            </div>
@@ -322,7 +324,8 @@ const SignUpForm = () => {
                            variant="outline"
                            size="sm"
                            onClick={() => append("")}
-                           className="rounded-full">
+                           className="rounded-full"
+                        >
                            <PlusCircle className="h-4 w-4 mr-2" />
                            Add
                         </Button>

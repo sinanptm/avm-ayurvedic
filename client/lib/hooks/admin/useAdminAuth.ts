@@ -31,7 +31,7 @@ export const useResendOtpAdmin = () => {
 };
 
 export const useLogoutAdmin = () => {
-   return useMutation<MessageResponse, AxiosError<ErrorResponse>,null>({
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>, null>({
       mutationFn: logoutAdmin,
       onError: (error) => {
          console.log("Error in Logout Admin ", error);

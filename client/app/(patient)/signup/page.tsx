@@ -6,9 +6,7 @@ export const metadata: Metadata = {
 };
 
 const Register = () => {
-   return (
-      <SignUnFormSection />
-   );
+   return <SignUnFormSection />;
 };
 
 export default Register;

@@ -61,7 +61,8 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                      timeInputLabel="Time:"
                      dateFormat={dateFormat ?? "dd/MM/yyyy"}
                      wrapperClassName="date-picker"
-                     {...(isLimited ? { minDate: new Date() } : {})}>
+                     {...(isLimited ? { minDate: new Date() } : {})}
+                  >
                      <div className="text-red-700">{showDateText}</div>
                   </ReactDatePicker>
                </FormControl>

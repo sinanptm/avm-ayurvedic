@@ -9,11 +9,10 @@ import UpdateProfilePatient from "@/components/models/patient/UpdateProfilePatie
 type Props = {
    patientData: IPatient;
    isLoading: boolean;
-   refetch:any;
+   refetch: any;
 };
 
-
-export default function PersonalInformation({ patientData, isLoading,refetch }: Props) {
+export default function PersonalInformation({ patientData, isLoading, refetch }: Props) {
    const infoItems = [
       {
          icon: "/assets/icons/calendar.svg",
@@ -38,7 +37,8 @@ export default function PersonalInformation({ patientData, isLoading,refetch }: 
                size="sm"
                className="h-8 w-8 p-0"
                onClick={() => setIsOpen(!isOpen)}
-               aria-label="Edit personal information">
+               aria-label="Edit personal information"
+            >
                <Image alt="Edit" src={"/assets/icons/edit.svg"} width={23} height={23} className="h-6 w-6" />
             </Button>
          </CardHeader>

@@ -20,9 +20,9 @@ export default class DoctorRepository implements IDoctorRepository {
    async create(doctor: IDoctor): Promise<string> {
       return (await this.model.create(doctor))._id;
    }
-   async update(doctor: IDoctor): Promise<IDoctor|null> {
+   async update(doctor: IDoctor): Promise<IDoctor | null> {
       if (!isValidObjectId(doctor._id!)) throw new Error("Invalid Object Id");
-      return  await this.model.findByIdAndUpdate(doctor._id, doctor, { new: true });
+      return await this.model.findByIdAndUpdate(doctor._id, doctor, { new: true });
    }
    async findMany(offset: number, limit: number): Promise<PaginatedResult<IDoctor>> {
       const totalItems = await this.model.countDocuments();

@@ -1,10 +1,8 @@
-import React from 'react'
-import Universal from '@/components/skeletons/Universal'
+import React from "react";
+import Universal from "@/components/skeletons/Universal";
 
 const loading = () => {
-  return (
-    <Universal />
-  )
-}
+   return <Universal />;
+};
 
-export default loading
+export default loading;

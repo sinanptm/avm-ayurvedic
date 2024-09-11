@@ -26,8 +26,8 @@ const AdminSigninForm = () => {
    });
    const { mutate: signin, isPending } = useSignInDoctor();
    const { setCredentials } = useAuth();
-   const router = useRouter()
-   const [isForgetPasswordModelOpen, setForgetPasswordModelOpen] = useState(false)
+   const router = useRouter();
+   const [isForgetPasswordModelOpen, setForgetPasswordModelOpen] = useState(false);
 
    const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
       signin(values, {
@@ -35,10 +35,10 @@ const AdminSigninForm = () => {
             toast({
                title: "Signin Successful",
                description: "Please check you email for otp",
-               variant: "success"
+               variant: "success",
             });
             setCredentials("otpMailDoctor", values.email);
-            router.push('/doctor/otp-verification');
+            router.push("/doctor/otp-verification");
          },
          onError: (error) => {
             if (error.response?.data.message === "Not Verified") {
@@ -57,23 +57,23 @@ const AdminSigninForm = () => {
                form.setError("email", {
                   message: errorMessage,
                });
-
             }
          },
-      })
+      });
    };
 
    return (
       <>
          <Form {...form}>
-            <form
-               onSubmit={form.handleSubmit(onSubmit)}
-               className="space-y-6 flex-1"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
                <section className="mb-12 space-y-4">
                   <h1 className="header">Doctor Signin</h1>
-                  <p className="text-dark-700"> Don&apos;t  have an account?{" "}
-                     <Link href={'/doctor/signup'} className="text-sky-600">Signup</Link>
+                  <p className="text-dark-700">
+                     {" "}
+                     Don&apos;t have an account?{" "}
+                     <Link href={"/doctor/signup"} className="text-sky-600">
+                        Signup
+                     </Link>
                   </p>
                </section>
 
@@ -95,7 +95,8 @@ const AdminSigninForm = () => {
                />
                <p
                   className="text-dark-700 text-sm mt-2 cursor-pointer"
-                  onClick={() => setForgetPasswordModelOpen(!isForgetPasswordModelOpen)}>
+                  onClick={() => setForgetPasswordModelOpen(!isForgetPasswordModelOpen)}
+               >
                   Forget Password?
                </p>
 

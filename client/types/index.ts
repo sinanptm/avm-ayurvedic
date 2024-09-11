@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export type NavLinkType = {
    label: string;
    href: string;
-   icon?:string;
+   icon?: string;
 };
 
 export type AnimatedCardProps = {
@@ -39,10 +39,9 @@ export interface ErrorResponse {
    stack?: string;
 }
 
-export interface MessageResponse  {
+export interface MessageResponse {
    message: string;
-};
-
+}
 
 export interface PaginatedResult<T> {
    items: T[];
@@ -57,12 +56,12 @@ export interface IDoctor {
    _id?: string;
    name?: string;
    phone?: string;
-   password?:string;
+   password?: string;
    qualifications?: string[];
    isBlocked?: boolean;
    image?: string;
    email?: string;
    updatedAt?: string;
    createdAt?: string;
-   isVerified?:boolean;
+   isVerified?: boolean;
 }

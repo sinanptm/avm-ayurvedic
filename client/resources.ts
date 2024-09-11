@@ -7,7 +7,6 @@
 
 // ! Gradiant Generator
 
-
 // ! make sure to add caching in the server side responses
 
 // https://enhanced-button.vercel.app/ enhanced buttons
@@ -21,9 +20,7 @@
 
 // https://nextjs.org/docs/app/building-your-application/data-fetching/caching-and-revalidating/
 
-// !email service 
+// !email service
 // https://medium.com/@raghavendralacharya/sending-html-email-templates-with-images-using-node-js-and-nodemailer-719a1f1dc894
-
-
 
 // https://stackoverflow.com/questions/36272286/getting-access-denied-when-calling-the-putobject-operation-with-bucket-level-per

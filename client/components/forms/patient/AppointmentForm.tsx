@@ -46,7 +46,8 @@ const AppointmentForm = () => {
                control={form.control}
                name="appointmentType"
                label="Appointment Type"
-               placeholder="Select an Appointment">
+               placeholder="Select an Appointment"
+            >
                {AppointmentTypes.map((appointment, i) => (
                   <SelectItem key={appointment.type + i} value={appointment.type}>
                      <div className="flex cursor-pointer items-center gap-2">
@@ -111,7 +112,8 @@ const AppointmentForm = () => {
                control={form.control}
                name="payment"
                label="Payment Options"
-               placeholder="Available Options">
+               placeholder="Available Options"
+            >
                {PaymentOptions.map((appointment, i) => (
                   <SelectItem key={appointment + i} value={appointment}>
                      <div className="flex cursor-pointer items-center gap-2">

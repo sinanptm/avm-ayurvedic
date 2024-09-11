@@ -26,26 +26,16 @@ const SuccessPage = () => {
                   alt="Success"
                />
                <h2 className="header mb-6 max-w-[600px] text-center">
-                  Your{" "}
-                  <span className="text-green-500">Appointment request</span>{" "}
-                  has been successfully submitted!.
+                  Your <span className="text-green-500">Appointment request</span> has been successfully submitted!.
                </h2>
                <p>We will be in touch shortly to confirm.</p>
             </section>
             <section className="request-details">
                <p>Request Appointment details</p>
                <div className="flex  gap-3">
-                  <Image
-                     src={"/assets/icons/calendar.svg"}
-                     width={24}
-                     height={24}
-                     alt="Calendar"
-                  />
+                  <Image src={"/assets/icons/calendar.svg"} width={24} height={24} alt="Calendar" />
                   <p>
-                     Date:{" "}
-                     <span className="text-gray-300">
-                        October 12, 2022, 3:00 PM{" "}
-                     </span>
+                     Date: <span className="text-gray-300">October 12, 2022, 3:00 PM </span>
                   </p>
                </div>
             </section>

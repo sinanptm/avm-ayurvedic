@@ -6,7 +6,7 @@ import AuthSkelton from "@/components/skeletons/AuthPage";
 import { notFound } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/hooks/useAuth";
-import OAuth from './OAuth'
+import OAuth from "./OAuth";
 
 const SignUnFormSection = () => {
    const { patientToken } = useAuth();
@@ -15,9 +15,9 @@ const SignUnFormSection = () => {
    useEffect(() => {
       const timer = setTimeout(() => {
          setLoading(false);
-      }, 0); 
+      }, 0);
 
-      return () => clearTimeout(timer); 
+      return () => clearTimeout(timer);
    }, []);
 
    if (isLoading) {
@@ -42,7 +42,13 @@ const SignUnFormSection = () => {
                </div>
             </section>
 
-            <Image src={Banners.patient_signup} height={1000} width={1000} alt="patient" className="side-img max-w-[390px]" />
+            <Image
+               src={Banners.patient_signup}
+               height={1000}
+               width={1000}
+               alt="patient"
+               className="side-img max-w-[390px]"
+            />
          </div>
       );
    }

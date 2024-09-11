@@ -27,7 +27,7 @@ export default function GoogleSignInButton() {
                   toast({
                      title: "Authentication Completed ✅",
                      description: "Google Authentication Completed!. let's book your first appointment",
-                     variant: "success"
+                     variant: "success",
                   });
 
                   router.push("/");
@@ -53,7 +53,8 @@ export default function GoogleSignInButton() {
       <Button
          onClick={handleGoogleSignIn}
          variant="outline"
-         className="w-full mt-5 bg-white text-gray-900 hover:bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 py-2 px-4 rounded-lg shadow-md transition-colors duration-200 flex items-center justify-center">
+         className="w-full mt-5 bg-white text-gray-900 hover:bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 py-2 px-4 rounded-lg shadow-md transition-colors duration-200 flex items-center justify-center"
+      >
          <Image src="/assets/icons/social/google.svg" alt="Google logo" width={24} height={24} className="mr-2" />
          Sign in with Google
       </Button>

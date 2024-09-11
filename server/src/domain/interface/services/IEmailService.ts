@@ -1,7 +1,7 @@
 export type SendMailProps = {
    email: string;
    name: string;
-   subject:string;
+   subject: string;
    pathOfTemplate: string;
    otp?: number;
    link?: string;

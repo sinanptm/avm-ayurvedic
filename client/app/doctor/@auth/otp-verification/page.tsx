@@ -13,7 +13,7 @@ const OtpVerificationPage = () => {
    const [otp, setOtp] = useState("");
    const { otpMailDoctor, setMultipleCredentials } = useAuth();
    const { mutate: validate, isPending } = useValidateOtpDoctor();
-   const { mutate: resendOtp, isPending: isSending } = useResendOtpDoctor()
+   const { mutate: resendOtp, isPending: isSending } = useResendOtpDoctor();
    const router = useRouter();
 
    const handleVerify = async (e: FormEvent) => {
@@ -43,7 +43,6 @@ const OtpVerificationPage = () => {
       );
    };
 
-
    const handleResend = async () => {
       resendOtp(
          { email: otpMailDoctor },
@@ -61,7 +60,7 @@ const OtpVerificationPage = () => {
                   description: error.response?.data.message || "Unknown Error Occurred",
                   variant: "destructive",
                });
-            }
+            },
          }
       );
    };

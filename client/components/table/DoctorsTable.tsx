@@ -23,14 +23,14 @@ const columns = [
 
 export default function DoctorsPage() {
    const { data, isLoading, refetch } = useGetDoctorsAdmin(0, 10);
-   const [isModelOpen,setModelOpen ] =useState(false);
-   const [selectedDoctor,setSelectedDoctor] = useState({});
+   const [isModelOpen, setModelOpen] = useState(false);
+   const [selectedDoctor, setSelectedDoctor] = useState({});
    const doctors = data?.items || [];
 
-   const handleViewProfile = (doctor:IDoctor)=>{
+   const handleViewProfile = (doctor: IDoctor) => {
       setSelectedDoctor(doctor);
       setModelOpen(true);
-   }
+   };
 
    return (
       <main className="flex-1 space-y-4 p-4 md:p-6">
@@ -77,16 +77,19 @@ export default function DoctorsPage() {
                                     <TableCell className="font-medium">{doctor.name}</TableCell>
                                     <TableCell>{doctor.email}</TableCell>
                                     <TableCell>
-                                       <Badge variant={`${doctor.isVerified?"default":"destructive"}`}>
+                                       <Badge variant={`${doctor.isVerified ? "default" : "destructive"}`}>
                                           {doctor.isVerified ? "Verified" : "Not Verified"}
                                        </Badge>
                                     </TableCell>
                                     <TableCell>
-                                       <Badge variant={`${doctor.isBlocked?"destructive":"success"}`}>
+                                       <Badge variant={`${doctor.isBlocked ? "destructive" : "success"}`}>
                                           {doctor.isBlocked ? "Yes" : "No"}
                                        </Badge>
                                     </TableCell>
-                                    <TableCell className="text-right cursor-pointer" onClick={()=>handleViewProfile(doctor)}>
+                                    <TableCell
+                                       className="text-right cursor-pointer"
+                                       onClick={() => handleViewProfile(doctor)}
+                                    >
                                        <Button variant="ghost" size="sm">
                                           View Profile
                                        </Button>
@@ -103,7 +106,12 @@ export default function DoctorsPage() {
                         </TableBody>
                      </Table>
                   </CardContent>
-                  <AdminDoctorProfileModel  open={isModelOpen} setOpen={setModelOpen} doctor={selectedDoctor} refetch={refetch} />
+                  <AdminDoctorProfileModel
+                     open={isModelOpen}
+                     setOpen={setModelOpen}
+                     doctor={selectedDoctor}
+                     refetch={refetch}
+                  />
                </Card>
             )}
          </div>

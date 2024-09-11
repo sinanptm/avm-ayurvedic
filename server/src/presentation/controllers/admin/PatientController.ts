@@ -25,7 +25,7 @@ export default class AdminPatientController {
             return res.status(StatusCode.BadRequest).json({ message: "_id Is Required" });
          }
 
-         await this.adminPatientUseCase.blockUnblock(id,isBlocked)
+         await this.adminPatientUseCase.blockUnblock(id, isBlocked);
 
          res.status(StatusCode.Success).json({
             message: `Patient ${isBlocked ? "Unblocked" : "Blocked"} Successfully`,

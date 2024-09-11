@@ -39,12 +39,9 @@ const ForgotPasswordModal = ({ isOpen, setIsOpen }: Props) => {
          email: "",
       },
    });
-   const {
-      control,
-      handleSubmit,
-   } = form;
-   const { mutate: forgetPassword,isPending } = useForgetPassword();
-   const {setCredentials} = useAuth()
+   const { control, handleSubmit } = form;
+   const { mutate: forgetPassword, isPending } = useForgetPassword();
+   const { setCredentials } = useAuth();
    const onSubmit = async (data: FormValues) => {
       forgetPassword(
          { email: data.email },
@@ -55,19 +52,19 @@ const ForgotPasswordModal = ({ isOpen, setIsOpen }: Props) => {
                   description: "Please Check Your Email for further instructions",
                   variant: "success",
                });
-               setIsOpen(false)
-               setCredentials("resetMailPatient",data.email);
+               setIsOpen(false);
+               setCredentials("resetMailPatient", data.email);
                form.reset();
             },
-            onError:(error)=>{
-              if(error.status===404){
-                toast({
-                  title:"Invalid Email Address",
-                  description:"Please Verify Your Email Address",
-                  variant:"destructive"
-                });
-              }
-            }
+            onError: (error) => {
+               if (error.status === 404) {
+                  toast({
+                     title: "Invalid Email Address",
+                     description: "Please Verify Your Email Address",
+                     variant: "destructive",
+                  });
+               }
+            },
          }
       );
    };
@@ -98,7 +95,11 @@ const ForgotPasswordModal = ({ isOpen, setIsOpen }: Props) => {
                         </Button>
                      </AlertDialogCancel>
                      <AlertDialogAction asChild>
-                        <SubmitButton isLoading={isPending} variant="outline" className="bg-slate-500 bg-opacity-40 cursor-pointer">
+                        <SubmitButton
+                           isLoading={isPending}
+                           variant="outline"
+                           className="bg-slate-500 bg-opacity-40 cursor-pointer"
+                        >
                            Send Reset Instructions
                         </SubmitButton>
                      </AlertDialogAction>

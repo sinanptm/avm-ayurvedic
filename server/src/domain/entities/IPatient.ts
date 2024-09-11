@@ -10,9 +10,9 @@ export interface IPatient {
    isBlocked?: boolean;
    address?: string;
    token?: string;
-   createdAt?:string;
-   updatedAt?:string;
-   profile?:string;
-   gender?:"Male"|"Female"|"Other"
-   occupation?:string;
+   createdAt?: string;
+   updatedAt?: string;
+   profile?: string;
+   gender?: "Male" | "Female" | "Other";
+   occupation?: string;
 }

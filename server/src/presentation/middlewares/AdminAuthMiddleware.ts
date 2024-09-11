@@ -21,14 +21,14 @@ export default class AdminAuthMiddleware {
          }
          const { id, email } = this.tokenService.verifyAccessToken(token);
          if (!id || !email) {
-            logger.warn("Unauthorized: Invalid Access Token Attempt")
+            logger.warn("Unauthorized: Invalid Access Token Attempt");
             return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Invalid Access Token" });
          }
 
          req.admin = { email, id };
 
          next();
-      } catch (error:any) {
+      } catch (error: any) {
          if (error.message === "Token Expired") {
             return res.status(StatusCode.Unauthorized).json({ message: "Access token expired" });
          }

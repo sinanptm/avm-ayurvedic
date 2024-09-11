@@ -4,7 +4,7 @@ import { IPatient } from "../../domain/entities/IPatient";
 const patientSchema = new Schema<IPatient>(
    {
       name: { type: String, required: true },
-      email: { type: String, required: true, unique: true,  match: /.+\@.+\..+/ },
+      email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
       phone: { type: String },
       password: { type: String },
       bloodGroup: { type: String },

@@ -39,12 +39,9 @@ const ForgotPasswordModalDoctor = ({ isOpen, setIsOpen }: Props) => {
          email: "",
       },
    });
-   const {
-      control,
-      handleSubmit,
-   } = form;
+   const { control, handleSubmit } = form;
    const { mutate: forgetPassword, isPending } = useForgotPasswordDoctor();
-   const { setCredentials } = useAuth()
+   const { setCredentials } = useAuth();
    const onSubmit = async (data: FormValues) => {
       if (isOpen) {
          forgetPassword(
@@ -56,7 +53,7 @@ const ForgotPasswordModalDoctor = ({ isOpen, setIsOpen }: Props) => {
                      description: "Please Check Your Email for further instructions",
                      variant: "success",
                   });
-                  setIsOpen(false)
+                  setIsOpen(false);
                   setCredentials("resetMailDoctor", data.email);
                   form.reset();
                },
@@ -65,16 +62,16 @@ const ForgotPasswordModalDoctor = ({ isOpen, setIsOpen }: Props) => {
                      toast({
                         title: "Invalid Email Address",
                         description: "Please Verify Your Email Address",
-                        variant: "destructive"
+                        variant: "destructive",
                      });
                   } else {
                      toast({
                         title: "Action Failed",
                         description: error.response?.data.message || "Unknown Error Occurred",
-                        variant: "destructive"
+                        variant: "destructive",
                      });
                   }
-               }
+               },
             }
          );
       }
@@ -106,7 +103,11 @@ const ForgotPasswordModalDoctor = ({ isOpen, setIsOpen }: Props) => {
                         </Button>
                      </AlertDialogCancel>
                      <AlertDialogAction asChild>
-                        <SubmitButton isLoading={isPending} variant="outline" className="bg-slate-500 bg-opacity-40 cursor-pointer">
+                        <SubmitButton
+                           isLoading={isPending}
+                           variant="outline"
+                           className="bg-slate-500 bg-opacity-40 cursor-pointer"
+                        >
                            Send Reset Instructions
                         </SubmitButton>
                      </AlertDialogAction>

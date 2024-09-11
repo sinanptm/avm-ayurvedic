@@ -47,12 +47,12 @@ export const forgetPassword = async (email: string) => {
    return response.data;
 };
 
-export const updatePassword = async (email: string,newPassword: string) => {
-   const response = await axiosInstance.patch("/update-password", { email,  newPassword });
+export const updatePassword = async (email: string, newPassword: string) => {
+   const response = await axiosInstance.patch("/update-password", { email, newPassword });
    return response.data;
 };
 
-export const logoutPatient = async ()=>{
+export const logoutPatient = async () => {
    const response = await axiosInstance.post("/logout");
    return response.data;
-}
+};

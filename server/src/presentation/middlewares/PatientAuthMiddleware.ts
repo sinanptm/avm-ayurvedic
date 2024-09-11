@@ -5,7 +5,7 @@ import { CustomRequest, StatusCode } from "../../types";
 export default class PatientAuthMiddleware {
    constructor(private tokenService: ITokenService) {}
 
-   exec(req: CustomRequest, res: Response, next: NextFunction){
+   exec(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const authHeader = req.headers.authorization || req.headers.Authorization;
          const tokenString = Array.isArray(authHeader) ? authHeader[0] : authHeader;
@@ -34,5 +34,5 @@ export default class PatientAuthMiddleware {
          }
          return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Invalid Access token" });
       }
-   };
+   }
 }

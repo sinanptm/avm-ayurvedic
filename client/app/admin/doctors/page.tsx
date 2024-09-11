@@ -1,9 +1,9 @@
 import DoctorTable from "@/components/table/DoctorsTable";
 import { Metadata } from "next";
 
-export const metadata:Metadata = {
-  title:"Doctors"
-}
+export const metadata: Metadata = {
+   title: "Doctors",
+};
 
 const DoctorsPage = () => {
    return <DoctorTable />;

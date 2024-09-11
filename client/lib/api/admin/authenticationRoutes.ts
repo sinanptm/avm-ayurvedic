@@ -23,7 +23,7 @@ export const resendOptAdmin = async (email: string) => {
    return response.data;
 };
 
-export const logoutAdmin = async ()=>{
+export const logoutAdmin = async () => {
    const response = await axiosInstance.post("/logout");
    return response.data;
-}
+};

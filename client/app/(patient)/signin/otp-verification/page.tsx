@@ -75,7 +75,7 @@ const OtpVerificationPage = () => {
                   });
                   router.push("/");
                   setTimeout(() => {
-                     setMultipleCredentials({patientToken:accessToken,otpMail:''})
+                     setMultipleCredentials({ patientToken: accessToken, otpMail: "" });
                   }, 220);
                },
                onError: (error) => {
@@ -110,7 +110,13 @@ const OtpVerificationPage = () => {
                   />
                </div>
             </section>
-            <Image src={Banners.patient_otp} height={1000} width={1000} alt="patient" className="side-img max-w-[50%]" />
+            <Image
+               src={Banners.patient_otp}
+               height={1000}
+               width={1000}
+               alt="patient"
+               className="side-img max-w-[50%]"
+            />
          </div>
       );
    } else {

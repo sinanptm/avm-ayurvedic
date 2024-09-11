@@ -2,7 +2,7 @@ export default interface IDoctor {
    readonly _id?: string;
    name?: string;
    phone?: string;
-   password?:string;
+   password?: string;
    qualifications?: string[];
    role?: "admin" | "doctor";
    isBlocked?: boolean;
@@ -10,6 +10,6 @@ export default interface IDoctor {
    email?: string;
    updatedAt?: string;
    createdAt?: string;
-   token?:string;
-   isVerified?:boolean;
+   token?: string;
+   isVerified?: boolean;
 }

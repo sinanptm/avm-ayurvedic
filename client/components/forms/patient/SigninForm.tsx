@@ -90,7 +90,8 @@ const LoginForm = () => {
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             <p
                className="text-dark-700 text-sm mt-2 cursor-pointer"
-               onClick={() => setIsForgetPasswordOpen(!isForgetPasswordOpen)}>
+               onClick={() => setIsForgetPasswordOpen(!isForgetPasswordOpen)}
+            >
                Forget Password?
             </p>
 

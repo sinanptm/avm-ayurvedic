@@ -8,7 +8,8 @@ export default class AuthenticationController {
    async login(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, password } = req.body;
-         if (!email?.trim() || !password?.trim()) res.status(StatusCode.BadRequest).json({message:"Email and Password id Required"});
+         if (!email?.trim() || !password?.trim())
+            res.status(StatusCode.BadRequest).json({ message: "Email and Password id Required" });
 
          await this.authUseCase.login(email, password);
 
@@ -21,7 +22,7 @@ export default class AuthenticationController {
    async validateOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, otp } = req.body;
-         if (!email||!email.trim()) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
+         if (!email || !email.trim()) return res.status(StatusCode.BadRequest).json({ message: "Email is Required" });
          const { accessToken, refreshToken } = await this.authUseCase.validateOtp(email, otp);
 
          res.cookie(Cookie.Admin, refreshToken, {
@@ -55,7 +56,7 @@ export default class AuthenticationController {
          const { adminToken } = req.cookies;
          if (!adminToken) return res.status(StatusCode.Forbidden).json({ message: "Unauthenticated" });
          const { accessToken } = await this.authUseCase.refreshAccessToken(adminToken);
-         res.status(StatusCode.Success).json({accessToken});
+         res.status(StatusCode.Success).json({ accessToken });
       } catch (error) {
          next(error);
       }
