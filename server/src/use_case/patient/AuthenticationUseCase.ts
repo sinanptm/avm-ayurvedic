@@ -5,6 +5,7 @@ import IEmailService from "../../domain/interface/services/IEmailService";
 import { IPatient } from "../../domain/entities/IPatient";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { generateOTP } from "../../utils";
+import { UserRole } from "../../types";
 
 type TokensResponse = {
    accessToken: string;
@@ -66,7 +67,7 @@ export default class AuthenticationUseCase {
       if (patient.isBlocked) {
          throw new Error("Patient is Blocked");
       }
-      let accessToken = this.tokenService.createAccessToken(email, patient._id!);
+      let accessToken = this.tokenService.createAccessToken(email, patient._id!,  UserRole.Patient);
       let refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
 
       return { accessToken, refreshToken };
@@ -99,7 +100,7 @@ export default class AuthenticationUseCase {
       if (patient && patient?.isBlocked) throw new Error("Unauthorized");
 
       const refreshToken = this.tokenService.createRefreshToken(patient?.email!, patient?._id!);
-      const accessToken = this.tokenService.createAccessToken(patient?.email!, patient?._id!);
+      const accessToken = this.tokenService.createAccessToken(patient?.email!, patient?._id!, UserRole.Patient);
 
       patient!.token = refreshToken;
 
@@ -118,7 +119,7 @@ export default class AuthenticationUseCase {
 
       if (patient.isBlocked) throw new Error("Patient is Blocked");
 
-      const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!);
+      const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!,  UserRole.Patient);
 
       return { accessToken };
    }

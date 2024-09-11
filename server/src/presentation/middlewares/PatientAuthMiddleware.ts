@@ -1,9 +1,10 @@
 import { NextFunction, Response } from "express";
 import ITokenService from "../../domain/interface/services/ITokenService";
-import { CustomRequest, StatusCode } from "../../types";
+import { CustomRequest, StatusCode, UserRole } from "../../types";
+import logger from "../../utils/logger";
 
 export default class PatientAuthMiddleware {
-   constructor(private tokenService: ITokenService) {}
+   constructor(private tokenService: ITokenService) { }
 
    exec(req: CustomRequest, res: Response, next: NextFunction) {
       try {
@@ -22,11 +23,16 @@ export default class PatientAuthMiddleware {
             return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Access Token is missing" });
          }
 
-         const decodedToken = this.tokenService.verifyAccessToken(token);
-         req.patient = {
-            email: decodedToken.email,
-            id: decodedToken.id,
-         };
+         const { email, id, role } = this.tokenService.verifyAccessToken(token);
+         if (!id || !email || !role) {
+            logger.warn("Unauthorized: Invalid Access Token Attempt");
+            return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Invalid Access Token" });
+         }
+         if (role !== UserRole.Patient) {
+            return res.status(StatusCode.Forbidden).json({ message: "Forbidden: Access restricted to patients" });
+         }
+
+         req.patient = { email, id };
          next();
       } catch (error: any) {
          if (error.message === "Token Expired") {

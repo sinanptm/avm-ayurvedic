@@ -6,6 +6,7 @@ import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { generateOTP } from "../../utils";
+import { UserRole } from "../../types";
 
 export default class AuthenticationUseCase {
    constructor(
@@ -48,7 +49,7 @@ export default class AuthenticationUseCase {
       if (!doctor) throw new Error("Unauthorized");
 
       const refreshToken = this.tokenService.createRefreshToken(doctor?.email!, doctor?._id!);
-      const accessToken = this.tokenService.createAccessToken(doctor?.email!, doctor?._id!);
+      const accessToken = this.tokenService.createAccessToken(doctor?.email!, doctor?._id!, UserRole.Doctor);
 
       doctor!.token = refreshToken;
 
@@ -128,14 +129,13 @@ export default class AuthenticationUseCase {
    }
 
    async refresh(token: string): Promise<{ accessToken: string }> {
-      const { id } = this.tokenService.verifyAccessToken(token);
-
+      const { id } = this.tokenService.verifyRefreshToken(token);
       const doctor = await this.doctorRepository.findByID(id);
       if (!doctor) throw new Error("Unauthorized");
 
       if (doctor.isBlocked) throw new Error("Doctor is Blocked");
 
-      const accessToken = this.tokenService.createAccessToken(doctor.email!, doctor._id!);
+      const accessToken = this.tokenService.createAccessToken(doctor.email!, doctor._id!, UserRole.Doctor);
 
       return { accessToken };
    }

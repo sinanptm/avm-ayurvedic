@@ -4,6 +4,7 @@ import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { generateOTP } from "../../utils";
+import { UserRole } from "../../types";
 export default class AuthenticationUseCase {
    constructor(
       private adminRepository: IDoctorRepository,
@@ -41,7 +42,7 @@ export default class AuthenticationUseCase {
       const admin = await this.adminRepository.findByEmailWithCredentials(email);
       if (!admin) throw new Error("Not Found");
 
-      const accessToken = this.tokenService.createAccessToken(email, admin._id!);
+      const accessToken = this.tokenService.createAccessToken(email, admin._id!, UserRole.Admin);
       const refreshToken = this.tokenService.createRefreshToken(email, admin._id!);
 
       admin!.token = refreshToken;
@@ -77,7 +78,7 @@ export default class AuthenticationUseCase {
       if (!admin) {
          throw new Error("Unauthorized");
       }
-      const accessToken = this.tokenService.createAccessToken(admin.email!, admin._id!);
+      const accessToken = this.tokenService.createAccessToken(admin.email!, admin._id!, UserRole.Admin);
 
       return { accessToken };
    }
