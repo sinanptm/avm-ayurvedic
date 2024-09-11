@@ -46,3 +46,9 @@ export interface PaginatedResult<T> {
    hasNextPage: boolean;
    hasPreviousPage: boolean;
 }
+
+export enum UserRole {
+   Admin = 'admin',
+   Doctor = 'doctor',
+   Patient = 'patient',
+}

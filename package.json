@@ -4,7 +4,7 @@
    "private": true,
    "scripts": {
       "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
-       "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\""
+      "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\""
    },
    "devDependencies": {
       "concurrently": "^8.2.2"

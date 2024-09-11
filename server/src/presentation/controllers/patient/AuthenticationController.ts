@@ -1,6 +1,6 @@
 import AuthenticationUseCase from "../../../use_case/patient/AuthenticationUseCase";
 import { NextFunction, Request, Response } from "express";
-import { isValidatePassword, isValidEmail } from "../../validators/authValidators";
+import { isValidatePassword, isValidEmail } from "../../validators/entitieValidators";
 import { Cookie, StatusCode } from "../../../types";
 
 export default class AuthPatientController {

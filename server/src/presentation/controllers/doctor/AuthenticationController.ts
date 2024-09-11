@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import AuthenticationUseCase from "../../../use_case/doctor/AuthenticationUseCase";
 import { Cookie, StatusCode } from "../../../types";
 import IDoctor from "../../../domain/entities/IDoctor";
-import { isValidatePassword, isValidEmail } from "../../validators/authValidators";
+import { isValidatePassword, isValidEmail } from "../../validators/entitieValidators";
 
 export default class AuthDoctorController {
    constructor(private authDoctorUseCase: AuthenticationUseCase) {}

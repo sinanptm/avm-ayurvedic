@@ -1,6 +1,6 @@
 import ITokenService from "../../domain/interface/services/ITokenService";
 import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
-import logger from "../../utils/logger";
+import { UserRole } from "../../types/index";
 
 export default class JWTService implements ITokenService {
    private signToken(payload: object, secret: string, expiresIn: string): string {
@@ -26,12 +26,12 @@ export default class JWTService implements ITokenService {
       return { email: decoded.email, id: decoded.id };
    }
 
-   createAccessToken(email: string, id: string): string {
-      return this.signToken({ email, id }, process.env.ACCESS_TOKEN_SECRET!, "15m");
+   createAccessToken(email: string, id: string, role: UserRole): string {
+      return this.signToken({ email, id, role }, process.env.ACCESS_TOKEN_SECRET!, "15m");
    }
 
-   verifyAccessToken(token: string): { email: string; id: string } {
-      const decoded = this.verifyToken(token, process.env.ACCESS_TOKEN_SECRET!);
-      return { email: decoded.email, id: decoded.id };
+   verifyAccessToken(token: string): { email: string; id: string, role: UserRole } {
+      const { email, id, role } = this.verifyToken(token, process.env.ACCESS_TOKEN_SECRET!);
+      return { email, id, role  };
    }
 }
