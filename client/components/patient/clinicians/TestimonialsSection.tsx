@@ -8,7 +8,7 @@ export const TestimonialsSection = () => (
       <Card>
         <CardContent className="p-6">
           <p className="italic mb-4">
-            "The Ayurvedic treatments I received here have transformed my life. I feel more balanced and energized."
+            &quot;The Ayurvedic treatments I received here have transformed my life. I feel more balanced and energized.&quot;
           </p>
           <p className="font-semibold">- Sarah M.</p>
         </CardContent>
@@ -16,7 +16,7 @@ export const TestimonialsSection = () => (
       <Card>
         <CardContent className="p-6">
           <p className="italic mb-4">
-            "The doctors here are knowledgeable and compassionate. They understand your unique needs."
+            &quot;The doctors here are knowledgeable and compassionate. They understand your unique needs.&quot;
           </p>
           <p className="font-semibold">- John D.</p>
         </CardContent>
