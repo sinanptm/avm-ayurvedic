@@ -6,7 +6,7 @@ import { CTASection } from "@/components/patient/clinicians/CTASection";
 import DoctorPagination from "@/components/patient/clinicians/DoctorsSection";
 
 const Page = async () => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
   const response = await fetch(`${apiUrl}/doctors`, {
     next: { revalidate: 60 },
   });
