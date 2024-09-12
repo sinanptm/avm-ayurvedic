@@ -8,7 +8,8 @@ import getConfig from "next/config";
 
 const Page = async () => {
   const { publicRuntimeConfig } = getConfig();
-  const response = await fetch(`${publicRuntimeConfig.apiUrl}/doctors`, {
+  let api = publicRuntimeConfig.apiUrl || 'http://localhost:3000'
+  const response = await fetch(`${api}/doctors`, {
     next: { revalidate: 60 },
   });
   const data = await response.json();
