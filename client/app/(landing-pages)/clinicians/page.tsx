@@ -4,9 +4,11 @@ import { TestimonialsSection } from "@/components/patient/clinicians/Testimonial
 import { FAQSection } from "@/components/patient/clinicians/FAQSection";
 import { CTASection } from "@/components/patient/clinicians/CTASection";
 import DoctorPagination from "@/components/patient/clinicians/DoctorsSection";
+import getConfig from "next/config";
 
 const Page = async () => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/doctors`,{
+  const { publicRuntimeConfig } = getConfig();
+  const response = await fetch(`${publicRuntimeConfig.apiUrl}/doctors`, {
     next: { revalidate: 60 },
   });
   const data = await response.json();

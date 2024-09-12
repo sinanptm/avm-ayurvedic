@@ -1,7 +1,6 @@
 import { IDoctor } from "@/types";
 import axios from "axios";
 
-// Create an axios instance with base URL and default headers
 const axiosInstance = axios.create({
    baseURL: `${process.env.NEXT_PUBLIC_API_URL}/admin`,
    headers: {
