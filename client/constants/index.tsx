@@ -30,9 +30,9 @@ export const DoctorsSidebarLinks: NavLinkType[] = [
       icon: "/assets/icons/store.svg",
    },
    {
-      label: "Profile",
-      href: "/doctor/profile",
-      icon: "/assets/icons/user.svg",
+      label: "Slots",
+      href: "/doctor/slots",
+      icon: "/assets/icons/utils/slots.svg",
    },
 ];
 
@@ -205,26 +205,33 @@ export const AppointmentTypes = [
 ];
 
 export const PaymentOptions: string[] = ["online", "Op"];
-// ! from server
 export const AvailableTimes = [
-   "09:00",
-   "09:30",
-   "10:00",
-   "10:30",
-   "11:00",
-   "11:30",
-   "12:00",
-   "12:30",
-   "13:00",
-   "13:30",
-   "14:00",
-   "14:30",
-   "15:00",
-   "15:30",
-   "16:00",
-   "16:30",
-   "17:00",
+   "12:00 AM",
+   "01:00 AM",
+   "02:00 AM",
+   "03:00 AM",
+   "04:00 AM",
+   "05:00 AM",
+   "06:00 AM",
+   "07:00 AM",
+   "08:00 AM",
+   "09:00 AM",
+   "10:00 AM",
+   "11:00 AM",
+   "12:00 PM",
+   "01:00 PM",
+   "02:00 PM",
+   "03:00 PM",
+   "04:00 PM",
+   "05:00 PM",
+   "06:00 PM",
+   "07:00 PM",
+   "08:00 PM",
+   "09:00 PM",
+   "10:00 PM",
+   "11:00 PM"
 ];
+
 
 export const GenderOptions: string[] = ["Male", "Female", "Other"];
 export const BloodGroups: string[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
