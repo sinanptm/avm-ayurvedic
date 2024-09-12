@@ -1,4 +1,4 @@
-import PatientsTable from "@/components/table/PatientsTable";
+import PatientsTable from "@/components/view/table/PatientsTable";
 import { Metadata } from "next";
 import React from "react";
 

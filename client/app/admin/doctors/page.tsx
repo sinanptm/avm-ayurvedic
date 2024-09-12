@@ -1,4 +1,4 @@
-import DoctorTable from "@/components/table/DoctorsTable";
+import DoctorTable from "@/components/view/table/DoctorsTable";
 import { DoctorsFilter } from "@/types";
 import { Metadata } from "next";
 

@@ -2,7 +2,7 @@ import { Days } from '@/types';
 import React from 'react';
 
 type Props = {
-    day: Days;
+  day: Days;
 }
 
 const TabContent = ({ day }: Props) => {
@@ -22,3 +22,4 @@ const TabContent = ({ day }: Props) => {
 }
 
 export default TabContent;
+

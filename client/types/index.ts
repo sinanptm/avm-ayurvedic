@@ -72,15 +72,7 @@ export enum DoctorsFilter {
    VERIFIED = 'verified'
 }
 
-export type SlotStatus = "available" | "booked" | "pending" | "canceled";
-export type ISlot = {
-   _id?: string;
-   doctorId: string;
-   date: string;
-   startTime: string;
-   endTime: string;
-   status: SlotStatus;
-};
+export type SlotStatus = "available" | "booked";
 export enum Days {
    Monday = "Monday",
    Tuesday = "Tuesday",
@@ -90,3 +82,11 @@ export enum Days {
    Saturday = "Saturday",
    Sunday = "Sunday",
 }
+export type ISlot = {
+   _id?: string;
+   doctorId: string;
+   day: Days;
+   startTime: string;
+   endTime: string;
+   status: SlotStatus;
+};

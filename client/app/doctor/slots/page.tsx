@@ -1,4 +1,4 @@
-import TabSection from "@/components/doctor/slots/Tabs";
+import TabSection from "@/components/view/tab/DoctorSlotsTab";
 import { Metadata } from "next";
 
 export const metadata:Metadata ={

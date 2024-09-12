@@ -11,8 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useGetDoctorsAdmin } from "@/lib/hooks/admin/useAdminDoctor"
 import { getDefault } from "@/lib/utils"
 import TableSkeleton from "@/components/skeletons/TableSkelton"
-import AdminDoctorProfileModel from "../models/admin/DoctorProfileModel"
-import Pagination from "../navigation/Pagination"
+import AdminDoctorProfileModel from "../../models/admin/DoctorProfileModel"
+import Pagination from "../../navigation/Pagination"
 import { DoctorsFilter, IDoctor } from "@/types"
 
 const columns = [

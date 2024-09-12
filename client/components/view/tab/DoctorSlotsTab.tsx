@@ -1,6 +1,6 @@
 import { Days } from "@/types";
 import { Tabs } from "@/components/ui/tabs-v2";
-import TabContent from "./TabContent";
+import TabContent from "./DoctorSlotsTabContent";
 
 export default function TabSection() {
   const tabs = Object.values(Days).map((day) => ({
