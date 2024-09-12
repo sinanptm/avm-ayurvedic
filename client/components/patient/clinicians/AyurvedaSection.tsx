@@ -7,7 +7,7 @@ export const AyurvedaSection = () => (
     <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">The Healing Power of Ayurveda</h2>
     <div className="space-y-6 text-base md:text-lg">
       <p>
-        Ayurveda, one of the world's oldest holistic healing systems, originated in India over 5,000 years ago.
+        Ayurveda, one of the world&apos;s oldest holistic healing systems, originated in India over 5,000 years ago.
         It emphasizes the balance of the mind, body, and spirit to achieve optimal health. According to Ayurvedic teachings,
         true wellness is achieved by harmonizing your unique physical, mental, and emotional constitution, known as your dosha.
       </p>
@@ -17,7 +17,7 @@ export const AyurvedaSection = () => (
         that address your individual imbalances and promote overall well-being.
       </p>
       <p>
-        Whether you're seeking relief from chronic illness, looking to enhance your energy and vitality, or simply striving for better
+        Whether you&apos;re seeking relief from chronic illness, looking to enhance your energy and vitality, or simply striving for better
         mental clarity, Ayurveda offers a holistic pathway to health. Our skilled practitioners will guide you in discovering the
         treatments that align with your body's unique needs.
       </p>

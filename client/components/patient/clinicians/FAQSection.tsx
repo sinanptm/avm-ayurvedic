@@ -8,7 +8,7 @@ export const FAQSection = () => (
       <AccordionItem value="item-1">
         <AccordionTrigger className="text-lg">What is Ayurveda?</AccordionTrigger>
         <AccordionContent className="text-base">
-          Ayurveda is a holistic healing system that originated in India over 5,000 years ago. It focuses on balancing the mind, body, and spirit to promote overall health and prevent illness. Ayurveda emphasizes personalized treatments based on an individual's unique constitution or dosha.
+          Ayurveda is a holistic healing system that originated in India over 5,000 years ago. It focuses on balancing the mind, body, and spirit to promote overall health and prevent illness. Ayurveda emphasizes personalized treatments based on an individual&apos;s unique constitution or dosha.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
@@ -20,7 +20,7 @@ export const FAQSection = () => (
       <AccordionItem value="item-3">
         <AccordionTrigger className="text-lg">Are Ayurvedic treatments safe?</AccordionTrigger>
         <AccordionContent className="text-base">
-          Ayurvedic treatments are generally safe when administered by qualified practitioners. However, it's important to consult with a certified Ayurvedic doctor and inform them of any existing health conditions or medications you're taking. As with any medical treatment, there can be potential interactions or side effects, which is why personalized care and professional guidance are crucial.
+          Ayurvedic treatments are generally safe when administered by qualified practitioners. However, it&apos;s important to consult with a certified Ayurvedic doctor and inform them of any existing health conditions or medications you&apos;re taking. As with any medical treatment, there can be potential interactions or side effects, which is why personalized care and professional guidance are crucial.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-4">
