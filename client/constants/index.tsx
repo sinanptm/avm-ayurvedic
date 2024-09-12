@@ -104,6 +104,15 @@ export const SliderImages: string[] = [
    // "https://images.unsplash.com/photo-1482189349482-3defd547e0e9?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
+export const DummyDoctors = [
+   { "_id": "66e18ca5f2448c308b75a861", "email": "muhammeds@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e18ca5f2448c308b75a861-1726057637911", "isBlocked": false, "name": "Dr Muhammed", "phone": "+918082327749", "role": "doctor", "qualifications": ["BAMS", "MBBS"], "isVerified": true, "createdAt": "2024-09-11T12:27:17.898Z", "updatedAt": "2024-09-11T17:39:20.906Z", "__v": 0 },
+   { "_id": "66e1cace6d9f4811ad6f6767", "email": "drshafeeq@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1cace6d9f4811ad6f6767-1726073550611", "isBlocked": false, "name": "Dr Ganesh", "phone": "+918909049", "role": "doctor", "qualifications": ["Mbbs"], "isVerified": true, "createdAt": "2024-09-11T16:52:30.548Z", "updatedAt": "2024-09-11T17:39:28.121Z", "__v": 0 },
+   { "_id": "66e1d4144dd4bfd500a9481f", "email": "Jasmin9@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1d4144dd4bfd500a9481f-1726075924461", "isBlocked": false, "name": "Jasmin", "phone": "+918089507749", "role": "doctor", "qualifications": ["BAMS", "MBBS"], "isVerified": true, "createdAt": "2024-09-11T17:32:04.440Z", "updatedAt": "2024-09-12T05:50:04.033Z", "__v": 0 },
+   { "_id": "66e28058798c79efcba79690", "email": "drJasmin@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e28058798c79efcba79690-1726120024184", "isBlocked": false, "name": "Dr Jasmin", "phone": "+918239109212", "role": "doctor", "qualifications": ["MBBS ", "BAMS"], "isVerified": true, "createdAt": "2024-09-12T05:47:04.157Z", "updatedAt": "2024-09-12T05:50:14.687Z", "__v": 0 }
+]
+
+
+
 export const FeaturesCardsHomePage: AnimatedCardProps[] = [
    {
       heading: "Instant Appointments",

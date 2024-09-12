@@ -4,13 +4,16 @@ import { TestimonialsSection } from "@/components/patient/clinicians/Testimonial
 import { FAQSection } from "@/components/patient/clinicians/FAQSection";
 import { CTASection } from "@/components/patient/clinicians/CTASection";
 import DoctorPagination from "@/components/patient/clinicians/DoctorsSection";
+import { DummyDoctors } from "@/constants";
 
 const Page = async () => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-  const response = await fetch(`${apiUrl}/doctors`, {
-    next: { revalidate: 60 },
-  });
-  const data = await response.json();
+  // const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  // const response = await fetch(`${apiUrl}/doctors`, {
+  //   next: { revalidate: 60 },
+  // });
+  // const data = await response.json();
+  // console.log(JSON.stringify(data.items));
+  
   
 
   return (
@@ -21,7 +24,7 @@ const Page = async () => {
           Discover our team of skilled Ayurvedic doctors dedicated to your holistic well-being.
           We combine ancient wisdom with modern care for personalized healing.
         </p>
-        <DoctorPagination initialData={data} />
+        <DoctorPagination initialData={DummyDoctors} />
         <AyurvedaSection />
         <TestimonialsSection />
         <FAQSection />
