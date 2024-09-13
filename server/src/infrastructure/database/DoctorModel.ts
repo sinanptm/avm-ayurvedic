@@ -16,6 +16,8 @@ const doctorSchema = new Schema<IDoctor>(
    },
    {
       timestamps: true,
+    versionKey: false, 
+
    }
 );
 doctorSchema.index({ email: 1 });

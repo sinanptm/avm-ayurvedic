@@ -74,13 +74,13 @@ export enum DoctorsFilter {
 
 export type SlotStatus = "available" | "booked";
 export enum Days {
-   Monday = "Monday",
-   Tuesday = "Tuesday",
-   Wednesday = "Wednesday",
-   Thursday = "Thursday",
-   Friday = "Friday",
-   Saturday = "Saturday",
-   Sunday = "Sunday",
+   Monday = "monday",
+   Tuesday = "tuesday",
+   Wednesday = "wednesday",
+   Thursday = "thursday",
+   Friday = "friday",
+   Saturday = "saturday",
+   Sunday = "sunday",
 }
 export type ISlot = {
    _id?: string;

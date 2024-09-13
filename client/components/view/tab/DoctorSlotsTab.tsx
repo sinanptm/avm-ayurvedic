@@ -21,8 +21,8 @@ export default function TabSection() {
   };
 
   const tabs = Object.values(Days).map((day) => ({
-    title: day,
-    value: day,
+    title: day.toUpperCase(),
+    value: day.toUpperCase(),
     content: (
       <div>
         <TabContent day={day} />

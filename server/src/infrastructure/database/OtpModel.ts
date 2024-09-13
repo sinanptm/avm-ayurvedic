@@ -8,6 +8,8 @@ const otpSchema = new Schema<IOtp>(
    },
    {
       timestamps: true,
+    versionKey: false, 
+
    }
 );
 
