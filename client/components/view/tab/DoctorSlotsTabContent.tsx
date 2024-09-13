@@ -1,8 +1,9 @@
 'use client'
 import { Button } from '@/components/ui/button';
+import { useAddSlotsDoctor, useGetAllSlotsDoctor, useGetSlotsByDayDoctor } from '@/lib/hooks/slots/useSlot';
 import { Days } from '@/types';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   day: Days;
@@ -15,10 +16,21 @@ export const AvailableTimes = {
 };
 
 const TabContent = ({ day }: Props) => {
+  const { data: slots, isLoading, refetch } = useGetSlotsByDayDoctor(day);
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
+  const { mutate: addSlots, isPending } = useAddSlotsDoctor()
+
+  useEffect(() => {
+    if (!isLoading && slots) {
+      setSelectedSlots(slots.map(el => el.startTime || ""));
+    }
+  }, [slots])
 
   const handleAddSlot = (slot: string) => {
-    setSelectedSlots(prev => [...prev, slot]);
+    addSlots({ slots: [{ startTime: slot }], day });
+    setTimeout(()=>{
+      refetch()
+    })
   };
 
   const handleRemoveSlot = (slot: string) => {
@@ -44,46 +56,54 @@ const TabContent = ({ day }: Props) => {
             className="w-full flex items-center justify-between py-1 px-2 text-[8px] xxs:text-[10px] xs:text-xs sm:text-sm h-auto min-h-[24px] xxs:min-h-[28px] xs:min-h-[32px]"
             onClick={() => selectedSlots.includes(time) ? handleRemoveSlot(time) : handleAddSlot(time)}
           >
-            <span className="mr-1">{time}</span>
-            <Image
-              src={selectedSlots.includes(time) ? '/assets/icons/close.svg' : '/assets/icons/circle-plus.svg'}
-              alt={selectedSlots.includes(time) ? "Remove slot" : "Add slot"}
-              height={12}
-              width={12}
-              className="w-3 h-3"
-            />
-          </Button>
-        ))}
-      </div>
-    </div>
+            {isPending?(
+               <Image src="/assets/icons/loader.svg" alt="loader" width={27} height={27} />
+            ):(
+              <>
+              <span className="mr-1">{time}</span>
+              <Image
+                src={selectedSlots.includes(time) ? '/assets/icons/close.svg' : '/assets/icons/circle-plus.svg'}
+                alt={selectedSlots.includes(time) ? "Remove slot" : "Add slot"}
+                height={12}
+                width={12}
+                className="w-3 h-3"
+                />
+                </>
+
+            )}
+    </Button>
+  ))
+}
+      </div >
+    </div >
   );
 
-  return (
-    <div className="p-2 sm:p-4 bg-dark-200 rounded-lg shadow-md">
-      <h1 className="text-lg sm:text-xl font-medium mb-4 text-white">Slots for <span className='font-semibold'>{day.toUpperCase()}</span></h1>
-      <div className="space-y-4">
-        {renderTimeSlots(AvailableTimes.Morning, "Morning Slots")}
-        {renderTimeSlots(AvailableTimes.Afternoon, "Afternoon Slots")}
-        {renderTimeSlots(AvailableTimes.Evening, "Evening Slots")}
-        <div className="flex justify-between items-center mt-4">
-          <Button
-            variant="destructive"
-            onClick={handleClearAll}
-            className="text-[10px] xs:text-xs sm:text-sm px-2 py-1 h-auto"
-          >
-            Clear
-          </Button>
-          <Button
-            variant="success"
-            onClick={() => handleAddAll(Object.values(AvailableTimes).flat())}
-            className="text-[10px] xs:text-xs sm:text-sm px-2 py-1 h-auto"
-          >
-            Add all
-          </Button>
-        </div>
+return (
+  <div className="p-2 sm:p-4 bg-dark-200 rounded-lg shadow-md">
+    <h1 className="text-lg sm:text-xl font-medium mb-4 text-white">Slots for <span className='font-semibold'>{day.toUpperCase()}</span></h1>
+    <div className="space-y-4">
+      {renderTimeSlots(AvailableTimes.Morning, "Morning Slots")}
+      {renderTimeSlots(AvailableTimes.Afternoon, "Afternoon Slots")}
+      {renderTimeSlots(AvailableTimes.Evening, "Evening Slots")}
+      <div className="flex justify-between items-center mt-4">
+        <Button
+          variant="destructive"
+          onClick={handleClearAll}
+          className="text-[10px] xs:text-xs sm:text-sm px-2 py-1 h-auto"
+        >
+          Clear
+        </Button>
+        <Button
+          variant="success"
+          onClick={() => handleAddAll(Object.values(AvailableTimes).flat())}
+          className="text-[10px] xs:text-xs sm:text-sm px-2 py-1 h-auto"
+        >
+          Add all
+        </Button>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default TabContent;
