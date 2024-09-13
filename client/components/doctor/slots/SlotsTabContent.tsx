@@ -31,17 +31,17 @@ const TabContent = ({ day }: Props) => {
     }
   }, [slots, isLoading]);
 
-  const handleAddSlot = (slot: string, category: string) => {
+  const handleAddSlot = (slot: string) => {
     addSlots({ slots: [{ startTime: slot }], day });
     setTimeout(() => refetch(), 500);
   };
 
-  const handleRemoveSlot = (slot: string, category: string) => {
+  const handleRemoveSlot = (slot: string) => {
     deleteSlots({ slots: [{ startTime: slot }], day });
     setTimeout(() => refetch(), 500);
   };
 
-  const handleAddAll = (times: string[], category: string) => {
+  const handleAddAll = (times: string[]) => {
     if (!slots || slots.length === 0) return;
   
     const addAllSlots = times.filter(time => !slots.some(slot => slot.startTime === time));
@@ -52,7 +52,7 @@ const TabContent = ({ day }: Props) => {
     }
   };
   
-  const handleClearAll = (times: string[], category: string) => {
+  const handleClearAll = (times: string[]) => {
     if (!slots || slots.length === 0) return;
   
     const clearAllSlots = times.filter(time => slots.some(slot => slot.startTime === time));
@@ -74,10 +74,10 @@ const TabContent = ({ day }: Props) => {
           selectedMorningSlots,
           isPending,
           isDeleting,
-          (slot) => handleAddSlot(slot, "Morning"),
-          (slot) => handleRemoveSlot(slot, "Morning"),
-          () => handleAddAll(AvailableTimes.Morning, "Morning"),
-          () => handleClearAll(AvailableTimes.Morning, "Morning")
+          (slot) => handleAddSlot(slot),
+          (slot) => handleRemoveSlot(slot),
+          () => handleAddAll(AvailableTimes.Morning),
+          () => handleClearAll(AvailableTimes.Morning)
         )}
         {RenderTimeSlots(
           AvailableTimes.Afternoon,
@@ -85,10 +85,10 @@ const TabContent = ({ day }: Props) => {
           selectedAfternoonSlots,
           isPending,
           isDeleting,
-          (slot) => handleAddSlot(slot, "Afternoon"),
-          (slot) => handleRemoveSlot(slot, "Afternoon"),
-          () => handleAddAll(AvailableTimes.Afternoon, "Afternoon"),
-          () => handleClearAll(AvailableTimes.Afternoon, "Afternoon")
+          (slot) => handleAddSlot(slot),
+          (slot) => handleRemoveSlot(slot),
+          () => handleAddAll(AvailableTimes.Afternoon),
+          () => handleClearAll(AvailableTimes.Afternoon)
         )}
         {RenderTimeSlots(
           AvailableTimes.Evening,
@@ -96,10 +96,10 @@ const TabContent = ({ day }: Props) => {
           selectedEveningSlots,
           isPending,
           isDeleting,
-          (slot) => handleAddSlot(slot, "Evening"),
-          (slot) => handleRemoveSlot(slot, "Evening"),
-          () => handleAddAll(AvailableTimes.Evening, "Evening"),
-          () => handleClearAll(AvailableTimes.Evening, "Evening")
+          (slot) => handleAddSlot(slot),
+          (slot) => handleRemoveSlot(slot),
+          () => handleAddAll(AvailableTimes.Evening),
+          () => handleClearAll(AvailableTimes.Evening)
         )}
       </div>
     </div>

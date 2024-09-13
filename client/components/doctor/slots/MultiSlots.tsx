@@ -2,7 +2,7 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useAddSlotsDoctor } from "@/lib/hooks/slots/useSlot";
-import { AvailableTimes } from "../view/tab/doctor/DoctorSlotsTabContent";
+import { AvailableTimes } from "./SlotsTabContent";
 
 const availableTimeOptions = Object.values(AvailableTimes).flat().map(time => ({ label: time, value: time }));
 
