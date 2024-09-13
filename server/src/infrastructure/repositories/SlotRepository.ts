@@ -10,8 +10,12 @@ export default class SlotRepository implements ISlotRepository {
         await this.model.create(slot);
     }
 
+    async createMany(slots:ISlot[]):Promise<void>{
+        await this.model.create(slots);
+    }
+
     async update(slot: ISlot): Promise<void> {
-        await this.model.findByIdAndUpdate(slot._id, slot, { new: true });
+        await this.model.findByIdAndUpdate(slot._id, slot, { upsert: true });
     }
 
     async deleteManyByTime({ doctorId, startTime, status }: ISlot): Promise<void> {
