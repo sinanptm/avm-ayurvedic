@@ -11,7 +11,7 @@ export enum Days {
  }
 export type SlotStatus = "available" | "booked";
 
-export interface ISlot {
+export default interface ISlot {
     _id?: string;
     doctorId: string | Types.ObjectId;
     day: Days;

@@ -1,4 +1,4 @@
-import { DoctorsFilter, PaginatedResult } from "../../../types";
+import { PaginatedResult } from "../../../types";
 import IDoctor from "../../entities/IDoctor";
 
 export default interface IDoctorRepository {

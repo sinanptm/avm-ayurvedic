@@ -1,10 +1,10 @@
 import { model, Schema } from "mongoose";
-import { Days, ISlot } from "../../domain/entities/ISlot";
+import ISlot, { Days } from "../../domain/entities/ISlot";
 
 const slotSchema = new Schema<ISlot>(
     {
         doctorId: {
-            type:  Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Doctor',
             required: true,
             index: true
