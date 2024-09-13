@@ -13,50 +13,50 @@ export default class DoctorController {
     //     try {
     //         const doctorId = req.doctor?.id;
     //         const slot = req.body;
-    
+
     //         if (!slot.day || !Object.values(Days).includes(slot.day)) {
     //             return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing day for slot: ${JSON.stringify(slot)}` });
     //         }
-    
+
     //         if (!slot.startTime || !this.timeFormat.test(slot.startTime)) {
     //             return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime for slot: ${JSON.stringify(slot)}` });
     //         }
-    
+
     //         await this.slotUseCase.create(slot, doctorId!);
     //         return res.status(StatusCode.Created).json({ message: "Slot created successfully" });
-    
+
     //     } catch (error) {
     //         next(error);
     //     }
     // }
-    
+
     async createSlotsForDay(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
             const { slots, day } = req.body;
-    
+
             if (!slots || !Array.isArray(slots) || slots.length === 0) {
                 return res.status(StatusCode.BadRequest).json({ message: 'Slots data is required and should be a non-empty array.' });
             }
-    
+
             if (!Object.values(Days).includes(day)) {
                 return res.status(StatusCode.BadRequest).json({ message: 'Invalid or missing day.' });
             }
-    
+
             for (let slot of slots) {
                 if (!slot.startTime || !this.timeFormat.test(slot.startTime)) {
                     return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime for slot: ${JSON.stringify(slot)}` });
                 }
             }
             await this.slotUseCase.createSlotsForDay(doctorId!, slots, day);
-            return res.status(StatusCode.Created).json({ message: 'Slots created successfully.' });
-    
+            res.status(StatusCode.Created).json({ message: 'Slots created successfully.' });
+
         } catch (error) {
             next(error);
         }
     }
 
-    async update(req: CustomRequest, res: Response, next: NextFunction): Promise<void> {
+    async update(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const slot = req.body;
             await this.slotUseCase.update(slot);
@@ -66,22 +66,33 @@ export default class DoctorController {
         }
     }
 
-    async getAllSlots(req: CustomRequest, res: Response, next: NextFunction): Promise<void> {
+    async getAllDoctorSlots(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const doctorId = req.params.doctorId;
-            const slots = await this.slotUseCase.getAllSlots(doctorId);
-            res.status(200).json(slots);
+            const doctorId = req.doctor?.id;
+            const date = req.query.date as string;
+            let slots;
+            if (date) {
+                slots = await this.slotUseCase.getSlotsByDay(doctorId!, date)
+            } else {
+                slots = await this.slotUseCase.getAllSlots(doctorId!);
+            }
+            res.status(StatusCode.Success).json(slots);
         } catch (error) {
             next(error);
         }
     }
 
-    async getSlotsByDay(req: CustomRequest, res: Response, next: NextFunction): Promise<void> {
+    async getAllSlotsByDoctorId(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.params.doctorId;
             const date = req.query.date as string;
-            const slots = await this.slotUseCase.getSlotsByDay(doctorId, date);
-            res.status(200).json(slots);
+            let slots;
+            if (date) {
+                slots = await this.slotUseCase.getSlotsByDay(doctorId, date)
+            } else {
+                slots = await this.slotUseCase.getAllSlots(doctorId!);
+            }
+            res.status(StatusCode.Success).json(slots);
         } catch (error) {
             next(error);
         }
