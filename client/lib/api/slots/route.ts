@@ -72,10 +72,16 @@ export const addSlotsDoctor = async (slots: ISlot[], day: Days) => {
     return response.data;
 };
 
-export const updateSlotsDoctor = async (slot: ISlot) => {
-    const response = await axiosInstance.put('/', { slot });
-    return response.data;
-};
+
+export const deleteManyByDayDoctor = async (slots:ISlot[],day:Days)=>{
+    const response = await axiosInstance.delete('/',{data:{
+        slots,
+        day
+    }});
+    return response.data
+}
+
+
 
 export const getSlotsByDayDoctor = async (day: Days) => {
     const response = await axiosInstance.get(`/doctor?day=${day}`);
