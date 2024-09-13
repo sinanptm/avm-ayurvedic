@@ -44,7 +44,11 @@ export default class SlotUseCase {
         return await this.slotRepository.findMany(doctorId);
     }
 
-    async getSlotsByDay(doctorId: string, date: string): Promise<ISlot[] | null> {
+    async getSlotsByDay(doctorId: string, day: Days): Promise<ISlot[] | null> {
+        return await this.slotRepository.findManyByDay(doctorId, day);
+    }
+
+    async getSlotsByDate(doctorId: string, date: string): Promise<ISlot[] | null> {
         const day = this.getDayFromDate(date);
         return await this.slotRepository.findManyByDay(doctorId, day);
     }

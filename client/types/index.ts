@@ -82,11 +82,11 @@ export enum Days {
    Saturday = "saturday",
    Sunday = "sunday",
 }
-export type ISlot = {
+export interface ISlot {
    _id?: string;
-   doctorId: string;
-   day: Days;
-   startTime: string;
-   endTime: string;
-   status: SlotStatus;
+   doctorId?: string;
+   day?: Days;
+   startTime?: string;
+   endTime?: string;
+   status?: SlotStatus;
 };

@@ -69,10 +69,10 @@ export default class DoctorController {
     async getAllDoctorSlots(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
-            const date = req.query.date as string;
+            const day = req.query.day as Days;
             let slots;
-            if (date) {
-                slots = await this.slotUseCase.getSlotsByDay(doctorId!, date)
+            if (Object.values(Days).includes(day)) {
+                slots = await this.slotUseCase.getSlotsByDay(doctorId!, day)
             } else {
                 slots = await this.slotUseCase.getAllSlots(doctorId!);
             }
@@ -86,9 +86,10 @@ export default class DoctorController {
         try {
             const doctorId = req.params.doctorId;
             const date = req.query.date as string;
+            
             let slots;
             if (date) {
-                slots = await this.slotUseCase.getSlotsByDay(doctorId, date)
+                slots = await this.slotUseCase.getSlotsByDate(doctorId, date)
             } else {
                 slots = await this.slotUseCase.getAllSlots(doctorId!);
             }
