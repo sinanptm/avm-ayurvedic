@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ISlot, Days, ErrorResponse, MessageResponse } from "@/types";
-import { addSlotsDoctor, getSlotsByDayDoctor, getAllSlotsDoctor, deleteManyByDayDoctor } from "@/lib/api/slots/route";
+import { addSlotsDoctor, getSlotsByDayDoctor, getAllSlotsDoctor, deleteManyByDayDoctor, addSlotsAllDayDoctor, deleteSlotsAllDayDoctor } from "@/lib/api/slots/route";
 
 export const useAddSlotsDoctor = () => {
    return useMutation<MessageResponse, AxiosError<ErrorResponse>, { slots: ISlot[], day: Days }>({
@@ -19,6 +19,18 @@ export const useDeleteDoctorByDay = ()=>{
          console.log("Error Deleting Slot: ", error);
       },
    });
+}
+
+export const useAddSlotsAllDaysDoctor = ()=>{
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>,{startTimes:string[]}>({
+      mutationFn:({startTimes})=>addSlotsAllDayDoctor(startTimes)
+   })
+}
+
+export const useDeleteSlotsAllDaysDoctor = ()=>{
+   return useMutation<MessageResponse, AxiosError<ErrorResponse>,{startTimes:string[]}>({
+      mutationFn:({startTimes})=>deleteSlotsAllDayDoctor(startTimes)
+   })
 }
 
 

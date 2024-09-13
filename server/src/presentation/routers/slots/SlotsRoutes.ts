@@ -15,9 +15,9 @@ const slotUseCase = new SlotUseCase(slotRepository);
 const slotController = new SlotController(slotUseCase);
 
 router.post('/day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createManyByDay.bind(slotController));
-router.post('/all-day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createForAllDays.bind(slotController));
+router.post('/all-days', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createForAllDays.bind(slotController));
 router.delete('/day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.deleteManyByDay.bind(slotController));
-router.delete('/all-day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.deleteForAllDays.bind(slotController));
+router.delete('/all-days', authorizeDoctor.exec.bind(authorizeDoctor), slotController.deleteForAllDays.bind(slotController));
 router.get('/doctor', authorizeDoctor.exec.bind(authorizeDoctor), slotController.getAllDoctorSlots.bind(slotController));
 router.get('/:doctorId', slotController.getAllSlotsByDoctorId.bind(slotController));
 

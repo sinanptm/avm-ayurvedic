@@ -73,12 +73,28 @@ export const addSlotsDoctor = async (slots: ISlot[], day: Days) => {
 };
 
 
-export const deleteManyByDayDoctor = async (slots:ISlot[],day:Days)=>{
-    const response = await axiosInstance.delete('/day',{data:{
-        slots,
-        day
-    }});
+export const deleteManyByDayDoctor = async (slots: ISlot[], day: Days) => {
+    const response = await axiosInstance.delete('/day', {
+        data: {
+            slots,
+            day
+        }
+    });
     return response.data
+}
+
+export const addSlotsAllDayDoctor = async (startTimes: string[]) => {
+    const response = await axiosInstance.post('/all-days', { startTimes })
+    return response.data;
+}
+
+export const deleteSlotsAllDayDoctor = async (startTimes: string[]) => {
+    const response = await axiosInstance.delete('/all-days', {
+        data: {
+            startTimes
+        }
+    })
+    return response.data;
 }
 
 
