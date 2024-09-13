@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { PlusCircle, X, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export const RenderTimeSlots = (
   times: string[],
@@ -26,24 +26,18 @@ export const RenderTimeSlots = (
             "w-full flex items-center justify-between py-2 px-3 text-xs sm:text-sm h-auto",
             "transition-all duration-200 ease-in-out",
             "hover:scale-105",
-            selectedSlots.includes(time) 
-              ? "bg-red-600  text-white" 
+            selectedSlots.includes(time)
+              ? "bg-red-600  text-white"
               : "bg-gray-700 text-gray-200"
           )}
           onClick={() => selectedSlots.includes(time) ? onRemoveSlot(time) : onAddSlot(time)}
           disabled={isPending || isDeleting}
         >
-          {isPending || isDeleting ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+          <span>{time}</span>
+          {selectedSlots.includes(time) ? (
+            <Image src={'/assets/icons/close.svg'} className="h-4 w-4 ml-2" alt="Close" width={23} height={23} />
           ) : (
-            <>
-              <span>{time}</span>
-              {selectedSlots.includes(time) ? (
-                <X className="h-4 w-4 ml-2" />
-              ) : (
-                <PlusCircle className="h-4 w-4 ml-2" />
-              )}
-            </>
+            <Image src={'/assets/icons/circle-plus.svg'} className="h-4 w-4 ml-2" alt="Add" width={23} height={23} />
           )}
         </Button>
       ))}

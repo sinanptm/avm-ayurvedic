@@ -6,6 +6,7 @@ import TabContent from "@/components/doctor/slots/SlotsTabContent";
 import MultiSlots from "@/components/doctor/slots/MultiSlots";
 
 export default function TabSection() {
+  
   const tabs = Object.values(Days).map((day) => ({
     title: day.toUpperCase(),
     value: day.toUpperCase(),
