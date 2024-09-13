@@ -8,8 +8,9 @@ import PatientAuthMiddleware from "../middlewares/PatientAuthMiddleware";
 import AdminAuthMiddleware from "../middlewares/AdminAuthMiddleware";
 import protectedAdminRoutes from "./admin/AdminRoutes";
 import doctorAuthentication from "./doctor/AuthenticationRoutes";
-import UnathenicatedControllers from "../controllers/UnauthenticatedControllers";
+import slotRoutes from "./slots/SlotsRoutes";
 import UnauthenticatedUseCases from "../../use_case/UnauthenticatedUseCases";
+import UnauthenticatedControllers from "../controllers/UnauthenticatedControllers";
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
 
 const app = express();
@@ -20,7 +21,7 @@ const authorizeAdmin = new AdminAuthMiddleware(tokenService);
 
 const doctorRepository = new DoctorRepository()
 const unauthenticatedUseCase = new UnauthenticatedUseCases(doctorRepository)
-const unauthenticatedController = new UnathenicatedControllers(unauthenticatedUseCase)
+const unauthenticatedController = new UnauthenticatedControllers(unauthenticatedUseCase)
 
 const errorHandler = new ErrorHandler();
 
@@ -31,6 +32,8 @@ app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec.bind(authorizeAdmin), protectedAdminRoutes);
 
 app.use("/doctor/auth", doctorAuthentication);
+
+app.use('/slots',slotRoutes);
 
 app.get('/doctors', unauthenticatedController.getDoctors.bind(unauthenticatedController))
 

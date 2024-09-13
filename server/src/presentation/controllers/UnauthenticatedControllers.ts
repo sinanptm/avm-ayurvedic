@@ -2,7 +2,7 @@ import { StatusCode } from "../../types";
 import UnauthenticatedUseCases from "../../use_case/UnauthenticatedUseCases";
 import { NextFunction, Request, Response } from "express";
 
-export default class UnathenicatedControllers {
+export default class UnauthenticatedControllers {
     constructor(private unauthenticatedUseCase: UnauthenticatedUseCases) { }
 
     async getDoctors(req: Request, res: Response, next: NextFunction) {
