@@ -1,12 +1,11 @@
 import ISlot, { Days } from "../../entities/ISlot";
 
 export default interface ISlotRepository {
-    create(slot: ISlot): Promise<void>;
     update(slot: ISlot): Promise<void>;
-    createMany(slots:ISlot[]):Promise<void>;
-    deleteManyByTime({ doctorId, startTime, status }: ISlot): Promise<void>;
-    deleteManyByDay({ doctorId, status, day }: ISlot): Promise<void>;
-    findOne({ startTime, doctorId, day }: ISlot): Promise<ISlot | null>;
+    createMany(slots: ISlot[]): Promise<void>;
+    deleteManyByTime({ }: ISlot): Promise<void>;
+    deleteManyByDay({ }: ISlot): Promise<void>;
+    deleteManyByDayAndTime(doctorId: string, day: Days, startTimes: string[]): Promise<void>
     findMany(doctorId: string): Promise<ISlot[] | null>;
-    findManyByDay(doctorId:string,day:Days):Promise<ISlot[] | null>;
+    findManyByDay(doctorId: string, day: Days): Promise<ISlot[] | null>;
 }

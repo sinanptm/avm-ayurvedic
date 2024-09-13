@@ -22,20 +22,18 @@ export default class SlotUseCase {
                 endTime: this.calculateEndTime(slot.startTime!),
                 day,
             }));
-    
+
         if (newSlots.length > 0) {
             await this.slotRepository.createMany(newSlots);
         }
     }
-    
-    // async create(slot: ISlot, doctorId: string): Promise<void> {
-    //     slot.endTime = this.calculateEndTime(slot.startTime!);
-    //     slot.status = 'available';
-    //     slot.doctorId = doctorId;
-    
-    //     await this.slotRepository.create(slot);
-    // }
-    
+
+    async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
+       const startTimes = slots.map(el=>el.startTime!);
+       await this.slotRepository.deleteManyByDayAndTime(doctorId,day,startTimes)
+    }
+
+
     async update(slot: ISlot): Promise<void> {
         await this.slotRepository.update(slot);
     }

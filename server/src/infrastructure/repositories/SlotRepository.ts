@@ -6,32 +6,26 @@ import { FilterQuery } from "mongoose";
 export default class SlotRepository implements ISlotRepository {
     model = SlotModel;
 
-    async create(slot: ISlot): Promise<void> {
-        await this.model.create(slot);
-    }
-
-    async createMany(slots:ISlot[]):Promise<void>{
+    async createMany(slots: ISlot[]): Promise<void> {
         await this.model.create(slots);
     }
 
+    async deleteManyByDayAndTime(doctorId: string, day: Days, startTimes: string[]): Promise<void> {
+        await this.model.deleteMany({ doctorId, day, startTime: { $in: startTimes } });
+    }
+    
     async update(slot: ISlot): Promise<void> {
         await this.model.findByIdAndUpdate(slot._id, slot, { upsert: true });
     }
 
-    async deleteManyByTime({ doctorId, startTime, status }: ISlot): Promise<void> {
+    async deleteManyByTime({ doctorId, startTime }: ISlot): Promise<void> {
         const filter: FilterQuery<ISlot> = { doctorId, startTime };
-        if (status) filter.status = status;
         await this.model.deleteMany(filter);
     }
 
-    async deleteManyByDay({ doctorId, day, status }: ISlot): Promise<void> {
+    async deleteManyByDay({ doctorId, day }: ISlot): Promise<void> {
         const filter: FilterQuery<ISlot> = { doctorId, day };
-        if (status) filter.status = status;
         await this.model.deleteMany(filter);
-    }
-
-    async findOne({ doctorId, startTime, day }: ISlot): Promise<ISlot | null> {
-        return await this.model.findOne({ doctorId, startTime, day });
     }
 
     async findMany(doctorId: string): Promise<ISlot[] | null> {

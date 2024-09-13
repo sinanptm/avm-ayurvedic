@@ -17,6 +17,7 @@ const slotContController = new SlotContController(slotUseCase)
 
 router.post('/', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.createSlotsForDay.bind(slotContController))
 router.put('/', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.update.bind(slotContController));
+router.delete('/', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.deleteManyByDay.bind(slotContController))
 router.get('/doctor', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.getAllDoctorSlots.bind(slotContController))
 router.get('/:doctorId', slotContController.getAllSlotsByDoctorId.bind(slotContController));
 

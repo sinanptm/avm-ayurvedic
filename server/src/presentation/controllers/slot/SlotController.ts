@@ -9,27 +9,6 @@ export default class DoctorController {
         this.timeFormat = /^(0[1-9]|1[0-2]):([0-5][0-9])\s?(AM|PM)$/i;
     }
 
-    // async create(req: CustomRequest, res: Response, next: NextFunction) {
-    //     try {
-    //         const doctorId = req.doctor?.id;
-    //         const slot = req.body;
-
-    //         if (!slot.day || !Object.values(Days).includes(slot.day)) {
-    //             return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing day for slot: ${JSON.stringify(slot)}` });
-    //         }
-
-    //         if (!slot.startTime || !this.timeFormat.test(slot.startTime)) {
-    //             return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime for slot: ${JSON.stringify(slot)}` });
-    //         }
-
-    //         await this.slotUseCase.create(slot, doctorId!);
-    //         return res.status(StatusCode.Created).json({ message: "Slot created successfully" });
-
-    //     } catch (error) {
-    //         next(error);
-    //     }
-    // }
-
     async createSlotsForDay(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
@@ -53,6 +32,32 @@ export default class DoctorController {
 
         } catch (error) {
             next(error);
+        }
+    }
+
+    async deleteManyByDay(req:CustomRequest,res:Response,next:NextFunction){
+        try {
+            const doctorId = req.doctor?.id;
+            const { slots, day } = req.body;
+
+            if (!slots || !Array.isArray(slots) || slots.length === 0) {
+                return res.status(StatusCode.BadRequest).json({ message: 'Slots data is required and should be a non-empty array.' });
+            }
+
+            if (!Object.values(Days).includes(day)) {
+                return res.status(StatusCode.BadRequest).json({ message: 'Invalid or missing day.' });
+            }
+            for (let slot of slots) {
+                if (!slot.startTime || !this.timeFormat.test(slot.startTime)) {
+                    return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime for slot: ${JSON.stringify(slot)}` });
+                }
+            }
+
+            await this.slotUseCase.deleteManyByDay(doctorId!,slots,day);
+            
+            res.status(StatusCode.Success).json({message:"Slots Deleted"})
+        } catch (error) {
+            next(error)
         }
     }
 
