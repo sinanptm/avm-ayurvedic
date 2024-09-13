@@ -1,24 +1,24 @@
-import express from 'express'
+import express from 'express';
 import SlotRepository from '../../../infrastructure/repositories/SlotRepository';
 import SlotUseCase from '../../../use_case/slot/SlotUseCases';
-import SlotContController from '../../controllers/slot/SlotController';
-import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
-import TokenService from "../../../infrastructure/services/JWTService";
+import SlotController from '../../controllers/slot/SlotController';
+import DoctorAuthMiddleware from '../../middlewares/DoctorAuthMiddleware';
+import TokenService from '../../../infrastructure/services/JWTService';
+
 const router = express.Router();
 
 const slotRepository = new SlotRepository();
 const tokenService = new TokenService();
-
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
 const slotUseCase = new SlotUseCase(slotRepository);
-const slotContController = new SlotContController(slotUseCase)
+const slotController = new SlotController(slotUseCase);
 
+router.post('/day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createManyByDay.bind(slotController));
+router.post('/all-day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createForAllDays.bind(slotController));
+router.delete('/day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.deleteManyByDay.bind(slotController));
+router.delete('/all-day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.deleteForAllDays.bind(slotController));
+router.get('/doctor', authorizeDoctor.exec.bind(authorizeDoctor), slotController.getAllDoctorSlots.bind(slotController));
+router.get('/:doctorId', slotController.getAllSlotsByDoctorId.bind(slotController));
 
-router.post('/', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.createSlotsForDay.bind(slotContController))
-router.put('/', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.update.bind(slotContController));
-router.delete('/', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.deleteManyByDay.bind(slotContController))
-router.get('/doctor', authorizeDoctor.exec.bind(authorizeDoctor), slotContController.getAllDoctorSlots.bind(slotContController))
-router.get('/:doctorId', slotContController.getAllSlotsByDoctorId.bind(slotContController));
-
-export default router
+export default router;

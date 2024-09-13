@@ -9,7 +9,7 @@ export default class DoctorController {
         this.timeFormat = /^(0[1-9]|1[0-2]):([0-5][0-9])\s?(AM|PM)$/i;
     }
 
-    async createSlotsForDay(req: CustomRequest, res: Response, next: NextFunction) {
+    async createManyByDay(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
             const { slots, day } = req.body;
@@ -27,7 +27,7 @@ export default class DoctorController {
                     return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime for slot: ${JSON.stringify(slot)}` });
                 }
             }
-            await this.slotUseCase.createSlotsForDay(doctorId!, slots, day);
+            await this.slotUseCase.createManyByDay(doctorId!, slots, day);
             res.status(StatusCode.Created).json({ message: 'Slots created successfully.' });
 
         } catch (error) {
@@ -35,7 +35,23 @@ export default class DoctorController {
         }
     }
 
-    async deleteManyByDay(req:CustomRequest,res:Response,next:NextFunction){
+    async createForAllDays(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const doctorId = req.doctor?.id!;
+            const { startTimes } = req.body;
+            for (let time of startTimes) {
+                if (!this.timeFormat.test(time)) {
+                    return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime  ${time}` });
+                }
+            }
+            await this.slotUseCase.createForAllDays(doctorId, startTimes)
+            res.status(StatusCode.Created).json({ message: "Slots created successfully" })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async deleteManyByDay(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
             const { slots, day } = req.body;
@@ -53,9 +69,25 @@ export default class DoctorController {
                 }
             }
 
-            await this.slotUseCase.deleteManyByDay(doctorId!,slots,day);
-            
-            res.status(StatusCode.Success).json({message:"Slots Deleted"})
+            await this.slotUseCase.deleteManyByDay(doctorId!, slots, day);
+
+            res.status(StatusCode.Success).json({ message: "Slots Deleted successfully" })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async deleteForAllDays(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const doctorId = req.doctor?.id!;
+            const { startTimes } = req.body;
+            for (let time of startTimes) {
+                if (!this.timeFormat.test(time)) {
+                    return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime  ${time}` });
+                }
+            }
+            await this.slotUseCase.deleteForAllDays(doctorId, startTimes)
+            res.status(StatusCode.Success).json({ message: "Slots Deleted successfully" })
         } catch (error) {
             next(error)
         }
@@ -91,7 +123,7 @@ export default class DoctorController {
         try {
             const doctorId = req.params.doctorId;
             const date = req.query.date as string;
-            
+
             let slots;
             if (date) {
                 slots = await this.slotUseCase.getSlotsByDate(doctorId, date)

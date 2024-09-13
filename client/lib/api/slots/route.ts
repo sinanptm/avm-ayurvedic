@@ -68,13 +68,13 @@ axiosInstance.interceptors.response.use(
 );
 
 export const addSlotsDoctor = async (slots: ISlot[], day: Days) => {
-    const response = await axiosInstance.post('/', { slots, day });
+    const response = await axiosInstance.post('/day', { slots, day });
     return response.data;
 };
 
 
 export const deleteManyByDayDoctor = async (slots:ISlot[],day:Days)=>{
-    const response = await axiosInstance.delete('/',{data:{
+    const response = await axiosInstance.delete('/day',{data:{
         slots,
         day
     }});

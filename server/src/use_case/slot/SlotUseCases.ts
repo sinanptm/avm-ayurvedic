@@ -11,7 +11,7 @@ export default class SlotUseCase {
         this.interval = 1;
     }
 
-    async createSlotsForDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
+    async createManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
         const existingSlots = await this.slotRepository.findManyByDay(doctorId, day);
         const newSlots = slots
             .filter(slot => !existingSlots?.find(existing => existing.startTime === slot.startTime))
@@ -28,11 +28,33 @@ export default class SlotUseCase {
         }
     }
 
+    async createForAllDays(doctorId: string, startTimes: string[]): Promise<void> {
+        const days = Object.values(Days);
+        const slotsByDay = days.reduce((acc, day) => {
+            acc[day] = startTimes.map(startTime => ({
+                startTime,
+            }));
+            return acc;
+        }, {} as Record<Days, ISlot[]>);
+    
+        for (const day of days) {
+            const slots = slotsByDay[day];
+            await this.createManyByDay(doctorId, slots, day);
+        }
+    }
+    
+
     async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
        const startTimes = slots.map(el=>el.startTime!);
        await this.slotRepository.deleteManyByDayAndTime(doctorId,day,startTimes)
     }
 
+    async deleteForAllDays(doctorId: string, startTimes: string[]): Promise<void> {
+        const days = Object.values(Days);
+        for (const day of days) {
+            await this.slotRepository.deleteManyByDayAndTime(doctorId, day, startTimes);
+        }
+    }
 
     async update(slot: ISlot): Promise<void> {
         await this.slotRepository.update(slot);
