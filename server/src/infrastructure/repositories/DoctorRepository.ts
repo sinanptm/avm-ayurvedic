@@ -1,7 +1,8 @@
 import IDoctor from "../../domain/entities/IDoctor";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import { isValidObjectId } from "../database/isValidObjId";
 import DoctorModel from "../database/DoctorModel";
+import { Types } from 'mongoose'
+import { isValidObjectId } from "../database/isValidObjId";
 import { PaginatedResult } from "../../types";
 
 export default class DoctorRepository implements IDoctorRepository {
@@ -9,8 +10,8 @@ export default class DoctorRepository implements IDoctorRepository {
    async findByEmail(email: string): Promise<IDoctor | null> {
       return await this.model.findOne({ email }).select(["-token", "-password"]);
    }
-   async findByID(id: string): Promise<IDoctor | null> {
-      if (!isValidObjectId(id)) throw new Error("Invalid Object Id");
+   async findByID(id: string | Types.ObjectId,): Promise<IDoctor | null> {
+      if (typeof id === 'string' && !isValidObjectId(id)) throw new Error("Invalid Object Id");
 
       return await this.model.findById(id).select(["-token", "-password"]);
    }

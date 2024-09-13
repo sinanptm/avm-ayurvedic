@@ -1,9 +1,10 @@
-import { PaginatedResult } from "../../../types";
 import IDoctor from "../../entities/IDoctor";
+import { Types } from 'mongoose'
+import { PaginatedResult } from "../../../types";
 
 export default interface IDoctorRepository {
    findByEmail(email: string): Promise<IDoctor | null>;
-   findByID(id: string): Promise<IDoctor | null>;
+   findByID(id: string | Types.ObjectId): Promise<IDoctor | null>;
    findByEmailWithCredentials(email: string): Promise<IDoctor | null>;
    create(doctor: IDoctor): Promise<string>;
    update(doctor: IDoctor): Promise<IDoctor | null>;

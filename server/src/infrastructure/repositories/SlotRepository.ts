@@ -1,4 +1,4 @@
-import ISlot  from "../../domain/entities/ISlot";
+import ISlot, { Days } from "../../domain/entities/ISlot";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import SlotModel from "../database/SlotModel";
 import { FilterQuery } from "mongoose";
@@ -30,7 +30,11 @@ export default class SlotRepository implements ISlotRepository {
         return await this.model.findOne({ doctorId, startTime, day });
     }
 
-    async findMany({ doctorId }: ISlot): Promise<ISlot[] | null> {
+    async findMany(doctorId: string): Promise<ISlot[] | null> {
         return await this.model.find({ doctorId });
+    }
+
+    async findManyByDay(doctorId: string, day: Days): Promise<ISlot[] | null> {
+        return await this.model.find({ doctorId, day })
     }
 }

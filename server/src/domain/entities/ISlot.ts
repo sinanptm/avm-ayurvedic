@@ -13,9 +13,9 @@ export type SlotStatus = "available" | "booked";
 
 export default interface ISlot {
     _id?: string;
-    doctorId: string | Types.ObjectId;
-    day: Days;
-    startTime: string;
-    endTime: string;
-    status: SlotStatus;
+    doctorId?: string | Types.ObjectId;
+    day?: Days;
+    startTime?: string;
+    endTime?: string;
+    status?: SlotStatus;
 };
