@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const Appointment = () => {
    return (
-      <div className="flex h-screen max-h-screen py-5">
+      <div className="flex h-screen max-h-screen">
          <section className="remove-scrollbar container">
             <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
                <Image
@@ -21,7 +21,7 @@ const Appointment = () => {
                />
                <AppointmentForm />
 
-               <p className="copyright py-8">© {new Date().getFullYear()} AVM Ayurvedic.</p>
+               <p className="copyright py-12">© {new Date().getFullYear()} AVM Ayurvedic.</p>
             </div>
          </section>
 

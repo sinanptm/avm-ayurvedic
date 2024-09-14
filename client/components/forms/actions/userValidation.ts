@@ -1,3 +1,4 @@
+import { AppointmentType } from "@/types";
 import { z } from "zod";
 
 export const signinFormValidation = z.object({
@@ -76,10 +77,10 @@ export const updateProfileFormValidation = z.object({
 });
 
 export const appointmentFormValidation = z.object({
-   appointmentType: z.enum(["outpatient", "inpatient"]),
+   appointmentType: z.string().min(1,'AppointMent type is required'),
    reason: z.string().trim().min(5, "Reason must be at least 5 characters long"),
    note: z.string().trim().min(5, "Notes must be at least 5 characters long"),
    schedule: z.coerce.date(),
-   payment: z.enum(["online", "Op"]),
-   doctor: z.enum(["Shafeek", "Hakeem", "Salih", "Sinan"]),
+   payment: z.enum(["online", "outpatient"]),
+   doctor: z.string().min(1,"Doctor is required"),
 });

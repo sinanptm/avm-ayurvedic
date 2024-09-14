@@ -90,3 +90,8 @@ export interface ISlot {
    endTime?: string;
    status?: SlotStatus;
 };
+
+export enum AppointmentType {
+   VIDEO_CONSULTING = "video-consulting",
+   IN_PERSON = "in-person",
+}

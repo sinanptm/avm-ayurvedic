@@ -1,4 +1,4 @@
-import { AnimatedCardProps, NavLinkType } from "@/types";
+import { AnimatedCardProps, AppointmentType, NavLinkType } from "@/types";
 
 export const AdminSideBarLinks: NavLinkType[] = [
    {
@@ -179,9 +179,10 @@ export const GuaranteeListHonePage: { src: string; text: string; heading: string
 ];
 export const AppointmentTypes = [
    {
+      id:AppointmentType.IN_PERSON,
       image: "/assets/icons/wheelchair.svg",
-      type: "Outpatient",
-      title: "Outpatient Consulting",
+      type: "Inpatient",
+      title: "Inpatient Consulting",
       description: "Specialized Ayurvedic care without overnight stay",
       details: [
          "Quick and efficient Ayurvedic consultations",
@@ -191,6 +192,7 @@ export const AppointmentTypes = [
       ],
    },
    {
+      id:AppointmentType.VIDEO_CONSULTING,
       image: "/assets/services/ip.svg",
       type: "Online Video Call",
       title: "Online Video Consulting",

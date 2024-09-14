@@ -109,7 +109,7 @@ export const getAllSlotsDoctor = async () => {
 }
 // =================================================================== //
 
-export const getSlotsOfDoctor = async(doctorId:string,date:string)=>{
+export const getSlotsOfDoctor = async(doctorId:string,date:string)=>{    
     const response = await axiosInstance.get(`/${doctorId}?date=${date}`);
     return response.data;
 }
