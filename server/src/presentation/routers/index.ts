@@ -33,7 +33,7 @@ app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec.bind(authorizeAdmin), protectedAdminRoutes);
 app.use("/doctor/auth", doctorAuthentication);
 app.use('/slots', slotRoutes);
-app.use('/appointment', appointmentRoutes)
+app.use('/appointments', appointmentRoutes)
 
 
 app.use(errorHandler.exec.bind(errorHandler));

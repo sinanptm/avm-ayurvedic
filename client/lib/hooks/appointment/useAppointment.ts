@@ -1,6 +1,6 @@
-import { getDoctorsList } from "@/lib/api/appointment"
-import { ErrorResponse, IDoctor, PaginatedResult } from "@/types"
-import { useQuery } from "@tanstack/react-query"
+import { createAppointment, getDoctorsList } from "@/lib/api/appointment"
+import IAppointment, { ErrorResponse, IDoctor, MessageResponse, PaginatedResult } from "@/types"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 
 export const useGetDoctorsList = () => {
@@ -10,3 +10,11 @@ export const useGetDoctorsList = () => {
     })
 }
 
+export const useCreateAppointment = ()=>{
+    return useMutation<MessageResponse,AxiosError<ErrorResponse>,{appointment:IAppointment}>({
+        mutationFn:({appointment})=>createAppointment(appointment),
+        onError:(error)=>{
+            console.log("Error in creating appointment",error);   
+        }
+    })
+}

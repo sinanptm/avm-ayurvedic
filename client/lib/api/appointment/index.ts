@@ -1,4 +1,4 @@
-import { IPatient } from "@/types";
+import IAppointment, { IPatient } from "@/types";
 import axios from "axios";
 
 const getAuthTokens = () => {
@@ -71,3 +71,8 @@ export const getDoctorsList = async () => {
    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/doctors`);
    return response.data;
 };
+
+export const createAppointment = async (appointment:IAppointment)=>{
+   const response = await axiosInstance.post('/',{appointment});
+   return response.data;
+}
