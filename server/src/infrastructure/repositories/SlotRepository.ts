@@ -13,7 +13,20 @@ export default class SlotRepository implements ISlotRepository {
     async deleteManyByDayAndTime(doctorId: string, day: Days, startTimes: string[]): Promise<void> {
         await this.model.deleteMany({ doctorId, day, startTime: { $in: startTimes } });
     }
-
+    async findManyByDaysAndTimes(doctorId: string, days: Days[], startTimes: string[]): Promise<ISlot[]> {
+        return await this.model.find({
+            doctorId,
+            day: { $in: days },
+            startTime: { $in: startTimes }
+        });
+    }
+    async deleteManyByDaysAndTimes(doctorId: string, days: Days[], startTimes: string[]): Promise<void> {
+        await this.model.deleteMany({
+            doctorId,
+            day: { $in: days },
+            startTime: { $in: startTimes }
+        });
+    }
     async update(slot: ISlot): Promise<void> {
         await this.model.findByIdAndUpdate(slot._id, slot, { upsert: true });
     }
@@ -29,10 +42,10 @@ export default class SlotRepository implements ISlotRepository {
         }
         return await this.model.find(query);
     }
-    
+
     async findById(slotId: string): Promise<ISlot | null> {
-        if(!isValidObjectId(slotId)) throw new Error("Invalid Object Id")
+        if (!isValidObjectId(slotId)) throw new Error("Invalid Object Id")
         return await this.model.findById(slotId)
     }
-   
+
 }

@@ -9,7 +9,7 @@ export default class SlotUseCase {
 
     constructor(
         private slotRepository: ISlotRepository,
-        private appointmentRepository:IAppointmentRepository
+        private appointmentRepository: IAppointmentRepository
     ) {
         this.interval = 1;
     }
@@ -17,7 +17,7 @@ export default class SlotUseCase {
     async createManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
         const existingSlots = await this.slotRepository.findManyByDay(doctorId, day);
         const newSlots = slots
-            .filter(slot => !existingSlots?.find(existing => existing.startTime === slot.startTime))
+            .filter(slot => !existingSlots?.some(existing => existing.startTime === slot.startTime))
             .map(slot => ({
                 ...slot,
                 doctorId,
@@ -46,18 +46,17 @@ export default class SlotUseCase {
         }
     }
 
-
     async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
         const startTimes = slots.map(el => el.startTime!);
-        
+
         const bookedSlots = await this.slotRepository.findManyByDay(doctorId, day, 'booked');
-        
+
         if (bookedSlots?.length) {
             const bookedSlotIds = bookedSlots
                 .filter(slot => startTimes.includes(slot.startTime!))
                 .map(slot => slot._id)
-                .filter((id): id is string => id !== undefined); 
-        
+                .filter((id): id is string => id !== undefined);
+
             if (bookedSlotIds.length > 0) {
                 await this.appointmentRepository.updateManyBySlotIds(bookedSlotIds, {
                     status: AppointmentStatus.CANCELLED
@@ -66,12 +65,24 @@ export default class SlotUseCase {
         }
         await this.slotRepository.deleteManyByDayAndTime(doctorId, day, startTimes);
     }
-    
 
     async deleteForAllDays(doctorId: string, startTimes: string[]): Promise<void> {
         const days = Object.values(Days);
-        for (const day of days) {
-            await this.slotRepository.deleteManyByDayAndTime(doctorId, day, startTimes);
+
+        const slots = await this.slotRepository.findManyByDaysAndTimes(doctorId, days, startTimes);
+
+        if (slots?.length) {
+            const bookedSlotIds = slots
+                .filter(slot => slot.status === 'booked')
+                .map(slot => slot._id)
+                .filter((id): id is string => id !== undefined);
+
+            if (bookedSlotIds.length > 0) {
+                await this.appointmentRepository.updateManyBySlotIds(bookedSlotIds, {
+                    status: AppointmentStatus.CANCELLED
+                });
+            }
+            await this.slotRepository.deleteManyByDaysAndTimes(doctorId, days, startTimes);
         }
     }
 
@@ -98,7 +109,6 @@ export default class SlotUseCase {
         return dayNames[dayOfWeek] as Days;
     }
 
-
     private calculateEndTime(startTime: string): string {
         const [hoursStr, minutesStr] = startTime.split(":");
         const hours = parseInt(hoursStr, 10);
@@ -109,6 +119,4 @@ export default class SlotUseCase {
         const endHour = (hours + this.interval) % 24;
         return `${endHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     }
-
 }
-
