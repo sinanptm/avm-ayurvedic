@@ -91,10 +91,7 @@ export const appointmentFormValidation = z.object({
      .max(1000, "Notes must not exceed 1000 characters")
      .optional(),
  
-   date: z.coerce.date()
-     .refine((date) => date > new Date(), {
-       message: "Appointment date must be in the future",
-     }),
+   date: z.coerce.date(),
   
    doctor: z.string({
      required_error: "Doctor selection is required",
@@ -103,4 +100,4 @@ export const appointmentFormValidation = z.object({
    slotId: z.string({
      required_error: "Time slot selection is required",
    }).min(1, "Time slot selection is required"),
- })
+});

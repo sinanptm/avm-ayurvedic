@@ -37,7 +37,11 @@ export const useDeleteSlotsAllDaysDoctor = ()=>{
 export const useGetSlotsByDayDoctor = (day: Days) => {
    return useQuery<ISlot[], AxiosError<ErrorResponse>>({
       queryFn: () => getSlotsByDayDoctor(day),
-      queryKey: ["slotsByDay","allSlots", day],
+      queryKey: ["slotsByDay", day],
+      refetchOnMount:false,
+      refetchOnWindowFocus:false,
+      refetchInterval:1000*30,
+      
    });
 };
 
@@ -45,7 +49,7 @@ export const useGetSlotsByDayDoctor = (day: Days) => {
 export const useGetAllSlotsDoctor = () => {
    return useQuery<ISlot[], AxiosError<ErrorResponse>>({
       queryFn: () => getAllSlotsDoctor(),
-      queryKey: ["slotsByDay","allSlots",Object.values(Days)],
+      queryKey: ["allSlots",Object.values(Days)],
    });
 };
 
@@ -55,6 +59,9 @@ export const useGetAllSlotsDoctor = () => {
 export const useGetSlotsOfDoctor = (doctorId:string,date:string)=>{
    return useQuery<ISlot[],AxiosError<ErrorResponse>>({
       queryFn:()=>getSlotsOfDoctor(doctorId,date),
-      queryKey:["doctorSlots",doctorId,date]
+      queryKey:["doctorSlots",doctorId,date],
+      retry:1,
+      refetchOnWindowFocus:false,
+      refetchOnMount:false
    })
 }

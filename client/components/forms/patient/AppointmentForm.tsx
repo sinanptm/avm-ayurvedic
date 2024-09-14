@@ -19,11 +19,13 @@ import { formatDate } from "@/lib/utils";
 import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { AppointmentType } from "@/types";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AppointmentForm = () => {
    const { data: doctorsData, isLoading: isDoctorsLoading } = useGetDoctorsList();
    const [isDoctorSelected, setIsDoctorSelected] = useState(false);
    const { mutate: createAppointment, isPending } = useCreateAppointment();
+   const query = useQueryClient();
 
    const form = useForm<z.infer<typeof appointmentFormValidation>>({
       resolver: zodResolver(appointmentFormValidation),
@@ -42,7 +44,7 @@ const AppointmentForm = () => {
       date: new Date(),
    });
 
-   const { data: slots, isLoading: isSlotsLoading , refetch} = useGetSlotsOfDoctor(
+   const { data: slots, isLoading: isSlotsLoading } = useGetSlotsOfDoctor(
       slotFilter.doctorId,
       slotFilter.date instanceof Date ? slotFilter.date.toISOString() : ""
    );
@@ -80,10 +82,11 @@ const AppointmentForm = () => {
                   description: "We will notify you once the doctor approves your appointment",
                   variant: "success",
                });
-               refetch();
+               query.invalidateQueries({
+                  queryKey: ["doctorSlots", slotFilter.doctorId, slotFilter.date instanceof Date ? slotFilter.date.toISOString() : ""]
+               })
             },
             onError(error) {
-               refetch();
                const message =
                   error?.response?.status === 403
                      ? "This action is only allowed for verified users."
@@ -100,7 +103,7 @@ const AppointmentForm = () => {
 
    return (
       <Form {...form}>
-         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
+         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m">
             <section className="mb-12 space-y-4">
                <h1 className="text-2xl font-bold text-gray-200">New Appointment</h1>
                <p className="text-gray-400">Request New Appointment in 10 seconds</p>

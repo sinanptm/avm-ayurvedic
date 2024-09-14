@@ -6,19 +6,21 @@ import React, { useEffect, useState } from 'react';
 import { RenderTimeSlots } from './RenderTimeSlots';
 import ConfirmDeleteSlotsModal from '@/components/models/ConfirmDeleteSlotsModel';
 import { AvailableTimes } from '@/constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   day: Days;
 };
 
 const TabContent = ({ day }: Props) => {
-  const { data: slots, isLoading, refetch } = useGetSlotsByDayDoctor(day);
   const [selectedMorningSlots, setSelectedMorningSlots] = useState<string[]>([]);
   const [selectedAfternoonSlots, setSelectedAfternoonSlots] = useState<string[]>([]);
   const [selectedEveningSlots, setSelectedEveningSlots] = useState<string[]>([]);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
   const [slotsToDelete, setSlotsToDelete] = useState<string[]>([]);
+  const query = useQueryClient();
 
+  const { data: slots, isLoading, refetch } = useGetSlotsByDayDoctor(day);
   const { mutate: addSlots, isPending } = useAddSlotsDoctor();
   const { mutate: deleteSlots, isPending: isDeleting } = useDeleteDoctorByDay();
 
@@ -32,7 +34,10 @@ const TabContent = ({ day }: Props) => {
 
   const handleAddSlot = (slot: string) => {
     addSlots({ slots: [{ startTime: slot }], day });
-    setTimeout(() => refetch(), 500);
+    query.invalidateQueries({
+      queryKey: ['slotsByDay', day]
+    })
+    setTimeout(() => refetch());
   };
 
   const handleRemoveSlot = (slot: string) => {
@@ -45,13 +50,16 @@ const TabContent = ({ day }: Props) => {
     const addAllSlots = times.filter(time => !slots.some(slot => slot.startTime === time));
     if (addAllSlots.length > 0) {
       addSlots({ slots: addAllSlots.map(time => ({ startTime: time })), day });
+      query.invalidateQueries({
+        queryKey: ['slotsByDay', day]
+      })
       setTimeout(() => refetch());
     }
   };
-  
+
   const handleClearAll = (times: string[]) => {
     if (!slots || slots.length === 0) return;
-  
+
     const clearAllSlots = times.filter(time => slots.some(slot => slot.startTime === time));
 
     if (clearAllSlots.length > 0) {
@@ -64,6 +72,9 @@ const TabContent = ({ day }: Props) => {
     deleteSlots({ slots: slotsToDelete.map(time => ({ startTime: time })), day });
     setOpenConfirmDelete(false);
     setSlotsToDelete([]);
+    query.invalidateQueries({
+      queryKey: ['slotsByDay', day]
+    })
     setTimeout(() => refetch());
   };
 
@@ -105,7 +116,7 @@ const TabContent = ({ day }: Props) => {
           () => handleClearAll(AvailableTimes.Evening)
         )}
       </div>
-      <ConfirmDeleteSlotsModal 
+      <ConfirmDeleteSlotsModal
         open={openConfirmDelete}
         setOpen={setOpenConfirmDelete}
         handleDeleteSlots={handleConfirmDelete}

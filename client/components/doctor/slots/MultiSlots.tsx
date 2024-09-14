@@ -5,6 +5,8 @@ import { useAddSlotsAllDaysDoctor, useDeleteSlotsAllDaysDoctor, useGetAllSlotsDo
 import { toast } from "@/components/ui/use-toast";
 import ConfirmDeleteSlotsModel from "@/components/models/ConfirmDeleteSlotsModel";
 import { AvailableTimes } from "@/constants";
+import { useQueryClient } from "@tanstack/react-query";
+import { Days } from "@/types";
 
 const availableTimeOptions = Object.values(AvailableTimes).flat().map(time => ({ label: time, value: time }));
 
@@ -12,7 +14,7 @@ const SlotManager = () => {
     const [slotsToAdd, setSlotsToAdd] = useState<string[]>([]);
     const [slotsToRemove, setSlotsToRemove] = useState<string[]>([]);
     const [isDeleteModelOpen,setDeleteModelOpen] = useState(false)
-    const { refetch } = useGetAllSlotsDoctor();
+    const query = useQueryClient()
     const { mutate: addSlots, isPending: isAdding } = useAddSlotsAllDaysDoctor();
     const { mutate: deleteSlots, isPending: isDeleting } = useDeleteSlotsAllDaysDoctor();
 
@@ -40,6 +42,11 @@ const SlotManager = () => {
                         description: `Successfully added ${slotsToAdd.length} slots.`,
                         variant: "success"
                     });
+                    setTimeout(()=>{
+                        query.invalidateQueries({
+                            queryKey:['slotsByDay',...Object.values(Days)]
+                        })
+                    })
                 },
                 onError: (error) => {
                     console.error("Failed to add slots", error);
@@ -50,7 +57,6 @@ const SlotManager = () => {
                     });
                 }
             });
-            refetch()
         }
     };
 
@@ -65,6 +71,11 @@ const SlotManager = () => {
                         variant: "warning"
                     });
                     setDeleteModelOpen(false)
+                    setTimeout(()=>{
+                        query.invalidateQueries({
+                            queryKey:['slotsByDay',...Object.values(Days)]
+                        })
+                    })
                 },
                 onError: (error) => {
                     console.error("Failed to delete slots", error);
@@ -75,7 +86,6 @@ const SlotManager = () => {
                     });
                 }
             });
-            refetch()
         }
     };
 
