@@ -4,7 +4,6 @@ import IPatientRepository from "../../domain/interface/repositories/IPatientRepo
 import IEmailService from "../../domain/interface/services/IEmailService";
 import { IPatient } from "../../domain/entities/IPatient";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import { generateOTP } from "../../utils";
 import { UserRole } from "../../types";
 
 type TokensResponse = {
@@ -19,7 +18,7 @@ export default class AuthenticationUseCase {
       private emailService: IEmailService,
       private otpRepository: IOtpRepository,
       private tokenService: ITokenService
-   ) {}
+   ) { }
 
    async register(patient: IPatient) {
       patient.password = await this.passwordService.hash(patient.password!);
@@ -42,9 +41,9 @@ export default class AuthenticationUseCase {
 
       if (foundedPatient.isBlocked) throw new Error("Unauthorized");
 
-      let otp = +generateOTP(6);
+      let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
-         otp = +generateOTP(6);
+         otp = +this.generateOTP(6);
       }
       await this.otpRepository.create(otp, foundedPatient.email!);
 
@@ -67,7 +66,7 @@ export default class AuthenticationUseCase {
       if (patient.isBlocked) {
          throw new Error("Patient is Blocked");
       }
-      let accessToken = this.tokenService.createAccessToken(email, patient._id!,  UserRole.Patient);
+      let accessToken = this.tokenService.createAccessToken(email, patient._id!, UserRole.Patient);
       let refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
 
       return { accessToken, refreshToken };
@@ -77,9 +76,9 @@ export default class AuthenticationUseCase {
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Invalid Credentials");
 
-      let otp = +generateOTP(6);
+      let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
-         otp = +generateOTP(6);
+         otp = +this.generateOTP(6);
       }
       await this.emailService.sendMail({
          email,
@@ -119,7 +118,7 @@ export default class AuthenticationUseCase {
 
       if (patient.isBlocked) throw new Error("Patient is Blocked");
 
-      const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!,  UserRole.Patient);
+      const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!, UserRole.Patient);
 
       return { accessToken };
    }
@@ -146,5 +145,15 @@ export default class AuthenticationUseCase {
       patient.password = await this.passwordService.hash(newPassword);
 
       await this.patientRepository.update(patient);
+   }
+   private generateOTP(length: number): string {
+      let otp = "";
+      const digits = "0123456789";
+
+      for (let i = 0; i < length; i++) {
+         otp += digits[Math.floor(Math.random() * 10)];
+      }
+
+      return otp;
    }
 }

@@ -5,7 +5,6 @@ import ICloudStorageService from "../../domain/interface/services/ICloudStorageS
 import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import { generateOTP } from "../../utils";
 import { UserRole } from "../../types";
 
 export default class AuthenticationUseCase {
@@ -16,7 +15,7 @@ export default class AuthenticationUseCase {
       private emailService: IEmailService,
       private otpRepository: IOtpRepository,
       private cloudService: ICloudStorageService
-   ) {}
+   ) { }
 
    async signin(email: string, password: string): Promise<void> {
       const doctor = await this.doctorRepository.findByEmailWithCredentials(email);
@@ -26,9 +25,9 @@ export default class AuthenticationUseCase {
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new Error("Invalid Credentials");
       if (!doctor.isVerified) throw new Error("Not Verified");
 
-      let otp = +generateOTP(6);
+      let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
-         otp = +generateOTP(6);
+         otp = +this.generateOTP(6);
       }
       await this.emailService.sendMail({
          email,
@@ -64,9 +63,9 @@ export default class AuthenticationUseCase {
       const doctor = await this.doctorRepository.findByEmail(email);
       if (!doctor) throw new Error("Invalid Credentials");
 
-      let otp = +generateOTP(6);
+      let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
-         otp = +generateOTP(6);
+         otp = +this.generateOTP(6);
       }
       await this.emailService.sendMail({
          email,
@@ -138,5 +137,16 @@ export default class AuthenticationUseCase {
       const accessToken = this.tokenService.createAccessToken(doctor.email!, doctor._id!, UserRole.Doctor);
 
       return { accessToken };
+   }
+
+   private generateOTP(length: number): string {
+      let otp = "";
+      const digits = "0123456789";
+
+      for (let i = 0; i < length; i++) {
+         otp += digits[Math.floor(Math.random() * 10)];
+      }
+
+      return otp;
    }
 }

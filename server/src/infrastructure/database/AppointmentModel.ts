@@ -21,6 +21,10 @@ const appointmentSchema = new Schema<IAppointment>(
       required: true,
       index: true,
     },
+    startTime: {
+      type:String,
+      required:true
+    },
     appointmentType: {
       type: String,
       enum: Object.values(AppointmentType),

@@ -6,4 +6,6 @@ export default interface ISlotRepository {
     deleteManyByDayAndTime(doctorId: string, day: Days, startTimes: string[]): Promise<void>
     findMany(doctorId: string): Promise<ISlot[] | null>;
     findManyByDay(doctorId: string, day: Days): Promise<ISlot[] | null>;
+    findById(slotId: string): Promise<ISlot | null>;
+    findByDoctorIdStartTimeAndDay(slotId: string, doctorId: string, startTime: string, day:Days): Promise<ISlot | null>;
 }

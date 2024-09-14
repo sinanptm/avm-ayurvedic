@@ -3,7 +3,6 @@ import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import { generateOTP } from "../../utils";
 import { UserRole } from "../../types";
 export default class AuthenticationUseCase {
    constructor(
@@ -12,7 +11,7 @@ export default class AuthenticationUseCase {
       private tokenService: ITokenService,
       private emailService: IEmailService,
       private otpRepository: IOtpRepository
-   ) {}
+   ) { }
 
    async login(email: string, password: string): Promise<void> {
       const doctor = await this.adminRepository.findByEmailWithCredentials(email);
@@ -20,9 +19,9 @@ export default class AuthenticationUseCase {
       if (doctor?.role !== "admin") throw new Error("Invalid Credentials");
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new Error("Invalid Credentials");
 
-      let otp = parseInt(generateOTP(6), 10);
+      let otp = parseInt(this.generateOTP(6), 10);
       while (otp.toString().length !== 6) {
-         otp = parseInt(generateOTP(6), 10);
+         otp = parseInt(this.generateOTP(6), 10);
       }
       await this.emailService.sendMail({
          email,
@@ -56,9 +55,9 @@ export default class AuthenticationUseCase {
       const admin = await this.adminRepository.findByEmail(email);
       if (!admin) throw new Error("Not Found");
 
-      let otp = parseInt(generateOTP(6), 10);
+      let otp = parseInt(this.generateOTP(6), 10);
       while (otp.toString().length !== 6) {
-         otp = parseInt(generateOTP(6), 10);
+         otp = parseInt(this.generateOTP(6), 10);
       }
 
       await this.otpRepository.create(otp, email);
@@ -81,5 +80,16 @@ export default class AuthenticationUseCase {
       const accessToken = this.tokenService.createAccessToken(admin.email!, admin._id!, UserRole.Admin);
 
       return { accessToken };
+   }
+
+   private generateOTP(length: number): string {
+      let otp = "";
+      const digits = "0123456789";
+
+      for (let i = 0; i < length; i++) {
+         otp += digits[Math.floor(Math.random() * 10)];
+      }
+
+      return otp;
    }
 }
