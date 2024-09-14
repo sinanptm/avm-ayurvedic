@@ -5,6 +5,14 @@ import { FAQSection } from "@/components/patient/clinicians/FAQSection";
 import { CTASection } from "@/components/patient/clinicians/CTASection";
 import DoctorPagination from "@/components/patient/clinicians/DoctorsSection";
 import { DummyDoctors } from "@/constants";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Clinicians ",
+  description: "Meet our team of highly skilled Ayurvedic doctors offering holistic and personalized care for your well-being. Explore ancient healing practices combined with modern care techniques.",
+  keywords: ["Ayurveda", "Ayurvedic Doctors", "Holistic Healing", "Personalized Care", "Natural Medicine"],
+  viewport: "width=device-width, initial-scale=1.0",
+};
 
 const Page = async () => {
   // const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
