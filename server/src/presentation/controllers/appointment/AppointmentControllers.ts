@@ -11,11 +11,11 @@ export default class AppointmentController {
 
     async create(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const { error } = this.appointmentValidator.validate(req.body.appointment);
+            const { appointment } = req.body;
+            const { error } = this.appointmentValidator.validate(appointment);
             if (error) {
                 return res.status(StatusCode.BadRequest).json({ message: error.details[0].message });
             }
-            const { appointment } = req.body;
             const patientId = req.patient?.id;
             await this.appointmentUseCase.create(appointment, patientId!);
             res.status(StatusCode.Success).json({ message: "Appointment created successfully" });

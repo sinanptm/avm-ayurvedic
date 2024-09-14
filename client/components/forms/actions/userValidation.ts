@@ -95,17 +95,12 @@ export const appointmentFormValidation = z.object({
      .refine((date) => date > new Date(), {
        message: "Appointment date must be in the future",
      }),
- 
-   payment: z.enum(["online", "outpatient"], {
-     required_error: "Payment method is required",
-     invalid_type_error: "Invalid payment method",
-   }),
- 
+  
    doctor: z.string({
      required_error: "Doctor selection is required",
    }).min(1, "Doctor selection is required"),
  
-   slot: z.string({
+   slotId: z.string({
      required_error: "Time slot selection is required",
    }).min(1, "Time slot selection is required"),
  })

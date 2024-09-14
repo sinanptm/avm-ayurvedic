@@ -7,7 +7,6 @@ export default class AppointmentValidator {
     constructor() {
         this.schema = Joi.object({
             doctorId: Joi.string().required(),
-            patientId: Joi.string().required(),
             slotId: Joi.string().required(),
             appointmentType: Joi.string().valid(...Object.values(AppointmentType)).required(),
             appointmentDate: Joi.string().isoDate().required(),

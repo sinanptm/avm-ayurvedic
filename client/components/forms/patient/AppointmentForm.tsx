@@ -1,26 +1,29 @@
 'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Form } from "@/components/ui/form"
-import CustomFormField from "@/components/common/CustomFormField"
-import SubmitButton from "@/components/common/SubmitButton"
-import { appointmentFormValidation } from "@/components/forms/actions/userValidation"
-import { SelectItem } from "@/components/ui/select"
-import Image from "next/image"
-import { AppointmentTypes, PaymentOptions } from "@/constants"
-import { FormFieldType } from "@/types/fromTypes"
-import { useGetDoctorsList } from "@/lib/hooks/appointment/useAppointment"
-import { useGetSlotsOfDoctor } from "@/lib/hooks/slots/useSlot"
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { formatDate } from "@/lib/utils"
-import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import CustomFormField from "@/components/common/CustomFormField";
+import SubmitButton from "@/components/common/SubmitButton";
+import { appointmentFormValidation } from "@/components/forms/actions/userValidation";
+import { SelectItem } from "@/components/ui/select";
+import Image from "next/image";
+import { AppointmentTypes } from "@/constants";
+import { FormFieldType } from "@/types/fromTypes";
+import { useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointment";
+import { useGetSlotsOfDoctor } from "@/lib/hooks/slots/useSlot";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { formatDate } from "@/lib/utils";
+import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { toast } from "@/components/ui/use-toast";
+import { AppointmentType } from "@/types";
 
 const AppointmentForm = () => {
-   const { data, isLoading } = useGetDoctorsList()
-   const [isDoctorSelected, setIsDoctorSelected] = useState(false)
+   const { data: doctorsData, isLoading: isDoctorsLoading } = useGetDoctorsList();
+   const [isDoctorSelected, setIsDoctorSelected] = useState(false);
+   const { mutate: createAppointment, isPending } = useCreateAppointment();
 
    const form = useForm<z.infer<typeof appointmentFormValidation>>({
       resolver: zodResolver(appointmentFormValidation),
@@ -28,44 +31,74 @@ const AppointmentForm = () => {
          appointmentType: "",
          reason: "",
          note: "",
-         date: new Date(Date.now()),
-         payment: "online",
+         date: new Date(),
          doctor: "",
-         slot: "",
+         slotId: "",
       },
-   })
+   });
 
    const [slotFilter, setSlotFilter] = useState({
       doctorId: "",
       date: new Date(),
-   })
+   });
 
-   const { data: slots, isLoading: isGettingSlot } = useGetSlotsOfDoctor(
+   const { data: slots, isLoading: isSlotsLoading } = useGetSlotsOfDoctor(
       slotFilter.doctorId,
       slotFilter.date instanceof Date ? slotFilter.date.toISOString() : ""
-   )
+   );
 
    useEffect(() => {
       const subscription = form.watch((value, { name }) => {
          if (name === 'doctor' && value.doctor) {
-            setIsDoctorSelected(true)
+            setIsDoctorSelected(true);
          }
          setSlotFilter({
             doctorId: value.doctor || "",
             date: value.date ? new Date(value.date) : new Date(),
-         })
-      })
+         });
+      });
 
-      return () => subscription.unsubscribe()
-   }, [form])
+      return () => subscription.unsubscribe();
+   }, [form]);
 
-   const onSubmit = async (values: z.infer<typeof appointmentFormValidation>) => {
-      console.log(values)
-   }
+   const onSubmit = async (formData: z.infer<typeof appointmentFormValidation>) => {
+      createAppointment(
+         {
+            appointment: {
+               appointmentDate: formData.date as unknown as string,
+               doctorId: formData.doctor,
+               slotId: formData.slotId,
+               notes: formData.note,
+               reason: formData.reason,
+               appointmentType: formData.appointmentType as AppointmentType,
+            },
+         },
+         {
+            onSuccess() {
+               toast({
+                  title: "Appointment Created",
+                  description: "We will notify you once the doctor approves your appointment",
+                  variant: "success",
+               });
+            },
+            onError(error) {
+               const message =
+                  error?.response?.status === 403
+                     ? "This action is only allowed for verified users."
+                     : error.response?.data.message || "Appointment creation failed. Please try again.";
+               toast({
+                  title: "Appointment Creation Failed ❌",
+                  description: message,
+                  variant: "destructive",
+               });
+            },
+         }
+      );
+   };
 
    return (
       <Form {...form}>
-         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
+         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
             <section className="mb-12 space-y-4">
                <h1 className="text-2xl font-bold text-gray-200">New Appointment</h1>
                <p className="text-gray-400">Request New Appointment in 10 seconds</p>
@@ -110,8 +143,8 @@ const AppointmentForm = () => {
                name="doctor"
                label="Doctor"
             >
-               {!isLoading && data?.items ? (
-                  data.items.map((doctor) => (
+               {!isDoctorsLoading && doctorsData?.items ? (
+                  doctorsData.items.map((doctor) => (
                      <SelectItem key={doctor._id} value={doctor._id!}>
                         <div className="flex cursor-pointer items-center gap-2">
                            {doctor.image && (
@@ -134,14 +167,16 @@ const AppointmentForm = () => {
 
             <FormField
                control={form.control}
-               name="slot"
+               name="slotId"
                render={({ field }) => (
                   <FormItem>
                      <FormLabel className="text-gray-200">Time Slot</FormLabel>
                      {isDoctorSelected && (
                         <div className="space-y-3 p-3 rounded-lg shadow-md border-2 border-gray-400">
-                           <h3 className="text-base font-semibold text-gray-200">Available Time Slots for {formatDate(slotFilter.date)}</h3>
-                           {isGettingSlot ? (
+                           <h3 className="text-base font-semibold text-gray-200">
+                              Available Time Slots for {formatDate(slotFilter.date)}
+                           </h3>
+                           {isSlotsLoading ? (
                               <div className="flex items-center justify-center h-20">
                                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-400"></div>
                               </div>
@@ -152,7 +187,7 @@ const AppointmentForm = () => {
                                        type="button"
                                        key={slot._id}
                                        variant="ghost"
-                                       onClick={() => form.setValue('slot', slot._id!, { shouldValidate: true })}
+                                       onClick={() => form.setValue('slotId', slot._id!, { shouldValidate: true })}
                                        className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${field.value === slot._id
                                           ? 'bg-primary text-primary-foreground border-primary shadow-md scale-105'
                                           : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 hover:text-gray-100'
@@ -182,7 +217,6 @@ const AppointmentForm = () => {
                   label="Reason for Appointment"
                   placeholder="Annual monthly check-up"
                />
-
                <CustomFormField
                   fieldType={FormFieldType.TEXTAREA}
                   control={form.control}
@@ -192,26 +226,10 @@ const AppointmentForm = () => {
                />
             </div>
 
-            <CustomFormField
-               fieldType={FormFieldType.SELECT}
-               control={form.control}
-               name="payment"
-               label="Payment Options"
-               placeholder="Available Options"
-            >
-               {PaymentOptions.map((option, i) => (
-                  <SelectItem key={option + i} value={option}>
-                     <div className="flex cursor-pointer items-center gap-2">
-                        <p className="text-gray-200">{option}</p>
-                     </div>
-                  </SelectItem>
-               ))}
-            </CustomFormField>
-
-            <SubmitButton isLoading={false}>Submit</SubmitButton>
+            <SubmitButton isLoading={isPending}>Submit</SubmitButton>
          </form>
       </Form>
-   )
-}
+   );
+};
 
-export default AppointmentForm
+export default AppointmentForm;

@@ -6,9 +6,10 @@ import { AxiosError } from "axios"
 export const useGetDoctorsList = () => {
     return useQuery<PaginatedResult<IDoctor>, AxiosError<ErrorResponse>>({
         queryFn: () => getDoctorsList(),
-        queryKey: ["doctors"]
-    })
-}
+        queryKey: ["doctors"],
+        retry: false
+    });
+};
 
 export const useCreateAppointment = ()=>{
     return useMutation<MessageResponse,AxiosError<ErrorResponse>,{appointment:IAppointment}>({
