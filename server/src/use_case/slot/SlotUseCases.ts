@@ -36,17 +36,17 @@ export default class SlotUseCase {
             }));
             return acc;
         }, {} as Record<Days, ISlot[]>);
-    
+
         for (const day of days) {
             const slots = slotsByDay[day];
             await this.createManyByDay(doctorId, slots, day);
         }
     }
-    
+
 
     async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
-       const startTimes = slots.map(el=>el.startTime!);
-       await this.slotRepository.deleteManyByDayAndTime(doctorId,day,startTimes)
+        const startTimes = slots.map(el => el.startTime!);
+        await this.slotRepository.deleteManyByDayAndTime(doctorId, day, startTimes)
     }
 
     async deleteForAllDays(doctorId: string, startTimes: string[]): Promise<void> {
@@ -74,14 +74,19 @@ export default class SlotUseCase {
     }
 
     private getDayFromDate(date: string): Days {
-        const dayOfWeek = new Date(date).getDay();
+        const dayOfWeek = new Date(date).getUTCDay();
         const dayNames = Object.values(Days);
         return dayNames[dayOfWeek] as Days;
     }
 
 
     private calculateEndTime(startTime: string): string {
-        const [hours, minutes] = startTime.split(":").map(Number);
+        const [hoursStr, minutesStr] = startTime.split(":");
+        const hours = parseInt(hoursStr, 10);
+        const minutes = parseInt(minutesStr, 10);
+        if (isNaN(hours) || isNaN(minutes)) {
+            throw new Error("Invalid start time format");
+        }
         const endHour = (hours + this.interval) % 24;
         return `${endHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     }

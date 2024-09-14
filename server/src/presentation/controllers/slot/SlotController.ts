@@ -121,7 +121,7 @@ export default class DoctorController {
 
     async getAllSlotsByDoctorId(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const doctorId = req.params.doctorI
+            const doctorId = req.params.doctorId
             const date = req.query.date as string;
 
             const slots = await this.slotUseCase.getSlotsByDate(doctorId, date)

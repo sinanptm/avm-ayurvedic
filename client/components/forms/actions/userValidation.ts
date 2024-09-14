@@ -83,4 +83,5 @@ export const appointmentFormValidation = z.object({
    schedule: z.coerce.date(),
    payment: z.enum(["online", "outpatient"]),
    doctor: z.string().min(1,"Doctor is required"),
+   slot:z.string().min(1,'Slot is required')
 });
