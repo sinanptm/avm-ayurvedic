@@ -67,11 +67,12 @@ axiosInstance.interceptors.response.use(
     }
 );
 
+// =================================================================== //
+
 export const addSlotsDoctor = async (slots: ISlot[], day: Days) => {
     const response = await axiosInstance.post('/day', { slots, day });
     return response.data;
 };
-
 
 export const deleteManyByDayDoctor = async (slots: ISlot[], day: Days) => {
     const response = await axiosInstance.delete('/day', {
@@ -97,8 +98,6 @@ export const deleteSlotsAllDayDoctor = async (startTimes: string[]) => {
     return response.data;
 }
 
-
-
 export const getSlotsByDayDoctor = async (day: Days) => {
     const response = await axiosInstance.get(`/doctor?day=${day}`);
     return response.data;
@@ -106,5 +105,11 @@ export const getSlotsByDayDoctor = async (day: Days) => {
 
 export const getAllSlotsDoctor = async () => {
     const response = await axiosInstance.get('/doctor');
+    return response.data;
+}
+// =================================================================== //
+
+export const getSlotsOfDoctor = async(doctorId:string,date:string)=>{
+    const response = await axiosInstance.get(`/${doctorId}?date=${date}`);
     return response.data;
 }
