@@ -16,6 +16,7 @@ import { useGetSlotsOfDoctor } from "@/lib/hooks/slots/useSlot"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { formatDate } from "@/lib/utils"
+import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
 const AppointmentForm = () => {
    const { data, isLoading } = useGetDoctorsList()
@@ -27,7 +28,7 @@ const AppointmentForm = () => {
          appointmentType: "",
          reason: "",
          note: "",
-         schedule: new Date(Date.now()),
+         date: new Date(Date.now()),
          payment: "online",
          doctor: "",
          slot: "",
@@ -51,7 +52,7 @@ const AppointmentForm = () => {
          }
          setSlotFilter({
             doctorId: value.doctor || "",
-            date: value.schedule ? new Date(value.schedule) : new Date(),
+            date: value.date ? new Date(value.date) : new Date(),
          })
       })
 
@@ -73,11 +74,11 @@ const AppointmentForm = () => {
             <CustomFormField
                fieldType={FormFieldType.DATE_PICKER}
                control={form.control}
-               name="schedule"
-               showDateText="Only date after today is valid"
+               name="date"
+               showDateText="Appointment date must be in the future"
                label="Expected appointment date"
                isLimited
-               dateFormat="MM/dd/yyyy"
+               dateFormat="dd/MM/yyyy"
             />
 
             <CustomFormField
@@ -131,37 +132,47 @@ const AppointmentForm = () => {
                )}
             </CustomFormField>
 
-            {isDoctorSelected && (
-               <div className="space-y-3 p-3 rounded-lg shadow-md  border-2 border-gray-400">
-                  <h3 className="text-base font-semibold text-gray-200">Available Time Slots {formatDate(slotFilter.date)}</h3>
-                  {isGettingSlot ? (
-                     <div className="flex items-center justify-center h-20">
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-400"></div>
-                     </div>
-                  ) : slots && slots.length > 0 ? (
-                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-                        {slots.map((slot) => (
-                           <Button
-                              type="button"
-                              key={slot._id}
-                              variant="ghost"
-                              onClick={() => form.setValue('slot', slot._id!)}
-                              className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${form.watch('slot') === slot._id
-                                 ? 'bg-primary text-primary-foreground border-primary shadow-md scale-105'
-                                 : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 hover:text-gray-100'
-                                 }`}
-                           >
-                              {slot.startTime} - {slot.endTime}
-                           </Button>
-                        ))}
-                     </div>
-                  ) : (
-                     <div className="flex items-center justify-center h-20 text-sm text-gray-400">
-                        No available slots for the selected date and doctor.
-                     </div>
-                  )}
-               </div>
-            )}
+            <FormField
+               control={form.control}
+               name="slot"
+               render={({ field }) => (
+                  <FormItem>
+                     <FormLabel className="text-gray-200">Time Slot</FormLabel>
+                     {isDoctorSelected && (
+                        <div className="space-y-3 p-3 rounded-lg shadow-md border-2 border-gray-400">
+                           <h3 className="text-base font-semibold text-gray-200">Available Time Slots for {formatDate(slotFilter.date)}</h3>
+                           {isGettingSlot ? (
+                              <div className="flex items-center justify-center h-20">
+                                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-400"></div>
+                              </div>
+                           ) : slots && slots.length > 0 ? (
+                              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                                 {slots.map((slot) => (
+                                    <Button
+                                       type="button"
+                                       key={slot._id}
+                                       variant="ghost"
+                                       onClick={() => form.setValue('slot', slot._id!, { shouldValidate: true })}
+                                       className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${field.value === slot._id
+                                          ? 'bg-primary text-primary-foreground border-primary shadow-md scale-105'
+                                          : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 hover:text-gray-100'
+                                          }`}
+                                    >
+                                       {slot.startTime} - {slot.endTime}
+                                    </Button>
+                                 ))}
+                              </div>
+                           ) : (
+                              <div className="flex items-center justify-center h-20 text-sm text-gray-400">
+                                 No available slots for the selected date and doctor.
+                              </div>
+                           )}
+                        </div>
+                     )}
+                     <FormMessage className="text-red-500" />
+                  </FormItem>
+               )}
+            />
 
             <div className="flex flex-col gap-6 xl:flex-row">
                <CustomFormField

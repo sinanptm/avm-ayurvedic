@@ -81,6 +81,7 @@ const RegistrationForm = ({ refetch }: { refetch: any }) => {
                   control={form.control}
                   name="birthDate"
                   label="Date of birth *"
+                  dateFormat="dd/mm/yy"
                   showDateText="Please Select A Date Before Today"
                />
 

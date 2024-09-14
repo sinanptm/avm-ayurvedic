@@ -77,11 +77,35 @@ export const updateProfileFormValidation = z.object({
 });
 
 export const appointmentFormValidation = z.object({
-   appointmentType: z.string().min(1,'AppointMent type is required'),
-   reason: z.string().trim().min(5, "Reason must be at least 5 characters long"),
-   note: z.string().trim().min(5, "Notes must be at least 5 characters long"),
-   schedule: z.coerce.date(),
-   payment: z.enum(["online", "outpatient"]),
-   doctor: z.string().min(1,"Doctor is required"),
-   slot:z.string().min(1,'Slot is required')
-});
+   appointmentType: z.string({
+     required_error: "Appointment type is required",
+   }).min(1, "Appointment type is required"),
+ 
+   reason: z.string({
+     required_error: "Reason for appointment is required",
+   }).trim().min(5, "Reason must be at least 5 characters long")
+     .max(500, "Reason must not exceed 500 characters"),
+ 
+   note: z.string().trim()
+     .min(5, "Notes must be at least 5 characters long")
+     .max(1000, "Notes must not exceed 1000 characters")
+     .optional(),
+ 
+   date: z.coerce.date()
+     .refine((date) => date > new Date(), {
+       message: "Appointment date must be in the future",
+     }),
+ 
+   payment: z.enum(["online", "outpatient"], {
+     required_error: "Payment method is required",
+     invalid_type_error: "Invalid payment method",
+   }),
+ 
+   doctor: z.string({
+     required_error: "Doctor selection is required",
+   }).min(1, "Doctor selection is required"),
+ 
+   slot: z.string({
+     required_error: "Time slot selection is required",
+   }).min(1, "Time slot selection is required"),
+ })
