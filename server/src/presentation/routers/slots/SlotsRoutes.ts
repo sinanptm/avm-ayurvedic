@@ -4,14 +4,16 @@ import SlotUseCase from '../../../use_case/slot/SlotUseCases';
 import SlotController from '../../controllers/slot/SlotController';
 import DoctorAuthMiddleware from '../../middlewares/DoctorAuthMiddleware';
 import TokenService from '../../../infrastructure/services/JWTService';
+import AppointmentRepository from '../../../infrastructure/repositories/AppointmentRepository';
 
 const router = express.Router();
 
 const slotRepository = new SlotRepository();
 const tokenService = new TokenService();
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
+const appointmentRepository = new AppointmentRepository()
 
-const slotUseCase = new SlotUseCase(slotRepository);
+const slotUseCase = new SlotUseCase(slotRepository,appointmentRepository);
 const slotController = new SlotController(slotUseCase);
 
 router.post('/day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createManyByDay.bind(slotController));

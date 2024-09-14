@@ -1,4 +1,4 @@
-import ISlot, { Days } from "../../domain/entities/ISlot";
+import ISlot, { Days, SlotStatus } from "../../domain/entities/ISlot";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import { isValidObjectId } from "../database/isValidObjId";
 import SlotModel from "../database/SlotModel";
@@ -22,9 +22,14 @@ export default class SlotRepository implements ISlotRepository {
         return await this.model.find({ doctorId });
     }
 
-    async findManyByDay(doctorId: string, day: Days): Promise<ISlot[] | null> {
-        return await this.model.find({ doctorId, day })
+    async findManyByDay(doctorId: string, day: Days, status?: SlotStatus): Promise<ISlot[] | null> {
+        const query: any = { doctorId, day };
+        if (status) {
+            query.status = status;
+        }
+        return await this.model.find(query);
     }
+    
     async findById(slotId: string): Promise<ISlot | null> {
         if(!isValidObjectId(slotId)) throw new Error("Invalid Object Id")
         return await this.model.findById(slotId)

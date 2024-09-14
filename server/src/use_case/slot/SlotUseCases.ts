@@ -1,12 +1,15 @@
 import ISlot, { SlotStatus } from "../../domain/entities/ISlot";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import { Days } from "../../domain/entities/ISlot";
+import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import { AppointmentStatus } from "../../domain/entities/IAppointment";
 
 export default class SlotUseCase {
     protected interval: number;
 
     constructor(
-        private slotRepository: ISlotRepository
+        private slotRepository: ISlotRepository,
+        private appointmentRepository:IAppointmentRepository
     ) {
         this.interval = 1;
     }
@@ -46,8 +49,24 @@ export default class SlotUseCase {
 
     async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
         const startTimes = slots.map(el => el.startTime!);
-        await this.slotRepository.deleteManyByDayAndTime(doctorId, day, startTimes)
+        
+        const bookedSlots = await this.slotRepository.findManyByDay(doctorId, day, 'booked');
+        
+        if (bookedSlots?.length) {
+            const bookedSlotIds = bookedSlots
+                .filter(slot => startTimes.includes(slot.startTime!))
+                .map(slot => slot._id)
+                .filter((id): id is string => id !== undefined); 
+        
+            if (bookedSlotIds.length > 0) {
+                await this.appointmentRepository.updateManyBySlotIds(bookedSlotIds, {
+                    status: AppointmentStatus.CANCELLED
+                });
+            }
+        }
+        await this.slotRepository.deleteManyByDayAndTime(doctorId, day, startTimes);
     }
+    
 
     async deleteForAllDays(doctorId: string, startTimes: string[]): Promise<void> {
         const days = Object.values(Days);
@@ -70,7 +89,7 @@ export default class SlotUseCase {
 
     async getSlotsByDate(doctorId: string, date: string): Promise<ISlot[] | null> {
         const day = this.getDayFromDate(date);
-        return await this.slotRepository.findManyByDay(doctorId, day);
+        return await this.slotRepository.findManyByDay(doctorId, day, "available");
     }
 
     private getDayFromDate(date: string): Days {

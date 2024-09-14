@@ -42,7 +42,7 @@ const AppointmentForm = () => {
       date: new Date(),
    });
 
-   const { data: slots, isLoading: isSlotsLoading } = useGetSlotsOfDoctor(
+   const { data: slots, isLoading: isSlotsLoading , refetch} = useGetSlotsOfDoctor(
       slotFilter.doctorId,
       slotFilter.date instanceof Date ? slotFilter.date.toISOString() : ""
    );
@@ -80,8 +80,10 @@ const AppointmentForm = () => {
                   description: "We will notify you once the doctor approves your appointment",
                   variant: "success",
                });
+               refetch();
             },
             onError(error) {
+               refetch();
                const message =
                   error?.response?.status === 403
                      ? "This action is only allowed for verified users."
