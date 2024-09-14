@@ -1,5 +1,3 @@
-import { Types } from "mongoose";
-
 export enum Days {
     Sunday = "sunday",
     Monday = "monday",
@@ -13,7 +11,7 @@ export type SlotStatus = "available" | "booked";
 
 export default interface ISlot {
     _id?: string;
-    doctorId?: string | Types.ObjectId;
+    doctorId?: string;
     day?: Days;
     startTime?: string;
     endTime?: string;
