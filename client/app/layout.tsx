@@ -18,8 +18,8 @@ const inter = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
    title: {
       absolute: "",
-      template: "AVM | %s",
-      default: "AVM Ayurveda",
+      template: "%s | AVM Ayurvedic",
+      default: "AVM Ayurvedic",
    },
    description: "Appointment booking and video call consultation, an ayurveda hospital",
 };

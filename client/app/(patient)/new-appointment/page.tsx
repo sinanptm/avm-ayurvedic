@@ -4,8 +4,11 @@ import { Metadata } from "next";
 import { Banners } from "@/constants";
 
 export const metadata: Metadata = {
-   title: "Products",
+   title: "Book a New Appointment",
+   description: "Schedule your next appointment with AVM Ayurvedic and get personalized treatment from our expert doctors. Book now for a healthier future.",
+   keywords: ["AVM Ayurvedic", "Book Appointment", "Ayurvedic Treatment", "Health and Wellness", "Doctor Appointment"],
 };
+
 
 const Appointment = () => {
    return (
