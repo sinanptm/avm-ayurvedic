@@ -1,7 +1,9 @@
 export interface IPatient {
    readonly _id?: string;
+   readonly createdAt?: string;
+   readonly updatedAt?: string;
    name?: string;
-   email?: string;
+   readonly email?: string;
    password?: string;
    phone?: string;
    bloodGroup?: string;
@@ -10,8 +12,6 @@ export interface IPatient {
    isBlocked?: boolean;
    address?: string;
    token?: string;
-   createdAt?: string;
-   updatedAt?: string;
    profile?: string;
    gender?: "Male" | "Female" | "Other";
    occupation?: string;

@@ -10,10 +10,12 @@ export enum Days {
 export type SlotStatus = "available" | "booked";
 
 export default interface ISlot {
-    _id?: string;
-    doctorId?: string;
+    readonly _id?: string;
+    readonly doctorId?: string;
+    readonly createdAt?: string;
+    readonly updatedAt?: string;
+    readonly startTime?: string;
     day?: Days;
-    startTime?: string;
     endTime?: string;
     status?: SlotStatus;
 };
