@@ -12,6 +12,7 @@ import slotRoutes from "./slots/SlotsRoutes";
 import UnauthenticatedUseCases from "../../use_case/UnauthenticatedUseCases";
 import UnauthenticatedControllers from "../controllers/UnauthenticatedControllers";
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
+import appointmentRoutes from "./appointment/AppointmentRoutes";
 
 const app = express();
 const tokenService = new TokenService();
@@ -25,17 +26,15 @@ const unauthenticatedController = new UnauthenticatedControllers(unauthenticated
 
 const errorHandler = new ErrorHandler();
 
+app.get('/doctors', unauthenticatedController.getDoctors.bind(unauthenticatedController))
 app.use("/patient/auth", patientAuthentication);
 app.use("/patient", authorizePatient.exec.bind(authorizePatient), protectedRoutes);
-
 app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec.bind(authorizeAdmin), protectedAdminRoutes);
-
 app.use("/doctor/auth", doctorAuthentication);
+app.use('/slots', slotRoutes);
+app.use('/appointment', appointmentRoutes)
 
-app.use('/slots',slotRoutes);
-
-app.get('/doctors', unauthenticatedController.getDoctors.bind(unauthenticatedController))
 
 app.use(errorHandler.exec.bind(errorHandler));
 

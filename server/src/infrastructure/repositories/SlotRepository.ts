@@ -26,11 +26,8 @@ export default class SlotRepository implements ISlotRepository {
         return await this.model.find({ doctorId, day })
     }
     async findById(slotId: string): Promise<ISlot | null> {
+        if(!isValidObjectId(slotId)) throw new Error("Invalid Object Id")
         return await this.model.findById(slotId)
     }
-    async findByDoctorIdStartTimeAndDay(slotId: string, doctorId: string, startTime: string, day: Days): Promise<ISlot | null> {
-        if (!isValidObjectId(doctorId)) throw new Error("Invalid Object Id");
-        if (!isValidObjectId(slotId)) throw new Error("Invalid Object Id");
-        return await this.model.findOne({ _id: slotId, doctorId, startTime, day });
-    }
+   
 }

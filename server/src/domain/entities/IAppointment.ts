@@ -19,6 +19,5 @@ export default interface IAppointment {
     readonly appointmentDate?: string;
     readonly reason?: string;
     readonly notes?: string;
-    readonly startTime?:string;
     status?: AppointmentStatus;
 }
