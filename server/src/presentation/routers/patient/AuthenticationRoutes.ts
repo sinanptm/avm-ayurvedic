@@ -6,12 +6,14 @@ import PatientRepository from "../../../infrastructure/repositories/PatientRepos
 import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
 import AuthenticationController from "../../controllers/patient/AuthenticationController";
 import AuthPatientUseCase from "../../../use_case/patient/AuthenticationUseCase";
+import JoiService from "../../../infrastructure/services/JoiService";
 
 const router = express.Router();
 
 const tokenService = new JWTService();
 const passwordService = new BcryptService();
 const emailService = new NodeMailerService();
+const validatorService = new JoiService()
 const patientRepository = new PatientRepository();
 const otpRepository = new OtpRepository();
 
@@ -20,7 +22,8 @@ const authPatientUseCase = new AuthPatientUseCase(
    passwordService,
    emailService,
    otpRepository,
-   tokenService
+   tokenService,
+   validatorService
 );
 const authenticationController = new AuthenticationController(authPatientUseCase);
 

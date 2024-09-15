@@ -5,6 +5,7 @@ import IEmailService from "../../domain/interface/services/IEmailService";
 import { IPatient } from "../../domain/entities/IPatient";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { UserRole } from "../../types";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
 
 type TokensResponse = {
    accessToken: string;
@@ -17,29 +18,34 @@ export default class AuthenticationUseCase {
       private passwordService: IPasswordServiceRepository,
       private emailService: IEmailService,
       private otpRepository: IOtpRepository,
-      private tokenService: ITokenService
+      private tokenService: ITokenService,
+      private validatorService: IValidatorService
    ) { }
 
    async register(patient: IPatient) {
+      this.validatorService.validateEmailFormat(patient.email!);
+      this.validatorService.validatePassword(patient.password!);
+      if (!patient.name?.trim()) throw new Error("Name is required");
+      if (!patient.phone?.toString().trim()) throw new Error("Phone number is required");
+
       patient.password = await this.passwordService.hash(patient.password!);
       const { _id } = await this.patientRepository.create(patient);
       return `New Patient with id ${_id} Created`;
    }
 
    async login(patient: IPatient): Promise<{ email: string } | null> {
+      this.validatorService.validateEmailFormat(patient.email!);
+      if (!patient.password?.trim()) throw new Error("Password is required");
+
       const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundedPatient) throw new Error("Invalid Credentials");
 
       if (!foundedPatient.password) throw new Error("Patient has no Password");
 
-      if (foundedPatient.isBlocked) {
-         throw new Error("Patient is Blocked");
-      }
+      if (foundedPatient.isBlocked) throw new Error("Patient is Blocked");
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
       if (!isPasswordValid) throw new Error("Invalid Credentials");
-
-      if (foundedPatient.isBlocked) throw new Error("Unauthorized");
 
       let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
@@ -59,13 +65,15 @@ export default class AuthenticationUseCase {
    }
 
    async oAuthSignin(email: string, name: string, profile?: string): Promise<TokensResponse> {
+      this.validatorService.validateEmailFormat(email);
+      if (!name) throw new Error("Name is required");
+
       let patient = await this.patientRepository.findByEmail(email);
       if (!patient) {
          patient = await this.patientRepository.create({ email, name, profile } as IPatient);
       }
-      if (patient.isBlocked) {
-         throw new Error("Patient is Blocked");
-      }
+      if (patient.isBlocked) throw new Error("Patient is Blocked");
+
       let accessToken = this.tokenService.createAccessToken(email, patient._id!, UserRole.Patient);
       let refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
 
@@ -73,6 +81,8 @@ export default class AuthenticationUseCase {
    }
 
    async resendOtp(email: string): Promise<void> {
+      this.validatorService.validateEmailFormat(email);
+
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Invalid Credentials");
 
@@ -92,6 +102,8 @@ export default class AuthenticationUseCase {
    }
 
    async validateOtp(otp: number, email: string): Promise<TokensResponse> {
+      this.validatorService.validateEmailFormat(email);
+
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw Error("Invalid Credentials");
 
@@ -124,6 +136,8 @@ export default class AuthenticationUseCase {
    }
 
    async sendForgetPasswordMail(email: string): Promise<void> {
+      this.validatorService.validateEmailFormat(email);
+
       const patient = await this.patientRepository.findByEmail(email);
       if (!patient) throw new Error("Invalid Credentials");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
@@ -138,6 +152,9 @@ export default class AuthenticationUseCase {
    }
 
    async updatePatientPassword(email: string, newPassword: string): Promise<void> {
+      this.validatorService.validateEmailFormat(email);
+      this.validatorService.validatePassword(newPassword);
+
       const patient = await this.patientRepository.findByEmailWithCredentials(email);
       if (!patient) throw new Error("Invalid Credentials");
       if (patient.isBlocked) throw new Error("Patient is Blocked");
@@ -146,6 +163,7 @@ export default class AuthenticationUseCase {
 
       await this.patientRepository.update(patient);
    }
+
    private generateOTP(length: number): string {
       let otp = "";
       const digits = "0123456789";
