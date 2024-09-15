@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCode } from "../../types/index";
 import logger from "../../utils/logger";
+import { ValidationError } from "../../domain/entities/ValidationError";
 
 export default class ErrorHandler {
    exec(err: any, req: Request, res: Response, next: NextFunction) {
@@ -12,8 +13,13 @@ export default class ErrorHandler {
          ip: req.ip,
       });
 
+
       const statusCode = err.statusCode || StatusCode.InternalServerError;
       const message = err.message || "Internal Server Error";
+      
+      if (err instanceof ValidationError) {
+         return res.status(statusCode).json({ message });
+      }
 
       if (err.code && err.code === 11000) {
          logger.warn("Duplicate key error encountered.");
@@ -54,8 +60,8 @@ export default class ErrorHandler {
          });
       } else if (message.includes("Invalid Object Id")) {
          return res.status(StatusCode.UnprocessableEntity).json({ message });
-      }else if (message.includes("Invalid Filter")){
-         return res.status(StatusCode.BadRequest).json({message})
+      } else if (message.includes("Invalid Filter")) {
+         return res.status(StatusCode.BadRequest).json({ message })
       }
 
       res.status(statusCode).json({

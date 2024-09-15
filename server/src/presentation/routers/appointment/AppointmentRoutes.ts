@@ -3,9 +3,9 @@ import AppointmentRepository from '../../../infrastructure/repositories/Appointm
 import SlotRepository from '../../../infrastructure/repositories/SlotRepository';
 import AppointmentUseCase from '../../../use_case/appointment/AppointmentUseCase';
 import AppointmentController from '../../controllers/appointment/AppointmentControllers';
-import AppointmentValidator from '../../validators/AppointmentValidator';
 import PatientAuthMiddleware from '../../middlewares/PatientAuthMiddleware';
 import JWTService from '../../../infrastructure/services/JWTService';
+import JoiService from '../../../infrastructure/services/JoiService';
 
 const router = express.Router();
 
@@ -13,11 +13,11 @@ const router = express.Router();
 const appointmentRepository = new AppointmentRepository();
 const slotRepository = new SlotRepository();
 const tokenService = new JWTService()
+const validatorService = new JoiService()
 
-const appointmentUseCase = new AppointmentUseCase(appointmentRepository, slotRepository);
+const appointmentUseCase = new AppointmentUseCase(appointmentRepository, slotRepository, validatorService);
 
-const appointmentValidator = new AppointmentValidator()
-const appointmentController = new AppointmentController(appointmentUseCase, appointmentValidator);
+const appointmentController = new AppointmentController(appointmentUseCase);
 
 const authorizePatient = new PatientAuthMiddleware(tokenService);
 
