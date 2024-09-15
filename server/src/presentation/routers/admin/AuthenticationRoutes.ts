@@ -6,6 +6,7 @@ import BcryptService from "../../../infrastructure/services/BcryptService";
 import JWTService from "../../../infrastructure/services/JWTService";
 import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
 import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
+import JoiService from "../../../infrastructure/services/JoiService";
 
 const router = express.Router();
 
@@ -14,13 +15,15 @@ const otpRepository = new OtpRepository();
 const passwordService = new BcryptService();
 const tokenService = new JWTService();
 const emailService = new NodeMailerService();
+const validatorService = new JoiService()
 
 const authUseCase = new AuthenticationUseCase(
    adminRepository,
    passwordService,
    tokenService,
    emailService,
-   otpRepository
+   otpRepository,
+   validatorService
 );
 const authController = new AuthenticationController(authUseCase);
 

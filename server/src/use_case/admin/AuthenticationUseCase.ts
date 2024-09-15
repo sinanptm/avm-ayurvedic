@@ -4,16 +4,20 @@ import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { UserRole } from "../../types";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
 export default class AuthenticationUseCase {
    constructor(
       private adminRepository: IDoctorRepository,
       private passwordService: IPasswordServiceRepository,
       private tokenService: ITokenService,
       private emailService: IEmailService,
-      private otpRepository: IOtpRepository
+      private otpRepository: IOtpRepository,
+      private validatorService: IValidatorService
    ) { }
 
    async login(email: string, password: string): Promise<void> {
+      this.validatorService.validateRequiredFields({email,password})
+      this.validatorService.validateEmailFormat(email);
       const doctor = await this.adminRepository.findByEmailWithCredentials(email);
       if (!doctor) throw new Error("Invalid Credentials");
       if (doctor?.role !== "admin") throw new Error("Invalid Credentials");
@@ -35,6 +39,7 @@ export default class AuthenticationUseCase {
    }
 
    async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
+      this.validatorService.validateEmailFormat(email)
       const requestedOtp = await this.otpRepository.findOne(otp, email);
       if (!requestedOtp) throw new Error("Invalid Credentials");
 
@@ -52,6 +57,7 @@ export default class AuthenticationUseCase {
    }
 
    async resendOtp(email: string) {
+      this.validatorService.validateEmailFormat(email)
       const admin = await this.adminRepository.findByEmail(email);
       if (!admin) throw new Error("Not Found");
 

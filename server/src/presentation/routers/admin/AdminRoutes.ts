@@ -7,16 +7,18 @@ import AdminDoctorController from "../../controllers/admin/DoctorController";
 import AdminDoctorUseCase from "../../../use_case/admin/DoctorUseCase";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
 import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
+import JoiService from "../../../infrastructure/services/JoiService";
 
 const router = express.Router();
 
 const patientRepository = new PatientRepository();
 const doctorRepository = new DoctorRepository();
 const emailService = new NodeMailerService();
-const adminPatientUseCase = new AdminPatientUseCase(patientRepository);
+const validatorService = new JoiService()
+const adminPatientUseCase = new AdminPatientUseCase(patientRepository,validatorService);
 const adminPatientController = new AdminPatientController(adminPatientUseCase);
 
-const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository, emailService);
+const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository, emailService,validatorService);
 const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
 
 router

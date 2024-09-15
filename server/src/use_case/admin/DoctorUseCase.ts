@@ -1,12 +1,14 @@
 import IDoctor from "../../domain/entities/IDoctor";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { DoctorsFilter, PaginatedResult } from "../../types";
 
 export default class AdminDoctorUseCase {
    constructor(
       private doctorRepository: IDoctorRepository,
-      private emailService: IEmailService
+      private emailService: IEmailService,
+      private validatorService: IValidatorService
    ) { }
 
    async getAll(offset: number, limit: number, type: DoctorsFilter): Promise<PaginatedResult<IDoctor>> {
