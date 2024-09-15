@@ -1,7 +1,9 @@
 import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
+import { ValidationError } from "../../domain/entities/ValidationError";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import { StatusCode } from "../../types";
 
 export default class AppointmentUseCase {
     constructor(
@@ -21,9 +23,14 @@ export default class AppointmentUseCase {
         if (notes) this.validatorService.validateLength(notes, 0, 255);
 
         const slot = await this.slotRepository.findById(slotId!);
-        if (!slot) throw new Error("Slot Not Found");
-        if (slot.status === 'booked') throw new Error("Slot already booked");
-        slot!.status = 'booked';
+        if (!slot) throw new ValidationError("Slot Not Found", StatusCode.NotFound);
+        
+        if (slot.status === 'booked') {
+            const bookedAppointment = await this.appointRepository.findByDateAndSlot(appointmentDate!, slotId!);
+            if (bookedAppointment) throw new ValidationError("Slot already booked", StatusCode.Conflict);
+        } else {
+            slot!.status = 'booked';
+        }
         await this.slotRepository.update(slot);
         await this.appointRepository.create({
             slotId,

@@ -1,7 +1,6 @@
 import { IPatient } from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import { PaginatedResult } from "../../types";
-import { isValidObjectId } from "../database/isValidObjId";
 import PatientModel from "../database/PatientModel";
 
 export default class PatientRepository implements IPatientRepository {
@@ -43,13 +42,9 @@ export default class PatientRepository implements IPatientRepository {
       return await this.model.findOne({ email }).select(["-password", "-token"]);
    }
    async findByIdAndUpdate(id: string, patient: IPatient): Promise<IPatient | null> {
-      if (!isValidObjectId(id)) throw new Error("Invalid Object Id");
       return await this.model.findByIdAndUpdate(id, patient, { new: true });
    }
    async findById(id: string): Promise<IPatient | null> {
-      if (!isValidObjectId(id)) {
-         throw new Error(`Invalid Object Id`);
-      }
       return await this.model.findById(id).select(["-password", "-token"]);
    }
    async findByEmailWithCredentials(email: string): Promise<IPatient | null> {

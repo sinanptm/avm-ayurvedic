@@ -64,7 +64,7 @@ export default class JoiService implements IValidatorService {
 
     public validateTimeFormat(time: string): boolean {
         const schema = Joi.string().pattern(/^([01]\d|2[0-3]):([0-5]\d) (AM|PM)$/);
-    
+
         const { error } = schema.validate(time);
         if (error) {
             throw new ValidationError('Invalid time format, must be in "HH:MM AM/PM" format', StatusCode.BadRequest);
@@ -87,7 +87,7 @@ export default class JoiService implements IValidatorService {
         if (error) {
             throw new ValidationError(
                 'Password must be at least 8 characters, include at least one uppercase letter, one number, and one special character',
-                StatusCode.BadRequest
+                StatusCode.UnprocessableEntity
             );
         }
         return true;
