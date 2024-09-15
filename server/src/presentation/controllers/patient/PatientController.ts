@@ -18,7 +18,7 @@ export default class PatientController {
    async updateProfile(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const { id } = req.patient!;
-         const { patient } = req.body;
+         const patient = req.body.patient;
          if (!patient) return res.status(StatusCode.BadRequest).json({ message: "Patient Data is Required" });
 
          await this.patientUseCase.updateProfile(id, patient);
@@ -47,9 +47,9 @@ export default class PatientController {
          if (!key) {
             return res.status(StatusCode.BadRequest).json({ message: "Image key is required" });
          }
-         const imageUrl = await this.patientUseCase.updateProfileImage(id, key);
 
-         res.status(StatusCode.Success).json({ message: "Profile image updated successfully", imageUrl });
+         await this.patientUseCase.updateProfileImage(id, key);
+         res.status(StatusCode.Success).json({ message: "Profile image updated successfully" });
       } catch (error) {
          next(error);
       }
