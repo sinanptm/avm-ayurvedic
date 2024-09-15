@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { StatusCode } from '../../types';
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { ValidationError } from "../../domain/entities/ValidationError";
+import ValidationError from "../../domain/entities/ValidationError";
 
 export default class JoiService implements IValidatorService {
 

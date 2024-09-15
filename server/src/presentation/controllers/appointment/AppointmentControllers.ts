@@ -14,9 +14,6 @@ export default class AppointmentController {
             await this.appointmentUseCase.create(appointment, patientId!);
             res.status(StatusCode.Success).json({ message: "Appointment created successfully" });
         } catch (error: any) {
-            if (error.message === 'Slot already booked') {
-                return res.status(StatusCode.Conflict).json({ message: error.message })
-            }
             next(error);
         }
     }

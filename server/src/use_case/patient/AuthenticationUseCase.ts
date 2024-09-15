@@ -4,8 +4,9 @@ import IPatientRepository from "../../domain/interface/repositories/IPatientRepo
 import IEmailService from "../../domain/interface/services/IEmailService";
 import { IPatient } from "../../domain/entities/IPatient";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import { UserRole } from "../../types";
+import { StatusCode, UserRole } from "../../types";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import ValidationError from "../../domain/entities/ValidationError";
 
 type TokensResponse = {
    accessToken: string;
@@ -22,8 +23,8 @@ export default class AuthenticationUseCase {
       private validatorService: IValidatorService
    ) { }
 
-   async register(patient: IPatient) {
-      this.validatorService.validateRequiredFields({ email: patient.email, password: patient.password, name: patient.name, phone: patient.phone })
+   async register(patient: IPatient): Promise<string> {
+      this.validatorService.validateRequiredFields({ email: patient.email, password: patient.password, name: patient.name, phone: patient.phone });
       this.validatorService.validateEmailFormat(patient.email!);
       this.validatorService.validatePassword(patient.password!);
       this.validatorService.validateLength(patient.name!, 3, 20);
@@ -31,37 +32,34 @@ export default class AuthenticationUseCase {
 
       patient.password = await this.passwordService.hash(patient.password!);
       const { _id } = await this.patientRepository.create(patient);
-      return `New Patient with id ${_id} Created`;
+      return `Patient created successfully with ID ${_id}`;
    }
 
-   async login(patient: IPatient): Promise<{ email: string } | null> {
+   async login(patient: IPatient): Promise<{ email: string }> {
       this.validatorService.validateEmailFormat(patient.email!);
       this.validatorService.validatePassword(patient.password!);
 
-      const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
-      if (!foundedPatient) throw new Error("Invalid Credentials");
+      const foundPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
+      if (!foundPatient) throw new ValidationError("Invalid email or password", StatusCode.Unauthorized);
 
-      if (!foundedPatient.password) throw new Error("Patient has no Password");
-      if (foundedPatient.isBlocked) throw new Error("Patient is Blocked");
+      if (!foundPatient.password) throw new ValidationError("Account requires alternative login methods", StatusCode.Unauthorized);
+      if (foundPatient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
 
-      const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
-      if (!isPasswordValid) throw new Error("Invalid Credentials");
+      const isPasswordValid = await this.passwordService.compare(patient.password!, foundPatient.password!);
+      if (!isPasswordValid) throw new ValidationError("Invalid email or password", StatusCode.Unauthorized);
 
-      let otp = +this.generateOTP(6);
-      while (otp.toString().length !== 6) {
-         otp = +this.generateOTP(6);
-      }
-      await this.otpRepository.create(otp, foundedPatient.email!);
+      const otp = +this.generateOTP(6);
+      await this.otpRepository.create(otp, foundPatient.email!);
 
       await this.emailService.sendMail({
-         email: foundedPatient.email!,
-         name: foundedPatient.name!,
+         email: foundPatient.email!,
+         name: foundPatient.name!,
          otp,
          pathOfTemplate: "../../../public/otpEmailTemplate.html",
-         subject: "No Reply Mail: Otp Verification",
+         subject: "OTP Verification",
       });
 
-      return { email: foundedPatient.email! };
+      return { email: foundPatient.email! };
    }
 
    async oAuthSignin(email: string, name: string, profile?: string): Promise<TokensResponse> {
@@ -72,10 +70,10 @@ export default class AuthenticationUseCase {
       if (!patient) {
          patient = await this.patientRepository.create({ email, name, profile } as IPatient);
       }
-      if (patient.isBlocked) throw new Error("Patient is Blocked");
+      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
 
-      let accessToken = this.tokenService.createAccessToken(email, patient._id!, UserRole.Patient);
-      let refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
+      const accessToken = this.tokenService.createAccessToken(email, patient._id!, UserRole.Patient);
+      const refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
 
       return { accessToken, refreshToken };
    }
@@ -84,18 +82,15 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(email);
 
       const patient = await this.patientRepository.findByEmail(email);
-      if (!patient) throw new Error("Invalid Credentials");
+      if (!patient) throw new ValidationError("Invalid email address", StatusCode.Unauthorized);
 
-      let otp = +this.generateOTP(6);
-      while (otp.toString().length !== 6) {
-         otp = +this.generateOTP(6);
-      }
+      const otp = +this.generateOTP(6);
       await this.emailService.sendMail({
          email,
          name: patient.name!,
          otp,
          pathOfTemplate: "../../../public/otpEmailTemplate.html",
-         subject: "No Reply Mail: Otp Verification",
+         subject: "OTP Verification",
       });
 
       await this.otpRepository.create(otp, email);
@@ -104,18 +99,17 @@ export default class AuthenticationUseCase {
    async validateOtp(otp: number, email: string): Promise<TokensResponse> {
       this.validatorService.validateEmailFormat(email);
 
-      const isOtp = await this.otpRepository.findOne(otp, email);
-      if (!isOtp) throw Error("Invalid Credentials");
+      const isOtpValid = await this.otpRepository.findOne(otp, email);
+      if (!isOtpValid) throw new ValidationError("Invalid OTP", StatusCode.Unauthorized);
 
-      const patient = await this.patientRepository.findByEmailWithCredentials(email)!;
-      if (patient && patient?.isBlocked) throw new Error("Unauthorized");
+      const patient = await this.patientRepository.findByEmailWithCredentials(email);
+      if (!patient || patient.isBlocked) throw new ValidationError("Unauthorized", StatusCode.Forbidden);
 
-      const refreshToken = this.tokenService.createRefreshToken(patient?.email!, patient?._id!);
-      const accessToken = this.tokenService.createAccessToken(patient?.email!, patient?._id!, UserRole.Patient);
+      const refreshToken = this.tokenService.createRefreshToken(patient.email!, patient._id!);
+      const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!, UserRole.Patient);
 
-      patient!.token = refreshToken;
-
-      await this.patientRepository.update(patient!);
+      patient.token = refreshToken;
+      await this.patientRepository.update(patient);
 
       await this.otpRepository.deleteMany(email);
 
@@ -126,9 +120,8 @@ export default class AuthenticationUseCase {
       const { id } = this.tokenService.verifyRefreshToken(token);
 
       const patient = await this.patientRepository.findById(id);
-      if (!patient) throw new Error("Unauthorized");
-
-      if (patient.isBlocked) throw new Error("Patient is Blocked");
+      if (!patient) throw new ValidationError("Unauthorized", StatusCode.Unauthorized);
+      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
 
       const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!, UserRole.Patient);
 
@@ -139,14 +132,14 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(email);
 
       const patient = await this.patientRepository.findByEmail(email);
-      if (!patient) throw new Error("Invalid Credentials");
-      if (patient.isBlocked) throw new Error("Patient is Blocked");
+      if (!patient) throw new ValidationError("Invalid email address", StatusCode.Unauthorized);
+      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
 
       await this.emailService.sendMail({
          email,
          name: patient.name!,
          pathOfTemplate: "../../../public/resetPasswordTemplate.html",
-         subject: "No Reply Mail: Password Reset",
+         subject: "Password Reset",
          link: `${process.env.CLIENT_URL}/signin/reset-password`,
       });
    }
@@ -156,11 +149,10 @@ export default class AuthenticationUseCase {
       this.validatorService.validatePassword(newPassword);
 
       const patient = await this.patientRepository.findByEmailWithCredentials(email);
-      if (!patient) throw new Error("Invalid Credentials");
-      if (patient.isBlocked) throw new Error("Patient is Blocked");
+      if (!patient) throw new ValidationError("Invalid email address", StatusCode.Unauthorized);
+      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
 
       patient.password = await this.passwordService.hash(newPassword);
-
       await this.patientRepository.update(patient);
    }
 

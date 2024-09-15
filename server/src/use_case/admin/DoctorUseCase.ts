@@ -1,8 +1,9 @@
 import IDoctor from "../../domain/entities/IDoctor";
+import ValidationError from "../../domain/entities/ValidationError";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { DoctorsFilter, PaginatedResult } from "../../types";
+import { DoctorsFilter, PaginatedResult, StatusCode } from "../../types";
 
 export default class AdminDoctorUseCase {
    constructor(
@@ -27,7 +28,7 @@ export default class AdminDoctorUseCase {
 
    async update(doctor: IDoctor): Promise<void> {
       const updatedDoctor = await this.doctorRepository.update(doctor);
-      if (!updatedDoctor) throw new Error("Not Found");
+      if (!updatedDoctor) throw new ValidationError("Not Found",StatusCode.NotFound);
       if (updatedDoctor?.isVerified! && doctor.isVerified) {
          await this.emailService.sendMail({
             email: updatedDoctor.email!,

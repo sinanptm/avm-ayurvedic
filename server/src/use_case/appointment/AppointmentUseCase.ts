@@ -1,5 +1,5 @@
 import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
-import { ValidationError } from "../../domain/entities/ValidationError";
+import ValidationError from "../../domain/entities/ValidationError";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";

@@ -3,7 +3,7 @@ import ISlotRepository from "../../domain/interface/repositories/ISlotRepository
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
-import { ValidationError } from "../../domain/entities/ValidationError";
+import ValidationError from "../../domain/entities/ValidationError";
 import { StatusCode } from "../../types";
 
 export default class SlotUseCase {

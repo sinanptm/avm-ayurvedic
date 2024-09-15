@@ -24,9 +24,6 @@ export default class AuthPatientController {
             email: patientDetails?.email,
          });
       } catch (error: any) {
-         if (error.message === "Patient has no Password") {
-            return res.status(StatusCode.Unauthorized).json({ message: "Please use other login methods" });
-         }
          next(error);
       }
    }

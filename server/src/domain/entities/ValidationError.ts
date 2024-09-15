@@ -1,6 +1,6 @@
 import { StatusCode } from "../../types";
 
-export class ValidationError extends Error {
+export default class ValidationError extends Error {
   public statusCode: StatusCode
   constructor(message: string, statusCode: StatusCode) {
     super(message);
