@@ -1,7 +1,7 @@
-import ISlot, { SlotStatus } from "../../domain/entities/ISlot";
+import ISlot, { SlotStatus, Days } from "../../domain/entities/ISlot";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
-import { Days } from "../../domain/entities/ISlot";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
 
 export default class SlotUseCase {
@@ -9,12 +9,17 @@ export default class SlotUseCase {
 
     constructor(
         private slotRepository: ISlotRepository,
-        private appointmentRepository: IAppointmentRepository
+        private appointmentRepository: IAppointmentRepository,
+        private validatorService: IValidatorService
     ) {
         this.interval = 1;
     }
 
+
     async createManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
+        this.validateSlotStartTimes(slots);
+        this.validateDay(day);
+
         const existingSlots = await this.slotRepository.findManyByDay(doctorId, day);
         const newSlots = slots
             .filter(slot => !existingSlots?.some(existing => existing.startTime === slot.startTime))
@@ -32,6 +37,11 @@ export default class SlotUseCase {
     }
 
     async createForAllDays(doctorId: string, startTimes: string[]): Promise<void> {
+        startTimes.forEach(time => {
+            this.validatorService.validateTimeFormat(time);
+            this.validatorService.validateLength(time, 7, 11);
+        });
+
         const days = Object.values(Days);
         const slotsByDay = days.reduce((acc, day) => {
             acc[day] = startTimes.map(startTime => ({
@@ -47,6 +57,9 @@ export default class SlotUseCase {
     }
 
     async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
+        this.validateSlotStartTimes(slots);
+        this.validateDay(day);
+
         const startTimes = slots.map(el => el.startTime!);
 
         const bookedSlots = await this.slotRepository.findManyByDay(doctorId, day, 'booked');
@@ -67,6 +80,11 @@ export default class SlotUseCase {
     }
 
     async deleteForAllDays(doctorId: string, startTimes: string[]): Promise<void> {
+        startTimes.forEach(time => {
+            this.validatorService.validateTimeFormat(time);
+            this.validatorService.validateLength(time, 7, 11);
+        });
+
         const days = Object.values(Days);
 
         const slots = await this.slotRepository.findManyByDaysAndTimes(doctorId, days, startTimes);
@@ -87,18 +105,24 @@ export default class SlotUseCase {
     }
 
     async update(slot: ISlot): Promise<void> {
+        this.validatorService.validateIdFormat(slot._id!);
+        this.validatorService.validateTimeFormat(slot.startTime!);
         await this.slotRepository.update(slot);
     }
 
     async getAllSlots(doctorId: string): Promise<ISlot[] | null> {
+        this.validatorService.validateIdFormat(doctorId);
         return await this.slotRepository.findMany(doctorId);
     }
 
     async getSlotsByDay(doctorId: string, day: Days): Promise<ISlot[] | null> {
+        this.validateDay(day);
+        this.validatorService.validateIdFormat(doctorId);
         return await this.slotRepository.findManyByDay(doctorId, day);
     }
 
     async getSlotsByDate(doctorId: string, date: string): Promise<ISlot[] | null> {
+        this.validatorService.validateIdFormat(doctorId);
         const day = this.getDayFromDate(date);
         return await this.slotRepository.findManyByDay(doctorId, day, "available");
     }
@@ -109,14 +133,39 @@ export default class SlotUseCase {
         return dayNames[dayOfWeek] as Days;
     }
 
+    private validateSlotStartTimes(slots: ISlot[]): void {
+        slots.forEach(slot => {
+            if (!slot.startTime) {
+                throw new Error(`Missing startTime for slot: ${JSON.stringify(slot)}`);
+            }
+            this.validatorService.validateTimeFormat(slot.startTime);
+            this.validatorService.validateLength(slot.startTime, 7, 11);
+        });
+    }
+
+    private validateDay(day: Days): void {
+        if (!Object.values(Days).includes(day)) {
+            throw new Error('Invalid or missing day.');
+        }
+    }
+
     private calculateEndTime(startTime: string): string {
-        const [hoursStr, minutesStr] = startTime.split(":");
-        const hours = parseInt(hoursStr, 10);
+        const [time, period] = startTime.split(' ');
+        const [hoursStr, minutesStr] = time.split(":");
+        let hours = parseInt(hoursStr, 10);
         const minutes = parseInt(minutesStr, 10);
+
+        if (period === 'PM' && hours < 12) hours += 12;
+        if (period === 'AM' && hours === 12) hours = 0;
+
         if (isNaN(hours) || isNaN(minutes)) {
             throw new Error("Invalid start time format");
         }
+
         const endHour = (hours + this.interval) % 24;
-        return `${endHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        const endPeriod = endHour >= 12 ? 'PM' : 'AM';
+        const displayHour = endHour % 12 || 12;
+
+        return `${displayHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${endPeriod}`;
     }
 }

@@ -4,29 +4,13 @@ import SlotUseCase from "../../../use_case/slot/SlotUseCases";
 import { Days } from "../../../domain/entities/ISlot";
 
 export default class DoctorController {
-    private timeFormat: RegExp;
-    constructor(private slotUseCase: SlotUseCase) {
-        this.timeFormat = /^(0[1-9]|1[0-2]):([0-5][0-9])\s?(AM|PM)$/i;
-    }
+    constructor(private slotUseCase: SlotUseCase) { }
 
     async createManyByDay(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
             const { slots, day } = req.body;
 
-            if (!slots || !Array.isArray(slots) || slots.length === 0) {
-                return res.status(StatusCode.BadRequest).json({ message: 'Slots data is required and should be a non-empty array.' });
-            }
-
-            if (!Object.values(Days).includes(day)) {
-                return res.status(StatusCode.BadRequest).json({ message: 'Invalid or missing day.' });
-            }
-
-            for (let slot of slots) {
-                if (!slot.startTime || !this.timeFormat.test(slot.startTime)) {
-                    return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime for slot: ${JSON.stringify(slot)}` });
-                }
-            }
             await this.slotUseCase.createManyByDay(doctorId!, slots, day);
             res.status(StatusCode.Created).json({ message: 'Slots created successfully.' });
 
@@ -39,11 +23,6 @@ export default class DoctorController {
         try {
             const doctorId = req.doctor?.id!;
             const { startTimes } = req.body;
-            for (let time of startTimes) {
-                if (!this.timeFormat.test(time)) {
-                    return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime  ${time}` });
-                }
-            }
             await this.slotUseCase.createForAllDays(doctorId, startTimes)
             res.status(StatusCode.Created).json({ message: "Slots created successfully" })
         } catch (error) {
@@ -55,20 +34,6 @@ export default class DoctorController {
         try {
             const doctorId = req.doctor?.id;
             const { slots, day } = req.body;
-
-            if (!slots || !Array.isArray(slots) || slots.length === 0) {
-                return res.status(StatusCode.BadRequest).json({ message: 'Slots data is required and should be a non-empty array.' });
-            }
-
-            if (!Object.values(Days).includes(day)) {
-                return res.status(StatusCode.BadRequest).json({ message: 'Invalid or missing day.' });
-            }
-            for (let slot of slots) {
-                if (!slot.startTime || !this.timeFormat.test(slot.startTime)) {
-                    return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime for slot: ${JSON.stringify(slot)}` });
-                }
-            }
-
             await this.slotUseCase.deleteManyByDay(doctorId!, slots, day);
 
             res.status(StatusCode.Success).json({ message: "Slots Deleted successfully" })
@@ -81,11 +46,7 @@ export default class DoctorController {
         try {
             const doctorId = req.doctor?.id!;
             const { startTimes } = req.body;
-            for (let time of startTimes) {
-                if (!this.timeFormat.test(time)) {
-                    return res.status(StatusCode.BadRequest).json({ message: `Invalid or missing startTime  ${time}` });
-                }
-            }
+
             await this.slotUseCase.deleteForAllDays(doctorId, startTimes)
             res.status(StatusCode.Success).json({ message: "Slots Deleted successfully" })
         } catch (error) {

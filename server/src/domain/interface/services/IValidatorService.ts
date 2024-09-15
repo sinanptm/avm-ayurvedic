@@ -5,6 +5,7 @@ export default interface IValidatorService {
     validateIdFormat(id: string): boolean;
     validatePhoneNumber(phoneNumber: string): boolean;
     validateDateFormat(date: string): boolean;
+    validateTimeFormat(time: string): boolean;
     validateEnum(field: string, enumValues: string[]): boolean;
     validatePassword(password: string): boolean;
     validateBoolean(value: any): boolean;

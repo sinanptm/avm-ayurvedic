@@ -62,6 +62,16 @@ export default class JoiService implements IValidatorService {
         return true;
     }
 
+    public validateTimeFormat(time: string): boolean {
+        const schema = Joi.string().pattern(/^([01]\d|2[0-3]):([0-5]\d) (AM|PM)$/);
+    
+        const { error } = schema.validate(time);
+        if (error) {
+            throw new ValidationError('Invalid time format, must be in "HH:MM AM/PM" format', StatusCode.BadRequest);
+        }
+        return true;
+    }
+
     public validateEnum(field: string, enumValues: string[]): boolean {
         const schema = Joi.string().valid(...enumValues);
         const { error } = schema.validate(field);
