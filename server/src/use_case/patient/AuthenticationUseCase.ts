@@ -23,10 +23,11 @@ export default class AuthenticationUseCase {
    ) { }
 
    async register(patient: IPatient) {
+      this.validatorService.validateRequiredFields({ email: patient.email, password: patient.password, name: patient.name, phone: patient.phone })
       this.validatorService.validateEmailFormat(patient.email!);
       this.validatorService.validatePassword(patient.password!);
-      if (!patient.name?.trim()) throw new Error("Name is required");
-      if (!patient.phone?.toString().trim()) throw new Error("Phone number is required");
+      this.validatorService.validateLength(patient.name!, 3, 20);
+      this.validatorService.validatePhoneNumber(patient.phone!);
 
       patient.password = await this.passwordService.hash(patient.password!);
       const { _id } = await this.patientRepository.create(patient);
@@ -35,13 +36,12 @@ export default class AuthenticationUseCase {
 
    async login(patient: IPatient): Promise<{ email: string } | null> {
       this.validatorService.validateEmailFormat(patient.email!);
-      if (!patient.password?.trim()) throw new Error("Password is required");
+      this.validatorService.validatePassword(patient.password!);
 
       const foundedPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundedPatient) throw new Error("Invalid Credentials");
 
       if (!foundedPatient.password) throw new Error("Patient has no Password");
-
       if (foundedPatient.isBlocked) throw new Error("Patient is Blocked");
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundedPatient.password!);
@@ -66,7 +66,7 @@ export default class AuthenticationUseCase {
 
    async oAuthSignin(email: string, name: string, profile?: string): Promise<TokensResponse> {
       this.validatorService.validateEmailFormat(email);
-      if (!name) throw new Error("Name is required");
+      this.validatorService.validateLength(name, 3, 20);
 
       let patient = await this.patientRepository.findByEmail(email);
       if (!patient) {
