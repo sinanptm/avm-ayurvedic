@@ -45,7 +45,7 @@ export default class JoiService implements IValidatorService {
     }
 
     public validatePhoneNumber(phoneNumber: string): boolean {
-        const schema = Joi.string().pattern(new RegExp("^[0-9]{10}$"));
+        const schema = Joi.string().min(4).max(15);
         const { error } = schema.validate(phoneNumber);
         if (error) {
             throw new ValidationError('Invalid phone number format', StatusCode.BadRequest);

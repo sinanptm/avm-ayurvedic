@@ -6,6 +6,7 @@ import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { UserRole } from "../../types";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
 
 export default class AuthenticationUseCase {
    constructor(
@@ -14,10 +15,13 @@ export default class AuthenticationUseCase {
       private tokenService: ITokenService,
       private emailService: IEmailService,
       private otpRepository: IOtpRepository,
-      private cloudService: ICloudStorageService
+      private cloudService: ICloudStorageService,
+      private validatorService: IValidatorService
    ) { }
 
    async signin(email: string, password: string): Promise<void> {
+      this.validatorService.validateEmailFormat(email)
+      this.validatorService.validatePassword(password)
       const doctor = await this.doctorRepository.findByEmailWithCredentials(email);
       if (!doctor) throw new Error("Not Found");
       if (doctor.isBlocked) throw new Error("Doctor is Blocked");
@@ -41,6 +45,7 @@ export default class AuthenticationUseCase {
    }
 
    async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
+      this.validatorService.validateEmailFormat(email)
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw Error("Invalid Credentials");
 
@@ -60,6 +65,7 @@ export default class AuthenticationUseCase {
    }
 
    async resendOtp(email: string) {
+      this.validatorService.validateEmailFormat(email)
       const doctor = await this.doctorRepository.findByEmail(email);
       if (!doctor) throw new Error("Invalid Credentials");
 
@@ -79,6 +85,7 @@ export default class AuthenticationUseCase {
    }
 
    async sendForgotPasswordMail(email: string): Promise<void> {
+      this.validatorService.validateEmailFormat(email)
       const doctor = await this.doctorRepository.findByEmail(email);
       if (!doctor) throw new Error("Invalid Credentials");
       if (doctor.isBlocked) throw new Error("Doctor is Blocked");
@@ -92,6 +99,8 @@ export default class AuthenticationUseCase {
    }
 
    async updatePassword(email: string, password: string): Promise<void> {
+      this.validatorService.validateEmailFormat(email)
+      this.validatorService.validatePassword(password)
       const doctor = await this.doctorRepository.findByEmail(email);
       if (!doctor) throw new Error("Invalid Credentials");
       if (doctor.isBlocked) throw new Error("Doctor is Blocked");
@@ -101,12 +110,17 @@ export default class AuthenticationUseCase {
    }
 
    async register(doctor: IDoctor): Promise<string> {
+      this.validatorService.validateRequiredFields({ email: doctor.email, name: doctor.name, password: doctor.password, phone: doctor.phone, qualification: doctor.qualifications })
+      this.validatorService.validatePassword(doctor.password!);
+      this.validatorService.validateEmailFormat(doctor.email!);
+      this.validatorService.validatePhoneNumber(doctor.phone!);
       doctor.password = await this.passwordService.hash(doctor.password!);
       const id = await this.doctorRepository.create(doctor);
       return id;
    }
 
    async getPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
+      this.validatorService.validateIdFormat(id);
       const doctor = await this.doctorRepository.findByID(id);
       if (!doctor) throw new Error("Not Found");
       const key = `profile-images/${id}-${Date.now()}`;
@@ -115,6 +129,7 @@ export default class AuthenticationUseCase {
    }
 
    async updateProfileImage(key: string, id: string): Promise<void> {
+      this.validatorService.validateIdFormat(id)
       const doctor = await this.doctorRepository.findByID(id);
       if (!doctor) throw new Error("Not Found");
       if (doctor.isBlocked) throw new Error("Doctor is Blocked");
