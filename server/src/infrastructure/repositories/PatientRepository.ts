@@ -1,6 +1,7 @@
+import CustomError from "../../domain/entities/CustomError";
 import { IPatient } from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import { PaginatedResult } from "../../types";
+import { PaginatedResult, StatusCode } from "../../types";
 import PatientModel from "../database/PatientModel";
 
 export default class PatientRepository implements IPatientRepository {
@@ -30,7 +31,7 @@ export default class PatientRepository implements IPatientRepository {
          return await patientModel.save();
       } catch (error: any) {
          if (error.code === 11000) {
-            throw new Error("Email Already Exists");
+            throw new CustomError("Email Already Exists", StatusCode.Conflict);
          }
          throw error;
       }

@@ -1,6 +1,7 @@
 import ITokenService from "../../domain/interface/services/ITokenService";
 import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
-import { UserRole } from "../../types/index";
+import { StatusCode, UserRole } from "../../types/index";
+import CustomError from "../../domain/entities/CustomError";
 
 export default class JWTService implements ITokenService {
    private signToken(payload: object, secret: string, expiresIn: string): string {
@@ -11,9 +12,9 @@ export default class JWTService implements ITokenService {
          return jwt.verify(token, secret) as JwtPayload;
       } catch (error) {
          if (error instanceof TokenExpiredError) {
-            throw new Error("Token Expired");
+            throw new CustomError("Token Expired",StatusCode.Unauthorized);
          }
-         throw new Error("Invalid token");
+         throw new CustomError("Invalid token",StatusCode.Forbidden);
       }
    }
 

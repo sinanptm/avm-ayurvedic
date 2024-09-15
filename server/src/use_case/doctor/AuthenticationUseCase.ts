@@ -28,7 +28,7 @@ export default class AuthenticationUseCase {
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
       if (doctor.role !== "doctor") throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
       if (!(await this.passwordService.compare(password, doctor.password!))) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
-      if (!doctor.isVerified) throw new Error("Not Verified");
+      if (!doctor.isVerified) throw new CustomError("Not Verified",StatusCode.Unauthorized);
 
       let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
