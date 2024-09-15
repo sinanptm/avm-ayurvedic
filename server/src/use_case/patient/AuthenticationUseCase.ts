@@ -6,7 +6,7 @@ import { IPatient } from "../../domain/entities/IPatient";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { StatusCode, UserRole } from "../../types";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import ValidationError from "../../domain/entities/ValidationError";
+import CustomError from "../../domain/entities/CustomError";
 
 type TokensResponse = {
    accessToken: string;
@@ -40,13 +40,13 @@ export default class AuthenticationUseCase {
       this.validatorService.validatePassword(patient.password!);
 
       const foundPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
-      if (!foundPatient) throw new ValidationError("Invalid email or password", StatusCode.Unauthorized);
+      if (!foundPatient) throw new CustomError("Invalid email or password", StatusCode.Unauthorized);
 
-      if (!foundPatient.password) throw new ValidationError("Account requires alternative login methods", StatusCode.Unauthorized);
-      if (foundPatient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
+      if (!foundPatient.password) throw new CustomError("Account requires alternative login methods", StatusCode.Unauthorized);
+      if (foundPatient.isBlocked) throw new CustomError("Account is blocked", StatusCode.Forbidden);
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundPatient.password!);
-      if (!isPasswordValid) throw new ValidationError("Invalid email or password", StatusCode.Unauthorized);
+      if (!isPasswordValid) throw new CustomError("Invalid email or password", StatusCode.Unauthorized);
 
       const otp = +this.generateOTP(6);
       await this.otpRepository.create(otp, foundPatient.email!);
@@ -70,7 +70,7 @@ export default class AuthenticationUseCase {
       if (!patient) {
          patient = await this.patientRepository.create({ email, name, profile } as IPatient);
       }
-      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
+      if (patient.isBlocked) throw new CustomError("Account is blocked", StatusCode.Forbidden);
 
       const accessToken = this.tokenService.createAccessToken(email, patient._id!, UserRole.Patient);
       const refreshToken = this.tokenService.createRefreshToken(email, patient._id!);
@@ -82,7 +82,7 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(email);
 
       const patient = await this.patientRepository.findByEmail(email);
-      if (!patient) throw new ValidationError("Invalid email address", StatusCode.Unauthorized);
+      if (!patient) throw new CustomError("Invalid email address", StatusCode.Unauthorized);
 
       const otp = +this.generateOTP(6);
       await this.emailService.sendMail({
@@ -100,10 +100,10 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(email);
 
       const isOtpValid = await this.otpRepository.findOne(otp, email);
-      if (!isOtpValid) throw new ValidationError("Invalid OTP", StatusCode.Unauthorized);
+      if (!isOtpValid) throw new CustomError("Invalid OTP", StatusCode.Unauthorized);
 
       const patient = await this.patientRepository.findByEmailWithCredentials(email);
-      if (!patient || patient.isBlocked) throw new ValidationError("Unauthorized", StatusCode.Forbidden);
+      if (!patient || patient.isBlocked) throw new CustomError("Unauthorized", StatusCode.Forbidden);
 
       const refreshToken = this.tokenService.createRefreshToken(patient.email!, patient._id!);
       const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!, UserRole.Patient);
@@ -120,8 +120,8 @@ export default class AuthenticationUseCase {
       const { id } = this.tokenService.verifyRefreshToken(token);
 
       const patient = await this.patientRepository.findById(id);
-      if (!patient) throw new ValidationError("Unauthorized", StatusCode.Unauthorized);
-      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
+      if (!patient) throw new CustomError("Unauthorized", StatusCode.Unauthorized);
+      if (patient.isBlocked) throw new CustomError("Account is blocked", StatusCode.Forbidden);
 
       const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!, UserRole.Patient);
 
@@ -132,8 +132,8 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(email);
 
       const patient = await this.patientRepository.findByEmail(email);
-      if (!patient) throw new ValidationError("Invalid email address", StatusCode.Unauthorized);
-      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
+      if (!patient) throw new CustomError("Invalid email address", StatusCode.Unauthorized);
+      if (patient.isBlocked) throw new CustomError("Account is blocked", StatusCode.Forbidden);
 
       await this.emailService.sendMail({
          email,
@@ -149,8 +149,8 @@ export default class AuthenticationUseCase {
       this.validatorService.validatePassword(newPassword);
 
       const patient = await this.patientRepository.findByEmailWithCredentials(email);
-      if (!patient) throw new ValidationError("Invalid email address", StatusCode.Unauthorized);
-      if (patient.isBlocked) throw new ValidationError("Account is blocked", StatusCode.Forbidden);
+      if (!patient) throw new CustomError("Invalid email address", StatusCode.Unauthorized);
+      if (patient.isBlocked) throw new CustomError("Account is blocked", StatusCode.Forbidden);
 
       patient.password = await this.passwordService.hash(newPassword);
       await this.patientRepository.update(patient);

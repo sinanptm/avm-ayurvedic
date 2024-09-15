@@ -7,7 +7,7 @@ import ITokenService from "../../domain/interface/services/ITokenService";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { StatusCode, UserRole } from "../../types";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import ValidationError from "../../domain/entities/ValidationError";
+import CustomError from "../../domain/entities/CustomError";
 
 export default class AuthenticationUseCase {
    constructor(
@@ -24,10 +24,10 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(email)
       this.validatorService.validatePassword(password)
       const doctor = await this.doctorRepository.findByEmailWithCredentials(email);
-      if (!doctor) throw new ValidationError("Not Found", StatusCode.NotFound);
-      if (doctor.isBlocked) throw new ValidationError("Doctor is Blocked", StatusCode.Forbidden);
-      if (doctor.role !== "doctor") throw new ValidationError("Invalid Credentials", StatusCode.Unauthorized);
-      if (!(await this.passwordService.compare(password, doctor.password!))) throw new ValidationError("Invalid Credentials", StatusCode.Unauthorized);
+      if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
+      if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
+      if (doctor.role !== "doctor") throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
+      if (!(await this.passwordService.compare(password, doctor.password!))) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
       if (!doctor.isVerified) throw new Error("Not Verified");
 
       let otp = +this.generateOTP(6);
@@ -48,10 +48,10 @@ export default class AuthenticationUseCase {
    async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
       this.validatorService.validateEmailFormat(email)
       const isOtp = await this.otpRepository.findOne(otp, email);
-      if (!isOtp) throw new ValidationError("Invalid Credentials", StatusCode.Unauthorized);
+      if (!isOtp) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
 
       const doctor = await this.doctorRepository.findByEmailWithCredentials(email)!;
-      if (!doctor) throw new ValidationError("Unauthorized", StatusCode.Unauthorized);
+      if (!doctor) throw new CustomError("Unauthorized", StatusCode.Unauthorized);
 
       const refreshToken = this.tokenService.createRefreshToken(doctor?.email!, doctor?._id!);
       const accessToken = this.tokenService.createAccessToken(doctor?.email!, doctor?._id!, UserRole.Doctor);
@@ -68,7 +68,7 @@ export default class AuthenticationUseCase {
    async resendOtp(email: string) {
       this.validatorService.validateEmailFormat(email)
       const doctor = await this.doctorRepository.findByEmail(email);
-      if (!doctor) throw new ValidationError("Invalid Credentials", StatusCode.Unauthorized);
+      if (!doctor) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
 
       let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
@@ -88,8 +88,8 @@ export default class AuthenticationUseCase {
    async sendForgotPasswordMail(email: string): Promise<void> {
       this.validatorService.validateEmailFormat(email)
       const doctor = await this.doctorRepository.findByEmail(email);
-      if (!doctor) throw new ValidationError("Invalid Credentials", StatusCode.Unauthorized);
-      if (doctor.isBlocked) throw new ValidationError("Doctor is Blocked", StatusCode.Forbidden);
+      if (!doctor) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
+      if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
       await this.emailService.sendMail({
          email,
          name: doctor.name!,
@@ -103,8 +103,8 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(email)
       this.validatorService.validatePassword(password)
       const doctor = await this.doctorRepository.findByEmail(email);
-      if (!doctor) throw new ValidationError("Invalid Credentials", StatusCode.Unauthorized);
-      if (doctor.isBlocked) throw new ValidationError("Doctor is Blocked", StatusCode.Forbidden);
+      if (!doctor) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
+      if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
 
       doctor.password = await this.passwordService.hash(password);
       await this.doctorRepository.update(doctor);
@@ -123,7 +123,7 @@ export default class AuthenticationUseCase {
    async getPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
       this.validatorService.validateIdFormat(id);
       const doctor = await this.doctorRepository.findByID(id);
-      if (!doctor) throw new ValidationError("Not Found", StatusCode.NotFound);
+      if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
       const key = `profile-images/${id}-${Date.now()}`;
       const url = await this.cloudService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
       return { url, key };
@@ -132,8 +132,8 @@ export default class AuthenticationUseCase {
    async updateProfileImage(key: string, id: string): Promise<void> {
       this.validatorService.validateIdFormat(id)
       const doctor = await this.doctorRepository.findByID(id);
-      if (!doctor) throw new ValidationError("Not Found", StatusCode.NotFound);
-      if (doctor.isBlocked) throw new ValidationError("Doctor is Blocked", StatusCode.Forbidden);
+      if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
+      if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
 
       if (doctor.image) {
          await this.cloudService.deleteFile(process.env.S3_BUCKET_NAME!, doctor.image.split("amazonaws.com/").pop()!);
@@ -146,9 +146,9 @@ export default class AuthenticationUseCase {
    async refresh(token: string): Promise<{ accessToken: string }> {
       const { id } = this.tokenService.verifyRefreshToken(token);
       const doctor = await this.doctorRepository.findByID(id);
-      if (!doctor) throw new ValidationError("Unauthorized", StatusCode.Unauthorized);
+      if (!doctor) throw new CustomError("Unauthorized", StatusCode.Unauthorized);
 
-      if (doctor.isBlocked) throw new ValidationError("Doctor is Blocked", StatusCode.Forbidden);
+      if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
 
       const accessToken = this.tokenService.createAccessToken(doctor.email!, doctor._id!, UserRole.Doctor);
 

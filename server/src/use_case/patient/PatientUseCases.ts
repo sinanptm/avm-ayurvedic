@@ -2,7 +2,7 @@ import IPatientRepository from "../../domain/interface/repositories/IPatientRepo
 import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
 import { IPatient } from "../../domain/entities/IPatient";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import ValidationError from "../../domain/entities/ValidationError";
+import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
 
 export default class PatientUseCase {
@@ -15,8 +15,8 @@ export default class PatientUseCase {
    async getUserProfile(id: string): Promise<IPatient> {
       this.validatorService.validateIdFormat(id);
       const patient = await this.patientRepository.findById(id);
-      if (!patient) throw new ValidationError("Patient not found", StatusCode.NotFound);
-      if (patient.isBlocked) throw new ValidationError("Patient account is blocked", StatusCode.Forbidden);
+      if (!patient) throw new CustomError("Patient not found", StatusCode.NotFound);
+      if (patient.isBlocked) throw new CustomError("Patient account is blocked", StatusCode.Forbidden);
       return patient;
    }
 
@@ -27,8 +27,8 @@ export default class PatientUseCase {
       this.validatorService.validatePhoneNumber(patient.phone!);
 
       const existingPatient = await this.patientRepository.findById(id);
-      if (!existingPatient) throw new ValidationError("Patient not found", StatusCode.NotFound);
-      if (existingPatient.isBlocked) throw new ValidationError("Patient account is blocked", StatusCode.Forbidden);
+      if (!existingPatient) throw new CustomError("Patient not found", StatusCode.NotFound);
+      if (existingPatient.isBlocked) throw new CustomError("Patient account is blocked", StatusCode.Forbidden);
 
       await this.patientRepository.findByIdAndUpdate(id, patient);
    }
@@ -36,7 +36,7 @@ export default class PatientUseCase {
    async createPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
       this.validatorService.validateIdFormat(id);
       const patient = await this.patientRepository.findById(id);
-      if (!patient) throw new ValidationError("Patient not found", StatusCode.NotFound);
+      if (!patient) throw new CustomError("Patient not found", StatusCode.NotFound);
 
       const key = `profile-images/${id}-${Date.now()}`;
       const url = await this.cloudStorageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
@@ -48,8 +48,8 @@ export default class PatientUseCase {
       this.validatorService.validateIdFormat(id);
 
       const patient = await this.patientRepository.findById(id);
-      if (!patient) throw new ValidationError("Patient not found", StatusCode.NotFound);
-      if (patient.isBlocked) throw new ValidationError("Patient account is blocked", StatusCode.Forbidden);
+      if (!patient) throw new CustomError("Patient not found", StatusCode.NotFound);
+      if (patient.isBlocked) throw new CustomError("Patient account is blocked", StatusCode.Forbidden);
 
       if (patient.profile) {
          await this.cloudStorageService.deleteFile(

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCode } from "../../types/index";
 import logger from "../../utils/logger";
-import ValidationError from "../../domain/entities/ValidationError";
+import CustomError from "../../domain/entities/CustomError";
 
 export default class ErrorHandler {
    exec(err: any, req: Request, res: Response, next: NextFunction) {
@@ -17,7 +17,7 @@ export default class ErrorHandler {
       const statusCode = err.statusCode || StatusCode.InternalServerError;
       const message = err.message || "Internal Server Error";
 
-      if (err instanceof ValidationError) {
+      if (err instanceof CustomError) {
          return res.status(statusCode).json({ message });
       }
 

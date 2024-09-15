@@ -3,7 +3,7 @@ import ISlotRepository from "../../domain/interface/repositories/ISlotRepository
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
-import ValidationError from "../../domain/entities/ValidationError";
+import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
 
 export default class SlotUseCase {
@@ -141,7 +141,7 @@ export default class SlotUseCase {
     private validateSlotStartTimes(slots: ISlot[]): void {
         slots.forEach(slot => {
             if (!slot.startTime) {
-                throw new ValidationError(`Missing startTime for slot: ${JSON.stringify(slot)}`,StatusCode.BadRequest);
+                throw new CustomError(`Missing startTime for slot: ${JSON.stringify(slot)}`,StatusCode.BadRequest);
             }
             this.validatorService.validateTimeFormat(slot.startTime);
             this.validatorService.validateLength(slot.startTime, 7, 11);
@@ -150,7 +150,7 @@ export default class SlotUseCase {
 
     private validateDay(day: Days): void {
         if (!Object.values(Days).includes(day)) {
-            throw new ValidationError('Invalid or missing day.',StatusCode.BadRequest);
+            throw new CustomError('Invalid or missing day.',StatusCode.BadRequest);
         }
     }
 
@@ -164,7 +164,7 @@ export default class SlotUseCase {
         if (period === 'AM' && hours === 12) hours = 0;
 
         if (isNaN(hours) || isNaN(minutes)) {
-            throw new ValidationError("Invalid start time format",StatusCode.BadRequest);
+            throw new CustomError("Invalid start time format",StatusCode.BadRequest);
         }
 
         const endHour = (hours + this.interval) % 24;

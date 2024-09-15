@@ -1,5 +1,5 @@
 import IDoctor from "../../domain/entities/IDoctor";
-import ValidationError from "../../domain/entities/ValidationError";
+import CustomError from "../../domain/entities/CustomError";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
@@ -28,7 +28,7 @@ export default class AdminDoctorUseCase {
 
    async update(doctor: IDoctor): Promise<void> {
       const updatedDoctor = await this.doctorRepository.update(doctor);
-      if (!updatedDoctor) throw new ValidationError("Not Found",StatusCode.NotFound);
+      if (!updatedDoctor) throw new CustomError("Not Found",StatusCode.NotFound);
       if (updatedDoctor?.isVerified! && doctor.isVerified) {
          await this.emailService.sendMail({
             email: updatedDoctor.email!,
