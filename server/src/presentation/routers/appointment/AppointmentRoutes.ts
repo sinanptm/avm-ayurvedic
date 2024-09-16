@@ -26,6 +26,6 @@ const appointmentController = new AppointmentController(appointmentUseCase);
 const authorizePatient = new PatientAuthMiddleware(tokenService);
 
 router.post('/', authorizePatient.exec.bind(authorizePatient), appointmentController.create.bind(appointmentController));
-router.put('/payment', authorizePatient.exec.bind(authorizePatient), appointmentController.completePayment.bind(appointmentController))
+router.post('/verify-payment', authorizePatient.exec.bind(authorizePatient), appointmentController.completePayment.bind(appointmentController))
 
 export default router;

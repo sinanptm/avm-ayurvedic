@@ -5,7 +5,6 @@ const paymentSchema = new Schema<IPayment>(
   {
     orderId: {
       type: String,
-      required: true,
     },
     paymentId: {
       type: String,
@@ -14,7 +13,6 @@ const paymentSchema = new Schema<IPayment>(
     appointmentId: {
       type: Schema.Types.ObjectId,
       ref: 'Appointment',
-      required: true,
       index: true,
     },
     amount: {

@@ -48,18 +48,20 @@ export default class AppointmentUseCase {
 
         const razorpayOrder = await this.paymentService.createOrder(this.bookingAmount, 'INR', `receipt_${payment._id}`);
 
-        await this.paymentRepository.update({
-            _id: payment._id,
-            orderId: razorpayOrder.id!,
-        });
-
+        
         const appointmentId = await this.appointmentRepository.create({
             ...appointmentData,
             patientId,
             status: AppointmentStatus.PAYMENT_PENDING,
-            paymentId: razorpayOrder.id!,
+            paymentId: payment._id!,
         });
 
+        await this.paymentRepository.update({
+            _id: payment._id,
+            orderId: razorpayOrder.id!,
+            appointmentId
+        });
+        
         return { orderId: razorpayOrder.id, appointmentId };
     }
 

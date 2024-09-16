@@ -45,9 +45,10 @@ const appointmentSchema = new Schema<IAppointment>(
       required: true,
     },
     paymentId:{
-      type:String,
-      required:true,
-      default:null
+      type: Schema.Types.ObjectId,
+      ref: 'Payment', 
+      required: true,
+      index: true,
     }
   },
   {

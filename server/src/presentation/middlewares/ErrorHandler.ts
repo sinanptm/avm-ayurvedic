@@ -25,7 +25,6 @@ export default class ErrorHandler {
             method: req.method,
             path: req.path,
             clientIp,
-            requestHeaders: req.headers,
             error: message,
          });
          return res.status(StatusCode.Conflict).json({
@@ -43,7 +42,6 @@ export default class ErrorHandler {
             method: req.method,
             path: req.path,
             clientIp,
-            requestHeaders: req.headers,
          });
          return res.status(StatusCode.InternalServerError).json({
             message: "We are having an issue with the Email Service.",
@@ -55,7 +53,6 @@ export default class ErrorHandler {
          method: req.method,
          path: req.path,
          clientIp,
-         requestHeaders: req.headers,
          stack: error.stack, 
       });
 
