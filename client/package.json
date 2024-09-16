@@ -40,6 +40,7 @@
       "next": "^14.2.7",
       "next-themes": "^0.3.0",
       "otp-timer-ts": "^3.0.1",
+      "razorpay": "^2.9.4",
       "react": "^18",
       "react-datepicker": "^7.3.0",
       "react-dom": "^18",

@@ -7,6 +7,8 @@ import { StatusCode } from "../../types";
 import IPaymentService from "../../domain/interface/services/IPaymentService";
 import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
 import { PaymentStatus } from "../../domain/entities/IPayment";
+import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
+import { IPatient } from "../../domain/entities/IPatient";
 
 export default class AppointmentUseCase {
     bookingAmount: number;
@@ -16,7 +18,8 @@ export default class AppointmentUseCase {
         private slotRepository: ISlotRepository,
         private validatorService: IValidatorService,
         private paymentService: IPaymentService,
-        private paymentRepository: IPaymentRepository
+        private paymentRepository: IPaymentRepository,
+        private patientRepository: IPatientRepository
     ) {
         this.bookingAmount = 300;
     }
@@ -24,7 +27,7 @@ export default class AppointmentUseCase {
     async createAppointment(
         appointmentData: IAppointment,
         patientId: string
-    ): Promise<{ appointmentId: string, orderId: string }> {
+    ): Promise<{ appointmentId: string, orderId: string, patient: IPatient }> {
         this.validateAppointmentData(appointmentData, patientId);
 
         const slot = await this.slotRepository.findById(appointmentData.slotId!);
@@ -48,7 +51,7 @@ export default class AppointmentUseCase {
 
         const razorpayOrder = await this.paymentService.createOrder(this.bookingAmount, 'INR', `receipt_${payment._id}`);
 
-        
+
         const appointmentId = await this.appointmentRepository.create({
             ...appointmentData,
             patientId,
@@ -61,8 +64,10 @@ export default class AppointmentUseCase {
             orderId: razorpayOrder.id!,
             appointmentId
         });
-        
-        return { orderId: razorpayOrder.id, appointmentId };
+
+        const patient = await this.patientRepository.findById(patientId)!
+
+        return { orderId: razorpayOrder.id, appointmentId, patient: { email: patient?.email, name: patient?.name, phone: patient?.phone } };
     }
 
     async verifyPayment(paymentData: { razorpay_order_id: string, razorpay_payment_id: string, razorpay_signature: string }, appointmentId: string): Promise<void> {

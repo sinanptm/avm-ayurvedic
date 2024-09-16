@@ -72,12 +72,17 @@ export const getDoctorsList = async () => {
    return response.data;
 };
 
-export const createAppointment = async (appointment:IAppointment)=>{
-   const response = await axiosInstance.post('/',{appointment});
+export const createAppointment = async (appointment: IAppointment) => {
+   const response = await axiosInstance.post('/', { appointment });
    return response.data;
 }
 
-export const completePayment = async (data:any)=>{
-   const response = await axiosInstance.put('/',data);
+export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymentProps) => {
+   const response = await axiosInstance.post('/verify-payment', { paymentData, appointmentId });
    return response.data;
+}
+
+export type verifyPaymentProps = {
+   paymentData: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string };
+   appointmentId: string
 }

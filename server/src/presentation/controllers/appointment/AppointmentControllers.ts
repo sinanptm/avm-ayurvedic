@@ -11,8 +11,8 @@ export default class AppointmentController {
         try {
             const { appointment } = req.body;
             const patientId = req.patient?.id;
-            const { appointmentId, orderId } = await this.appointmentUseCase.createAppointment(appointment, patientId!);
-            res.status(StatusCode.Success).json({ orderId, appointmentId });
+            const { appointmentId, orderId, patient } = await this.appointmentUseCase.createAppointment(appointment, patientId!);
+            res.status(StatusCode.Success).json({ orderId, appointmentId, patient });
         } catch (error: any) {
             next(error);
         }
@@ -20,8 +20,8 @@ export default class AppointmentController {
 
     async completePayment(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const { razorpay_order_id, razorpay_payment_id, razorpay_signature, appointmentId } = req.body;
-            await this.appointmentUseCase.verifyPayment({ razorpay_order_id, razorpay_payment_id, razorpay_signature }, appointmentId)
+            const {  appointmentId,paymentData } = req.body;
+            await this.appointmentUseCase.verifyPayment(paymentData, appointmentId)
             res.status(StatusCode.Success).json({ message: "Payment Verification Completed" });
         } catch (error) {
             next(error)

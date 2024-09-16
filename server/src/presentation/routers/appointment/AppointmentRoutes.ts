@@ -8,6 +8,7 @@ import JWTService from '../../../infrastructure/services/JWTService';
 import JoiService from '../../../infrastructure/services/JoiService';
 import RazorPayService from '../../../infrastructure/services/RazorPayService';
 import PaymentRepository from '../../../infrastructure/repositories/PaymentRepository';
+import PatientRepository from '../../../infrastructure/repositories/PatientRepository';
 
 const router = express.Router();
 
@@ -17,9 +18,10 @@ const slotRepository = new SlotRepository();
 const tokenService = new JWTService();
 const validatorService = new JoiService();
 const paymentService = new RazorPayService();
-const paymentRepository = new PaymentRepository()
+const paymentRepository = new PaymentRepository();
+const patientRepository = new PatientRepository()
 
-const appointmentUseCase = new AppointmentUseCase(appointmentRepository, slotRepository, validatorService, paymentService, paymentRepository);
+const appointmentUseCase = new AppointmentUseCase(appointmentRepository, slotRepository, validatorService, paymentService, paymentRepository, patientRepository);
 
 const appointmentController = new AppointmentController(appointmentUseCase);
 

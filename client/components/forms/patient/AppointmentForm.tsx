@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import { AppointmentTypes } from "@/constants";
 import { FormFieldType } from "@/types/fromTypes";
-import { useCompletePaymentAppointment, useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointment";
+import { useVerifyPaymentAppointment, useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointment";
 import { useGetSlotsOfDoctor } from "@/lib/hooks/slots/useSlot";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -20,12 +20,20 @@ import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/for
 import { toast } from "@/components/ui/use-toast";
 import { AppointmentType } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
+import loadRazorpayScript from '@/lib/utils/loadRazorpayScript'
+
+// Declare Razorpay in the global scope
+declare global {
+   interface Window {
+      Razorpay: any;
+   }
+}
 
 const AppointmentForm = () => {
    const { data: doctorsData, isLoading: isDoctorsLoading } = useGetDoctorsList();
+   const { mutate: verifyPayment } = useVerifyPaymentAppointment();
    const [isDoctorSelected, setIsDoctorSelected] = useState(false);
    const { mutate: createAppointment, isPending } = useCreateAppointment();
-   const {mutate:completePayment} = useCompletePaymentAppointment()
    const query = useQueryClient();
 
    const form = useForm<z.infer<typeof appointmentFormValidation>>({
@@ -77,15 +85,60 @@ const AppointmentForm = () => {
             },
          },
          {
-            onSuccess: async({paymentSessionId})=> {
+            onSuccess: async ({ appointmentId, orderId, patient }) => {
                toast({
                   title: "Appointment Created",
-                  description: "We will notify you once the doctor approves your appointment",
+                  description: "Redirecting to payment...",
                   variant: "success",
                });
-               query.invalidateQueries({
-                  queryKey: ["doctorSlots", slotFilter.doctorId, slotFilter.date instanceof Date ? slotFilter.date.toISOString() : ""]
-               })
+
+               // Load Razorpay SDK
+               const isRazorpayLoaded = await loadRazorpayScript();
+               if (!isRazorpayLoaded) {
+                  toast({
+                     title: "Payment Error",
+                     description: "Razorpay SDK failed to load. Please try again.",
+                     variant: "destructive",
+                  });
+                  return;
+               }
+
+               const paymentOptions = {
+                  key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                  amount: 300 * 100,
+                  currency: "INR",
+                  name: "Your App",
+                  description: "Appointment Payment",
+                  order_id: orderId,
+                  handler: async function (response: { razorpay_order_id: string, razorpay_payment_id: string, razorpay_signature: string }) {
+                     verifyPayment({
+                        data: {
+                           appointmentId,
+                           paymentData: {
+                              razorpay_order_id: response.razorpay_order_id,
+                              razorpay_payment_id: response.razorpay_payment_id,
+                              razorpay_signature: response.razorpay_signature,
+                           }
+                        }
+                     });
+                     toast({
+                        title: "Payment Success",
+                        description: "Your payment was successful and the appointment is confirmed.",
+                        variant: "success",
+                     });
+                  },
+                  prefill: {
+                     name: patient.name,
+                     email: patient.email,
+                     contact: patient.phone,
+                  },
+                  theme: {
+                     color: "#3399cc",
+                  },
+               };
+
+               const paymentObject = new window.Razorpay(paymentOptions);
+               paymentObject.open();
             },
             onError(error) {
                const message =
