@@ -76,3 +76,8 @@ export const createAppointment = async (appointment:IAppointment)=>{
    const response = await axiosInstance.post('/',{appointment});
    return response.data;
 }
+
+export const completePayment = async (data:any)=>{
+   const response = await axiosInstance.put('/',data);
+   return response.data;
+}

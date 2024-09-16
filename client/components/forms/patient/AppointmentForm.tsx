@@ -11,7 +11,7 @@ import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import { AppointmentTypes } from "@/constants";
 import { FormFieldType } from "@/types/fromTypes";
-import { useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointment";
+import { useCompletePaymentAppointment, useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointment";
 import { useGetSlotsOfDoctor } from "@/lib/hooks/slots/useSlot";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,7 @@ const AppointmentForm = () => {
    const { data: doctorsData, isLoading: isDoctorsLoading } = useGetDoctorsList();
    const [isDoctorSelected, setIsDoctorSelected] = useState(false);
    const { mutate: createAppointment, isPending } = useCreateAppointment();
+   const {mutate:completePayment} = useCompletePaymentAppointment()
    const query = useQueryClient();
 
    const form = useForm<z.infer<typeof appointmentFormValidation>>({
@@ -76,7 +77,7 @@ const AppointmentForm = () => {
             },
          },
          {
-            onSuccess() {
+            onSuccess: async({paymentSessionId})=> {
                toast({
                   title: "Appointment Created",
                   description: "We will notify you once the doctor approves your appointment",

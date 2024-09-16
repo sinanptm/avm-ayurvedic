@@ -4,8 +4,8 @@ import AppointmentModel from "../database/AppointmentModel";
 
 export default class AppointmentRepository implements IAppointmentRepository {
     model = AppointmentModel
-    async create(appointment: IAppointment): Promise<void> {
-        await this.model.create(appointment)
+    async create(appointment: IAppointment): Promise<string> {
+        return (await this.model.create(appointment))._id
     }
     async update(appointment: IAppointment): Promise<void> {
         await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true })
@@ -14,9 +14,9 @@ export default class AppointmentRepository implements IAppointmentRepository {
     async findOneBySlotId(slotId: string): Promise<IAppointment | null> {
         return await this.model.findOne({ slotId });
     }
-    
+
     async findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null> {
-        return await this.model.find({appointmentDate,doctorId});
+        return await this.model.find({ appointmentDate, doctorId });
     }
     async findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null> {
         return await this.model.findOne({ appointmentDate, slotId })
@@ -28,6 +28,10 @@ export default class AppointmentRepository implements IAppointmentRepository {
 
     async updateManyBySlotIds(slotIds: string[], fields: Partial<IAppointment>): Promise<void> {
         await this.model.updateMany({ slotId: { $in: slotIds } }, fields);
+    }
+
+    async updateAppointmentStatusToConfirmed(appointmentId: string): Promise<void> {
+        await this.model.findByIdAndUpdate(appointmentId, { status: AppointmentStatus.PENDING });
     }
 
 }

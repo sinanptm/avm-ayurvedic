@@ -32,7 +32,7 @@ const appointmentSchema = new Schema<IAppointment>(
     },
     reason: {
       type: String,
-      default: null,
+      required:true
     },
     notes: {
       type: String,
@@ -44,6 +44,11 @@ const appointmentSchema = new Schema<IAppointment>(
       default: AppointmentStatus.PENDING,
       required: true,
     },
+    paymentId:{
+      type:String,
+      required:true,
+      default:null
+    }
   },
   {
     timestamps: true, 
