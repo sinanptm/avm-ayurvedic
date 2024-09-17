@@ -3,7 +3,6 @@ import IPaymentService, { RazorpayOrder } from '../../domain/interface/services/
 import { StatusCode } from '../../types';
 import CustomError from '../../domain/entities/CustomError'
 import * as crypto from 'crypto';
-import logger from '../../utils/logger';
 
 
 export default class RazorPayService implements IPaymentService {
@@ -31,7 +30,6 @@ export default class RazorPayService implements IPaymentService {
                 amount: typeof order.amount === 'string' ? parseInt(order.amount, 10) : order.amount,
             };
         } catch (error) {
-            logger.error(error)
             throw new CustomError('Error creating Razorpay order', StatusCode.PaymentError);
         }
     }
