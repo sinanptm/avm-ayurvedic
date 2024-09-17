@@ -1,3 +1,6 @@
+import { IPatient } from "./IPatient";
+import ISlot from "./ISlot";
+
 export enum AppointmentStatus {
     PAYMENT_PENDING = 'payment-pending',
     PENDING = 'pending',
@@ -22,4 +25,9 @@ export default interface IAppointment {
     readonly notes?: string;
     readonly paymentId?: string;
     status?: AppointmentStatus;
+}
+
+export interface IExtendedAppointment extends IAppointment {
+    patient?: IPatient;   
+    slot?: ISlot;       
 }

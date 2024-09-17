@@ -1,5 +1,5 @@
 import { IPatient } from "@/types";
-import axios from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 const getAuthTokens = () => {
    try {
@@ -14,7 +14,7 @@ const setAuthTokens = (tokens: Record<string, string>) => {
    localStorage.setItem("auth", JSON.stringify(tokens));
 };
 
-const axiosInstance = axios.create({
+const patientAxiosInstance = axios.create({
    baseURL: `${process.env.NEXT_PUBLIC_API_URL}/patient`,
    headers: {
       "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const axiosInstance = axios.create({
    withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use(
+patientAxiosInstance.interceptors.request.use(
    (config) => {
       const tokens = getAuthTokens();
       if (tokens.patientToken) {
@@ -33,7 +33,7 @@ axiosInstance.interceptors.request.use(
    (error) => Promise.reject(error)
 );
 
-axiosInstance.interceptors.response.use(
+patientAxiosInstance.interceptors.response.use(
    (response) => response,
    async (error: any) => {
       const originalRequest = error.config;
@@ -54,7 +54,7 @@ axiosInstance.interceptors.response.use(
             setAuthTokens({ ...tokens, patientToken: newAccessToken });
 
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-            return axiosInstance(originalRequest);
+            return patientAxiosInstance(originalRequest);
          } catch (refreshError: any) {
             if (refreshError.response?.status === 401 || 403) {
                setAuthTokens({ ...tokens, patientToken: "" });
@@ -68,21 +68,25 @@ axiosInstance.interceptors.response.use(
 );
 
 export const getPatientProfile = async () => {
-   const response = await axiosInstance.get(`/profile`);
+   const response = await patientAxiosInstance.get(`/profile`);
    return response.data;
 };
 
 export const updatePatientProfile = async (patient: IPatient) => {
-   const response = await axiosInstance.put("/profile", { patient });
+   const response = await patientAxiosInstance.put("/profile", { patient });
    return response.data;
 };
 
 export const getUpdateProfileUrl = async () => {
-   const response = await axiosInstance.get("/profile/upload-url");
+   const response = await patientAxiosInstance.get("/profile/upload-url");
    return response.data;
 };
 
 export const updateProfileImage = async (key: string) => {
-   const response = await axiosInstance.put("/profile/upload-url", { key });
+   const response = await patientAxiosInstance.put("/profile/upload-url", { key });
    return response.data;
 };
+
+
+
+export default patientAxiosInstance
