@@ -3,6 +3,7 @@ import { IPatient } from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import { PaginatedResult, StatusCode } from "../../types";
 import PatientModel from "../database/PatientModel";
+import { getPaginatedResult } from "./getPaginatedResult";
 
 export default class PatientRepository implements IPatientRepository {
    model = PatientModel;
@@ -11,18 +12,7 @@ export default class PatientRepository implements IPatientRepository {
       const totalItems = await this.model.countDocuments();
       const items = await this.model.find().skip(offset).limit(limit).select(["-token", "-password"]).exec();
 
-      const currentPage = Math.floor(offset / limit) + 1;
-      const totalPages = Math.ceil(totalItems / limit);
-      const hasNextPage = currentPage < totalPages;
-      const hasPreviousPage = currentPage > 1;
-      return {
-         currentPage,
-         hasNextPage,
-         hasPreviousPage,
-         items,
-         totalItems,
-         totalPages,
-      };
+      return getPaginatedResult(totalItems,offset,limit,items)
    }
 
    async create(patient: IPatient): Promise<IPatient | never> {

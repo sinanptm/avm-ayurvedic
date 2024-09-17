@@ -3,6 +3,7 @@ import IDoctorRepository from "../../domain/interface/repositories/IDoctorReposi
 import DoctorModel from "../database/DoctorModel";
 import { Types } from 'mongoose'
 import { PaginatedResult } from "../../types";
+import { getPaginatedResult } from "./getPaginatedResult";
 
 export default class DoctorRepository implements IDoctorRepository {
    model = DoctorModel;
@@ -29,19 +30,6 @@ export default class DoctorRepository implements IDoctorRepository {
          .limit(limit)
          .select('-password -token');
 
-      const currentPage = Math.floor(offset / limit) + 1;
-      const totalPages = Math.ceil(totalItems / limit);
-      const hasNextPage = currentPage < totalPages;
-      const hasPreviousPage = currentPage > 1;
-
-
-      return {
-         currentPage,
-         hasNextPage,
-         hasPreviousPage,
-         items,
-         totalItems,
-         totalPages,
-      };
+         return getPaginatedResult(totalItems,offset,limit,items)
    }
 }
