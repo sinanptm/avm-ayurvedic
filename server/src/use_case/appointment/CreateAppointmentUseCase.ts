@@ -24,7 +24,7 @@ export default class AppointmentUseCase {
         this.bookingAmount = 300;
     }
 
-    async createAppointment(
+    async exec(
         appointmentData: IAppointment,
         patientId: string
     ): Promise<{ appointmentId: string, orderId: string, patient: IPatient }> {

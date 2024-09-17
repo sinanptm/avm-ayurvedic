@@ -4,6 +4,7 @@ import AppointmentModel from "../database/AppointmentModel";
 
 export default class AppointmentRepository implements IAppointmentRepository {
     model = AppointmentModel
+
     async create(appointment: IAppointment): Promise<string> {
         return (await this.model.create(appointment))._id
     }
@@ -11,12 +12,12 @@ export default class AppointmentRepository implements IAppointmentRepository {
         await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true })
     }
 
-    async findOneBySlotId(slotId: string): Promise<IAppointment | null> {
-        return await this.model.findOne({ slotId });
+    async findManyByDoctorId(doctorId: string, status: AppointmentStatus): Promise<IAppointment[] | null> {
+        return await this.model.find({ doctorId, status });
     }
 
     async findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null> {
-        const dateWithoutTime = appointmentDate.split('T')[0]; 
+        const dateWithoutTime = appointmentDate.split('T')[0];
         return await this.model.find({
             doctorId,
             appointmentDate: { $regex: new RegExp(`^${dateWithoutTime}`) }
@@ -26,9 +27,6 @@ export default class AppointmentRepository implements IAppointmentRepository {
         return await this.model.findOne({ appointmentDate, slotId })
     }
 
-    async updateStatusMany(appointmentIds: string[], status: AppointmentStatus): Promise<void> {
-        await this.model.updateMany({ _id: { $in: appointmentIds } }, { status })
-    }
 
     async updateManyBySlotIds(slotIds: string[], fields: Partial<IAppointment>): Promise<void> {
         await this.model.updateMany({ slotId: { $in: slotIds } }, fields);
