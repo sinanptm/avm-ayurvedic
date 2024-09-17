@@ -21,7 +21,8 @@ export default function PatientsTable({ page }: Props) {
    const [isModelOpen, setModelOpen] = useState(false);
    const [selectedPatient, setSelectedPatient] = useState({});
    const router = useRouter();
-   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage, 7);
+   const limit = 7
+   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage, limit);
    const columns = [
       { name: "Image", width: "w-[80px]" },
       { name: "Name", width: "" },
@@ -50,9 +51,10 @@ export default function PatientsTable({ page }: Props) {
             {isLoading ? (
                <TableSkeleton
                   columns={columns}
+                  showHeader={false}
                   headerDescription="A list of all patients including their details."
                   headerTitle="All Patients"
-                  rows={7}
+                  rows={limit}
                />
             ) : (
                <>

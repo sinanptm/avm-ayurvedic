@@ -36,7 +36,8 @@ export default function DoctorsPage({ page, type }: Props) {
   const [isModelOpen, setModelOpen] = useState(false)
   const [tabType, setTabType] = useState<DoctorsFilter>(DoctorsFilter.VERIFIED)
   const router = useRouter()
-  const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage, 7, type);
+  const limit = 7
+  const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage, limit, type);
 
   const doctors = useMemo(() => data?.items || [], [data]);
 
@@ -89,7 +90,8 @@ export default function DoctorsPage({ page, type }: Props) {
                 {isLoading ? (
                   <TableSkeleton
                     columns={columns}
-                    rows={5}
+                    rows={limit}
+                    showHeader={false}
                     headerTitle="All Doctors"
                     headerDescription="A list of all doctors including their status, specialty, qualifications, and more."
                   />
@@ -132,8 +134,7 @@ export default function DoctorsPage({ page, type }: Props) {
                               </TableCell>
                               <TableCell className="text-right">
                                 <Button
-                                  variant="ghost"
-                                  size="sm"
+                                  variant="link" size="sm"
                                   onClick={() => handleViewProfile(doctor)}
                                   aria-label={`View profile of ${doctor.name}`}
                                 >

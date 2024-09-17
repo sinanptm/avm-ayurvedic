@@ -48,7 +48,7 @@ export default function TableSkeleton({
                      <TableRow key={rowIndex}>
                         {columns.map((column, colIndex) => (
                            <TableCell key={colIndex}>
-                              <Skeleton className={`h-4 ${column.width || "w-full"}`} />
+                              <Skeleton className={`h-6 ${column.width || "w-full"}`} />
                            </TableCell>
                         ))}
                      </TableRow>

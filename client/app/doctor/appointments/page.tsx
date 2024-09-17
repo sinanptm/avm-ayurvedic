@@ -1,15 +1,16 @@
-import TabSection from '@/components/view/tab/AppointmentTab'
+import AppointmentTable from '@/components/view/table/DoctorAppointmentTable';
 import { Metadata } from 'next'
-import React from 'react'
 
 
-export const metadata:Metadata = {
-    title:"Appointments"
+export const metadata: Metadata = {
+  title: "Appointments"
 }
 
-const Appointments = () => {
+const Appointments = ({ searchParams }: { searchParams: { page: number } }) => {
+  const page = searchParams.page || 0;
+
   return (
-    <TabSection />
+    <AppointmentTable page={page} />
   )
 }
 
