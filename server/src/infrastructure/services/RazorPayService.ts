@@ -7,7 +7,7 @@ import logger from '../../utils/logger';
 
 
 export default class RazorPayService implements IPaymentService {
-    private razorpay: Razorpay;
+    private razorpay: any;
 
     constructor() {
         this.razorpay = new Razorpay({

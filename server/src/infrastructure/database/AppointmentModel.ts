@@ -5,19 +5,19 @@ const appointmentSchema = new Schema<IAppointment>(
   {
     doctorId: {
       type: Schema.Types.ObjectId,
-      ref: 'Doctor',  
+      ref: 'Doctor',
       required: true,
       index: true,
     },
     patientId: {
       type: Schema.Types.ObjectId,
-      ref: 'Patient', 
+      ref: 'Patient',
       required: true,
       index: true,
     },
     slotId: {
       type: Schema.Types.ObjectId,
-      ref: 'Slot',    
+      ref: 'Slot',
       required: true,
       index: true,
     },
@@ -26,35 +26,26 @@ const appointmentSchema = new Schema<IAppointment>(
       enum: Object.values(AppointmentType),
       required: true,
     },
-    appointmentDate: {
-      type: String,
-      required: true,
-    },
-    reason: {
-      type: String,
-      required:true
-    },
-    notes: {
-      type: String,
-      default: null,
-    },
+    appointmentDate: { type: String, required: true },
+    reason: { type: String, required: true },
+    notes: { type: String, default: null, },
     status: {
       type: String,
-      enum: Object.values(AppointmentStatus), 
+      enum: Object.values(AppointmentStatus),
       default: AppointmentStatus.PENDING,
       required: true,
     },
-    paymentId:{
+    paymentId: {
       type: Schema.Types.ObjectId,
-      ref: 'Payment', 
+      ref: 'Payment',
       required: true,
       index: true,
     }
   },
   {
-    timestamps: true, 
-    versionKey: false, 
-    minimize: false,  
+    timestamps: true,
+    versionKey: false,
+    minimize: false,
   }
 );
 

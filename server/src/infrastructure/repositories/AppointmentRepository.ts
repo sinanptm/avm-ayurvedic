@@ -16,7 +16,11 @@ export default class AppointmentRepository implements IAppointmentRepository {
     }
 
     async findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null> {
-        return await this.model.find({ appointmentDate, doctorId });
+        const dateWithoutTime = appointmentDate.split('T')[0]; 
+        return await this.model.find({
+            doctorId,
+            appointmentDate: { $regex: new RegExp(`^${dateWithoutTime}`) }
+        });
     }
     async findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null> {
         return await this.model.findOne({ appointmentDate, slotId })

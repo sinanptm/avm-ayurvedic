@@ -22,7 +22,6 @@ import { AppointmentType } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 import loadRazorpayScript from '@/lib/utils/loadRazorpayScript'
 
-// Declare Razorpay in the global scope
 declare global {
    interface Window {
       Razorpay: any;
@@ -91,8 +90,6 @@ const AppointmentForm = () => {
                   description: "Redirecting to payment...",
                   variant: "success",
                });
-
-               // Load Razorpay SDK
                const isRazorpayLoaded = await loadRazorpayScript();
                if (!isRazorpayLoaded) {
                   toast({
@@ -107,8 +104,9 @@ const AppointmentForm = () => {
                   key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                   amount: 300 * 100,
                   currency: "INR",
-                  name: "Your App",
+                  name: patient.name,
                   description: "Appointment Payment",
+                  image:patient.profile||"",
                   order_id: orderId,
                   handler: async function (response: { razorpay_order_id: string, razorpay_payment_id: string, razorpay_signature: string }) {
                      verifyPayment({
@@ -123,7 +121,7 @@ const AppointmentForm = () => {
                      });
                      toast({
                         title: "Payment Success",
-                        description: "Your payment was successful and the appointment is confirmed.",
+                        description: "Your payment was successful and the appointment is confirmed. We will notify you once doctor approve you slot.",
                         variant: "success",
                      });
                   },
@@ -131,6 +129,9 @@ const AppointmentForm = () => {
                      name: patient.name,
                      email: patient.email,
                      contact: patient.phone,
+                  },
+                  notes:{
+                     address:"Razorpay Corporate Office"
                   },
                   theme: {
                      color: "#3399cc",
@@ -166,6 +167,7 @@ const AppointmentForm = () => {
             <CustomFormField
                fieldType={FormFieldType.DATE_PICKER}
                control={form.control}
+               showTimeSelect={false}
                name="date"
                showDateText="Appointment date must be in the future"
                label="Expected appointment date"
