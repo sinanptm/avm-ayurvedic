@@ -1,4 +1,3 @@
-import { AppointmentType } from "@/types";
 import { z } from "zod";
 
 export const signinFormValidation = z.object({
@@ -86,10 +85,7 @@ export const appointmentFormValidation = z.object({
    }).trim().min(5, "Reason must be at least 5 characters long")
      .max(500, "Reason must not exceed 500 characters"),
  
-   note: z.string().trim()
-     .min(5, "Notes must be at least 5 characters long")
-     .max(1000, "Notes must not exceed 1000 characters")
-     .optional(),
+   note: z.string(),
  
    date: z.coerce.date(),
   

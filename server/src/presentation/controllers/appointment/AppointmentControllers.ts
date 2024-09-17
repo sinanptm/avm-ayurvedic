@@ -35,8 +35,14 @@ export default class AppointmentController {
         try {
             const doctorId = req.doctor?.id;
             const status = req.query.status as AppointmentStatus;
-            const appointments =  await this.getAppointmentUseCase.getAppointmentsByDoctorId(doctorId!,status);
-            res.status(StatusCode.Success).json({appointments})
+            let offset = parseInt(req.query.offset as string);
+            let limit = parseInt(req.query.limit as string);
+        
+            offset = isNaN(offset) || offset < 0 ? 0 : offset;
+            limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100); 
+            
+            const data =  await this.getAppointmentUseCase.getAppointmentsByDoctorId(doctorId!,offset,limit,status);
+            res.status(StatusCode.Success).json(data)
         } catch (error) {
             next(error)
         }

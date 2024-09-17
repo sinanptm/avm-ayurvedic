@@ -1,6 +1,6 @@
+import axios from "axios";
 import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl";
 import IAppointment, { AppointmentStatus } from "@/types";
-import axios from "axios";
 import patientAxiosInstance from "../patient/authorizedRoutes";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
 
@@ -10,18 +10,16 @@ export type verifyPaymentProps = {
 }
 
 
-const { doctorInstance, patientInstance, baseUrl } = {
-   doctorInstance: doctorAxiosInstance,
-   patientInstance: patientAxiosInstance,
-   baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/appointments`
-}
+ const  baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments`
+
 
 export const getDoctorsList = async () => {
    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/doctors`);
    return response.data;
 };
+
 export const createAppointment = async (appointment: IAppointment) => {
-   const response = await withTempBaseUrl(patientInstance, baseUrl, {
+   const response = await withTempBaseUrl(patientAxiosInstance, baseUrl, {
       method: 'POST',
       url: '/',
       data: {
@@ -32,7 +30,7 @@ export const createAppointment = async (appointment: IAppointment) => {
 };
 
 export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymentProps) => {
-   const response = await withTempBaseUrl(patientInstance, baseUrl, {
+   const response = await withTempBaseUrl(patientAxiosInstance, baseUrl, {
       method: 'POST',
       url: '/verify-payment',
       data: {
@@ -43,10 +41,10 @@ export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymen
 };
 
 
-export const getAppointmentsDoctor = async (status: AppointmentStatus) => {
-   const response = await withTempBaseUrl(doctorInstance, baseUrl, {
+export const getAppointmentsDoctor = async (status: AppointmentStatus,offset: number, limit: number,) => {
+   const response = await withTempBaseUrl(doctorAxiosInstance, baseUrl, {
       method: 'GET',
-      url: `/doctor?status=${status}`,
+      url: `/doctor?status=${status}&${offset}&${limit}`,
    })
    return response.data;
 }

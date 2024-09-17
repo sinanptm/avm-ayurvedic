@@ -170,7 +170,7 @@ const AppointmentForm = () => {
                showTimeSelect={false}
                name="date"
                showDateText="Appointment date must be in the future"
-               label="Expected appointment date"
+               label="Expected appointment date *" 
                isLimited
                dateFormat="dd/MM/yyyy"
             />
@@ -179,7 +179,7 @@ const AppointmentForm = () => {
                fieldType={FormFieldType.SELECT}
                control={form.control}
                name="appointmentType"
-               label="Appointment Type"
+               label="Appointment Type *"
                placeholder="Select an Appointment"
             >
                {AppointmentTypes.map((appointment, i) => (
@@ -202,7 +202,7 @@ const AppointmentForm = () => {
                fieldType={FormFieldType.SELECT}
                control={form.control}
                name="doctor"
-               label="Doctor"
+               label="Doctor *"
             >
                {!isDoctorsLoading && doctorsData?.items ? (
                   doctorsData.items.map((doctor) => (
@@ -231,7 +231,7 @@ const AppointmentForm = () => {
                name="slotId"
                render={({ field }) => (
                   <FormItem>
-                     <FormLabel className="text-gray-200">Time Slot</FormLabel>
+                     <FormLabel className="text-gray-200">Time Slot *</FormLabel>
                      {isDoctorSelected && (
                         <div className="space-y-3 p-3 rounded-lg shadow-md border-2 border-gray-400">
                            <h3 className="text-base font-semibold text-gray-200">
@@ -275,14 +275,14 @@ const AppointmentForm = () => {
                   fieldType={FormFieldType.TEXTAREA}
                   control={form.control}
                   name="reason"
-                  label="Reason for Appointment"
+                  label="Reason for Appointment *"
                   placeholder="Annual monthly check-up"
                />
                <CustomFormField
                   fieldType={FormFieldType.TEXTAREA}
                   control={form.control}
                   name="note"
-                  label="Note"
+                  label="Any Notes"
                   placeholder="Please schedule before evening"
                />
             </div>

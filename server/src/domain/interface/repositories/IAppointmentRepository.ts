@@ -1,3 +1,4 @@
+import { PaginatedResult } from "../../../types";
 import IAppointment, { AppointmentStatus } from "../../entities/IAppointment";
 
 export default interface IAppointmentRepository {
@@ -7,5 +8,5 @@ export default interface IAppointmentRepository {
     findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null>;
     findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null>;
     updateAppointmentStatusToConfirmed(appointmentId: string): Promise<void>;
-    findManyByDoctorId(doctorId: string, status:AppointmentStatus): Promise<IAppointment[] | null>
+    findManyByDoctorId(doctorId: string, status:AppointmentStatus,offset:number,limit:number): Promise<PaginatedResult<IAppointment> | null>
 }

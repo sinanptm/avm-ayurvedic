@@ -1,6 +1,7 @@
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IAppointment, { AppointmentStatus } from "../../domain/entities/IAppointment";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import { PaginatedResult } from "../../types";
 
 export default class GetAppointmentUseCase {
     constructor(
@@ -8,12 +9,12 @@ export default class GetAppointmentUseCase {
         private validatorService: IValidatorService
     ) { }
 
-    async getAppointmentsByDoctorId(doctorId: string, status?: AppointmentStatus): Promise<IAppointment[] | null> {
+    async getAppointmentsByDoctorId(doctorId: string,offset:number,limit:number, status?: AppointmentStatus): Promise<PaginatedResult<IAppointment> | null> {
         this.validatorService.validateIdFormat(doctorId);
         if(status){
             this.validatorService.validateEnum(status,Object.values(AppointmentStatus))
         }
-        return await this.appointmentRepository.findManyByDoctorId(doctorId, status ?? AppointmentStatus.CONFIRMED)
+        return await this.appointmentRepository.findManyByDoctorId(doctorId, status ?? AppointmentStatus.CONFIRMED, offset,limit)
     }
 
 }

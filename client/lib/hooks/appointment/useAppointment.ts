@@ -1,5 +1,5 @@
-import { verifyPayment, createAppointment, getDoctorsList, verifyPaymentProps } from "@/lib/api/appointment"
-import IAppointment, { ErrorResponse, IDoctor, IPatient, MessageResponse, PaginatedResult } from "@/types"
+import { verifyPayment, createAppointment, getDoctorsList, verifyPaymentProps, getAppointmentsDoctor } from "@/lib/api/appointment"
+import IAppointment, { AppointmentStatus, ErrorResponse, IDoctor, IPatient, MessageResponse, PaginatedResult } from "@/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 
@@ -12,7 +12,7 @@ export const useGetDoctorsList = () => {
 };
 
 export const useCreateAppointment = () => {
-    return useMutation<{ orderId: string, appointmentId: string, patient:IPatient }, AxiosError<ErrorResponse>, { appointment: IAppointment }>({
+    return useMutation<{ orderId: string, appointmentId: string, patient: IPatient }, AxiosError<ErrorResponse>, { appointment: IAppointment }>({
         mutationFn: ({ appointment }) => createAppointment(appointment),
         onError: (error) => {
             console.log("Error in creating appointment", error);
@@ -26,5 +26,12 @@ export const useVerifyPaymentAppointment = () => {
         onError: (error) => {
             console.log("Error in Verifying payment ", error);
         }
+    })
+}
+
+export const useGetAppointmentsDoctor = (status: AppointmentStatus, offset: number, limit: number,) => {
+    return useQuery<PaginatedResult<IAppointment>, AxiosError<ErrorResponse>>({
+        queryKey: ["appointments", status, offset, limit,],
+        queryFn: () => getAppointmentsDoctor(status, offset, limit,)
     })
 }

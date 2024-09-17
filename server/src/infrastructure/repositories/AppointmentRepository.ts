@@ -1,5 +1,6 @@
 import IAppointment, { AppointmentStatus } from "../../domain/entities/IAppointment";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import { PaginatedResult } from "../../types";
 import AppointmentModel from "../database/AppointmentModel";
 
 export default class AppointmentRepository implements IAppointmentRepository {
@@ -12,8 +13,24 @@ export default class AppointmentRepository implements IAppointmentRepository {
         await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true })
     }
 
-    async findManyByDoctorId(doctorId: string, status: AppointmentStatus): Promise<IAppointment[] | null> {
-        return await this.model.find({ doctorId, status });
+    async findManyByDoctorId(doctorId: string, status: AppointmentStatus, offset: number, limit: number): Promise<PaginatedResult<IAppointment> | null> {
+        const totalItems = await this.model.countDocuments({ doctorId, status });
+        const items = await this.model.find({ doctorId, status })
+            .skip(offset)
+            .limit(limit)
+            .exec();
+        const currentPage = Math.floor(offset / limit) + 1;
+        const totalPages = Math.ceil(totalItems / limit);
+        const hasNextPage = currentPage < totalPages;
+        const hasPreviousPage = currentPage > 1;
+        return {
+            currentPage,
+            hasNextPage,
+            hasPreviousPage,
+            items,       
+            totalItems,   
+            totalPages,   
+        };
     }
 
     async findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null> {
