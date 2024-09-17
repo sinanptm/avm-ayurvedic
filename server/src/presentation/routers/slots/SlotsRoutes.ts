@@ -18,11 +18,11 @@ const validatorService = new JoiService()
 const slotUseCase = new SlotUseCase(slotRepository, appointmentRepository, validatorService);
 const slotController = new SlotController(slotUseCase);
 
-router.post('/day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createManyByDay.bind(slotController));
-router.post('/all-days', authorizeDoctor.exec.bind(authorizeDoctor), slotController.createForAllDays.bind(slotController));
-router.delete('/day', authorizeDoctor.exec.bind(authorizeDoctor), slotController.deleteManyByDay.bind(slotController));
-router.delete('/all-days', authorizeDoctor.exec.bind(authorizeDoctor), slotController.deleteForAllDays.bind(slotController));
-router.get('/doctor', authorizeDoctor.exec.bind(authorizeDoctor), slotController.getAllDoctorSlots.bind(slotController));
+router.post('/day', authorizeDoctor.exec, slotController.createManyByDay.bind(slotController));
+router.post('/all-days', authorizeDoctor.exec, slotController.createForAllDays.bind(slotController));
+router.delete('/day', authorizeDoctor.exec, slotController.deleteManyByDay.bind(slotController));
+router.delete('/all-days', authorizeDoctor.exec, slotController.deleteForAllDays.bind(slotController));
+router.get('/doctor', authorizeDoctor.exec, slotController.getAllDoctorSlots.bind(slotController));
 router.get('/:doctorId', slotController.getAllSlotsByDoctorId.bind(slotController));
 
 export default router;

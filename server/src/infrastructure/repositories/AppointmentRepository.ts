@@ -1,4 +1,4 @@
-import IAppointment, { AppointmentStatus } from "../../domain/entities/IAppointment";
+import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import { PaginatedResult } from "../../types";
 import AppointmentModel from "../database/AppointmentModel";
@@ -6,14 +6,41 @@ import { getPaginatedResult } from "./getPaginatedResult";
 
 export default class AppointmentRepository implements IAppointmentRepository {
     model = AppointmentModel
-
+    
     async create(appointment: IAppointment): Promise<string> {
         return (await this.model.create(appointment))._id
     }
     async update(appointment: IAppointment): Promise<void> {
         await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true })
     }
-
+    
+    async findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null> {
+        const appointment = await this.model.aggregate([
+            { $match: { _id: appointmentId } },
+            {
+                $lookup: {
+                    from: 'patients',
+                    localField: 'patientId',
+                    foreignField: '_id',
+                    as: 'patient'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'slots',
+                    localField: 'slotId',
+                    foreignField: '_id',
+                    as: 'slot'
+                }
+            },
+            { $unwind: { path: '$patient', preserveNullAndEmptyArrays: true } },
+            { $unwind: { path: '$slot', preserveNullAndEmptyArrays: true } }
+        ]).exec();
+    
+        return appointment.length ? appointment[0] as IExtendedAppointment : null;
+    }
+    
+    
     async findManyByDoctorId(doctorId: string, status: AppointmentStatus, offset: number, limit: number): Promise<PaginatedResult<IAppointment> | null> {
         const totalItems = await this.model.countDocuments({ doctorId, status });
         const items = await this.model.find({ doctorId, status })

@@ -28,9 +28,9 @@ const errorHandler = new ErrorHandler();
 
 app.get('/doctors', unauthenticatedController.getDoctors.bind(unauthenticatedController))
 app.use("/patient/auth", patientAuthentication);
-app.use("/patient", authorizePatient.exec.bind(authorizePatient), protectedRoutes);
+app.use("/patient", authorizePatient.exec, protectedRoutes);
 app.use("/admin/auth", adminAuthentication);
-app.use("/admin", authorizeAdmin.exec.bind(authorizeAdmin), protectedAdminRoutes);
+app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/doctor/auth", doctorAuthentication);
 app.use('/slots', slotRoutes);
 app.use('/appointments', appointmentRoutes)

@@ -1,5 +1,5 @@
 import { PaginatedResult } from "../../../types";
-import IAppointment, { AppointmentStatus } from "../../entities/IAppointment";
+import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../entities/IAppointment";
 
 export default interface IAppointmentRepository {
     create(appointment: IAppointment): Promise<string>;
@@ -8,5 +8,6 @@ export default interface IAppointmentRepository {
     findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null>;
     findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null>;
     updateAppointmentStatusToConfirmed(appointmentId: string): Promise<void>;
-    findManyByDoctorId(doctorId: string, status:AppointmentStatus,offset:number,limit:number): Promise<PaginatedResult<IAppointment> | null>
+    findManyByDoctorId(doctorId: string, status: AppointmentStatus, offset: number, limit: number): Promise<PaginatedResult<IAppointment> | null>;
+    findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null>
 }

@@ -4,7 +4,9 @@ import { CustomRequest, StatusCode, UserRole } from "../../types";
 import logger from "../../utils/logger";
 
 export default class AdminAuthMiddleware {
-   constructor(private tokenService: ITokenService) { }
+   constructor(private tokenService: ITokenService) { 
+      this.exec = this.exec.bind(this);
+   }
 
    exec(req: CustomRequest, res: Response, next: NextFunction) {
       try {

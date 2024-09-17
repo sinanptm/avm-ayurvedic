@@ -23,7 +23,7 @@ export default class AppointmentController {
 
     async completePayment(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const {  appointmentId,paymentData } = req.body;
+            const { appointmentId, paymentData } = req.body;
             await this.createAppointmentUseCase.verifyPayment(paymentData, appointmentId)
             res.status(StatusCode.Success).json({ message: "Payment Verification Completed" });
         } catch (error) {
@@ -31,18 +31,28 @@ export default class AppointmentController {
         }
     }
 
-    async getAppointmentsDoctor(req:CustomRequest,res:Response,next:NextFunction){
+    async getAppointmentsDoctor(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
             const status = req.query.status as AppointmentStatus;
             let offset = parseInt(req.query.offset as string);
             let limit = parseInt(req.query.limit as string);
-        
+
             offset = isNaN(offset) || offset < 0 ? 0 : offset;
-            limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100); 
-            
-            const data =  await this.getAppointmentUseCase.getAppointmentsByDoctorId(doctorId!,offset,limit,status);
+            limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
+
+            const data = await this.getAppointmentUseCase.getAppointmentsByDoctorId(doctorId!, offset, limit, status);
             res.status(StatusCode.Success).json(data)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getAppointmentDetails(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const appointmentId = req.params.appointmentId
+            const appointment = this.getAppointmentUseCase.getAppointmentDetails(appointmentId);
+            res.status(StatusCode.Success).json({ appointment });
         } catch (error) {
             next(error)
         }
