@@ -27,7 +27,7 @@ const patientRepository = new PatientRepository()
 
 const createAppointmentUseCase = new CreateAppointmentUseCase(appointmentRepository, slotRepository, validatorService, paymentService, paymentRepository, patientRepository);
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService);
-const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository,validatorService)
+const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService)
 
 const appointmentController = new AppointmentController(createAppointmentUseCase, getAppointmentUseCase, updateAppointmentUseCase);
 const authorizePatient = new PatientAuthMiddleware(tokenService);
@@ -38,6 +38,7 @@ router.post('/patient/verify-payment', authorizePatient.exec, appointmentControl
 router.get('/patient/details/:appointmentId', authorizePatient.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
 router.post('/patient/', authorizePatient.exec, appointmentController.create.bind(appointmentController));
 router.get('/patient/', authorizePatient.exec, appointmentController.getAppointmentsPatient.bind(appointmentController));
+router.put('/patient/', authorizePatient.exec, appointmentController.updateStatusAndNotes.bind(appointmentController));
 
 router.get('/doctor/details/:appointmentId', authorizeDoctor.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
 router.get('/doctor', authorizeDoctor.exec, appointmentController.getAppointmentsDoctor.bind(appointmentController));

@@ -14,4 +14,10 @@ export default class UpdateAppointmentUseCase {
         this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
         await this.appointmentRepository.update({ _id: appointmentId, status })
     }
+
+    async updateStatusAndNote(appointmentId: string, status: AppointmentStatus, notes: string): Promise<void> {
+        this.validatorService.validateRequiredFields({ appointmentId, status, notes });
+        this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
+        await this.appointmentRepository.update({ _id: appointmentId, status, notes });
+    }
 }

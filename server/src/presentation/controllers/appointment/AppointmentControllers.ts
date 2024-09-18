@@ -4,6 +4,7 @@ import CreateAppointmentUseCase from "../../../use_case/appointment/CreateAppoin
 import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentUseCase";
 import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
 import { AppointmentStatus } from "../../../domain/entities/IAppointment";
+import { not } from "joi";
 
 export default class AppointmentController {
     constructor(
@@ -87,4 +88,13 @@ export default class AppointmentController {
         }
     }
 
+    async updateStatusAndNotes(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const { appointmentId, status, notes } = req.body;
+            await this.updateAppointmentUseCase.updateStatusAndNote(appointmentId, status, notes);
+            res.status(StatusCode.Success).json({ message: "Appointment updated successfully" });
+        } catch (error) {
+            next(error)
+        }
+    }
 }

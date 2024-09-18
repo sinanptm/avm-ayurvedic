@@ -75,10 +75,19 @@ export const getAppointmentsPatient = async (offset: number, limit: number, stat
    return response.data;
 }
 
-export const getAppointmentDetailsPatient = async(appointmentId:string)=>{
+export const getAppointmentDetailsPatient = async (appointmentId: string) => {
    const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
       method: "GET",
       url: `/details/${appointmentId}`
    });
    return response.data
+}
+
+export const updateStatusAndNotesPatient = async (appointmentId: string, status: AppointmentStatus, notes: string) => {
+   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
+      method: "PUT",
+      url: "/",
+      data: { status, appointmentId, notes }
+   });
+   return response.data;
 }
