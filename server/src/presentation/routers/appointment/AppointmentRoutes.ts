@@ -35,6 +35,6 @@ const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 router.post('/verify-payment', authorizePatient.exec, appointmentController.completePayment.bind(appointmentController))
 router.post('/', authorizePatient.exec, appointmentController.create.bind(appointmentController));
 router.get('/doctor', authorizeDoctor.exec, appointmentController.getAppointmentsDoctor.bind(appointmentController));
-router.get(':appointmentId', authorizeDoctor.exec, appointmentController.getAppointmentDetails.bind(appointmentController))
+router.get('/doctor/details/:appointmentId', authorizeDoctor.exec, appointmentController.getAppointmentDetails.bind(appointmentController))
 
 export default router;

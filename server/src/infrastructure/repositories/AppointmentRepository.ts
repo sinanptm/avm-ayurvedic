@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import { PaginatedResult } from "../../types";
@@ -15,8 +16,10 @@ export default class AppointmentRepository implements IAppointmentRepository {
     }
     
     async findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null> {
+        const objectId = new mongoose.Types.ObjectId(appointmentId);
+        
         const appointment = await this.model.aggregate([
-            { $match: { _id: appointmentId } },
+            { $match: { _id: objectId } },
             {
                 $lookup: {
                     from: 'patients',
@@ -34,11 +37,23 @@ export default class AppointmentRepository implements IAppointmentRepository {
                 }
             },
             { $unwind: { path: '$patient', preserveNullAndEmptyArrays: true } },
-            { $unwind: { path: '$slot', preserveNullAndEmptyArrays: true } }
+            { $unwind: { path: '$slot', preserveNullAndEmptyArrays: true } },
+            {
+                $project: {
+                    'patient.password': 0,
+                    'patient.token': 0
+                }
+            }
         ]).exec();
+        
+        if (!appointment || appointment.length === 0) {
+            return null; 
+        }
     
-        return appointment.length ? appointment[0] as IExtendedAppointment : null;
+        return appointment[0] as IExtendedAppointment;
     }
+    
+    
     
     
     async findManyByDoctorId(doctorId: string, status: AppointmentStatus, offset: number, limit: number): Promise<PaginatedResult<IAppointment> | null> {

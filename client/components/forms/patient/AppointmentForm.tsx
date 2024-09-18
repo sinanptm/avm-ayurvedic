@@ -11,7 +11,7 @@ import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import { AppointmentTypes } from "@/constants";
 import { FormFieldType } from "@/types/fromTypes";
-import { useVerifyPaymentAppointment, useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointment";
+import { useVerifyPaymentAppointment, useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointmentDoctor";
 import { useGetSlotsOfDoctor } from "@/lib/hooks/slots/useSlot";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";

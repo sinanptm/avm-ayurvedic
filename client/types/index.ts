@@ -114,3 +114,9 @@ export default interface IAppointment {
    readonly notes?: string;
    status?: AppointmentStatus;
 }
+
+
+export interface IExtendedAppointment extends IAppointment {
+   patient?: IPatient;   
+   slot?: ISlot;       
+}

@@ -1,5 +1,5 @@
-import { verifyPayment, createAppointment, getDoctorsList, verifyPaymentProps, getAppointmentsDoctor } from "@/lib/api/appointment"
-import IAppointment, { AppointmentStatus, ErrorResponse, IDoctor, IPatient, MessageResponse, PaginatedResult } from "@/types"
+import { verifyPayment, createAppointment, getDoctorsList, verifyPaymentProps, getAppointmentsDoctor, getAppointmentDetailsDoctor } from "@/lib/api/appointment"
+import IAppointment, { AppointmentStatus, ErrorResponse, IDoctor, IExtendedAppointment, IPatient, MessageResponse, PaginatedResult } from "@/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 
@@ -29,9 +29,19 @@ export const useVerifyPaymentAppointment = () => {
     })
 }
 
-export const useGetAppointmentsDoctor = (status: AppointmentStatus, offset: number, limit: number,) => {
+export const useGetAppointmentsDoctor = ( offset: number, limit: number,status?: AppointmentStatus) => {
     return useQuery<PaginatedResult<IAppointment>, AxiosError<ErrorResponse>>({
         queryKey: ["appointments", status, offset, limit],
-        queryFn: () => getAppointmentsDoctor(status, offset, limit)
+        queryFn: () => getAppointmentsDoctor(offset, limit,status)
+    })
+}
+
+export const useGetAppointmentDetailsDoctor = (appointmentId: string) => {
+    return useQuery<IExtendedAppointment,AxiosError<ErrorResponse>>({
+        queryFn: () => getAppointmentDetailsDoctor(appointmentId),
+        queryKey: ['appointmentDetails', appointmentId],
+        retry:1,
+        retryOnMount:false,
+        retryDelay:1000*40
     })
 }

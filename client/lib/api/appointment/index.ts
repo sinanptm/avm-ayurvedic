@@ -41,10 +41,18 @@ export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymen
 };
 
 
-export const getAppointmentsDoctor = async (status: AppointmentStatus,offset: number, limit: number,) => {
+export const getAppointmentsDoctor = async (offset: number, limit: number,status?: AppointmentStatus) => {
    const response = await withTempBaseUrl(doctorAxiosInstance, baseUrl, {
       method: 'GET',
-      url: `/doctor?status=${status}&offset=${offset}&limit=${limit}`,
+      url: `/doctor?status=${status??''}&offset=${offset}&limit=${limit}`,
    })
    return response.data;
 }
+
+export const getAppointmentDetailsDoctor = async(appointmentId:string)=>{
+   const response = await withTempBaseUrl(doctorAxiosInstance,baseUrl,{
+      method:"GET",
+      url: `/doctor/details/${appointmentId}`
+   });
+   return response.data
+};

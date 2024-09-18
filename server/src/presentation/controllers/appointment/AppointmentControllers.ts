@@ -51,8 +51,8 @@ export default class AppointmentController {
     async getAppointmentDetails(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const appointmentId = req.params.appointmentId
-            const appointment = this.getAppointmentUseCase.getAppointmentDetails(appointmentId);
-            res.status(StatusCode.Success).json({ appointment });
+            const appointment = await this.getAppointmentUseCase.getAppointmentDetails(appointmentId);            
+            res.status(StatusCode.Success).json(appointment);
         } catch (error) {
             next(error)
         }
