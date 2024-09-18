@@ -9,15 +9,15 @@ export default class GetAppointmentUseCase {
         private validatorService: IValidatorService
     ) { }
 
-    async getAppointmentsByDoctorId(doctorId: string,offset:number,limit:number, status?: AppointmentStatus): Promise<PaginatedResult<IAppointment> | null> {
+    async getAppointmentsByDoctorId(doctorId: string, offset: number, limit: number, status?: AppointmentStatus): Promise<PaginatedResult<IAppointment> | null> {
         this.validatorService.validateIdFormat(doctorId);
-        if(status){
-            this.validatorService.validateEnum(status,Object.values(AppointmentStatus))
+        if (status) {
+            this.validatorService.validateEnum(status, Object.values(AppointmentStatus))
         }
-        return await this.appointmentRepository.findManyByDoctorId(doctorId, status ?? AppointmentStatus.CONFIRMED, offset,limit)
+        return await this.appointmentRepository.findManyByDoctorId(doctorId, offset, limit, status)
     }
 
-    async getAppointmentDetails(appointmentId:string):Promise<IExtendedAppointment|null>{
+    async getAppointmentDetails(appointmentId: string): Promise<IExtendedAppointment | null> {
         this.validatorService.validateIdFormat(appointmentId)
         return await this.appointmentRepository.findDetailsById(appointmentId);
     }

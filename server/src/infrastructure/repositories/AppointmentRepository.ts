@@ -56,15 +56,19 @@ export default class AppointmentRepository implements IAppointmentRepository {
     
     
     
-    async findManyByDoctorId(doctorId: string, status: AppointmentStatus, offset: number, limit: number): Promise<PaginatedResult<IAppointment> | null> {
-        const totalItems = await this.model.countDocuments({ doctorId, status });
-        const items = await this.model.find({ doctorId, status })
+    async findManyByDoctorId(doctorId: string, offset: number, limit: number, status?: AppointmentStatus): Promise<PaginatedResult<IAppointment> | null> {
+        const filter: { doctorId: string; status?: AppointmentStatus } = { doctorId };
+        if (status) {
+            filter.status = status;
+        }
+        const totalItems = await this.model.countDocuments(filter);
+        const items = await this.model.find(filter)
             .skip(offset)
             .limit(limit)
             .exec();
-      return getPaginatedResult(totalItems,offset,limit,items)
+        return getPaginatedResult(totalItems, offset, limit, items);
     }
-
+    
     async findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null> {
         const dateWithoutTime = appointmentDate.split('T')[0];
         return await this.model.find({

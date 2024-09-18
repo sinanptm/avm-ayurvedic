@@ -8,6 +8,6 @@ export default interface IAppointmentRepository {
     findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null>;
     findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null>;
     updateAppointmentStatusToConfirmed(appointmentId: string): Promise<void>;
-    findManyByDoctorId(doctorId: string, status: AppointmentStatus, offset: number, limit: number): Promise<PaginatedResult<IAppointment> | null>;
+    findManyByDoctorId(doctorId: string, offset: number, limit: number, status?: AppointmentStatus): Promise<PaginatedResult<IAppointment> | null>;
     findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null>
 }
