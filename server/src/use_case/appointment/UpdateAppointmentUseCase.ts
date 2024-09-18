@@ -8,10 +8,10 @@ export default class UpdateAppointmentUseCase {
         private validatorService: IValidatorService
     ) { }
 
-    async updateStatus(appointedId: string, status: AppointmentStatus): Promise<void> {
-        this.validatorService.validateRequiredFields({ appointedId, status })
-        this.validatorService.validateIdFormat(appointedId);
+    async updateStatus(appointmentId: string, status: AppointmentStatus): Promise<void> {
+        this.validatorService.validateRequiredFields({ appointmentId, status })
+        this.validatorService.validateIdFormat(appointmentId);
         this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
-        await this.appointmentRepository.update({ _id: appointedId, status })
+        await this.appointmentRepository.update({ _id: appointmentId, status })
     }
 }

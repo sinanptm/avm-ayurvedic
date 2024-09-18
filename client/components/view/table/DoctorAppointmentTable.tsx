@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useGetAppointmentsDoctor } from "@/lib/hooks/appointment/useAppointmentDoctor"
@@ -10,8 +9,9 @@ import { AppointmentStatus } from "@/types"
 import TableSkeleton from "@/components/skeletons/TableSkelton"
 import Pagination from "@/components/navigation/Pagination"
 import { Button } from "@/components/ui/button"
-import AppointmentDetailsModelDoctor from "@/components/models/appointment/appointmentDetailsDoctor"
+import AppointmentDetailsModelDoctor from "@/components/models/appointment/AppointmentDetailsDoctor"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import GetStatusBadge from "@/components/doctor/slots/GetStatusBadge"
 
 const columns = [
   { name: "Date", width: "w-1/5" },
@@ -76,7 +76,7 @@ export default function AppointmentTable({ page }: Props) {
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-black bg-opacity-75">
               <SelectItem value="all">All Statuses</SelectItem>
               {Object.values(AppointmentStatus).map((status) => (
                 <SelectItem key={status} value={status}>
@@ -116,9 +116,7 @@ export default function AppointmentTable({ page }: Props) {
                       <TableCell>{appointment.appointmentType}</TableCell>
                       <TableCell>{appointment.reason}</TableCell>
                       <TableCell>
-                        <Badge variant={appointment.status === AppointmentStatus.PENDING ? "warning" : "success"}>
-                          {appointment.status}
-                        </Badge>
+                       <GetStatusBadge status={appointment.status!} />
                       </TableCell>
                       <TableCell className="text-right">
                         <Button
@@ -153,7 +151,7 @@ export default function AppointmentTable({ page }: Props) {
           />
         )}
       </CardContent>
-      <AppointmentDetailsModelDoctor appointmentId={appointmentId} isOpen={isModelOpen} setIsOpen={setModelOpen} />
+      <AppointmentDetailsModelDoctor appointmentId={appointmentId} isOpen={isModelOpen} setIsOpen={setModelOpen} refetch={refetch} />
     </Card>
   )
 }

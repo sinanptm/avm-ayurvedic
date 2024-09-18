@@ -36,14 +36,14 @@ export default class AppointmentController {
     async getAppointmentsDoctor(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
-            const status = req.query.status as AppointmentStatus;
+            const status = req.query.status as AppointmentStatus | "undefined";
             let offset = parseInt(req.query.offset as string);
             let limit = parseInt(req.query.limit as string);
 
             offset = isNaN(offset) || offset < 0 ? 0 : offset;
             limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
 
-            const data = await this.getAppointmentUseCase.getAppointmentsByDoctorId(doctorId!, offset, limit, status);
+            const data = await this.getAppointmentUseCase.getAppointmentsByDoctorId(doctorId!, offset, limit,status === 'undefined' ? undefined : status);
             res.status(StatusCode.Success).json(data)
         } catch (error) {
             next(error)
@@ -62,8 +62,9 @@ export default class AppointmentController {
 
     async updateAppointment(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const { appointedId, status } = req.body
-            await this.updateAppointmentUseCase.updateStatus(appointedId, status)
+            const { appointmentId, status } = req.body
+            await this.updateAppointmentUseCase.updateStatus(appointmentId, status);
+            res.status(StatusCode.Success).json({message:"Status Updated"})
         } catch (error) {
             next(error)
         }

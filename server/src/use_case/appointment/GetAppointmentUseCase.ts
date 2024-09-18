@@ -10,7 +10,7 @@ export default class GetAppointmentUseCase {
     ) { }
 
     async getAppointmentsByDoctorId(doctorId: string, offset: number, limit: number, status?: AppointmentStatus): Promise<PaginatedResult<IAppointment> | null> {
-        this.validatorService.validateIdFormat(doctorId);
+        this.validatorService.validateIdFormat(doctorId);       
         if (status) {
             this.validatorService.validateEnum(status, Object.values(AppointmentStatus))
         }

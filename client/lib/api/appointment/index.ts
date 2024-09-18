@@ -10,7 +10,8 @@ export type verifyPaymentProps = {
 }
 
 
- const  baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments`
+const patientBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments/patient`
+const doctorBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments/doctor`
 
 
 export const getDoctorsList = async () => {
@@ -19,9 +20,9 @@ export const getDoctorsList = async () => {
 };
 
 export const createAppointment = async (appointment: IAppointment) => {
-   const response = await withTempBaseUrl(patientAxiosInstance, baseUrl, {
+   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
       method: 'POST',
-      url: '/patient/',
+      url: '/',
       data: {
          appointment
       }
@@ -30,9 +31,9 @@ export const createAppointment = async (appointment: IAppointment) => {
 };
 
 export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymentProps) => {
-   const response = await withTempBaseUrl(patientAxiosInstance, baseUrl, {
+   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
       method: 'POST',
-      url: '/patient/verify-payment',
+      url: '/verify-payment',
       data: {
          paymentData, appointmentId
       }
@@ -41,18 +42,27 @@ export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymen
 };
 
 
-export const getAppointmentsDoctor = async (offset: number, limit: number,status?: AppointmentStatus) => {
-   const response = await withTempBaseUrl(doctorAxiosInstance, baseUrl, {
+export const getAppointmentsDoctor = async (offset: number, limit: number, status?: AppointmentStatus) => {
+   const response = await withTempBaseUrl(doctorAxiosInstance, doctorBaseUrl, {
       method: 'GET',
-      url: `/doctor?status=${status??''}&offset=${offset}&limit=${limit}`,
+      url: `/?status=${status}&offset=${offset}&limit=${limit}`,
    })
    return response.data;
 }
 
-export const getAppointmentDetailsDoctor = async(appointmentId:string)=>{
-   const response = await withTempBaseUrl(doctorAxiosInstance,baseUrl,{
-      method:"GET",
-      url: `/doctor/details/${appointmentId}`
+export const getAppointmentDetailsDoctor = async (appointmentId: string) => {
+   const response = await withTempBaseUrl(doctorAxiosInstance, doctorBaseUrl, {
+      method: "GET",
+      url: `/details/${appointmentId}`
    });
    return response.data
 };
+
+export const updateAppointmentStatusDoctor = async (status: AppointmentStatus, appointmentId: string) => {
+   const response = await withTempBaseUrl(doctorAxiosInstance, doctorBaseUrl, {
+      method: "PUT",
+      url: "/",
+      data: { status, appointmentId }
+   });
+   return response.data;
+}

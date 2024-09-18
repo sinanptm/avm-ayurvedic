@@ -1,4 +1,4 @@
-import { verifyPayment, createAppointment, getDoctorsList, verifyPaymentProps, getAppointmentsDoctor, getAppointmentDetailsDoctor } from "@/lib/api/appointment"
+import { verifyPayment, createAppointment, getDoctorsList, verifyPaymentProps, getAppointmentsDoctor, getAppointmentDetailsDoctor, updateAppointmentStatusDoctor } from "@/lib/api/appointment"
 import IAppointment, { AppointmentStatus, ErrorResponse, IDoctor, IExtendedAppointment, IPatient, MessageResponse, PaginatedResult } from "@/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { AxiosError } from "axios"
@@ -43,5 +43,14 @@ export const useGetAppointmentDetailsDoctor = (appointmentId: string) => {
         retry:1,
         retryOnMount:false,
         retryDelay:1000*40
+    })
+}
+
+export const useUpdateAppointmentStatusDoctor = ()=>{
+    return useMutation<MessageResponse,AxiosError<ErrorResponse>,{appointmentId:string,status:AppointmentStatus}>({
+        mutationFn:({appointmentId,status})=>updateAppointmentStatusDoctor(status,appointmentId),
+        onError: (error) => {
+            console.log("Error in Updating status ", error);
+        }
     })
 }
