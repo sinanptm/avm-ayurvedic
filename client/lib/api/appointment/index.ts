@@ -66,3 +66,11 @@ export const updateAppointmentStatusDoctor = async (status: AppointmentStatus, a
    });
    return response.data;
 }
+
+export const getAppointmentsPatient = async (offset: number, limit: number, status?: AppointmentStatus) => {
+   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
+      method: 'GET',
+      url: `/?status=${status}&offset=${offset}&limit=${limit}`,
+   })
+   return response.data;
+}

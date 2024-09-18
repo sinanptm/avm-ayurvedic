@@ -32,7 +32,7 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
                variant: "destructive",
             });
             setCredentials("patientToken", "");
-         }, 20);
+         });
       }
       notFound();
    }
