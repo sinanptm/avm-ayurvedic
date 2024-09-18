@@ -9,7 +9,7 @@ import { AppointmentStatus } from "@/types"
 import TableSkeleton from "@/components/skeletons/TableSkelton"
 import Pagination from "@/components/navigation/Pagination"
 import { Button } from "@/components/ui/button"
-import AppointmentDetailsModelDoctor from "@/components/models/appointment/AppointmentDetailsDoctor"
+import AppointmentDetailsModelDoctor from "@/components/models/appointment/AppointmentDetailsDoctorModel"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge"
 
