@@ -1,3 +1,4 @@
+import IDoctor from "./IDoctor";
 import { IPatient } from "./IPatient";
 import ISlot from "./ISlot";
 
@@ -29,5 +30,6 @@ export default interface IAppointment {
 
 export interface IExtendedAppointment extends IAppointment {
     patient?: IPatient;   
-    slot?: ISlot;       
+    slot?: ISlot;   
+    doctor?:IDoctor;    
 }

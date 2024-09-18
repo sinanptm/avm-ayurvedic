@@ -117,6 +117,7 @@ export default interface IAppointment {
 
 
 export interface IExtendedAppointment extends IAppointment {
-   patient?: IPatient;   
-   slot?: ISlot;       
+   patient?: IPatient;
+   slot?: ISlot;
+   doctor?: IDoctor;
 }

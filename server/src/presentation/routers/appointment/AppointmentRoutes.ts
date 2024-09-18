@@ -35,9 +35,12 @@ const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
 
 router.post('/patient/verify-payment', authorizePatient.exec, appointmentController.completePayment.bind(appointmentController));
+router.get('/patient/details/:appointmentId', authorizePatient.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
 router.post('/patient/', authorizePatient.exec, appointmentController.create.bind(appointmentController));
-router.get('/doctor', authorizeDoctor.exec, appointmentController.getAppointmentsDoctor.bind(appointmentController));
+router.get('/patient/', authorizePatient.exec, appointmentController.getAppointmentsPatient.bind(appointmentController));
+
 router.get('/doctor/details/:appointmentId', authorizeDoctor.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
+router.get('/doctor', authorizeDoctor.exec, appointmentController.getAppointmentsDoctor.bind(appointmentController));
 router.put('/doctor/', authorizeDoctor.exec, appointmentController.updateAppointment.bind(appointmentController));
 
 export default router;

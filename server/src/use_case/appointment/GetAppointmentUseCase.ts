@@ -21,5 +21,8 @@ export default class GetAppointmentUseCase {
         this.validatorService.validateIdFormat(appointmentId)
         return await this.appointmentRepository.findDetailsById(appointmentId);
     }
-
+    
+    async getAppointmentsByPatientId(patientId:string,offset: number, limit: number, status?: AppointmentStatus):Promise<PaginatedResult<IAppointment>|null>{
+        return await this.appointmentRepository.findMayByPatientId(patientId,offset,limit,status);
+    }
 }
