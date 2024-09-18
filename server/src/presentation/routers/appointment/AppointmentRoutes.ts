@@ -11,6 +11,7 @@ import PaymentRepository from '../../../infrastructure/repositories/PaymentRepos
 import PatientRepository from '../../../infrastructure/repositories/PatientRepository';
 import GetAppointmentUseCase from '../../../use_case/appointment/GetAppointmentUseCase';
 import DoctorAuthMiddleware from '../../middlewares/DoctorAuthMiddleware';
+import UpdateAppointmentUseCase from '../../../use_case/appointment/UpdateAppointmentUseCase';
 
 const router = express.Router();
 
@@ -26,15 +27,17 @@ const patientRepository = new PatientRepository()
 
 const createAppointmentUseCase = new CreateAppointmentUseCase(appointmentRepository, slotRepository, validatorService, paymentService, paymentRepository, patientRepository);
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService);
+const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository,validatorService)
 
-const appointmentController = new AppointmentController(createAppointmentUseCase, getAppointmentUseCase);
+const appointmentController = new AppointmentController(createAppointmentUseCase, getAppointmentUseCase, updateAppointmentUseCase);
 const authorizePatient = new PatientAuthMiddleware(tokenService);
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
 
-router.post('/verify-payment', authorizePatient.exec, appointmentController.completePayment.bind(appointmentController))
-router.post('/', authorizePatient.exec, appointmentController.create.bind(appointmentController));
+router.post('/patient/verify-payment', authorizePatient.exec, appointmentController.completePayment.bind(appointmentController));
+router.post('/patient/', authorizePatient.exec, appointmentController.create.bind(appointmentController));
 router.get('/doctor', authorizeDoctor.exec, appointmentController.getAppointmentsDoctor.bind(appointmentController));
-router.get('/doctor/details/:appointmentId', authorizeDoctor.exec, appointmentController.getAppointmentDetails.bind(appointmentController))
+router.get('/doctor/details/:appointmentId', authorizeDoctor.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
+router.put('/doctor/', authorizeDoctor.exec, appointmentController.updateAppointment.bind(appointmentController));
 
 export default router;

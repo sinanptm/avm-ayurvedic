@@ -2,12 +2,14 @@ import { NextFunction, Response } from "express";
 import { CustomRequest, StatusCode } from "../../../types";
 import CreateAppointmentUseCase from "../../../use_case/appointment/CreateAppointmentUseCase";
 import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentUseCase";
+import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
 import { AppointmentStatus } from "../../../domain/entities/IAppointment";
 
 export default class AppointmentController {
     constructor(
         private createAppointmentUseCase: CreateAppointmentUseCase,
-        private getAppointmentUseCase: GetAppointmentUseCase
+        private getAppointmentUseCase: GetAppointmentUseCase,
+        private updateAppointmentUseCase: UpdateAppointmentUseCase
     ) { }
 
     async create(req: CustomRequest, res: Response, next: NextFunction) {
@@ -51,8 +53,17 @@ export default class AppointmentController {
     async getAppointmentDetails(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const appointmentId = req.params.appointmentId
-            const appointment = await this.getAppointmentUseCase.getAppointmentDetails(appointmentId);            
+            const appointment = await this.getAppointmentUseCase.getAppointmentDetails(appointmentId);
             res.status(StatusCode.Success).json(appointment);
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async updateAppointment(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const { appointedId, status } = req.body
+            await this.updateAppointmentUseCase.updateStatus(appointedId, status)
         } catch (error) {
             next(error)
         }

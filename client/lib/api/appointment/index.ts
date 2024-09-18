@@ -21,7 +21,7 @@ export const getDoctorsList = async () => {
 export const createAppointment = async (appointment: IAppointment) => {
    const response = await withTempBaseUrl(patientAxiosInstance, baseUrl, {
       method: 'POST',
-      url: '/',
+      url: '/patient/',
       data: {
          appointment
       }
@@ -32,7 +32,7 @@ export const createAppointment = async (appointment: IAppointment) => {
 export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymentProps) => {
    const response = await withTempBaseUrl(patientAxiosInstance, baseUrl, {
       method: 'POST',
-      url: '/verify-payment',
+      url: '/patient/verify-payment',
       data: {
          paymentData, appointmentId
       }
