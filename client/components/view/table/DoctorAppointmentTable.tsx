@@ -49,7 +49,7 @@ export default function AppointmentTable({ page }: Props) {
 
   const handleStatusChange = (status: AppointmentStatus | 'all') => {
     setStatusFilter(status);
-    setCurrentPage(1);
+    setCurrentPage(0);
     router.replace(`/doctor/appointments?page=1&status=${status}`);
     refetch();
   };
