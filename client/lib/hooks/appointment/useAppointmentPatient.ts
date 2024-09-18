@@ -20,7 +20,7 @@ export const useGetAppointmentDetailsPatient = (appointmentId: string) => {
     })
 }
 
-export const useUpdateAppointmentStatusDoctor = () => {
+export const useUpdateAppointmentStatusAndNotesPatient = () => {
     return useMutation<MessageResponse, AxiosError<ErrorResponse>, { appointmentId: string, status: AppointmentStatus, notes: string }>({
         mutationFn: ({ appointmentId, status, notes }) => updateStatusAndNotesPatient(appointmentId, status, notes),
         onError: (error) => {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useGetAppointmentDetailsPatient } from '@/lib/hooks/appointment/useAppointmentPatient';
+import { useGetAppointmentDetailsPatient, useUpdateAppointmentStatusAndNotesPatient } from '@/lib/hooks/appointment/useAppointmentPatient';
 import { notFound, useParams } from 'next/navigation';
 import { format } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -11,18 +11,77 @@ import { Calendar, Clock, FileText, Video, User, Mail, Phone, Edit2 } from "luci
 import Image from 'next/image';
 import { useState } from 'react';
 import { useAuth } from '@/lib/hooks/useAuth';
+import { toast } from '@/components/ui/use-toast';
+import ConfirmCancelAppointmentModelPatient from '@/components/models/appointment/ConfirmCancelAppointmentPatient';
+import { AppointmentStatus } from '@/types';
 
 const Page = () => {
   const id = useParams().id as string;
-  const { data: appointment } = useGetAppointmentDetailsPatient(id);
-  const [newNote, setNewNote] = useState('');
   const [isEditingNote, setIsEditingNote] = useState(false);
-  const { patientToken } = useAuth()
+  const [isCancelModelOpen, setCancelModelOpen] = useState(false)
+  const { data: appointment, refetch } = useGetAppointmentDetailsPatient(id);
+  const { mutate: update, isPending } = useUpdateAppointmentStatusAndNotesPatient();
+  const [newNote, setNewNote] = useState('');
+  const { patientToken } = useAuth();
+
 
 
   const handleUpdateNote = async () => {
-    
+    if (newNote.trim()) {
+      update(
+        { appointmentId: id, status: appointment?.status!, notes: newNote },
+        {
+          onSuccess: () => {
+            toast({
+              title: 'Note Updated 🎉',
+              description: 'Your note has been successfully updated!',
+              variant: 'success',
+            });
+            setIsEditingNote(false);
+            refetch();
+          },
+          onError: () => {
+            toast({
+              title: 'Error 😞',
+              description: 'Something went wrong while updating the note. Please try again.',
+              variant: 'destructive',
+            });
+          },
+        }
+      );
+    } else {
+      toast({
+        title: 'Invalid Input 🚫',
+        description: 'Note cannot be empty. Please enter some text.',
+        variant: 'warning',
+      });
+    }
   };
+
+  const handleCancelAppointment = async () => {
+    update(
+      { appointmentId: id, status: AppointmentStatus.CANCELLED, notes: appointment?.notes! },
+      {
+        onSuccess: () => {
+          toast({
+            title: 'Appointment Cancelled 🛑',
+            description: 'Your appointment has been successfully cancelled.',
+            variant: 'success',
+          });
+          refetch();
+          setCancelModelOpen(false)
+        },
+        onError: () => {
+          toast({
+            title: 'Error Cancelling 😞',
+            description: 'Something went wrong while cancelling the appointment. Please try again.',
+            variant: 'destructive',
+          });
+        },
+      }
+    );
+  };
+
 
   if (!patientToken) {
     notFound();
@@ -120,7 +179,7 @@ const Page = () => {
             </div>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
+                <Image src={'/assets/icons/email.svg'} width={23} height={23} alt={appointment.doctor?.email!} className="w-4 h-4" />
                 <span>{appointment.doctor?.email}</span>
               </div>
               <div className="flex items-center space-x-2">
@@ -159,10 +218,13 @@ const Page = () => {
             </div>
           </CardContent>
           <CardFooter className="justify-end">
-            <Button variant="destructive" className="ml-2">Cancel Appointment</Button>
+            {appointment.status === AppointmentStatus.CONFIRMED || appointment.status === AppointmentStatus.PENDING && (
+              <Button variant="destructive" className="ml-2" onClick={() => setCancelModelOpen(true)}>Cancel Appointment</Button>
+            )}
           </CardFooter>
         </Card>
       </div>
+      <ConfirmCancelAppointmentModelPatient open={isCancelModelOpen} setOpen={setCancelModelOpen} handleCancelAppointment={handleCancelAppointment} />
     </div>
   );
 }
