@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { AppointmentStatus } from "@/types";
 import { toast } from "@/components/ui/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
-import GetStatusBadge from "../../doctor/slots/GetStatusBadge";
+import GetStatusBadge from "../../doctor/appointment/GetStatusBadge";
 import AppointmentCancellationModal from "./ConfirmCancleAppointment";
 
 type Props = {

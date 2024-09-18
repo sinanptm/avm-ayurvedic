@@ -11,7 +11,7 @@ import Pagination from "@/components/navigation/Pagination"
 import { Button } from "@/components/ui/button"
 import AppointmentDetailsModelDoctor from "@/components/models/appointment/AppointmentDetailsDoctor"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import GetStatusBadge from "@/components/doctor/slots/GetStatusBadge"
+import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge"
 
 const columns = [
   { name: "Date", width: "w-1/5" },
