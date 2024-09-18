@@ -6,7 +6,7 @@ const FeaturesList = () => {
    return (
       <div className="py-5 px-4 sm:px-6 lg:px-8 mt-9">
          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row justify-center items-center md:items-stretch lg:items-stretch md:flex-row gap-x-4 gap-y-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                {FeaturesCardsHomePage.map((card, index) => (
                   <AnimatedCard
                      key={index}
@@ -15,7 +15,7 @@ const FeaturesList = () => {
                      link={card.link}
                      linkText={card.linkText}
                      text={card.text}
-                     className="bg-gradient-to-b from-green-50 to-white dark:from-green-900 dark:to-gray-900 rounded-lg lg:mx-14 md-cus:mx-10 md:mx-2"
+                     className="bg-gradient-to-b from-green-50 to-white dark:from-green-900 dark:to-gray-900 rounded-lg w-full max-w-sm"
                   />
                ))}
             </div>

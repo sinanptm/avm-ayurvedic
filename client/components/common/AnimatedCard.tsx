@@ -19,7 +19,7 @@ const AnimatedCard = ({
 }: AnimatedCardProps) => {
    return (
       <CardContainer className={`inter-var ${className}`} key={key}>
-         <CardBody className="bg-opacity-20 bg-green-200 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:border-white/[0.2] border-white/[0.1] md:w-[220px] h-full rounded-xl p-6 border min-w-[220px] w-[280px] ">
+         <CardBody className="bg-opacity-20 bg-green-200 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:border-white/[0.2] border-white/[0.1] rounded-xl p-6 border h-full flex flex-col">
             <CardItem translateZ="50" className="text-xl font-bold">
                {heading}
             </CardItem>
