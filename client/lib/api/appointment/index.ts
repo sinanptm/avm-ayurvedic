@@ -74,3 +74,11 @@ export const getAppointmentsPatient = async (offset: number, limit: number, stat
    })
    return response.data;
 }
+
+export const getAppointmentDetailsPatient = async(appointmentId:string)=>{
+   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
+      method: "GET",
+      url: `/details/${appointmentId}`
+   });
+   return response.data
+}
