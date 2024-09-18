@@ -8,14 +8,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Button } from "@/components/ui/button";
 import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge";
 import { Calendar, FileText, Video, User } from "lucide-react";
+import { useState } from "react";
 
 const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: number } }) => {
   const page = searchParams.page || 0;
-  const { data } = useGetAppointmentsPatient(page, 5);
+  const [currentPage,setCurrentPage] = useState(page)
+  const { data } = useGetAppointmentsPatient(page, 4);
   const router = useRouter();
+  
 
   const handlePageChange = (pageIndex: number) => {
+    if(pageIndex>data?.totalPages!) return null
     router.replace(`/profile?page=${pageIndex}`);
+    setCurrentPage(pageIndex)
   };
 
   const handleViewDetails = (appointmentId: string) => {
@@ -69,7 +74,7 @@ const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: numbe
 
         <div className="mt-6">
           <Pagination
-            currentPage={page}
+            currentPage={currentPage}
             handlePageChange={handlePageChange}
             hasNextPage={data?.hasNextPage!}
             hasPrevPage={data?.hasPreviousPage!}

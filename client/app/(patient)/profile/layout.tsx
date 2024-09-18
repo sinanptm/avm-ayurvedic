@@ -10,11 +10,10 @@ import { useAuth } from "@/lib/hooks/useAuth";
 interface Props {
    children: ReactNode;
    appointments: ReactNode;
-   records: ReactNode;
 }
 
-const ProfilePageLayout = ({ children, appointments, records }: Props) => {
-   const [section, setSection] = useState<"profile" | "appointments" | "records">("profile");
+const ProfilePageLayout = ({ children, appointments }: Props) => {
+   const [section, setSection] = useState<"profile" | "appointments">("profile");
    const router = useRouter();
    const { setCredentials } = useAuth();
 
@@ -53,7 +52,6 @@ const ProfilePageLayout = ({ children, appointments, records }: Props) => {
             <NavSection setSection={setSection} patientData={patientData!} refetch={refetch} />
             {section === "profile" && children}
             {section === "appointments" && appointments}
-            {section === "records" && records}
          </div>
       </div>
    );

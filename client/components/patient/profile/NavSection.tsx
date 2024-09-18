@@ -8,7 +8,7 @@ import { IPatient } from "@/types";
 import UploadProfileModel from "@/components/models/patient/UploadProfileModel";
 
 interface Props {
-   setSection: (state: "profile" | "appointments" | "records") => void;
+   setSection: (state: "profile" | "appointments" ) => void;
    patientData: IPatient;
    refetch: any;
 }
@@ -16,7 +16,7 @@ interface Props {
 export default function NavSection({ setSection, patientData, refetch }: Props) {
    const [isFileModel, setFileModel] = useState(false);
 
-   const handleClick = (path: "profile" | "appointments" | "records") => {
+   const handleClick = (path: "profile" | "appointments") => {
       setSection(path);
    };
 
@@ -65,9 +65,6 @@ export default function NavSection({ setSection, patientData, refetch }: Props) 
                </Button>
                <Button variant="outline" onClick={() => handleClick("appointments")} className="flex-1">
                   Appointments
-               </Button>
-               <Button variant="outline" onClick={() => handleClick("records")} className="flex-1">
-                  Medical Records
                </Button>
             </div>
          </CardContent>
