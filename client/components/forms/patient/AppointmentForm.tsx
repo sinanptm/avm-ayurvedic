@@ -19,8 +19,8 @@ import { formatDate } from "@/lib/utils";
 import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { AppointmentType } from "@/types";
-import { useQueryClient } from "@tanstack/react-query";
 import loadRazorpayScript from '@/lib/utils/loadRazorpayScript'
+import { useRouter } from "next/navigation";
 
 declare global {
    interface Window {
@@ -33,8 +33,7 @@ const AppointmentForm = () => {
    const { mutate: verifyPayment } = useVerifyPaymentAppointment();
    const [isDoctorSelected, setIsDoctorSelected] = useState(false);
    const { mutate: createAppointment, isPending } = useCreateAppointment();
-   const query = useQueryClient();
-
+const router = useRouter()
    const form = useForm<z.infer<typeof appointmentFormValidation>>({
       resolver: zodResolver(appointmentFormValidation),
       defaultValues: {
@@ -124,6 +123,7 @@ const AppointmentForm = () => {
                         description: "Your payment was successful and the appointment is confirmed. We will notify you once doctor approve you slot.",
                         variant: "success",
                      });
+                     router.push(`/new-appointment/${appointmentId}`);
                   },
                   prefill: {
                      name: patient.name,
