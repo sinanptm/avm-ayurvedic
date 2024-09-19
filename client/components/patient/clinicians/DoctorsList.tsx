@@ -5,13 +5,12 @@ import { IDoctor } from "@/types"
 import { DoctorCard } from "@/components/patient/clinicians/DoctorCard"
 import Pagination from "@/components/navigation/Pagination"
 
-interface DoctorPaginationProps {
+interface DoctorsListProps {
   initialData: IDoctor[]
 }
 
-export default function DoctorPagination({ initialData }: DoctorPaginationProps) {
+export default function DoctorsList({ initialData }: DoctorsListProps) {
   const [currentPage, setCurrentPage] = useState(1)
-  const [data] = useState(initialData) 
   const pageSize = 2
 
   const totalPages = useMemo(() => Math.ceil(initialData.length / pageSize), [initialData.length, pageSize])

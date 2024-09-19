@@ -15,10 +15,11 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => (
       <Image
         src={doctor.image!}
         alt={doctor.name!}
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: "cover" }}
         className="transition-transform duration-300 hover:scale-105"
       />
+
       {doctor.isVerified && (
         <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-1">
           <Image
@@ -30,7 +31,7 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => (
           />
         </div>
       )}
-     </div>
+    </div>
     <CardContent className="p-6">
       <h2 className="text-2xl font-semibold mb-2 line-clamp-1">{doctor.name}</h2>
       <div className="flex flex-wrap gap-2 mb-4">

@@ -3,7 +3,7 @@ import { AyurvedaSection } from "@/components/patient/clinicians/AyurvedaSection
 import { TestimonialsSection } from "@/components/patient/clinicians/TestimonialsSection";
 import { FAQSection } from "@/components/patient/clinicians/FAQSection";
 import { CTASection } from "@/components/patient/clinicians/CTASection";
-import DoctorPagination from "@/components/patient/clinicians/DoctorsSection";
+import DoctorsList from "@/components/patient/clinicians/DoctorsList";
 import { DummyDoctors } from "@/constants";
 import { Metadata } from "next";
 
@@ -11,18 +11,14 @@ export const metadata: Metadata = {
   title: "Our Clinicians ",
   description: "Meet our team of highly skilled Ayurvedic doctors offering holistic and personalized care for your well-being. Explore ancient healing practices combined with modern care techniques.",
   keywords: ["Ayurveda", "Ayurvedic Doctors", "Holistic Healing", "Personalized Care", "Natural Medicine"],
-  viewport: "width=device-width, initial-scale=1.0",
 };
 
 const Page = async () => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const response = await fetch(`${apiUrl}/doctors`, {
     next: { revalidate: 60 },
   });
   const data = await response.json();
-  // console.log(JSON.stringify(data.items));
-  
-  
 
   return (
     <section className="py-12 bg-gradient-to-b from-primary/10 to-background">
@@ -32,7 +28,7 @@ const Page = async () => {
           Discover our team of skilled Ayurvedic doctors dedicated to your holistic well-being.
           We combine ancient wisdom with modern care for personalized healing.
         </p>
-        <DoctorPagination initialData={data.items!} />
+        <DoctorsList initialData={data.items!} />
         <AyurvedaSection />
         <TestimonialsSection />
         <FAQSection />
