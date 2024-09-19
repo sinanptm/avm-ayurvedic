@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { IPatient } from "@/types";
 import UploadProfileModel from "@/components/models/patient/UploadProfileModel";
+import { ButtonV2 } from "@/components/common/ButtonV2";
 
 interface Props {
    setSection: (state: "profile" | "appointments" ) => void;
@@ -44,13 +44,13 @@ export default function NavSection({ setSection, patientData, refetch }: Props) 
                      height={100}
                      className="rounded-full border-4 border-white h-32 w-32"
                   />
-                  <Button
-                     variant="outline"
+                  <ButtonV2
+                     variant="gooeyLeft"
                      className="absolute bottom-0 right-0 mb-2 mr-2 p-2 bg-white rounded-full"
                      onClick={handleUploadClick}
                   >
                      <Image src="/assets/icons/upload.svg" alt="Upload" width={24} height={24} />
-                  </Button>
+                  </ButtonV2>
                </div>
                <div className="text-center sm:text-left">
                   <h1 className="text-2xl font-bold">{patientData.name}</h1>
@@ -60,12 +60,12 @@ export default function NavSection({ setSection, patientData, refetch }: Props) 
          </div>
          <CardContent className="p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-               <Button variant="outline" onClick={() => handleClick("profile")} className="flex-1">
+               <ButtonV2 variant="shine" onClick={() => handleClick("profile")} className="flex-1">
                   Profile
-               </Button>
-               <Button variant="outline" onClick={() => handleClick("appointments")} className="flex-1">
+               </ButtonV2>
+               <ButtonV2 variant="shine" onClick={() => handleClick("appointments")} className="flex-1">
                   Appointments
-               </Button>
+               </ButtonV2>
             </div>
          </CardContent>
          <UploadProfileModel open={isFileModel} setOpen={setFileModel} patientData={patientData} refetch={refetch} />

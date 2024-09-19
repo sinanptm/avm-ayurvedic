@@ -29,44 +29,16 @@ export default function ProfileSkeleton() {
             </Card>
 
             {/* Profile Section Skeleton */}
-            <Card className="p-6">
-               <Skeleton className="h-6 w-1/4 mb-4" />
+            <Card className="p-11">
+               <Skeleton className="h-10 w-1/4 mb-4" />
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[...Array(6)].map((_, i) => (
                      <div key={i} className="flex justify-between items-center">
-                        <Skeleton className="h-4 w-1/3" />
-                        <Skeleton className="h-4 w-1/2" />
+                        <Skeleton className="h-16 w-1/3" />
+                        <Skeleton className="h-16 w-1/2" />
                      </div>
                   ))}
                </div>
-            </Card>
-
-            {/* Appointments Section Skeleton */}
-            <Card className="p-6">
-               <Skeleton className="h-6 w-1/3 mb-4" />
-               {[...Array(3)].map((_, i) => (
-                  <div key={i} className="mb-4">
-                     <div className="flex justify-between items-center mb-2">
-                        <Skeleton className="h-4 w-1/4" />
-                        <Skeleton className="h-4 w-1/4" />
-                     </div>
-                     <Skeleton className="h-4 w-full" />
-                  </div>
-               ))}
-            </Card>
-
-            {/* Medical Records Section Skeleton */}
-            <Card className="p-6">
-               <Skeleton className="h-6 w-1/3 mb-4" />
-               {[...Array(3)].map((_, i) => (
-                  <div key={i} className="mb-4">
-                     <div className="flex justify-between items-center mb-2">
-                        <Skeleton className="h-4 w-1/3" />
-                        <Skeleton className="h-4 w-1/4" />
-                     </div>
-                     <Skeleton className="h-4 w-full" />
-                  </div>
-               ))}
             </Card>
          </div>
       </div>

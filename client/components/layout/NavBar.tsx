@@ -21,6 +21,7 @@ import { useLogoutMutation } from "@/lib/hooks/patient/usePatientAuth";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";
+import { ButtonV2 } from "../common/ButtonV2";
 
 export const NavBar = () => {
    const path = usePathname();
@@ -65,7 +66,12 @@ export const NavBar = () => {
       }
    };
 
-   const handleLinkClick = () => {
+   const handleLinkHome = () => {
+      setIsSheetOpen(false);
+   };
+
+   const handleLinkClick = (link:string) => {
+      route.push(link)
       setIsSheetOpen(false);
    };
 
@@ -73,18 +79,18 @@ export const NavBar = () => {
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">
          <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
             <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base" prefetch={false}>
-               <Package2 className="h-6 w-6" onClick={handleLinkClick} />
+               <Package2 className="h-6 w-6" onClick={handleLinkHome} />
                <span className="sr-only">Acme Inc</span>
             </Link>
             {NavLinks.map((link) => (
-               <Link
-                  href={link.href}
+               <ButtonV2
+                  variant={'linkHover2'}
+                  onClick={()=>handleLinkClick(link.href)}
+                  size={'sm'}
                   key={link.label + link.href}
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                  prefetch={false}
                >
                   {link.label}
-               </Link>
+               </ButtonV2>
             ))}
          </nav>
          <Sheet modal open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -114,7 +120,7 @@ export const NavBar = () => {
                      <Link
                         href={link.href}
                         key={link.label + link.href}
-                        onClick={handleLinkClick}
+                        onClick={handleLinkHome}
                         className="text-muted-foreground hover:text-foreground"
                         prefetch={false}
                      >
@@ -143,7 +149,7 @@ export const NavBar = () => {
             </form>
             <DropdownMenu>
                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full">
+                  <ButtonV2 variant="ghost" size="icon" className="rounded-full">
                      <Image
                         src="/assets/icons/circle-user.svg"
                         width={30}
@@ -152,7 +158,7 @@ export const NavBar = () => {
                         alt="Avatar"
                      />
                      <span className="sr-only">Toggle user menu</span>
-                  </Button>
+                  </ButtonV2>
                </DropdownMenuTrigger>
                <DropdownMenuContent align="end" className="mt-3">
                   {patientToken !== "" ? (

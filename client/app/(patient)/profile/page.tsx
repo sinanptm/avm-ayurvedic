@@ -1,11 +1,11 @@
 'use client'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useState } from "react";
 import UpdateProfilePatient from "@/components/models/patient/UpdateProfilePatient";
 import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
+import { ButtonV2 } from "@/components/common/ButtonV2";
 
 export default function PatientProfilePage() {
    const { data: patientData, isLoading, refetch } = useGetPatientProfile();
@@ -31,15 +31,15 @@ export default function PatientProfilePage() {
       <Card>
          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-2xl font-bold text-primary">Personal Information</CardTitle>
-            <Button
-               variant="outline"
+            <ButtonV2
+               variant="shine"
                size="sm"
                className="h-8 w-8 p-0"
                onClick={() => setIsOpen(!isOpen)}
                aria-label="Edit personal information"
             >
                <Image alt="Edit" src={"/assets/icons/edit.svg"} width={23} height={23} className="h-6 w-6" />
-            </Button>
+            </ButtonV2>
          </CardHeader>
          <CardContent className="grid gap-4 sm:grid-cols-2 pt-4">
             {infoItems.map((item, index) => (

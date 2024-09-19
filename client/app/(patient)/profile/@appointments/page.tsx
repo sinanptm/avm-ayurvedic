@@ -5,10 +5,10 @@ import { useGetAppointmentsPatient } from "@/lib/hooks/appointment/useAppointmen
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge";
 import { Calendar, FileText, Video, User } from "lucide-react";
 import { useState } from "react";
+import { ButtonV2 } from "@/components/common/ButtonV2";
 
 const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: number } }) => {
   const page = searchParams.page || 0;
@@ -60,14 +60,14 @@ const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: numbe
               </div>
             </CardContent>
             <CardFooter className="py-2 px-4 bg-gray-750 border-t border-gray-700 flex justify-end">
-              <Button 
-                variant="outline" 
+              <ButtonV2 
+                variant="gooeyRight" 
                 size="sm"
                 onClick={() => handleViewDetails(appointment._id!)}
-                className="text-green-400 hover:text-green-300 hover:bg-gray-700 border-green-500"
+                className="text-green-400  border-green-500"
               >
                 View Details
-              </Button>
+              </ButtonV2>
             </CardFooter>
           </Card>
         ))}

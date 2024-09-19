@@ -47,8 +47,8 @@ const ProfilePageLayout = ({ children, appointments }: Props) => {
    }
 
    return (
-      <div className="min-h-screen p-4 sm:p-6 md:p-8">
-         <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+      <div className="min-h-screen p-1 sm:p-6 md:p-8">
+         <div className="max-w-4xl mx-auto space-y-1 sm:space-y-6">
             <NavSection setSection={setSection} patientData={patientData!} refetch={refetch} />
             {section === "profile" && children}
             {section === "appointments" && appointments}

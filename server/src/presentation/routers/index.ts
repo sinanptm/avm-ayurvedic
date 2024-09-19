@@ -27,11 +27,11 @@ const unauthenticatedController = new UnauthenticatedControllers(unauthenticated
 const errorHandler = new ErrorHandler();
 
 app.get('/doctors', unauthenticatedController.getDoctors.bind(unauthenticatedController))
+app.use("/doctor/auth", doctorAuthentication);
 app.use("/patient/auth", patientAuthentication);
 app.use("/patient", authorizePatient.exec, protectedRoutes);
 app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
-app.use("/doctor/auth", doctorAuthentication);
 app.use('/slots', slotRoutes);
 app.use('/appointments', appointmentRoutes)
 

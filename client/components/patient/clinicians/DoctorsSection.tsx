@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useMemo, useState } from "react"
-import { IDoctor, PaginatedResult } from "@/types"
+import { IDoctor } from "@/types"
 import { DoctorCard } from "@/components/patient/clinicians/DoctorCard"
 import Pagination from "@/components/navigation/Pagination"
 
@@ -11,19 +11,21 @@ interface DoctorPaginationProps {
 
 export default function DoctorPagination({ initialData }: DoctorPaginationProps) {
   const [currentPage, setCurrentPage] = useState(1)
-  const [data] = useState(initialData)
+  const [data] = useState(initialData) 
   const pageSize = 2
 
   const totalPages = useMemo(() => Math.ceil(initialData.length / pageSize), [initialData.length, pageSize])
 
-  const paginatedItems = useMemo(() => 
+  const paginatedItems = useMemo(() =>
     initialData.slice((currentPage - 1) * pageSize, currentPage * pageSize),
     [initialData, currentPage, pageSize]
   )
 
   const handlePageChange = useCallback((newPage: number) => {
-    setCurrentPage(newPage)
-  }, [])
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage)
+    }
+  }, [totalPages])
 
   if (initialData.length === 0) {
     return <p className="text-center text-lg mb-16">No doctors available at the moment. Please check back later.</p>
