@@ -1,5 +1,5 @@
 export default interface IPaymentService {
-    createPaymentIntent(amount: number, currency: string): Promise<{ id: string, clientSecret: string }>
+    createCheckoutSession(amount: number, currency: string, successUrl: string, cancelUrl: string, metadata?: Record<string, any>): Promise<{ id: string, url: string }> 
     retrievePaymentIntent(paymentIntentId: string): Promise<any>
     handleWebhookEvent(body: Buffer, signature: string): Promise<any>
 }

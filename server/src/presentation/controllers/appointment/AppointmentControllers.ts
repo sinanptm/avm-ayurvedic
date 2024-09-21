@@ -4,7 +4,6 @@ import CreateAppointmentUseCase from "../../../use_case/appointment/CreateAppoin
 import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentUseCase";
 import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
 import { AppointmentStatus } from "../../../domain/entities/IAppointment";
-import { not } from "joi";
 
 export default class AppointmentController {
     constructor(
@@ -17,8 +16,8 @@ export default class AppointmentController {
         try {
             const { appointment } = req.body;
             const patientId = req.patient?.id;
-            const { appointmentId, orderId, patient } = await this.createAppointmentUseCase.exec(appointment, patientId!);
-            res.status(StatusCode.Success).json({ orderId, appointmentId, patient });
+            const { checkoutUrl, sessionId } = await this.createAppointmentUseCase.exec(appointment, patientId!);
+            res.status(StatusCode.Success).json({ checkoutUrl, sessionId });
         } catch (error: any) {
             next(error);
         }
@@ -30,7 +29,7 @@ export default class AppointmentController {
         try {
             await this.createAppointmentUseCase.handleStripeWebhook(req.body, signature);
             res.status(StatusCode.Success).json({ message: 'Webhook processed successfully' });
-        } catch (err:any) {
+        } catch (err: any) {
             console.error('Webhook processing error:', err);
             res.status(StatusCode.BadRequest).send(`Webhook Error: ${err.message}`);
         }

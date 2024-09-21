@@ -4,12 +4,6 @@ import IAppointment, { AppointmentStatus } from "@/types";
 import patientAxiosInstance from "../patient/authorizedRoutes";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
 
-export type verifyPaymentProps = {
-   paymentData: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string };
-   appointmentId: string
-}
-
-
 const patientBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments/patient`
 const doctorBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments/doctor`
 
@@ -25,17 +19,6 @@ export const createAppointment = async (appointment: IAppointment) => {
       url: '/',
       data: {
          appointment
-      }
-   });
-   return response.data;
-};
-
-export const verifyPayment = async ({ appointmentId, paymentData }: verifyPaymentProps) => {
-   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
-      method: 'POST',
-      url: '/verify-payment',
-      data: {
-         paymentData, appointmentId
       }
    });
    return response.data;

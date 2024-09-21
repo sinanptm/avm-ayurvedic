@@ -2,36 +2,54 @@ import Stripe from 'stripe';
 import IPaymentService from '../../domain/interface/services/IPaymentService';
 import CustomError from '../../domain/entities/CustomError';
 import { StatusCode } from '../../types';
+import logger from '../../utils/logger';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: '2024-06-20',
 });
 
 class StripePaymentService implements IPaymentService {
-    async createPaymentIntent(amount: number, currency: string): Promise<{ id: string, clientSecret: string }> {
+    async createCheckoutSession(amount: number, currency: string, successUrl: string, cancelUrl: string, metadata?: Record<string, any>): Promise<{ id: string, url: string }> {
         try {
-            const paymentIntent = await stripe.paymentIntents.create({
-                amount,
-                currency,
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: [
+                    {
+                        price_data: {
+                            currency,
+                            product_data: {
+                                name: 'Appointment Fee', 
+                            },
+                            unit_amount: amount * 100, 
+                        },
+                        quantity: 1,
+                    },
+                ],
+                mode: 'payment', 
+                metadata,
+                success_url: successUrl,
+                cancel_url: cancelUrl,
             });
+
             return {
-                id: paymentIntent.id,
-                clientSecret: paymentIntent.client_secret!, // Use this to complete the payment on the frontend
+                id: session.id,
+                url: session.url!,
             };
         } catch (error) {
-            throw new CustomError('Error creating payment intent', StatusCode.PaymentError);
+            logger.error(error);
+            throw new CustomError('Error creating checkout session', StatusCode.PaymentError);
         }
     }
-
     async retrievePaymentIntent(paymentIntentId: string): Promise<Stripe.PaymentIntent> {
         try {
             const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
             return paymentIntent;
         } catch (error) {
-            throw new CustomError('Error retrieving payment intent', StatusCode.PaymentError);
+            logger.error(error)
+            throw new CustomError('Error retrieving payment intent', StatusCode.PaymentError,undefined,error);
         }
     }
-
+    
     async handleWebhookEvent(body: Buffer, signature: string): Promise<Stripe.Event> {
         try {
             const event = stripe.webhooks.constructEvent(
@@ -51,7 +69,8 @@ class StripePaymentService implements IPaymentService {
                     throw new CustomError(`Unhandled event type ${event.type}`, StatusCode.BadRequest);
             }
         } catch (error) {
-            throw new CustomError('Error processing webhook event', StatusCode.InternalServerError);
+            logger.error(error)
+            throw new CustomError('Error processing webhook event', StatusCode.PaymentError);
         }
     }
 }

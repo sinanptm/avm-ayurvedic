@@ -27,12 +27,12 @@ export default class AppointmentUseCase {
     async exec(
         appointmentData: IAppointment,
         patientId: string
-    ): Promise<{ appointmentId: string, orderId: string, patient: IPatient }> {
+    ): Promise<{ sessionId: string, checkoutUrl: string }> {
         this.validateAppointmentData(appointmentData, patientId);
-
+    
         const slot = await this.slotRepository.findById(appointmentData.slotId!);
         if (!slot) throw new CustomError("Slot Not Found", StatusCode.NotFound);
-
+    
         if (slot.status === 'booked') {
             const bookedAppointment = await this.appointmentRepository.findByDateAndSlot(appointmentData.appointmentDate!, appointmentData.slotId!);
             if (bookedAppointment) throw new CustomError("Slot already booked", StatusCode.Conflict);
@@ -40,7 +40,7 @@ export default class AppointmentUseCase {
             slot.status = 'booked';
             await this.slotRepository.update(slot);
         }
-
+    
         const payment = await this.paymentRepository.create({
             orderId: '',
             appointmentId: appointmentData._id!,
@@ -48,27 +48,33 @@ export default class AppointmentUseCase {
             currency: 'INR',
             status: PaymentStatus.PENDING,
         });
-
-        const paymentIntent = await this.paymentService.createPaymentIntent(this.bookingAmount, 'INR');
-
-
+    
+        const checkoutSession = await this.paymentService.createCheckoutSession(
+            this.bookingAmount, 
+            'INR', 
+            `${process.env.CLIENT_URL}/new-appointment/${appointmentData._id}`,
+            `${process.env.CLIENT_URL}/appointment/cancel`,
+            { paymentId: payment._id?.toString() }
+        );
+    
         const appointmentId = await this.appointmentRepository.create({
             ...appointmentData,
             patientId,
             status: AppointmentStatus.PAYMENT_PENDING,
             paymentId: payment._id!,
         });
-
+    
         await this.paymentRepository.update({
             _id: payment._id,
-            orderId: paymentIntent.id!,
+            orderId: checkoutSession.id, 
             appointmentId
         });
-
-        const patient = await this.patientRepository.findById(patientId)!
-
-        return { orderId: paymentIntent.id, appointmentId, patient: { email: patient?.email, name: patient?.name, phone: patient?.phone } };
+    
+        const patient = await this.patientRepository.findById(patientId);
+    
+        return { sessionId: checkoutSession.id, checkoutUrl: checkoutSession.url! };
     }
+    
 
     async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
         const event = await this.paymentService.handleWebhookEvent(body, signature);
