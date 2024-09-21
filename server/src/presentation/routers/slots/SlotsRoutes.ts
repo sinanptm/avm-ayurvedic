@@ -1,11 +1,14 @@
 import express from 'express';
 import SlotRepository from '../../../infrastructure/repositories/SlotRepository';
-import SlotUseCase from '../../../use_case/slot/SlotUseCases';
 import SlotController from '../../controllers/slot/SlotController';
 import DoctorAuthMiddleware from '../../middlewares/DoctorAuthMiddleware';
 import TokenService from '../../../infrastructure/services/JWTService';
 import AppointmentRepository from '../../../infrastructure/repositories/AppointmentRepository';
 import JoiService from '../../../infrastructure/services/JoiService';
+import CreateSlotUseCase from '../../../use_case/slot/CreateSlotUseCase';
+import DeleteSlotUseCase from '../../../use_case/slot/DeleteSlotUseCase';
+import GetSlotUseCase from '../../../use_case/slot/GetSlotUseCase';
+import UpdateSlotUseCase from '../../../use_case/slot/UpdateSlotUseCase';
 
 const router = express.Router();
 
@@ -15,8 +18,12 @@ const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 const appointmentRepository = new AppointmentRepository()
 const validatorService = new JoiService()
 
-const slotUseCase = new SlotUseCase(slotRepository, appointmentRepository, validatorService);
-const slotController = new SlotController(slotUseCase);
+const createSlotUseCase = new CreateSlotUseCase(slotRepository, validatorService);
+const deleteSlotUseCase = new DeleteSlotUseCase(slotRepository, appointmentRepository, validatorService);
+const getSlotUseCase = new GetSlotUseCase(slotRepository, appointmentRepository, validatorService);
+const updateSlotUseCase = new UpdateSlotUseCase(slotRepository, validatorService);
+
+const slotController = new SlotController(createSlotUseCase, updateSlotUseCase, getSlotUseCase, deleteSlotUseCase);
 
 router.post('/day', authorizeDoctor.exec, slotController.createManyByDay.bind(slotController));
 router.delete('/day', authorizeDoctor.exec, slotController.deleteManyByDay.bind(slotController));
