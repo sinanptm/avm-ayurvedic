@@ -24,7 +24,9 @@ export default class AppointmentController {
     }
 
     async handleStripeWebhook(req: CustomRequest, res: Response, next: NextFunction) {
+        console.log('reached');
         const signature = req.headers['stripe-signature'] as string;
+        
 
         try {
             await this.createAppointmentUseCase.handleStripeWebhook(req.body, signature);

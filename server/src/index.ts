@@ -5,6 +5,8 @@ import routes from "./presentation/routers/index";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
+import bodyParser from 'body-parser'
+import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
 
 dotenv.config();
 
@@ -20,6 +22,7 @@ app.use(
       credentials: true,
    })
 );
+app.post('/api/appointments/webhook', bodyParser.raw({ type: 'application/json' }), webhook);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -12,6 +12,7 @@ import PatientRepository from '../../../infrastructure/repositories/PatientRepos
 import GetAppointmentUseCase from '../../../use_case/appointment/GetAppointmentUseCase';
 import DoctorAuthMiddleware from '../../middlewares/DoctorAuthMiddleware';
 import UpdateAppointmentUseCase from '../../../use_case/appointment/UpdateAppointmentUseCase';
+import bodyParser from 'body-parser'
 
 const router = express.Router();
 
@@ -34,7 +35,6 @@ const authorizePatient = new PatientAuthMiddleware(tokenService);
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
 
-router.post('/webhook', authorizePatient.exec, appointmentController.handleStripeWebhook.bind(appointmentController));
 router.get('/patient/details/:appointmentId', authorizePatient.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
 router.post('/patient/', authorizePatient.exec, appointmentController.create.bind(appointmentController));
 router.get('/patient/', authorizePatient.exec, appointmentController.getAppointmentsPatient.bind(appointmentController));
@@ -45,3 +45,5 @@ router.get('/doctor', authorizeDoctor.exec, appointmentController.getAppointment
 router.put('/doctor/', authorizeDoctor.exec, appointmentController.updateAppointment.bind(appointmentController));
 
 export default router;
+
+export const webhook = appointmentController.handleStripeWebhook.bind(appointmentController)
