@@ -24,13 +24,15 @@ export default class AppointmentController {
         }
     }
 
-    async completePayment(req: CustomRequest, res: Response, next: NextFunction) {
+    async handleStripeWebhook(req: CustomRequest, res: Response, next: NextFunction) {
+        const signature = req.headers['stripe-signature'] as string;
+
         try {
-            const { appointmentId, paymentData } = req.body;
-            await this.createAppointmentUseCase.verifyPayment(paymentData, appointmentId)
-            res.status(StatusCode.Success).json({ message: "Payment Verification Completed" });
-        } catch (error) {
-            next(error)
+            await this.createAppointmentUseCase.handleStripeWebhook(req.body, signature);
+            res.status(StatusCode.Success).json({ message: 'Webhook processed successfully' });
+        } catch (err:any) {
+            console.error('Webhook processing error:', err);
+            res.status(StatusCode.BadRequest).send(`Webhook Error: ${err.message}`);
         }
     }
 

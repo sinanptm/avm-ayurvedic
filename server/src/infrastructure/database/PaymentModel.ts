@@ -29,10 +29,6 @@ const paymentSchema = new Schema<IPayment>(
       default: PaymentStatus.PENDING,
       required: true,
     },
-    razorpaySignature: {
-      type: String,
-      default: null,
-    },
   },
   {
     timestamps: true,

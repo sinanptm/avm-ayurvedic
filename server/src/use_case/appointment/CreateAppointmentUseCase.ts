@@ -49,7 +49,7 @@ export default class AppointmentUseCase {
             status: PaymentStatus.PENDING,
         });
 
-        const razorpayOrder = await this.paymentService.createOrder(this.bookingAmount, 'INR', `receipt_${payment._id}`);
+        const paymentIntent = await this.paymentService.createPaymentIntent(this.bookingAmount, 'INR');
 
 
         const appointmentId = await this.appointmentRepository.create({
@@ -61,43 +61,32 @@ export default class AppointmentUseCase {
 
         await this.paymentRepository.update({
             _id: payment._id,
-            orderId: razorpayOrder.id!,
+            orderId: paymentIntent.id!,
             appointmentId
         });
 
         const patient = await this.patientRepository.findById(patientId)!
 
-        return { orderId: razorpayOrder.id, appointmentId, patient: { email: patient?.email, name: patient?.name, phone: patient?.phone } };
+        return { orderId: paymentIntent.id, appointmentId, patient: { email: patient?.email, name: patient?.name, phone: patient?.phone } };
     }
 
-    async verifyPayment(paymentData: { razorpay_order_id: string, razorpay_payment_id: string, razorpay_signature: string }, appointmentId: string): Promise<void> {
-        this.validatorService.validateRequiredFields({
-            razorpay_order_id: paymentData.razorpay_order_id,
-            razorpay_payment_id: paymentData.razorpay_payment_id,
-            razorpay_signature: paymentData.razorpay_signature,
-            appointmentId,
+    async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
+        const event = await this.paymentService.handleWebhookEvent(body, signature);
 
-        });
-        await this.paymentService.verifyPaymentSignature(
-            paymentData.razorpay_signature,
-            paymentData.razorpay_order_id,
-            paymentData.razorpay_payment_id
-        );
-        const payment = await this.paymentRepository.findByOrderId(paymentData.razorpay_order_id);
-        if (!payment) throw new CustomError("Payment not found", StatusCode.NotFound);
+        const paymentIntent = event.data.object as { id: string };
+        const payment = await this.paymentRepository.findByOrderId(paymentIntent.id);
+
+        if (!payment) {
+            throw new CustomError('Payment not found', StatusCode.NotFound);
+        }
 
         await this.paymentRepository.update({
             _id: payment._id,
-            orderId: payment.orderId,
-            paymentId: paymentData.razorpay_payment_id,
-            appointmentId: payment.appointmentId,
-            amount: payment.amount,
-            currency: payment.currency,
+            orderId: paymentIntent.id,
             status: PaymentStatus.COMPLETED,
-            razorpaySignature: paymentData.razorpay_signature,
         });
 
-        await this.appointmentRepository.updateAppointmentStatusToConfirmed(appointmentId);
+        await this.appointmentRepository.updateAppointmentStatusToConfirmed(payment.appointmentId!);
     }
 
     private validateAppointmentData({ appointmentDate, appointmentType, doctorId, notes, reason, slotId, }: IAppointment, patientId: string): void {

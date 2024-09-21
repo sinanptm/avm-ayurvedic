@@ -6,7 +6,7 @@ import AppointmentController from '../../controllers/appointment/AppointmentCont
 import PatientAuthMiddleware from '../../middlewares/PatientAuthMiddleware';
 import JWTService from '../../../infrastructure/services/JWTService';
 import JoiService from '../../../infrastructure/services/JoiService';
-import RazorPayService from '../../../infrastructure/services/RazorPayService';
+import StripeService from '../../../infrastructure/services/StripeService';
 import PaymentRepository from '../../../infrastructure/repositories/PaymentRepository';
 import PatientRepository from '../../../infrastructure/repositories/PatientRepository';
 import GetAppointmentUseCase from '../../../use_case/appointment/GetAppointmentUseCase';
@@ -21,7 +21,7 @@ const slotRepository = new SlotRepository();
 const tokenService = new JWTService();
 const validatorService = new JoiService();
 
-const paymentService = new RazorPayService();
+const paymentService = new StripeService();
 const paymentRepository = new PaymentRepository();
 const patientRepository = new PatientRepository()
 
@@ -34,7 +34,7 @@ const authorizePatient = new PatientAuthMiddleware(tokenService);
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
 
-router.post('/patient/verify-payment', authorizePatient.exec, appointmentController.completePayment.bind(appointmentController));
+router.post('/webhook', authorizePatient.exec, appointmentController.handleStripeWebhook.bind(appointmentController));
 router.get('/patient/details/:appointmentId', authorizePatient.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
 router.post('/patient/', authorizePatient.exec, appointmentController.create.bind(appointmentController));
 router.get('/patient/', authorizePatient.exec, appointmentController.getAppointmentsPatient.bind(appointmentController));

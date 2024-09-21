@@ -5,14 +5,13 @@ export enum PaymentStatus {
 }
 
 export default interface IPayment {
-    _id?: string;                  
-    orderId: string;              
-    paymentId?: string;            
-    appointmentId?: string;         
-    amount?: number;                
-    currency?: string;             
-    status?: PaymentStatus;         
-    createdAt?: Date;              
-    updatedAt?: Date;              
-    razorpaySignature?: string;    
+    _id?: string;
+    orderId: string;
+    paymentId?: string;
+    appointmentId?: string;
+    amount?: number;
+    currency?: string;
+    status?: PaymentStatus;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
