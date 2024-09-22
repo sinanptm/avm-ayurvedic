@@ -27,7 +27,7 @@ router.get(
     notificationController.getAllPatientNotifications.bind(notificationController)
 );
 
-router.post(
+router.delete(
     "/patient/clear-all",
     authorizePatient.exec,
     notificationController.clearMultipleNotifications.bind(notificationController)
@@ -47,7 +47,7 @@ router.get(
     notificationController.getAllDoctorNotifications.bind(notificationController)
 );
 
-router.post(
+router.delete(
     "/doctor/clear-all",
     authorizeDoctor.exec,
     notificationController.clearMultipleNotifications.bind(notificationController)
