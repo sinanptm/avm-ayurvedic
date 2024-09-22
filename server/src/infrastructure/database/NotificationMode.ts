@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import INotification, { NotificationStatus, NotificationTypes } from "../../domain/entities/INotification";
+import INotification, { NotificationTypes } from "../../domain/entities/INotification";
 
 const notificationSchema = new Schema<INotification>(
     {
@@ -21,11 +21,6 @@ const notificationSchema = new Schema<INotification>(
         message: {
             type: String,
             required: true,
-        },
-        status: {
-            type: String,
-            enum: Object.values(NotificationStatus),
-            default: NotificationStatus.UNREAD, 
         },
         appointmentId: {
             type: Schema.Types.ObjectId,

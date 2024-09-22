@@ -11,8 +11,8 @@ export default class AppointmentRepository implements IAppointmentRepository {
    async create(appointment: IAppointment): Promise<string> {
       return (await this.model.create(appointment))._id;
    }
-   async update(appointment: IAppointment): Promise<void> {
-      await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true });
+   async update(appointment: IAppointment): Promise<IAppointment | null> {
+      return await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true });
    }
 
    async findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null> {

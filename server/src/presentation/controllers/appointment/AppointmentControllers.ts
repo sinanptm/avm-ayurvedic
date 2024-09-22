@@ -77,16 +77,6 @@ export default class AppointmentController {
       }
    }
 
-   async updateAppointment(req: CustomRequest, res: Response, next: NextFunction) {
-      try {
-         const { appointmentId, status } = req.body;
-         await this.updateAppointmentUseCase.updateStatus(appointmentId, status);
-         res.status(StatusCode.Success).json({ message: "Status Updated" });
-      } catch (error) {
-         next(error);
-      }
-   }
-
    async getAppointmentsPatient(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const patientId = req.patient?.id;
@@ -104,6 +94,16 @@ export default class AppointmentController {
             status === "undefined" ? undefined : status
          );
          res.status(StatusCode.Success).json(data);
+      } catch (error) {
+         next(error);
+      }
+   }
+   
+   async updateAppointment(req: CustomRequest, res: Response, next: NextFunction) {
+      try {
+         const { appointmentId, status } = req.body;
+         await this.updateAppointmentUseCase.updateStatus(appointmentId, status);
+         res.status(StatusCode.Success).json({ message: "Status Updated" });
       } catch (error) {
          next(error);
       }

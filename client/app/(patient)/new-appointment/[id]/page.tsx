@@ -51,6 +51,7 @@ export default function AppointmentSuccessPage() {
                         <Image
                            src={"/assets/gifs/success.gif"}
                            className="w-auto h-auto"
+                           unoptimized
                            priority
                            width={300}
                            height={280}

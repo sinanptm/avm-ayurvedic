@@ -11,6 +11,7 @@ import PaymentRepository from "../../../infrastructure/repositories/PaymentRepos
 import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentUseCase";
 import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
 import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
+import NotificationRepository from "../../../infrastructure/repositories/NotificationRepository";
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ const validatorService = new JoiService();
 
 const paymentService = new StripeService();
 const paymentRepository = new PaymentRepository();
+const notificationRepository = new NotificationRepository()
 
 const createAppointmentUseCase = new CreateAppointmentUseCase(
    appointmentRepository,
@@ -30,7 +32,7 @@ const createAppointmentUseCase = new CreateAppointmentUseCase(
    paymentRepository
 );
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService, paymentRepository);
-const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService);
+const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService, notificationRepository);
 
 const appointmentController = new AppointmentController(
    createAppointmentUseCase,

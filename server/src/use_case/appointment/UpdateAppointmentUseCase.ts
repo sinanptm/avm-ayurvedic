@@ -1,23 +1,46 @@
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
+import { NotificationTypes } from "../../domain/entities/INotification";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import INotificationRepository from "../../domain/interface/repositories/INotificationRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 
 export default class UpdateAppointmentUseCase {
    constructor(
       private appointmentRepository: IAppointmentRepository,
-      private validatorService: IValidatorService
-   ) {}
+      private validatorService: IValidatorService,
+      private notificationRepository: INotificationRepository
+   ) { }
 
+   // By Doctor
    async updateStatus(appointmentId: string, status: AppointmentStatus): Promise<void> {
       this.validatorService.validateRequiredFields({ appointmentId, status });
       this.validatorService.validateIdFormat(appointmentId);
       this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
-      await this.appointmentRepository.update({ _id: appointmentId, status });
+      const appointment = await this.appointmentRepository.update({ _id: appointmentId, status });
+      // notify patient
+      if (status === AppointmentStatus.CANCELLED && appointment) {
+         await this.notificationRepository.create({
+            appointmentId,
+            message: `Your appointment has been canceled. If you have any questions, please contact your doctor.`,
+            patientId: appointment.patientId,
+            type: NotificationTypes.APPOINTMENT_CANCELED
+         });
+      }
    }
 
+   // By Patient 
    async updateStatusAndNote(appointmentId: string, status: AppointmentStatus, notes: string): Promise<void> {
       this.validatorService.validateRequiredFields({ appointmentId, status, notes });
       this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
-      await this.appointmentRepository.update({ _id: appointmentId, status, notes });
+      const appointment = await this.appointmentRepository.update({ _id: appointmentId, status, notes });
+      // notify doctor
+      if (status === AppointmentStatus.CANCELLED && appointment) {
+         await this.notificationRepository.create({
+            appointmentId,
+            message: `The appointment for patient has been canceled. The slot is now available for other patients.`,
+            doctorId: appointment.doctorId,
+            type: NotificationTypes.APPOINTMENT_CANCELED
+         });
+      }
    }
 }
