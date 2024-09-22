@@ -1,9 +1,10 @@
+// NavBar.tsx
 "use client";
 
 import Link from "next/link";
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Package2, Bell } from "lucide-react";
+import { Package2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -21,8 +22,7 @@ import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";
 import { ButtonV2 } from "../common/ButtonV2";
-import { Badge } from "@/components/ui/badge";
-import NotificationModal from "@/components/models/NotificationModel";
+import NotificationButton from "../button/PatientNotificationButton";
 
 export const NavBar = () => {
   const path = usePathname();
@@ -31,29 +31,6 @@ export const NavBar = () => {
   const { patientToken, setCredentials, logout } = useAuth();
   const [isLogoutModelOpen, setLogoutModelOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(3);
-
-  const notifications = [
-    {
-      id: "1",
-      title: "New message",
-      description: "You have a new message from Dr. Smith",
-      icon: "/assets/icons/email.svg",
-    },
-    {
-      id: "2",
-      title: "Appointment reminder",
-      description: "Your appointment is tomorrow at 2 PM",
-      icon: "/assets/icons/calendar.svg",
-    },
-    {
-      id: "3",
-      title: "Lab results ready",
-      description: "Your recent lab results are now available",
-      icon: "/assets/icons/utils/droplet.svg",
-    },
-  ];
 
   if (path.includes("signup") || path.includes("admin") || path.includes("signin") || path.includes("doctor")) {
     return null;
@@ -97,10 +74,6 @@ export const NavBar = () => {
   const handleLinkClick = (link: string) => {
     route.push(link);
     setIsSheetOpen(false);
-  };
-
-  const handleNotificationClick = () => {
-    setIsNotificationModalOpen(true);
   };
 
   return (
@@ -159,18 +132,7 @@ export const NavBar = () => {
         </SheetContent>
       </Sheet>
       <div className="flex items-center gap-4">
-        <ButtonV2 variant="ghost" size="icon" className="relative" onClick={handleNotificationClick}>
-          <Bell className="h-5 w-5" />
-          {notificationCount > 0 && (
-            <Badge
-              variant="destructive"
-              className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
-            >
-              {notificationCount}
-            </Badge>
-          )}
-          <span className="sr-only">View notifications</span>
-        </ButtonV2>
+        <NotificationButton /> 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <ButtonV2 variant="ghost" size="icon" className="rounded-full">
@@ -208,11 +170,6 @@ export const NavBar = () => {
           open={isLogoutModelOpen}
           setOpen={setLogoutModelOpen}
           handleLogoutConfirm={handleLogoutConfirm}
-        />
-        <NotificationModal
-          open={isNotificationModalOpen}
-          setOpen={setIsNotificationModalOpen}
-          notifications={notifications}
         />
       </div>
     </header>
