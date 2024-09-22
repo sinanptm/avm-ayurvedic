@@ -1,17 +1,14 @@
-import AppointmentTable from '@/components/view/table/DoctorAppointmentTable';
-import { Metadata } from 'next'
-
+import AppointmentTable from "@/components/view/table/DoctorAppointmentTable";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Appointments"
-}
+   title: "Appointments",
+};
 
 const Appointments = ({ searchParams }: { searchParams: { page: number } }) => {
-  const page = searchParams.page || 0;
+   const page = searchParams.page || 0;
 
-  return (
-    <AppointmentTable page={page} />
-  )
-}
+   return <AppointmentTable page={page} />;
+};
 
-export default Appointments
+export default Appointments;

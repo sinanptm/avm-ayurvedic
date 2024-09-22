@@ -10,25 +10,25 @@ export default class AdminDoctorUseCase {
       private doctorRepository: IDoctorRepository,
       private emailService: IEmailService,
       private validatorService: IValidatorService
-   ) { }
+   ) {}
 
    async getAll(offset: number, limit: number, type: DoctorsFilter): Promise<PaginatedResult<IDoctor>> {
       const filters = {
          [DoctorsFilter.VERIFIED]: { isVerified: true, isBlocked: false },
          [DoctorsFilter.NOT_VERIFIED]: { isVerified: false, isBlocked: false },
-         [DoctorsFilter.BLOCKED]: { isVerified: true, isBlocked: true }
-      }
+         [DoctorsFilter.BLOCKED]: { isVerified: true, isBlocked: true },
+      };
 
-      const { isBlocked, isVerified } = filters[type]
+      const { isBlocked, isVerified } = filters[type];
       let data = await this.doctorRepository.findMany(offset, limit, isVerified, isBlocked);
 
-      data.items = data.items.filter(doctor => doctor.role !== 'admin')
+      data.items = data.items.filter((doctor) => doctor.role !== "admin");
       return data;
    }
 
    async update(doctor: IDoctor): Promise<void> {
       const updatedDoctor = await this.doctorRepository.update(doctor);
-      if (!updatedDoctor) throw new CustomError("Not Found",StatusCode.NotFound);
+      if (!updatedDoctor) throw new CustomError("Not Found", StatusCode.NotFound);
       if (updatedDoctor?.isVerified! && doctor.isVerified) {
          await this.emailService.sendMail({
             email: updatedDoctor.email!,

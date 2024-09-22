@@ -70,8 +70,8 @@ export const NavBar = () => {
       setIsSheetOpen(false);
    };
 
-   const handleLinkClick = (link:string) => {
-      route.push(link)
+   const handleLinkClick = (link: string) => {
+      route.push(link);
       setIsSheetOpen(false);
    };
 
@@ -84,9 +84,9 @@ export const NavBar = () => {
             </Link>
             {NavLinks.map((link) => (
                <ButtonV2
-                  variant={'linkHover2'}
-                  onClick={()=>handleLinkClick(link.href)}
-                  size={'sm'}
+                  variant={"linkHover2"}
+                  onClick={() => handleLinkClick(link.href)}
+                  size={"sm"}
                   key={link.label + link.href}
                >
                   {link.label}

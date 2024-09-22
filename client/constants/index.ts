@@ -105,13 +105,63 @@ export const SliderImages: string[] = [
 ];
 
 export const DummyDoctors = [
-   { "_id": "66e18ca5f2448c308b75a861", "email": "muhammeds@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e18ca5f2448c308b75a861-1726057637911", "isBlocked": false, "name": "Dr Muhammed", "phone": "+918082327749", "role": "doctor", "qualifications": ["BAMS", "MBBS"], "isVerified": true, "createdAt": "2024-09-11T12:27:17.898Z", "updatedAt": "2024-09-11T17:39:20.906Z", "__v": 0 },
-   { "_id": "66e1cace6d9f4811ad6f6767", "email": "drshafeeq@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1cace6d9f4811ad6f6767-1726073550611", "isBlocked": false, "name": "Dr Ganesh", "phone": "+918909049", "role": "doctor", "qualifications": ["Mbbs"], "isVerified": true, "createdAt": "2024-09-11T16:52:30.548Z", "updatedAt": "2024-09-11T17:39:28.121Z", "__v": 0 },
-   { "_id": "66e1d4144dd4bfd500a9481f", "email": "Jasmin9@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1d4144dd4bfd500a9481f-1726075924461", "isBlocked": false, "name": "Jasmin", "phone": "+918089507749", "role": "doctor", "qualifications": ["BAMS", "MBBS"], "isVerified": true, "createdAt": "2024-09-11T17:32:04.440Z", "updatedAt": "2024-09-12T05:50:04.033Z", "__v": 0 },
-   { "_id": "66e28058798c79efcba79690", "email": "drJasmin@gmail.com", "image": "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e28058798c79efcba79690-1726120024184", "isBlocked": false, "name": "Dr Jasmin", "phone": "+918239109212", "role": "doctor", "qualifications": ["MBBS ", "BAMS"], "isVerified": true, "createdAt": "2024-09-12T05:47:04.157Z", "updatedAt": "2024-09-12T05:50:14.687Z", "__v": 0 }
-]
-
-
+   {
+      _id: "66e18ca5f2448c308b75a861",
+      email: "muhammeds@gmail.com",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e18ca5f2448c308b75a861-1726057637911",
+      isBlocked: false,
+      name: "Dr Muhammed",
+      phone: "+918082327749",
+      role: "doctor",
+      qualifications: ["BAMS", "MBBS"],
+      isVerified: true,
+      createdAt: "2024-09-11T12:27:17.898Z",
+      updatedAt: "2024-09-11T17:39:20.906Z",
+      __v: 0,
+   },
+   {
+      _id: "66e1cace6d9f4811ad6f6767",
+      email: "drshafeeq@gmail.com",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1cace6d9f4811ad6f6767-1726073550611",
+      isBlocked: false,
+      name: "Dr Ganesh",
+      phone: "+918909049",
+      role: "doctor",
+      qualifications: ["Mbbs"],
+      isVerified: true,
+      createdAt: "2024-09-11T16:52:30.548Z",
+      updatedAt: "2024-09-11T17:39:28.121Z",
+      __v: 0,
+   },
+   {
+      _id: "66e1d4144dd4bfd500a9481f",
+      email: "Jasmin9@gmail.com",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1d4144dd4bfd500a9481f-1726075924461",
+      isBlocked: false,
+      name: "Jasmin",
+      phone: "+918089507749",
+      role: "doctor",
+      qualifications: ["BAMS", "MBBS"],
+      isVerified: true,
+      createdAt: "2024-09-11T17:32:04.440Z",
+      updatedAt: "2024-09-12T05:50:04.033Z",
+      __v: 0,
+   },
+   {
+      _id: "66e28058798c79efcba79690",
+      email: "drJasmin@gmail.com",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e28058798c79efcba79690-1726120024184",
+      isBlocked: false,
+      name: "Dr Jasmin",
+      phone: "+918239109212",
+      role: "doctor",
+      qualifications: ["MBBS ", "BAMS"],
+      isVerified: true,
+      createdAt: "2024-09-12T05:47:04.157Z",
+      updatedAt: "2024-09-12T05:50:14.687Z",
+      __v: 0,
+   },
+];
 
 export const FeaturesCardsHomePage: AnimatedCardProps[] = [
    {
@@ -179,7 +229,7 @@ export const GuaranteeListHonePage: { src: string; text: string; heading: string
 ];
 export const AppointmentTypes = [
    {
-      id:AppointmentType.IN_PERSON,
+      id: AppointmentType.IN_PERSON,
       image: "/assets/icons/wheelchair.svg",
       type: "Inpatient",
       title: "Inpatient Consulting",
@@ -192,7 +242,7 @@ export const AppointmentTypes = [
       ],
    },
    {
-      id:AppointmentType.VIDEO_CONSULTING,
+      id: AppointmentType.VIDEO_CONSULTING,
       image: "/assets/services/ip.svg",
       type: "Online Video Call",
       title: "Online Video Consulting",
@@ -207,11 +257,24 @@ export const AppointmentTypes = [
 ];
 
 export const AvailableTimes = {
-   Morning: ["12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM"],
+   Morning: [
+      "12:00 AM",
+      "01:00 AM",
+      "02:00 AM",
+      "03:00 AM",
+      "04:00 AM",
+      "05:00 AM",
+      "06:00 AM",
+      "07:00 AM",
+      "08:00 AM",
+      "09:00 AM",
+      "10:00 AM",
+      "11:00 AM",
+   ],
    Afternoon: ["12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"],
-   Evening: ["05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM"]
- };
- 
+   Evening: ["05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM"],
+};
+
 export const GenderOptions: string[] = ["Male", "Female", "Other"];
 export const BloodGroups: string[] = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 export const DiseaseOptions: string[] = [

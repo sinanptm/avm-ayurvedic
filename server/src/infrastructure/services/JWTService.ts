@@ -12,9 +12,9 @@ export default class JWTService implements ITokenService {
          return jwt.verify(token, secret) as JwtPayload;
       } catch (error) {
          if (error instanceof TokenExpiredError) {
-            throw new CustomError("Token Expired",StatusCode.Unauthorized);
+            throw new CustomError("Token Expired", StatusCode.Unauthorized);
          }
-         throw new CustomError("Invalid token",StatusCode.Forbidden);
+         throw new CustomError("Invalid token", StatusCode.Forbidden);
       }
    }
 
@@ -31,8 +31,8 @@ export default class JWTService implements ITokenService {
       return this.signToken({ email, id, role }, process.env.ACCESS_TOKEN_SECRET!, "15m");
    }
 
-   verifyAccessToken(token: string): { email: string; id: string, role: UserRole } {
+   verifyAccessToken(token: string): { email: string; id: string; role: UserRole } {
       const { email, id, role } = this.verifyToken(token, process.env.ACCESS_TOKEN_SECRET!);
-      return { email, id, role  };
+      return { email, id, role };
    }
 }

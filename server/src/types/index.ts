@@ -15,7 +15,6 @@ export interface CustomRequest extends Request {
    };
 }
 
-
 export enum StatusCode {
    Success = 200,
    Created = 201,
@@ -23,7 +22,7 @@ export enum StatusCode {
    NoContent = 204,
    BadRequest = 400,
    Unauthorized = 401,
-   PaymentError=402,
+   PaymentError = 402,
    Forbidden = 403,
    NotFound = 404,
    Conflict = 409,
@@ -50,16 +49,15 @@ export interface PaginatedResult<T> {
 }
 
 export enum UserRole {
-   Admin = 'admin',
-   Doctor = 'doctor',
-   Patient = 'patient',
+   Admin = "admin",
+   Doctor = "doctor",
+   Patient = "patient",
 }
-
 
 // Filters
 
 export enum DoctorsFilter {
-   BLOCKED = 'blocked',
-   NOT_VERIFIED = 'not-verified',
-   VERIFIED = 'verified'
+   BLOCKED = "blocked",
+   NOT_VERIFIED = "not-verified",
+   VERIFIED = "verified",
 }

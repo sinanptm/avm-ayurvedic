@@ -87,6 +87,4 @@ export const updateProfileImage = async (key: string) => {
    return response.data;
 };
 
-
-
-export default patientAxiosInstance
+export default patientAxiosInstance;

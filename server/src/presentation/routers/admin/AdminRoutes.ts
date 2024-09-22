@@ -14,11 +14,11 @@ const router = express.Router();
 const patientRepository = new PatientRepository();
 const doctorRepository = new DoctorRepository();
 const emailService = new NodeMailerService();
-const validatorService = new JoiService()
-const adminPatientUseCase = new AdminPatientUseCase(patientRepository,validatorService);
+const validatorService = new JoiService();
+const adminPatientUseCase = new AdminPatientUseCase(patientRepository, validatorService);
 const adminPatientController = new AdminPatientController(adminPatientUseCase);
 
-const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository, emailService,validatorService);
+const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository, emailService, validatorService);
 const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
 
 router

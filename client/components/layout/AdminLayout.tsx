@@ -17,17 +17,17 @@ const Layout = ({ children, auth }: Props) => {
    const router = useRouter();
    const path = usePathname();
    useEffect(() => {
-      if (adminToken && path.includes('/otp-verification')) {
-         router.replace('/doctor');
+      if (adminToken && path.includes("/otp-verification")) {
+         router.replace("/doctor");
       }
-   }, [adminToken, path, router]); 
+   }, [adminToken, path, router]);
    useEffect(() => {
       const timer = setTimeout(() => {
          setLoading(false);
       }, 0);
       return () => clearTimeout(timer);
-   }, []); 
-   
+   }, []);
+
    if (isLoading) {
       return <UniversalSkelton />;
    }

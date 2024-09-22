@@ -21,10 +21,15 @@ export default class AuthenticationUseCase {
       private otpRepository: IOtpRepository,
       private tokenService: ITokenService,
       private validatorService: IValidatorService
-   ) { }
+   ) {}
 
    async register(patient: IPatient): Promise<string> {
-      this.validatorService.validateRequiredFields({ email: patient.email, password: patient.password, name: patient.name, phone: patient.phone });
+      this.validatorService.validateRequiredFields({
+         email: patient.email,
+         password: patient.password,
+         name: patient.name,
+         phone: patient.phone,
+      });
       this.validatorService.validateEmailFormat(patient.email!);
       this.validatorService.validatePassword(patient.password!);
       this.validatorService.validateLength(patient.name!, 3, 20);
@@ -42,7 +47,8 @@ export default class AuthenticationUseCase {
       const foundPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundPatient) throw new CustomError("Invalid email or password", StatusCode.Unauthorized);
 
-      if (!foundPatient.password) throw new CustomError("Account requires alternative login methods", StatusCode.Unauthorized);
+      if (!foundPatient.password)
+         throw new CustomError("Account requires alternative login methods", StatusCode.Unauthorized);
       if (foundPatient.isBlocked) throw new CustomError("Account is blocked", StatusCode.Forbidden);
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundPatient.password!);

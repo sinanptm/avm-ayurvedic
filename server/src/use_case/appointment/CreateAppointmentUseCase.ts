@@ -9,113 +9,111 @@ import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepo
 import IPayment, { PaymentStatus } from "../../domain/entities/IPayment";
 
 export default class AppointmentUseCase {
-    bookingAmount: number;
+   bookingAmount: number;
 
-    constructor(
-        private appointmentRepository: IAppointmentRepository,
-        private slotRepository: ISlotRepository,
-        private validatorService: IValidatorService,
-        private paymentService: IPaymentService,
-        private paymentRepository: IPaymentRepository,
-    ) {
-        this.bookingAmount = 300;
-    }
+   constructor(
+      private appointmentRepository: IAppointmentRepository,
+      private slotRepository: ISlotRepository,
+      private validatorService: IValidatorService,
+      private paymentService: IPaymentService,
+      private paymentRepository: IPaymentRepository
+   ) {
+      this.bookingAmount = 300;
+   }
 
-    async exec(
-        appointmentData: IAppointment,
-        patientId: string
-    ): Promise<{ sessionId: string, checkoutUrl: string }> {
-        this.validateAppointmentData(appointmentData, patientId);
+   async exec(appointmentData: IAppointment, patientId: string): Promise<{ sessionId: string; checkoutUrl: string }> {
+      this.validateAppointmentData(appointmentData, patientId);
 
-        const slot = await this.slotRepository.findById(appointmentData.slotId!);
-        if (!slot) throw new CustomError("Slot Not Found", StatusCode.NotFound);
+      const slot = await this.slotRepository.findById(appointmentData.slotId!);
+      if (!slot) throw new CustomError("Slot Not Found", StatusCode.NotFound);
 
-        if (slot.status === 'booked') {
-            const bookedAppointment = await this.appointmentRepository.findByDateAndSlot(appointmentData.appointmentDate!, appointmentData.slotId!);
-            if (bookedAppointment) throw new CustomError("Slot already booked", StatusCode.Conflict);
-        } else {
-            slot.status = 'booked';
-            await this.slotRepository.update(slot);
-        }
+      if (slot.status === "booked") {
+         const bookedAppointment = await this.appointmentRepository.findByDateAndSlot(
+            appointmentData.appointmentDate!,
+            appointmentData.slotId!
+         );
+         if (bookedAppointment) throw new CustomError("Slot already booked", StatusCode.Conflict);
+      } else {
+         slot.status = "booked";
+         await this.slotRepository.update(slot);
+      }
 
-        const payment = await this.paymentRepository.create({
-            orderId: '',
-            appointmentId: appointmentData._id!,
-            amount: this.bookingAmount,
-            currency: 'INR',
-            status: PaymentStatus.PENDING,
-        });
+      const payment = await this.paymentRepository.create({
+         orderId: "",
+         appointmentId: appointmentData._id!,
+         amount: this.bookingAmount,
+         currency: "INR",
+         status: PaymentStatus.PENDING,
+      });
 
-        const checkoutSession = await this.paymentService.createCheckoutSession(
-            this.bookingAmount,
-            'INR',
-            `${process.env.CLIENT_URL}/new-appointment/${payment._id}`,
-            `${process.env.CLIENT_URL}/new-appointment/cancel/${payment._id}`,
-            { paymentId: payment._id?.toString() }
-        );
+      const checkoutSession = await this.paymentService.createCheckoutSession(
+         this.bookingAmount,
+         "INR",
+         `${process.env.CLIENT_URL}/new-appointment/${payment._id}`,
+         `${process.env.CLIENT_URL}/new-appointment/cancel/${payment._id}`,
+         { paymentId: payment._id?.toString() }
+      );
 
-        const appointmentId = await this.appointmentRepository.create({
-            ...appointmentData,
-            patientId,
-            status: AppointmentStatus.PAYMENT_PENDING,
-            paymentId: payment._id!,
-        });
+      const appointmentId = await this.appointmentRepository.create({
+         ...appointmentData,
+         patientId,
+         status: AppointmentStatus.PAYMENT_PENDING,
+         paymentId: payment._id!,
+      });
 
-        await this.paymentRepository.update({
-            _id: payment._id,
-            orderId: checkoutSession.id,
-            appointmentId
-        });
+      await this.paymentRepository.update({
+         _id: payment._id,
+         orderId: checkoutSession.id,
+         appointmentId,
+      });
 
+      return { sessionId: checkoutSession.id, checkoutUrl: checkoutSession.url! };
+   }
 
-        return { sessionId: checkoutSession.id, checkoutUrl: checkoutSession.url! };
-    }
+   async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
+      const event = await this.paymentService.handleWebhookEvent(body, signature);
 
+      if (!event || !event.data || !event.data.object) {
+         return;
+      }
+      const paymentIntentMetadata = event.data.object.metadata as { paymentId: string };
 
-    async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
-        const event = await this.paymentService.handleWebhookEvent(body, signature);
-    
-        if (!event || !event.data || !event.data.object) {
-            return;
-        }    
-        const paymentIntentMetadata = event.data.object.metadata as { paymentId: string };       
-    
-        if (!paymentIntentMetadata || !paymentIntentMetadata.paymentId) {
-            return;
-        }
-    
-        await this.verifyPaymentIntent(paymentIntentMetadata.paymentId);
-    }
-    
-    
+      if (!paymentIntentMetadata || !paymentIntentMetadata.paymentId) {
+         return;
+      }
 
-    private async verifyPaymentIntent(id: string): Promise<IPayment | null> {
-        const payment = await this.paymentRepository.findById(id);
-    
-        if (!payment) {
-            return null; 
-        }
-    
-        await this.paymentRepository.update({
-            _id: payment._id,
-            status: PaymentStatus.COMPLETED,
-        });
-    
-        await this.appointmentRepository.updateAppointmentStatusToConfirmed(payment.appointmentId!);
-    
-        return payment;
-    }
-    
+      await this.verifyPaymentIntent(paymentIntentMetadata.paymentId);
+   }
 
-    private validateAppointmentData({ appointmentDate, appointmentType, doctorId, notes, reason, slotId, }: IAppointment, patientId: string): void {
-        this.validatorService.validateRequiredFields({ slotId, appointmentType, doctorId, reason, appointmentDate })!
-        this.validatorService.validateIdFormat(doctorId!);
-        this.validatorService.validateIdFormat(slotId!);
-        this.validatorService.validateIdFormat(patientId!);
-        this.validatorService.validateEnum(appointmentType!, Object.values(AppointmentType));
-        this.validatorService.validateDateFormat(appointmentDate!);
-        this.validatorService.validateLength(reason!, 1, 255);
+   private async verifyPaymentIntent(id: string): Promise<IPayment | null> {
+      const payment = await this.paymentRepository.findById(id);
 
-        if (notes) this.validatorService.validateLength(notes, 0, 255);
-    }
+      if (!payment) {
+         return null;
+      }
+
+      await this.paymentRepository.update({
+         _id: payment._id,
+         status: PaymentStatus.COMPLETED,
+      });
+
+      await this.appointmentRepository.updateAppointmentStatusToConfirmed(payment.appointmentId!);
+
+      return payment;
+   }
+
+   private validateAppointmentData(
+      { appointmentDate, appointmentType, doctorId, notes, reason, slotId }: IAppointment,
+      patientId: string
+   ): void {
+      this.validatorService.validateRequiredFields({ slotId, appointmentType, doctorId, reason, appointmentDate })!;
+      this.validatorService.validateIdFormat(doctorId!);
+      this.validatorService.validateIdFormat(slotId!);
+      this.validatorService.validateIdFormat(patientId!);
+      this.validatorService.validateEnum(appointmentType!, Object.values(AppointmentType));
+      this.validatorService.validateDateFormat(appointmentDate!);
+      this.validatorService.validateLength(reason!, 1, 255);
+
+      if (notes) this.validatorService.validateLength(notes, 0, 255);
+   }
 }

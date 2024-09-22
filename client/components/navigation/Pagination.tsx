@@ -17,7 +17,14 @@ type Props = {
    hasNextPage: boolean;
 };
 
-export default function Pagination({ currentPage, handlePageChange, totalPages, className, hasNextPage, hasPrevPage }: Props) {
+export default function Pagination({
+   currentPage,
+   handlePageChange,
+   totalPages,
+   className,
+   hasNextPage,
+   hasPrevPage,
+}: Props) {
    if (totalPages <= 1) return null;
 
    const getPageRange = () => {

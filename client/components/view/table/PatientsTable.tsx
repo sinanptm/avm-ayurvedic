@@ -21,7 +21,7 @@ export default function PatientsTable({ page }: Props) {
    const [isModelOpen, setModelOpen] = useState(false);
    const [selectedPatient, setSelectedPatient] = useState({});
    const router = useRouter();
-   const limit = 7
+   const limit = 7;
    const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage, limit);
    const columns = [
       { name: "Image", width: "w-[80px]" },
@@ -80,10 +80,11 @@ export default function PatientsTable({ page }: Props) {
                                     <TableRow key={patient._id}>
                                        <TableCell>
                                           <div
-                                             className={`relative w-16 h-16 rounded-full ${patient.isBlocked
-                                                ? "border-4 border-destructive"
-                                                : "border-4 border-primary"
-                                                }`}
+                                             className={`relative w-16 h-16 rounded-full ${
+                                                patient.isBlocked
+                                                   ? "border-4 border-destructive"
+                                                   : "border-4 border-primary"
+                                             }`}
                                           >
                                              <Image
                                                 src={patient.profile || "/placeholder.svg?height=64&width=64"}

@@ -66,6 +66,4 @@ doctorAxiosInstance.interceptors.response.use(
    }
 );
 
-
-
-export default doctorAxiosInstance
+export default doctorAxiosInstance;

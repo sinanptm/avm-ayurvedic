@@ -6,7 +6,7 @@ import logger from "../../utils/logger";
 export default class PatientAuthMiddleware {
    constructor(private tokenService: ITokenService) {
       this.exec = this.exec.bind(this);
-    }
+   }
 
    exec(req: CustomRequest, res: Response, next: NextFunction) {
       try {

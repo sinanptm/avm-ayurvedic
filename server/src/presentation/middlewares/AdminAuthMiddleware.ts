@@ -4,7 +4,7 @@ import { CustomRequest, StatusCode, UserRole } from "../../types";
 import logger from "../../utils/logger";
 
 export default class AdminAuthMiddleware {
-   constructor(private tokenService: ITokenService) { 
+   constructor(private tokenService: ITokenService) {
       this.exec = this.exec.bind(this);
    }
 
@@ -22,11 +22,11 @@ export default class AdminAuthMiddleware {
             return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Access Token is missing" });
          }
          const { id, email, role } = this.tokenService.verifyAccessToken(token);
-         if (!id || !email || !role) {         
+         if (!id || !email || !role) {
             logger.warn("Unauthorized: Invalid Access Token Attempt");
             return res.status(StatusCode.Unauthorized).json({ message: "Unauthorized: Invalid Access Token" });
          }
-         
+
          if (role !== UserRole.Admin) {
             return res.status(StatusCode.Forbidden).json({ message: "Forbidden: Access restricted to admins" });
          }

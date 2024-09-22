@@ -20,23 +20,7 @@
 
 // https://stackoverflow.com/questions/36272286/getting-access-denied-when-calling-the-putobject-operation-with-bucket-level-per
 
-
-
-
-
 // https://www.youtube.com/watch?v=LA8oE6vGO_w&list=PLDn5_2K0bUmcukAoUVoREbCmSzNbgKntL&index=20
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    "use client";
 // import React, { useState } from "react";

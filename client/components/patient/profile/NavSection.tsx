@@ -8,7 +8,7 @@ import UploadProfileModel from "@/components/models/patient/UploadProfileModel";
 import { ButtonV2 } from "@/components/common/ButtonV2";
 
 interface Props {
-   setSection: (state: "profile" | "appointments" ) => void;
+   setSection: (state: "profile" | "appointments") => void;
    patientData: IPatient;
    refetch: any;
 }

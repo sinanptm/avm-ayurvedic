@@ -19,8 +19,7 @@ const patientSchema = new Schema<IPatient>(
    },
    {
       timestamps: true,
-    versionKey: false, 
-
+      versionKey: false,
    }
 );
 

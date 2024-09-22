@@ -67,9 +67,9 @@ export interface IDoctor {
 }
 
 export enum DoctorsFilter {
-   BLOCKED = 'blocked',
-   NOT_VERIFIED = 'not-verified',
-   VERIFIED = 'verified'
+   BLOCKED = "blocked",
+   NOT_VERIFIED = "not-verified",
+   VERIFIED = "verified",
 }
 
 export type SlotStatus = "available" | "booked";
@@ -89,14 +89,14 @@ export interface ISlot {
    startTime?: string;
    endTime?: string;
    status?: SlotStatus;
-};
+}
 
 export enum AppointmentStatus {
-   PAYMENT_PENDING = 'payment-pending',
-   PENDING = 'pending',
-   CONFIRMED = 'confirmed',
-   CANCELLED = 'cancelled',
-   COMPLETED = 'completed',
+   PAYMENT_PENDING = "payment-pending",
+   PENDING = "pending",
+   CONFIRMED = "confirmed",
+   CANCELLED = "cancelled",
+   COMPLETED = "completed",
 }
 export enum AppointmentType {
    VIDEO_CONSULTING = "video-consulting",
@@ -115,7 +115,6 @@ export default interface IAppointment {
    readonly notes?: string;
    status?: AppointmentStatus;
 }
-
 
 export interface IExtendedAppointment extends IAppointment {
    patient?: IPatient;

@@ -53,12 +53,12 @@ export default class ErrorHandler {
          method: req.method,
          path: req.path,
          clientIp,
-         stack: error.stack, 
+         stack: error.stack,
       });
 
       res.status(statusCode).json({
          message,
-         ...(process.env.NODE_ENV !== "production" && { stack: error.stack }), 
+         ...(process.env.NODE_ENV !== "production" && { stack: error.stack }),
       });
    }
 }

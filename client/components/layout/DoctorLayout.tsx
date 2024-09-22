@@ -15,10 +15,13 @@ const Layout = ({ children, auth }: Props) => {
    const { doctorToken } = useAuth();
    const [isLoading, setLoading] = useState(true);
    const path = usePathname();
-   const router = useRouter()
+   const router = useRouter();
    useEffect(() => {
-      if (doctorToken && (path.includes('/otp-verification') || path.includes('/signup') || path.includes('/reset-password'))) {
-         router.replace('/doctor');
+      if (
+         doctorToken &&
+         (path.includes("/otp-verification") || path.includes("/signup") || path.includes("/reset-password"))
+      ) {
+         router.replace("/doctor");
       }
    }, [doctorToken, path, router]);
    useEffect(() => {

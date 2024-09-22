@@ -12,7 +12,7 @@ export default class PatientRepository implements IPatientRepository {
       const totalItems = await this.model.countDocuments();
       const items = await this.model.find().skip(offset).limit(limit).select(["-token", "-password"]).exec();
 
-      return getPaginatedResult(totalItems,offset,limit,items)
+      return getPaginatedResult(totalItems, offset, limit, items);
    }
 
    async create(patient: IPatient): Promise<IPatient | never> {

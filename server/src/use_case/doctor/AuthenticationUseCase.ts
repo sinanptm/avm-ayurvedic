@@ -18,17 +18,18 @@ export default class AuthenticationUseCase {
       private otpRepository: IOtpRepository,
       private cloudService: ICloudStorageService,
       private validatorService: IValidatorService
-   ) { }
+   ) {}
 
    async signin(email: string, password: string): Promise<void> {
-      this.validatorService.validateEmailFormat(email)
-      this.validatorService.validatePassword(password)
+      this.validatorService.validateEmailFormat(email);
+      this.validatorService.validatePassword(password);
       const doctor = await this.doctorRepository.findByEmailWithCredentials(email);
       if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
       if (doctor.role !== "doctor") throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
-      if (!(await this.passwordService.compare(password, doctor.password!))) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
-      if (!doctor.isVerified) throw new CustomError("Not Verified",StatusCode.Unauthorized);
+      if (!(await this.passwordService.compare(password, doctor.password!)))
+         throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
+      if (!doctor.isVerified) throw new CustomError("Not Verified", StatusCode.Unauthorized);
 
       let otp = +this.generateOTP(6);
       while (otp.toString().length !== 6) {
@@ -46,7 +47,7 @@ export default class AuthenticationUseCase {
    }
 
    async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
-      this.validatorService.validateEmailFormat(email)
+      this.validatorService.validateEmailFormat(email);
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
 
@@ -66,7 +67,7 @@ export default class AuthenticationUseCase {
    }
 
    async resendOtp(email: string) {
-      this.validatorService.validateEmailFormat(email)
+      this.validatorService.validateEmailFormat(email);
       const doctor = await this.doctorRepository.findByEmail(email);
       if (!doctor) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
 
@@ -86,7 +87,7 @@ export default class AuthenticationUseCase {
    }
 
    async sendForgotPasswordMail(email: string): Promise<void> {
-      this.validatorService.validateEmailFormat(email)
+      this.validatorService.validateEmailFormat(email);
       const doctor = await this.doctorRepository.findByEmail(email);
       if (!doctor) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
@@ -100,8 +101,8 @@ export default class AuthenticationUseCase {
    }
 
    async updatePassword(email: string, password: string): Promise<void> {
-      this.validatorService.validateEmailFormat(email)
-      this.validatorService.validatePassword(password)
+      this.validatorService.validateEmailFormat(email);
+      this.validatorService.validatePassword(password);
       const doctor = await this.doctorRepository.findByEmail(email);
       if (!doctor) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
@@ -111,7 +112,13 @@ export default class AuthenticationUseCase {
    }
 
    async register(doctor: IDoctor): Promise<string> {
-      this.validatorService.validateRequiredFields({ email: doctor.email, name: doctor.name, password: doctor.password, phone: doctor.phone, qualification: doctor.qualifications })
+      this.validatorService.validateRequiredFields({
+         email: doctor.email,
+         name: doctor.name,
+         password: doctor.password,
+         phone: doctor.phone,
+         qualification: doctor.qualifications,
+      });
       this.validatorService.validatePassword(doctor.password!);
       this.validatorService.validateEmailFormat(doctor.email!);
       this.validatorService.validatePhoneNumber(doctor.phone!);
@@ -130,7 +137,7 @@ export default class AuthenticationUseCase {
    }
 
    async updateProfileImage(key: string, id: string): Promise<void> {
-      this.validatorService.validateIdFormat(id)
+      this.validatorService.validateIdFormat(id);
       const doctor = await this.doctorRepository.findByID(id);
       if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);

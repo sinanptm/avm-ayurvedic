@@ -1,5 +1,5 @@
 import IDoctor from "../../entities/IDoctor";
-import { Types } from 'mongoose'
+import { Types } from "mongoose";
 import { PaginatedResult } from "../../../types";
 
 export default interface IDoctorRepository {

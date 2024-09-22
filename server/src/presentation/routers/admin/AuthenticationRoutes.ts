@@ -15,7 +15,7 @@ const otpRepository = new OtpRepository();
 const passwordService = new BcryptService();
 const tokenService = new JWTService();
 const emailService = new NodeMailerService();
-const validatorService = new JoiService()
+const validatorService = new JoiService();
 
 const authUseCase = new AuthenticationUseCase(
    adminRepository,

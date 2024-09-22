@@ -20,21 +20,20 @@ const tokenService = new TokenService();
 const authorizePatient = new PatientAuthMiddleware(tokenService);
 const authorizeAdmin = new AdminAuthMiddleware(tokenService);
 
-const doctorRepository = new DoctorRepository()
-const unauthenticatedUseCase = new UnauthenticatedUseCases(doctorRepository)
-const unauthenticatedController = new UnauthenticatedControllers(unauthenticatedUseCase)
+const doctorRepository = new DoctorRepository();
+const unauthenticatedUseCase = new UnauthenticatedUseCases(doctorRepository);
+const unauthenticatedController = new UnauthenticatedControllers(unauthenticatedUseCase);
 
 const errorHandler = new ErrorHandler();
 
-app.get('/doctors', unauthenticatedController.getDoctors.bind(unauthenticatedController))
+app.get("/doctors", unauthenticatedController.getDoctors.bind(unauthenticatedController));
 app.use("/doctor/auth", doctorAuthentication);
 app.use("/patient/auth", patientAuthentication);
 app.use("/patient", authorizePatient.exec, protectedRoutes);
 app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
-app.use('/slots', slotRoutes);
-app.use('/appointments', appointmentRoutes)
-
+app.use("/slots", slotRoutes);
+app.use("/appointments", appointmentRoutes);
 
 app.use(errorHandler.exec.bind(errorHandler));
 

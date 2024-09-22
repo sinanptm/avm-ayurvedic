@@ -15,15 +15,16 @@ export default class AuthenticationUseCase {
       private emailService: IEmailService,
       private otpRepository: IOtpRepository,
       private validatorService: IValidatorService
-   ) { }
+   ) {}
 
    async login(email: string, password: string): Promise<void> {
-      this.validatorService.validateRequiredFields({ email, password })
+      this.validatorService.validateRequiredFields({ email, password });
       this.validatorService.validateEmailFormat(email);
       const doctor = await this.adminRepository.findByEmailWithCredentials(email);
       if (!doctor) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
       if (doctor?.role !== "admin") throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
-      if (!(await this.passwordService.compare(password, doctor.password!))) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
+      if (!(await this.passwordService.compare(password, doctor.password!)))
+         throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
 
       let otp = parseInt(this.generateOTP(6), 10);
       while (otp.toString().length !== 6) {
@@ -41,7 +42,7 @@ export default class AuthenticationUseCase {
    }
 
    async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
-      this.validatorService.validateEmailFormat(email)
+      this.validatorService.validateEmailFormat(email);
       const requestedOtp = await this.otpRepository.findOne(otp, email);
       if (!requestedOtp) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
 
@@ -59,7 +60,7 @@ export default class AuthenticationUseCase {
    }
 
    async resendOtp(email: string) {
-      this.validatorService.validateEmailFormat(email)
+      this.validatorService.validateEmailFormat(email);
       const admin = await this.adminRepository.findByEmail(email);
       if (!admin) throw new CustomError("Not Found", StatusCode.NotFound);
 

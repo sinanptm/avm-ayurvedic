@@ -76,24 +76,33 @@ export const updateProfileFormValidation = z.object({
 });
 
 export const appointmentFormValidation = z.object({
-   appointmentType: z.string({
-     required_error: "Appointment type is required",
-   }).min(1, "Appointment type is required"),
- 
-   reason: z.string({
-     required_error: "Reason for appointment is required",
-   }).trim().min(5, "Reason must be at least 5 characters long")
-     .max(500, "Reason must not exceed 500 characters"),
- 
+   appointmentType: z
+      .string({
+         required_error: "Appointment type is required",
+      })
+      .min(1, "Appointment type is required"),
+
+   reason: z
+      .string({
+         required_error: "Reason for appointment is required",
+      })
+      .trim()
+      .min(5, "Reason must be at least 5 characters long")
+      .max(500, "Reason must not exceed 500 characters"),
+
    note: z.string(),
- 
+
    date: z.coerce.date(),
-  
-   doctor: z.string({
-     required_error: "Doctor selection is required",
-   }).min(1, "Doctor selection is required"),
- 
-   slotId: z.string({
-     required_error: "Time slot selection is required",
-   }).min(1, "Time slot selection is required"),
+
+   doctor: z
+      .string({
+         required_error: "Doctor selection is required",
+      })
+      .min(1, "Doctor selection is required"),
+
+   slotId: z
+      .string({
+         required_error: "Time slot selection is required",
+      })
+      .min(1, "Time slot selection is required"),
 });

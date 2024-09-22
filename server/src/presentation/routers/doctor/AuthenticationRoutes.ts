@@ -11,7 +11,7 @@ import JoiService from "../../../infrastructure/services/JoiService";
 
 const passwordService = new BcryptService();
 const tokenService = new JWTService();
-const validatorService = new JoiService()
+const validatorService = new JoiService();
 const emailService = new NodeMailerService();
 const cloudService = new S3StorageService();
 const doctorRepository = new DoctorRepository();

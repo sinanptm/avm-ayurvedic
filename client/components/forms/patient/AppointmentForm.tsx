@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,12 +25,11 @@ import { Elements } from "@stripe/react-stripe-js";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
 
-
 const AppointmentForm = () => {
    const { data: doctorsData, isLoading: isDoctorsLoading } = useGetDoctorsList();
    const [isDoctorSelected, setIsDoctorSelected] = useState(false);
    const { mutate: createAppointment, isPending } = useCreateAppointment();
-   const router = useRouter()
+   const router = useRouter();
    const form = useForm<z.infer<typeof appointmentFormValidation>>({
       resolver: zodResolver(appointmentFormValidation),
       defaultValues: {
@@ -55,7 +54,7 @@ const AppointmentForm = () => {
 
    useEffect(() => {
       const subscription = form.watch((value, { name }) => {
-         if (name === 'doctor' && value.doctor) {
+         if (name === "doctor" && value.doctor) {
             setIsDoctorSelected(true);
          }
          setSlotFilter({
@@ -87,7 +86,7 @@ const AppointmentForm = () => {
                   variant: "success",
                });
                const stripe = await stripePromise;
-               await stripe?.redirectToCheckout({sessionId})
+               await stripe?.redirectToCheckout({ sessionId });
             },
             onError(error) {
                const message =
@@ -103,7 +102,7 @@ const AppointmentForm = () => {
          }
       );
    };
-   
+
    return (
       <Form {...form}>
          <Elements stripe={stripePromise}>
@@ -150,12 +149,7 @@ const AppointmentForm = () => {
                </CustomFormField>
 
                {/* Doctor Selection Field */}
-               <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  control={form.control}
-                  name="doctor"
-                  label="Doctor *"
-               >
+               <CustomFormField fieldType={FormFieldType.SELECT} control={form.control} name="doctor" label="Doctor *">
                   {!isDoctorsLoading && doctorsData?.items ? (
                      doctorsData.items.map((doctor) => (
                         <SelectItem key={doctor._id} value={doctor._id!}>
@@ -201,11 +195,11 @@ const AppointmentForm = () => {
                                           type="button"
                                           key={slot._id}
                                           variant="ghost"
-                                          onClick={() => form.setValue('slotId', slot._id!, { shouldValidate: true })}
+                                          onClick={() => form.setValue("slotId", slot._id!, { shouldValidate: true })}
                                           className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${
                                              field.value === slot._id
-                                                ? 'bg-primary text-primary-foreground border-primary shadow-md scale-105'
-                                                : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 hover:text-gray-100'
+                                                ? "bg-primary text-primary-foreground border-primary shadow-md scale-105"
+                                                : "bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 hover:text-gray-100"
                                           }`}
                                        >
                                           {slot.startTime} - {slot.endTime}

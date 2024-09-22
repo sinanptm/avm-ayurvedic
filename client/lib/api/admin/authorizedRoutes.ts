@@ -77,7 +77,7 @@ export const blockPatient = async (id: string, isBlocked: boolean) => {
    return response.data;
 };
 
-export const getDoctors = async (offset: number, limit: number, type:"verified"|"not-verified"|"blocked") => {
+export const getDoctors = async (offset: number, limit: number, type: "verified" | "not-verified" | "blocked") => {
    const response = await axiosInstance.get(`/doctor?offset=${offset}&limit=${limit}&type=${type}`);
    return response.data;
 };

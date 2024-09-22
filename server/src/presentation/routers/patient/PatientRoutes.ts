@@ -9,7 +9,7 @@ const router = express.Router();
 
 const patientRepository = new PatientRepository();
 const s3StorageService = new S3StorageService();
-const validatorService = new JoiService()
+const validatorService = new JoiService();
 
 const patientUseCase = new PatientUseCase(patientRepository, s3StorageService, validatorService);
 const patientController = new PatientController(patientUseCase);

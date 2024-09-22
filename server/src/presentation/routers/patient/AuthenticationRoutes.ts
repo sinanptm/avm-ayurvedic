@@ -13,7 +13,7 @@ const router = express.Router();
 const tokenService = new JWTService();
 const passwordService = new BcryptService();
 const emailService = new NodeMailerService();
-const validatorService = new JoiService()
+const validatorService = new JoiService();
 const patientRepository = new PatientRepository();
 const otpRepository = new OtpRepository();
 

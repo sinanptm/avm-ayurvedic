@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
@@ -10,7 +10,6 @@ import { ButtonV2 } from "@/components/common/ButtonV2";
 export default function PatientProfilePage() {
    const { data: patientData, isLoading, refetch } = useGetPatientProfile();
    if (isLoading || !patientData) {
-
    }
    const infoItems = [
       {

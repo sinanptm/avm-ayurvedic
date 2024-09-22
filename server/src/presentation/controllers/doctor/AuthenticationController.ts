@@ -18,7 +18,7 @@ export default class AuthDoctorController {
    async validateOtp(req: Request, res: Response, next: NextFunction) {
       try {
          const { otp, email } = req.body;
-        
+
          const { accessToken, refreshToken } = await this.authDoctorUseCase.validateOtp(email, otp);
 
          res.cookie(Cookie.Doctor, refreshToken, {
