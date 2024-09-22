@@ -9,4 +9,5 @@ export default interface IValidatorService {
    validateEnum(field: string, enumValues: string[]): boolean;
    validatePassword(password: string): boolean;
    validateBoolean(value: any): boolean;
+   validateMultipleIds(ids:string[]):boolean;
 }

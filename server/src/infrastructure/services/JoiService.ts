@@ -51,6 +51,15 @@ export default class JoiService implements IValidatorService {
       return true;
    }
 
+   public validateMultipleIds(ids: string[]): boolean {
+      const schema = Joi.array().items(Joi.string().pattern(new RegExp("^[a-fA-F0-9]{24}$")));
+      const { error } = schema.validate(ids);
+      if (error) {
+          throw new CustomError("Invalid ID format", StatusCode.BadRequest);
+      } 
+      return true;
+  }
+  
    public validatePhoneNumber(phoneNumber: string): boolean {
       const schema = Joi.string().min(4).max(15);
       const { error } = schema.validate(phoneNumber);
