@@ -29,7 +29,7 @@ export default class AppointmentUseCase {
 
       if (slot.status === "booked") {
          const bookedAppointment = await this.appointmentRepository.findByDateAndSlot(
-            appointmentData.appointmentDate!,
+            appointmentData.appointmentDate! as string,
             appointmentData.slotId!
          );
          if (bookedAppointment) throw new CustomError("Slot already booked", StatusCode.Conflict);
@@ -111,7 +111,7 @@ export default class AppointmentUseCase {
       this.validatorService.validateIdFormat(slotId!);
       this.validatorService.validateIdFormat(patientId!);
       this.validatorService.validateEnum(appointmentType!, Object.values(AppointmentType));
-      this.validatorService.validateDateFormat(appointmentDate!);
+      this.validatorService.validateDateFormat(appointmentDate! as string);
       this.validatorService.validateLength(reason!, 1, 255);
 
       if (notes) this.validatorService.validateLength(notes, 0, 255);

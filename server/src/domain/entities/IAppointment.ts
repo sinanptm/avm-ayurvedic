@@ -1,5 +1,5 @@
 import IDoctor from "./IDoctor";
-import IPatient  from "./IPatient";
+import IPatient from "./IPatient";
 import ISlot from "./ISlot";
 
 export enum AppointmentStatus {
@@ -21,7 +21,7 @@ export default interface IAppointment {
    readonly createdAt?: string;
    readonly updatedAt?: string;
    readonly appointmentType?: AppointmentType;
-   readonly appointmentDate?: string;
+   readonly appointmentDate?: string | Date;
    readonly reason?: string;
    readonly notes?: string;
    readonly paymentId?: string;
