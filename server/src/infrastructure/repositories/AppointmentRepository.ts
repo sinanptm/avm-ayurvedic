@@ -107,7 +107,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
       return await this.model.findOne({ appointmentDate, slotId });
    }
 
-   async updateManyBySlotIdsNotInStatuses(slotIds: string[], fields: Partial<IAppointment>, notInStatuses:AppointmentStatus[]): Promise<IAppointment[] | null> {
+   async updateManyBySlotIdsNotInStatuses(slotIds: string[], fields: Partial<IAppointment>, notInStatuses: AppointmentStatus[]): Promise<IAppointment[] | null> {
       const appointments = await this.model.find({ slotId: { $in: slotIds }, status: { $nin: notInStatuses } });
       await this.model.updateMany({ slotId: { $in: slotIds }, status: { $nin: notInStatuses } }, fields);
       return appointments
