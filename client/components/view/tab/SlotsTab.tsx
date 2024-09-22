@@ -21,8 +21,7 @@ export default function TabSection() {
          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">Manage Your Slots</h1>
 
          <MultiSlots />
-
-         <Tabs tabs={tabs} />
+         <Tabs tabs={tabs} activeTabClassName="bg-slate-300 bg-opacity-65" />
          <div className="my-14"></div>
       </div>
    );
