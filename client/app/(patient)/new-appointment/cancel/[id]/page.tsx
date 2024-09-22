@@ -33,7 +33,7 @@ export default function PaymentFailurePage() {
                <XCircle className="w-16 h-16 mx-auto text-red-500 mb-4" />
                <h2 className="text-xl font-semibold mb-2">Payment Failed</h2>
                <p className="text-muted-foreground mb-4">
-                  We're sorry, but your payment could not be processed. Please try again or contact support if the issue
+                  We&apos;re sorry, but your payment could not be processed. Please try again or contact support if the issue
                   persists.
                </p>
             </div>
