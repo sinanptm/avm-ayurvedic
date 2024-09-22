@@ -3,15 +3,14 @@
 import Link from "next/link";
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Package2 } from "lucide-react";
+import { Package2, Bell } from "lucide-react";
 import {
-   DropdownMenu,
-   DropdownMenuTrigger,
-   DropdownMenuContent,
-   DropdownMenuLabel,
-   DropdownMenuSeparator,
-   DropdownMenuItem,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { NavLinks } from "@/constants";
@@ -22,172 +21,202 @@ import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";
 import { ButtonV2 } from "../common/ButtonV2";
+import { Badge } from "@/components/ui/badge";
+import NotificationModal from "@/components/models/NotificationModel";
 
 export const NavBar = () => {
-   const path = usePathname();
-   const route = useRouter();
-   const { mutate: logoutFunc } = useLogoutMutation();
-   const { patientToken, setCredentials, logout } = useAuth();
-   const [isLogoutModelOpen, setLogoutModelOpen] = useState(false);
-   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const path = usePathname();
+  const route = useRouter();
+  const { mutate: logoutFunc } = useLogoutMutation();
+  const { patientToken, setCredentials, logout } = useAuth();
+  const [isLogoutModelOpen, setLogoutModelOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(3);
 
-   if (path.includes("signup") || path.includes("admin") || path.includes("signin") || path.includes("doctor")) {
-      return null;
-   }
+  const notifications = [
+    {
+      id: "1",
+      title: "New message",
+      description: "You have a new message from Dr. Smith",
+      icon: "/assets/icons/email.svg",
+    },
+    {
+      id: "2",
+      title: "Appointment reminder",
+      description: "Your appointment is tomorrow at 2 PM",
+      icon: "/assets/icons/calendar.svg",
+    },
+    {
+      id: "3",
+      title: "Lab results ready",
+      description: "Your recent lab results are now available",
+      icon: "/assets/icons/utils/droplet.svg",
+    },
+  ];
 
-   const handleLogoutClick = () => {
-      setLogoutModelOpen(true);
-   };
+  if (path.includes("signup") || path.includes("admin") || path.includes("signin") || path.includes("doctor")) {
+    return null;
+  }
 
-   const handleLogoutConfirm = () => {
-      try {
-         logoutFunc(null, {
-            onSuccess: () => {
-               toast({
-                  title: "Logout Successful",
-                  description: "We hope to see you again soon!",
-                  variant: "info",
-               });
-               setCredentials("patientToken", "");
-               route.push("/");
-            },
-            onError: () => {
-               toast({
-                  title: "Logout Failed",
-                  description: "An error occurred during logout. Please try again.",
-                  variant: "destructive",
-               });
-               logout("patientToken");
-            },
-         });
-         setLogoutModelOpen(false);
-      } catch (error) {
-         console.log(error);
-      }
-   };
+  const handleLogoutClick = () => {
+    setLogoutModelOpen(true);
+  };
 
-   const handleLinkHome = () => {
-      setIsSheetOpen(false);
-   };
+  const handleLogoutConfirm = () => {
+    try {
+      logoutFunc(null, {
+        onSuccess: () => {
+          toast({
+            title: "Logout Successful",
+            description: "We hope to see you again soon!",
+            variant: "info",
+          });
+          setCredentials("patientToken", "");
+          route.push("/");
+        },
+        onError: () => {
+          toast({
+            title: "Logout Failed",
+            description: "An error occurred during logout. Please try again.",
+            variant: "destructive",
+          });
+          logout("patientToken");
+        },
+      });
+      setLogoutModelOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-   const handleLinkClick = (link: string) => {
-      route.push(link);
-      setIsSheetOpen(false);
-   };
+  const handleLinkHome = () => {
+    setIsSheetOpen(false);
+  };
 
-   return (
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">
-         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-            <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base" prefetch={false}>
-               <Package2 className="h-6 w-6" onClick={handleLinkHome} />
-               <span className="sr-only">Acme Inc</span>
+  const handleLinkClick = (link: string) => {
+    route.push(link);
+    setIsSheetOpen(false);
+  };
+
+  const handleNotificationClick = () => {
+    setIsNotificationModalOpen(true);
+  };
+
+  return (
+    <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">
+      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+        <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base" prefetch={false}>
+          <Package2 className="h-6 w-6" onClick={handleLinkHome} />
+          <span className="sr-only">Acme Inc</span>
+        </Link>
+        {NavLinks.map((link) => (
+          <ButtonV2
+            variant={"linkHover2"}
+            onClick={() => handleLinkClick(link.href)}
+            size={"sm"}
+            key={link.label + link.href}
+          >
+            {link.label}
+          </ButtonV2>
+        ))}
+      </nav>
+      <Sheet modal open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetTrigger asChild>
+          <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+            <Image src={"/assets/icons/menu.svg"} alt="Menu" width={30} height={30} className="h-5 w-5" />
+            <span className="sr-only">Toggle navigation menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <SheetDescription></SheetDescription>
+          <SheetTitle>
+            <span className="sr-only">Navigation Menu</span>
+          </SheetTitle>
+          <nav className="grid gap-6 text-lg font-medium">
+            <Link href="/" className="flex items-center gap-2 text-lg font-semibold" prefetch={false}>
+              <Image
+                src={"/assets/icons/logo-icon.svg"}
+                width={33}
+                height={33}
+                alt="Logo"
+                className="h-11 w-11"
+              />
+              <span className="sr-only">Acme Inc</span>
             </Link>
             {NavLinks.map((link) => (
-               <ButtonV2
-                  variant={"linkHover2"}
-                  onClick={() => handleLinkClick(link.href)}
-                  size={"sm"}
-                  key={link.label + link.href}
-               >
-                  {link.label}
-               </ButtonV2>
+              <Link
+                href={link.href}
+                key={link.label + link.href}
+                onClick={handleLinkHome}
+                className="text-muted-foreground hover:text-foreground"
+                prefetch={false}
+              >
+                {link.label}
+              </Link>
             ))}
-         </nav>
-         <Sheet modal open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger asChild>
-               <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-                  <Image src={"/assets/icons/menu.svg"} alt="Menu" width={30} height={30} className="h-5 w-5" />
-                  <span className="sr-only">Toggle navigation menu</span>
-               </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-               <SheetDescription></SheetDescription>
-               <SheetTitle>
-                  <span className="sr-only">Navigation Menu</span>
-               </SheetTitle>
-               <nav className="grid gap-6 text-lg font-medium">
-                  <Link href="/" className="flex items-center gap-2 text-lg font-semibold" prefetch={false}>
-                     <Image
-                        src={"/assets/icons/logo-icon.svg"}
-                        width={33}
-                        height={33}
-                        alt="Logo"
-                        className="h-11 w-11"
-                     />
-                     <span className="sr-only">Acme Inc</span>
-                  </Link>
-                  {NavLinks.map((link) => (
-                     <Link
-                        href={link.href}
-                        key={link.label + link.href}
-                        onClick={handleLinkHome}
-                        className="text-muted-foreground hover:text-foreground"
-                        prefetch={false}
-                     >
-                        {link.label}
-                     </Link>
-                  ))}
-               </nav>
-            </SheetContent>
-         </Sheet>
-         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-            <form className="ml-auto flex-1 sm:flex-initial">
-               <div className="relative">
-                  <Image
-                     src={"/assets/icons/search.svg"}
-                     alt="svg"
-                     width={27}
-                     height={27}
-                     className="absolute left-2.5 top-2.5 mt-0.5 h-4 w-4 text-muted-foreground"
-                  />
-                  <Input
-                     type="search"
-                     placeholder="Search products..."
-                     className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-                  />
-               </div>
-            </form>
-            <DropdownMenu>
-               <DropdownMenuTrigger asChild>
-                  <ButtonV2 variant="ghost" size="icon" className="rounded-full">
-                     <Image
-                        src="/assets/icons/circle-user.svg"
-                        width={30}
-                        height={30}
-                        className="rounded-full"
-                        alt="Avatar"
-                     />
-                     <span className="sr-only">Toggle user menu</span>
-                  </ButtonV2>
-               </DropdownMenuTrigger>
-               <DropdownMenuContent align="end" className="mt-3">
-                  {patientToken !== "" ? (
-                     <>
-                        <DropdownMenuLabel className="cursor-pointer">
-                           <Link href={"/profile"}>My Account</Link>
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="cursor-pointer" onSelect={handleLogoutClick}>
-                           Logout
-                        </DropdownMenuItem>
-                     </>
-                  ) : (
-                     <>
-                        <DropdownMenuItem className="cursor-pointer" onClick={() => route.push("/signin")}>
-                           <Link href={"/signin"}>Sign In</Link>
-                        </DropdownMenuItem>
-                     </>
-                  )}
-               </DropdownMenuContent>
-            </DropdownMenu>
-            <LogoutModel
-               open={isLogoutModelOpen}
-               setOpen={setLogoutModelOpen}
-               handleLogoutConfirm={handleLogoutConfirm}
-            />
-         </div>
-      </header>
-   );
+          </nav>
+        </SheetContent>
+      </Sheet>
+      <div className="flex items-center gap-4">
+        <ButtonV2 variant="ghost" size="icon" className="relative" onClick={handleNotificationClick}>
+          <Bell className="h-5 w-5" />
+          {notificationCount > 0 && (
+            <Badge
+              variant="destructive"
+              className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
+            >
+              {notificationCount}
+            </Badge>
+          )}
+          <span className="sr-only">View notifications</span>
+        </ButtonV2>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <ButtonV2 variant="ghost" size="icon" className="rounded-full">
+              <Image
+                src="/assets/icons/circle-user.svg"
+                width={30}
+                height={30}
+                className="rounded-full"
+                alt="Avatar"
+              />
+              <span className="sr-only">Toggle user menu</span>
+            </ButtonV2>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="mt-3">
+            {patientToken !== "" ? (
+              <>
+                <DropdownMenuLabel className="cursor-pointer">
+                  <Link href={"/profile"}>My Account</Link>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer" onSelect={handleLogoutClick}>
+                  Logout
+                </DropdownMenuItem>
+              </>
+            ) : (
+              <>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => route.push("/signin")}>
+                  <Link href={"/signin"}>Sign In</Link>
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <LogoutModel
+          open={isLogoutModelOpen}
+          setOpen={setLogoutModelOpen}
+          handleLogoutConfirm={handleLogoutConfirm}
+        />
+        <NotificationModal
+          open={isNotificationModalOpen}
+          setOpen={setIsNotificationModalOpen}
+          notifications={notifications}
+        />
+      </div>
+    </header>
+  );
 };
 
 export default NavBar;
