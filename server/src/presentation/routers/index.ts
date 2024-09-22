@@ -13,6 +13,7 @@ import UnauthenticatedUseCases from "../../use_case/UnauthenticatedUseCases";
 import UnauthenticatedControllers from "../controllers/UnauthenticatedControllers";
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
 import appointmentRoutes from "./appointment/AppointmentRoutes";
+import notificationRoutes from "./notification/NotificationRoute";
 
 const app = express();
 const tokenService = new TokenService();
@@ -34,6 +35,7 @@ app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/slots", slotRoutes);
 app.use("/appointments", appointmentRoutes);
+app.use("/notifications", notificationRoutes);
 
 app.use(errorHandler.exec.bind(errorHandler));
 
