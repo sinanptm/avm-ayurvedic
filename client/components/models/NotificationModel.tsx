@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { Dispatch, SetStateAction } from "react"
-import Image from "next/image"
+import { Dispatch, SetStateAction } from "react";
+import Image from "next/image";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -9,53 +9,33 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { Card, CardContent } from "@/components/ui/card"
-import { INotification } from "@/types"
-import getNotificationDetails from "@/lib/utils/getNotificationDetails"
-import { useClearMultiplePatientNotifications, useClearPatientNotification } from "@/lib/hooks/notification/useNotificationPatient"
-import { XIcon, Trash2Icon } from "lucide-react"
-import { ButtonV2 } from "../common/ButtonV2"
+} from "@/components/ui/alert-dialog";
+import { Card, CardContent } from "@/components/ui/card";
+import { INotification } from "@/types";
+import getNotificationDetails from "@/lib/utils/getNotificationDetails";
+import { XIcon, Trash2Icon } from "lucide-react";
+import { ButtonV2 } from "../common/ButtonV2";
 
 type Props = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-  notifications: INotification[]
-  unauthorized: boolean,
-  refetch: any
-}
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  notifications: INotification[];
+  unauthorized: boolean;
+  handleClearSingleNotification: (notificationId: string) => void;
+  handleClearAllNotifications: () => void;
+};
 
-export default function NotificationModal({ open, setOpen, notifications, unauthorized, refetch }: Props) {
+export default function NotificationModal({
+  open,
+  setOpen,
+  notifications,
+  unauthorized,
+  handleClearSingleNotification,
+  handleClearAllNotifications,
+}: Props) {
   const closeModal = () => {
-    setOpen(false)
-  }
-  const { mutate: clearSingleNotification } = useClearPatientNotification()
-  const { mutate: clearMultipleNotification } = useClearMultiplePatientNotifications()
-
-  const handleClearSingleNotification = (notificationId: string) => {
-    clearSingleNotification(
-      { notificationId },
-      {
-        onSuccess: refetch,
-        onError: (error) => {
-          console.error("Failed to clear notification:", error)
-        },
-      },
-    )
-  }
-
-  const handleClearAllNotifications = () => {
-    const notificationIds = notifications.map(notification => notification._id!)
-    clearMultipleNotification(
-      { notificationIds },
-      {
-        onSuccess: refetch,
-        onError: (error) => {
-          console.error("Failed to clear multiple notifications:", error)
-        },
-      }
-    )
-  }
+    setOpen(false);
+  };
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -86,18 +66,12 @@ export default function NotificationModal({ open, setOpen, notifications, unauth
           ) : notifications && notifications.length > 0 ? (
             <>
               {notifications.map((notification) => {
-                const { icon, title } = getNotificationDetails(notification.type!)
+                const { icon, title } = getNotificationDetails(notification.type!);
                 return (
                   <Card key={notification._id}>
                     <CardContent className="flex items-center justify-between p-4">
                       <div className="flex items-center space-x-4">
-                        <Image
-                          src={icon}
-                          width={24}
-                          height={24}
-                          alt={title}
-                          className="h-6 w-6"
-                        />
+                        <Image src={icon} width={24} height={24} alt={title} className="h-6 w-6" />
                         <div>
                           <h3 className="font-semibold">{title}</h3>
                           <p className="text-sm text-muted-foreground">{notification.message}</p>
@@ -113,10 +87,9 @@ export default function NotificationModal({ open, setOpen, notifications, unauth
                       >
                         Clear
                       </ButtonV2>
-
                     </CardContent>
                   </Card>
-                )
+                );
               })}
             </>
           ) : (
@@ -151,5 +124,5 @@ export default function NotificationModal({ open, setOpen, notifications, unauth
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

@@ -22,7 +22,7 @@ import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";
 import { ButtonV2 } from "../common/ButtonV2";
-import NotificationButton from "../button/PatientNotificationButton";
+import NotificationButtonPatient from "../button/NotificationButtonPatient";
 
 export const NavBar = () => {
   const path = usePathname();
@@ -132,7 +132,7 @@ export const NavBar = () => {
         </SheetContent>
       </Sheet>
       <div className="flex items-center gap-4">
-        <NotificationButton /> 
+        <NotificationButtonPatient /> 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <ButtonV2 variant="ghost" size="icon" className="rounded-full">

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Package2, PanelLeft, Search, Bell } from "lucide-react";
+import { Package2, PanelLeft, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,13 +20,12 @@ import { NavLinkType } from "@/types";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useLogoutAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { toast } from "../ui/use-toast";
 import { useAuth } from "@/lib/hooks/useAuth";
 import LogoutModel from "../models/LogoutModel";
 import { useLogoutDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
-import { Badge } from "@/components/ui/badge";
+import NotificationButtonDoctor from "../button/NotificationButtonDoctor";
 
 const AdminLayoutWithSideBar = ({
   children,
@@ -38,11 +37,9 @@ const AdminLayoutWithSideBar = ({
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
   const [isLogoutOpen, setLogoutOpen] = useState(false);
-  const [isNotificationOpen, setNotificationOpen] = useState(false);
   const { mutate: logout } = useLogoutDoctor();
   const { setCredentials } = useAuth();
   const router = useRouter();
-  const [notificationCount, setNotificationCount] = useState(3); // Example notification count
 
   const handleLogout = () => {
     logout(
@@ -65,12 +62,6 @@ const AdminLayoutWithSideBar = ({
         },
       }
     );
-  };
-
-  const handleNotificationClick = () => {
-    setNotificationOpen(true);
-    // Here you would typically fetch notifications and update the count
-    setNotificationCount(0);
   };
 
   return (
@@ -117,17 +108,7 @@ const AdminLayoutWithSideBar = ({
           <div className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative" onClick={handleNotificationClick}>
-                  <Bell className="h-5 w-5" />
-                  {notificationCount > 0 && (
-                    <Badge
-                      variant="destructive"
-                      className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
-                    >
-                      {notificationCount}
-                    </Badge>
-                  )}
-                </Button>
+                <NotificationButtonDoctor />
               </TooltipTrigger>
               <TooltipContent
                 side="right"
@@ -220,15 +201,7 @@ const AdminLayoutWithSideBar = ({
                     {item.label}
                   </Link>
                 ))}
-                <Button variant="ghost" className="justify-start px-2.5" onClick={handleNotificationClick}>
-                  <Bell className="mr-4 h-5 w-5" />
-                  Notifications
-                  {notificationCount > 0 && (
-                    <Badge variant="destructive" className="ml-auto">
-                      {notificationCount}
-                    </Badge>
-                  )}
-                </Button>
+                <NotificationButtonDoctor />
               </nav>
             </SheetContent>
           </Sheet>
@@ -239,17 +212,7 @@ const AdminLayoutWithSideBar = ({
                 <Input type="search" placeholder="Search..." className="pl-8 h-8 text-sm sm:w-[300px]" />
               </div>
             </form>
-            <Button variant="ghost" size="icon" className="relative" onClick={handleNotificationClick}>
-              <Bell className="h-5 w-5" />
-              {notificationCount > 0 && (
-                <Badge
-                  variant="destructive"
-                  className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
-                >
-                  {notificationCount}
-                </Badge>
-              )}
-            </Button>
+            <NotificationButtonDoctor />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
