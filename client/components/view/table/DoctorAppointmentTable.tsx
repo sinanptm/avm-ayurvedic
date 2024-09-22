@@ -8,7 +8,6 @@ import { useGetAppointmentsDoctor } from "@/lib/hooks/appointment/useAppointment
 import { AppointmentStatus } from "@/types";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 import Pagination from "@/components/navigation/Pagination";
-import AppointmentDetailsModelDoctor from "@/components/models/appointment/AppointmentDetailsDoctorModel";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge";
 import { ButtonV2 } from "@/components/common/ButtonV2";
@@ -27,8 +26,6 @@ type Props = {
 
 export default function AppointmentTable({ page }: Props) {
    const [currentPage, setCurrentPage] = useState(page);
-   const [isModelOpen, setModelOpen] = useState(false);
-   const [appointmentId, setAppointmentId] = useState("");
    const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "all">("all");
    const limit = 7;
    const { data, isLoading, error, refetch } = useGetAppointmentsDoctor(
@@ -47,10 +44,7 @@ export default function AppointmentTable({ page }: Props) {
    };
 
    const handleViewDetails = (appointmentId: string) => {
-      setAppointmentId(appointmentId);
-      setModelOpen(true);
-      console.log(appointmentId);
-
+      router.push(`/doctor/appointments/${appointmentId}`)
    };
 
    const handleStatusChange = (status: AppointmentStatus | "all") => {
@@ -161,12 +155,6 @@ export default function AppointmentTable({ page }: Props) {
                />
             )}
          </CardContent>
-         <AppointmentDetailsModelDoctor
-            appointmentId={appointmentId}
-            isOpen={isModelOpen}
-            setIsOpen={setModelOpen}
-            refetch={refetch}
-         />
       </Card>
    );
 }
