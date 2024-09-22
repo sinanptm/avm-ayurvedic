@@ -1,4 +1,4 @@
-export interface IPatient {
+export default interface IPatient {
    readonly _id?: string;
    readonly createdAt?: string;
    readonly updatedAt?: string;

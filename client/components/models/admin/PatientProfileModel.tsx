@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { IPatient } from "@/types";
+import IPatient  from "@/types";
 import { useChangeStatusAdmin } from "@/lib/hooks/admin/useAdminPatients";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";

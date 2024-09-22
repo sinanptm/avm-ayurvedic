@@ -8,7 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../common/SubmitButton";
-import { IPatient } from "@/types";
+import IPatient  from "@/types";
 import { Input } from "../../ui/input";
 import { toast } from "../../ui/use-toast";
 import getCroppedImg from "@/lib/utils/cropImage";

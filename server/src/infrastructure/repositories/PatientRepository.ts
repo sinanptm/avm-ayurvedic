@@ -1,5 +1,5 @@
 import CustomError from "../../domain/entities/CustomError";
-import { IPatient } from "../../domain/entities/IPatient";
+import IPatient  from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import { PaginatedResult, StatusCode } from "../../types";
 import PatientModel from "../database/PatientModel";

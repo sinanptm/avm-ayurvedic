@@ -1,5 +1,5 @@
 import IDoctor from "./IDoctor";
-import { IPatient } from "./IPatient";
+import IPatient  from "./IPatient";
 import ISlot from "./ISlot";
 
 export enum AppointmentStatus {

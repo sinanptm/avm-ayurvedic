@@ -1,6 +1,6 @@
 import { StatusCode } from "../../types";
 
-export default class AppError extends Error {
+export default class CustomError extends Error {
    public statusCode: StatusCode;
    public code?: string;
    public details?: any;

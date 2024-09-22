@@ -1,6 +1,6 @@
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
-import { IPatient } from "../../domain/entities/IPatient";
+import IPatient  from "../../domain/entities/IPatient";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";

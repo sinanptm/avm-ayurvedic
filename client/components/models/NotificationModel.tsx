@@ -24,7 +24,7 @@ type Props = {
   notifications: Notification[];
 };
 
-export default function NotificationModal({ open, setOpen, notifications }: Props) {
+const NotificationModal = ({ open, setOpen, notifications }: Props)=> {
   const closeModal = () => {
     setOpen(false);
   };
@@ -73,3 +73,5 @@ export default function NotificationModal({ open, setOpen, notifications }: Prop
     </AlertDialog>
   );
 }
+
+export default NotificationModal
