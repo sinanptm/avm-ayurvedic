@@ -82,6 +82,24 @@ const Page = () => {
     );
   };
 
+  const isCancellable = () => {
+    if (!appointment?.slot?.startTime || !appointment?.appointmentDate) return false;
+  
+    const appointmentDate = new Date(appointment.appointmentDate);
+    const [hours, minutes] = appointment.slot.startTime.split(':');
+    const isPM = appointment.slot.startTime.includes('PM');
+  
+    appointmentDate.setHours(
+      isPM ? parseInt(hours) + 12 : parseInt(hours), 
+      parseInt(minutes.split(' ')[0]) 
+    );
+  
+    const currentTime = new Date();
+    const threeHoursBefore = new Date(appointmentDate.getTime() - 3 * 60 * 60 * 1000);
+    return currentTime < threeHoursBefore;
+  };
+  
+
 
   if (!patientToken) {
     notFound();
@@ -218,8 +236,10 @@ const Page = () => {
             </div>
           </CardContent>
           <CardFooter className="justify-end">
-            {appointment.status === AppointmentStatus.CONFIRMED || appointment.status === AppointmentStatus.PENDING && (
-              <Button variant="destructive" className="ml-2" onClick={() => setCancelModelOpen(true)}>Cancel Appointment</Button>
+            {(appointment.status === AppointmentStatus.CONFIRMED || appointment.status === AppointmentStatus.PENDING) && isCancellable() && (
+              <Button variant="destructive" className="ml-2" onClick={() => setCancelModelOpen(true)}>
+                Cancel Appointment
+              </Button>
             )}
           </CardFooter>
         </Card>
