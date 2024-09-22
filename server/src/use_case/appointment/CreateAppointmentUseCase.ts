@@ -6,9 +6,7 @@ import IValidatorService from "../../domain/interface/services/IValidatorService
 import { StatusCode } from "../../types";
 import IPaymentService from "../../domain/interface/services/IPaymentService";
 import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
-import { PaymentStatus } from "../../domain/entities/IPayment";
-import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import { IPatient } from "../../domain/entities/IPatient";
+import IPayment, { PaymentStatus } from "../../domain/entities/IPayment";
 
 export default class AppointmentUseCase {
     bookingAmount: number;
@@ -19,7 +17,6 @@ export default class AppointmentUseCase {
         private validatorService: IValidatorService,
         private paymentService: IPaymentService,
         private paymentRepository: IPaymentRepository,
-        private patientRepository: IPatientRepository
     ) {
         this.bookingAmount = 300;
     }
@@ -70,7 +67,6 @@ export default class AppointmentUseCase {
             appointmentId
         });
 
-        const patient = await this.patientRepository.findById(patientId);
 
         return { sessionId: checkoutSession.id, checkoutUrl: checkoutSession.url! };
     }
@@ -78,27 +74,38 @@ export default class AppointmentUseCase {
 
     async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
         const event = await this.paymentService.handleWebhookEvent(body, signature);
-
+    
         if (!event || !event.data || !event.data.object) {
-            return
+            return;
+        }    
+        const paymentIntentMetadata = event.data.object.metadata as { paymentId: string };       
+    
+        if (!paymentIntentMetadata || !paymentIntentMetadata.paymentId) {
+            return;
         }
+    
+        const payment = await this.verifyPaymentIntent(paymentIntentMetadata.paymentId);
+    }
+    
+    
 
-        const paymentIntent = event.data.object as { id: string };
-
-        const payment = await this.paymentRepository.findByOrderId(paymentIntent.id);
-
+    private async verifyPaymentIntent(id: string): Promise<IPayment | null> {
+        const payment = await this.paymentRepository.findById(id);
+    
         if (!payment) {
-            return
+            return null; 
         }
-
+    
         await this.paymentRepository.update({
             _id: payment._id,
-            orderId: paymentIntent.id,
             status: PaymentStatus.COMPLETED,
         });
-
+    
         await this.appointmentRepository.updateAppointmentStatusToConfirmed(payment.appointmentId!);
+    
+        return payment;
     }
+    
 
     private validateAppointmentData({ appointmentDate, appointmentType, doctorId, notes, reason, slotId, }: IAppointment, patientId: string): void {
         this.validatorService.validateRequiredFields({ slotId, appointmentType, doctorId, reason, appointmentDate })!

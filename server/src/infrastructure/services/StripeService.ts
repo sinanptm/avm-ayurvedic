@@ -29,7 +29,10 @@ class StripePaymentService implements IPaymentService {
                 metadata,
                 success_url: successUrl,
                 cancel_url: cancelUrl,
-            });
+                payment_intent_data: {
+                    metadata: { paymentId: metadata?.paymentId! } 
+                }
+            });            
 
             return {
                 id: session.id,

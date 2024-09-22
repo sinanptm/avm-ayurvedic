@@ -26,7 +26,7 @@ const paymentService = new StripeService();
 const paymentRepository = new PaymentRepository();
 const patientRepository = new PatientRepository()
 
-const createAppointmentUseCase = new CreateAppointmentUseCase(appointmentRepository, slotRepository, validatorService, paymentService, paymentRepository, patientRepository);
+const createAppointmentUseCase = new CreateAppointmentUseCase(appointmentRepository, slotRepository, validatorService, paymentService, paymentRepository);
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService);
 const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService)
 

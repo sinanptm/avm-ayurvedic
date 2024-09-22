@@ -49,7 +49,6 @@ const appointmentSchema = new Schema<IAppointment>(
   }
 );
 
-appointmentSchema.index({ doctorId: 1, patientId: 1, slotId: 1 }, { unique: true });
 
 const AppointmentModel = model<IAppointment>("Appointment", appointmentSchema);
 export default AppointmentModel;

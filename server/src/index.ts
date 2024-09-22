@@ -22,7 +22,7 @@ app.use(
       credentials: true,
    })
 );
-app.post('/api/appointments/webhook', bodyParser.raw({ type: 'application/json' }), webhook);
+app.post('/api/webhook', bodyParser.raw({ type: 'application/json' }), webhook);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
