@@ -5,18 +5,20 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonV2 } from "@/components/common/ButtonV2";
 import NotificationModal from "@/components/models/NotificationModel";
 import { useState } from "react";
-import { useGetAllPatientNotifications } from "@/lib/hooks/notification/useSlotPatient";
+import { useGetAllPatientNotifications } from "@/lib/hooks/notification/useNotificationPatient";
 import { INotification } from "@/types";
 
 const NotificationButton = () => {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const { data: notifications, isLoading } = useGetAllPatientNotifications();
-  
+  const { data: notifications, refetch, error } = useGetAllPatientNotifications();
+
   const notificationCount = notifications?.length || 0;
 
   const handleNotificationClick = () => {
     setIsNotificationModalOpen(true);
   };
+
+  const unauthorized = error?.status === 401 || error?.status === 403;
 
   return (
     <>
@@ -34,8 +36,10 @@ const NotificationButton = () => {
       </ButtonV2>
       <NotificationModal
         open={isNotificationModalOpen}
+        unauthorized={unauthorized!}
         setOpen={setIsNotificationModalOpen}
         notifications={notifications as INotification[] || []}
+        refetch={refetch}
       />
     </>
   );

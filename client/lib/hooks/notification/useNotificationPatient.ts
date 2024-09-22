@@ -1,18 +1,21 @@
-import { clearMultiplePatientNotifications, getDoctorNotifications, clearDoctorNotification } from "@/lib/api/notification"
+import { clearMultiplePatientNotifications, getPatientNotifications, clearPatientNotification } from "@/lib/api/notification"
 import { ErrorResponse, INotification, MessageResponse } from "@/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 
 
 
-export const useGetAllDoctorNotifications = ()=>{
+export const useGetAllPatientNotifications = ()=>{
     return useQuery<INotification[],AxiosError<ErrorResponse>>({
         queryKey:["notifications"],
-        queryFn:getDoctorNotifications
+        queryFn:getPatientNotifications,
+        retry:1,
+        retryOnMount:false,
+        refetchInterval:1000*60
     })
 }
 
-export const useClearMultipleDoctorNotifications = ()=>{
+export const useClearMultiplePatientNotifications = ()=>{
     return useMutation<MessageResponse,AxiosError<ErrorResponse>,{notificationIds:string[]}>({
         mutationFn:({notificationIds})=>clearMultiplePatientNotifications(notificationIds),
         onError:(error)=>{
@@ -21,9 +24,9 @@ export const useClearMultipleDoctorNotifications = ()=>{
     })
 }
 
-export const useClearDoctorNotification = ()=>{
+export const useClearPatientNotification = ()=>{
     return useMutation<MessageResponse,AxiosError<ErrorResponse>,{notificationId:string}>({
-        mutationFn:({notificationId})=>clearDoctorNotification(notificationId),
+        mutationFn:({notificationId})=>clearPatientNotification(notificationId),
         onError:(error)=>{
             console.log('error in clearing notification  ,', error);
         }
