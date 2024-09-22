@@ -71,21 +71,23 @@ export default class AppointmentUseCase {
    }
 
    async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
-      const event = await this.paymentService.handleWebhookEvent(body, signature);
-
+      const result = await this.paymentService.handleWebhookEvent(body, signature);
+      const { event, transactionId } = result;
+   
       if (!event || !event.data || !event.data.object) {
          return;
       }
       const paymentIntentMetadata = event.data.object.metadata as { paymentId: string };
-
+   
       if (!paymentIntentMetadata || !paymentIntentMetadata.paymentId) {
          return;
       }
-
-      await this.verifyPaymentIntent(paymentIntentMetadata.paymentId);
+   
+      await this.verifyPaymentIntent(paymentIntentMetadata.paymentId, transactionId);
    }
+   
 
-   private async verifyPaymentIntent(id: string): Promise<IPayment | null> {
+   private async verifyPaymentIntent(id: string, transactionId:string): Promise<IPayment | null> {
       const payment = await this.paymentRepository.findById(id);
 
       if (!payment) {
@@ -95,6 +97,7 @@ export default class AppointmentUseCase {
       await this.paymentRepository.update({
          _id: payment._id,
          status: PaymentStatus.COMPLETED,
+         paymentId:transactionId
       });
 
       await this.appointmentRepository.updateAppointmentStatusToConfirmed(payment.appointmentId!);

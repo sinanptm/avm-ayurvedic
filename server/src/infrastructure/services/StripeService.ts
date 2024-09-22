@@ -59,29 +59,29 @@ class StripePaymentService implements IPaymentService {
       }
    }
 
-   async handleWebhookEvent(body: Buffer, signature: string): Promise<Stripe.Event | any> {
+   async handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string }> {
       try {
          const event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
-
+         let res: { event: any; transactionId: string } = { event: null, transactionId: "" };
          switch (event.type) {
             case "payment_intent.succeeded":
-               return event;
+               const paymentIntent = event.data.object as Stripe.PaymentIntent;
+               res = { event, transactionId: paymentIntent.id };
+               break; 
+   
             case "payment_intent.payment_failed":
                throw new CustomError("Payment failed", StatusCode.PaymentError);
-            case "payment_intent.created":
-               break;
-            case "charge.succeeded":
-               break;
-            case "checkout.session.completed":
-               break;
+            
             default:
-               return null;
+               break;
          }
+         return res;
       } catch (error) {
          logger.error(error);
          throw new CustomError("Error processing webhook event", StatusCode.PaymentError);
       }
    }
+   
 }
 
 export default StripePaymentService;
