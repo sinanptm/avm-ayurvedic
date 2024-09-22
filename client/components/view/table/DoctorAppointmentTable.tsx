@@ -8,10 +8,10 @@ import { useGetAppointmentsDoctor } from "@/lib/hooks/appointment/useAppointment
 import { AppointmentStatus } from "@/types";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 import Pagination from "@/components/navigation/Pagination";
-import { Button } from "@/components/ui/button";
 import AppointmentDetailsModelDoctor from "@/components/models/appointment/AppointmentDetailsDoctorModel";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge";
+import { ButtonV2 } from "@/components/common/ButtonV2";
 
 const columns = [
    { name: "Date", width: "w-1/5" },
@@ -38,7 +38,7 @@ export default function AppointmentTable({ page }: Props) {
    );
    const router = useRouter();
 
-   const appointments = useMemo(() => data?.items || [], [data]);
+   const appointments = useMemo(() => data?.items || [], [data?.items]);
 
    const handlePageChange = (pageIndex: number) => {
       setCurrentPage(pageIndex);
@@ -49,6 +49,8 @@ export default function AppointmentTable({ page }: Props) {
    const handleViewDetails = (appointmentId: string) => {
       setAppointmentId(appointmentId);
       setModelOpen(true);
+      console.log(appointmentId);
+
    };
 
    const handleStatusChange = (status: AppointmentStatus | "all") => {
@@ -79,7 +81,7 @@ export default function AppointmentTable({ page }: Props) {
                   onValueChange={(value) => handleStatusChange(value as AppointmentStatus | "all")}
                >
                   <SelectTrigger className="w-[180px]">
-                     <SelectValue placeholder="Filter by status" />
+                     <SelectValue>{statusFilter === "all" ? "Filter by status" : statusFilter}</SelectValue>
                   </SelectTrigger>
                   <SelectContent className="bg-black bg-opacity-75">
                      <SelectItem value="all">All Statuses</SelectItem>
@@ -126,14 +128,14 @@ export default function AppointmentTable({ page }: Props) {
                                     <GetStatusBadge status={appointment.status!} />
                                  </TableCell>
                                  <TableCell className="text-right">
-                                    <Button
-                                       variant="link"
+                                    <ButtonV2
+                                       variant="linkHover2"
                                        size="sm"
                                        onClick={() => handleViewDetails(appointment._id!)}
                                        aria-label={`View details of appointment for ${appointment.reason}`}
                                     >
                                        View Details
-                                    </Button>
+                                    </ButtonV2>
                                  </TableCell>
                               </TableRow>
                            ))

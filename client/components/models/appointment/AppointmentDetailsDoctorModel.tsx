@@ -4,7 +4,7 @@ import {
    useGetAppointmentDetailsDoctor,
    useUpdateAppointmentStatusDoctor,
 } from "@/lib/hooks/appointment/useAppointmentDoctor";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
    AlertDialog,
    AlertDialogContent,
@@ -14,7 +14,6 @@ import {
    AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,12 +31,13 @@ type Props = {
 };
 
 export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appointmentId, refetch }: Props) {
+   const [isCancelModelOpen, setCancelModelOpen] = useState(false);
    const { data: appointment, isLoading, error } = useGetAppointmentDetailsDoctor(appointmentId);
    const { mutate: updateStatus, isPending } = useUpdateAppointmentStatusDoctor();
-   const [isCancelModelOpen, setCancelModelOpen] = useState(false);
    const query = useQueryClient();
 
    const handleAcceptAppointment = () => {
+      if (!appointmentId) return;
       updateStatus(
          { appointmentId, status: AppointmentStatus.CONFIRMED },
          {
@@ -65,14 +65,8 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
       );
    };
 
-   const showCancellationModal = () => {
-      setCancelModelOpen(true);
-   };
-   const cancelModelClose = () => {
-      setCancelModelOpen(false);
-   };
-
    const handleCancelAppointment = async () => {
+      if (!appointmentId) return;
       updateStatus(
          { appointmentId, status: AppointmentStatus.CANCELLED },
          {
@@ -82,7 +76,7 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
                   description: "❗ The appointment request has been cancelled. The patient will be notified.",
                   variant: "warning",
                });
-               cancelModelClose();
+               setCancelModelOpen(false);
                refetch();
                query.invalidateQueries({
                   queryKey: ["appointmentDetails", appointmentId],
@@ -100,7 +94,6 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
       );
    };
 
-   if (!isOpen) return null;
    return (
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
          <AlertDialogContent className="max-w-3xl bg-black">
@@ -123,15 +116,15 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
                <div className="space-y-6">
                   <div className="flex items-center space-x-4">
                      <Image
-                        src={appointment.patient!.profile! || "/placeholder.svg?height=80&width=80"}
-                        alt={appointment.patient!.name!}
+                        src={appointment.patient?.profile || "/placeholder.svg?height=80&width=80"}
+                        alt={appointment.patient?.name || "Patient"}
                         width={80}
                         height={80}
                         className="rounded-full"
                      />
                      <div>
-                        <h3 className="text-xl font-semibold">{appointment.patient!.name!}</h3>
-                        <p className="text-muted-foreground">{appointment.patient!.email!}</p>
+                        <h3 className="text-xl font-semibold">{appointment.patient?.name || "N/A"}</h3>
+                        <p className="text-muted-foreground">{appointment.patient?.email || "N/A"}</p>
                      </div>
                   </div>
 
@@ -144,17 +137,19 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
                            <div className="flex justify-between">
                               <span className="font-medium">Date:</span>
                               <span>
-                                 {new Date(appointment.appointmentDate!).toLocaleString().split(",")[0]},{" "}
-                                 {appointment.slot!.startTime}
+                                 {appointment.appointmentDate
+                                    ? new Date(appointment.appointmentDate).toLocaleString().split(",")[0]
+                                    : "N/A"}
+                                 , {appointment.slot?.startTime || "N/A"}
                               </span>
                            </div>
                            <div className="flex justify-between">
                               <span className="font-medium">Type:</span>
-                              <span className="capitalize">{appointment.appointmentType}</span>
+                              <span className="capitalize">{appointment.appointmentType || "N/A"}</span>
                            </div>
-                           <div className="flex justify-between items-center bg-background rounded-md ">
+                           <div className="flex justify-between items-center bg-background rounded-md">
                               <span className="font-medium text-foreground">Status:</span>
-                              <GetStatusBadge status={appointment.status!} />
+                              <GetStatusBadge status={appointment.status || AppointmentStatus.PENDING} />
                            </div>
                         </CardContent>
                      </Card>
@@ -166,34 +161,19 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
                         <CardContent className="space-y-2">
                            <div className="flex justify-between">
                               <span className="font-medium">Phone:</span>
-                              <span>{appointment.patient!.phone}</span>
+                              <span>{appointment.patient?.phone || "N/A"}</span>
                            </div>
                            <div className="flex justify-between">
                               <span className="font-medium">Gender:</span>
-                              <span>{appointment.patient!.gender}</span>
+                              <span>{appointment.patient?.gender || "N/A"}</span>
                            </div>
                            <div className="flex justify-between">
                               <span className="font-medium">Blood Group:</span>
-                              <span>{appointment.patient!.bloodGroup}</span>
+                              <span>{appointment.patient?.bloodGroup || "N/A"}</span>
                            </div>
                         </CardContent>
                      </Card>
                   </div>
-
-                  <Card>
-                     <CardHeader>
-                        <CardTitle>Appointment Details</CardTitle>
-                     </CardHeader>
-                     <CardContent className="space-y-2">
-                        <div>
-                           <span className="font-medium">Reason: {appointment.reason}</span>
-                        </div>
-                        <div>
-                           <span className="font-medium">Notes: {appointment.notes}</span>
-                           <p className="mt-1"></p>
-                        </div>
-                     </CardContent>
-                  </Card>
                </div>
             ) : (
                <div className="text-center text-muted-foreground">
@@ -209,7 +189,7 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
                   (appointment.status === AppointmentStatus.PENDING ||
                      appointment.status === AppointmentStatus.CONFIRMED) && (
                      <div className="space-x-2">
-                        <Button variant="destructive" onClick={showCancellationModal}>
+                        <Button variant="destructive" onClick={() => setCancelModelOpen(true)}>
                            Reject
                         </Button>
                         {appointment.status === AppointmentStatus.PENDING && (
@@ -221,6 +201,7 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
                   )}
             </AlertDialogFooter>
          </AlertDialogContent>
+
          <AppointmentCancellationModal
             open={isCancelModelOpen}
             setOpen={setCancelModelOpen}
@@ -229,3 +210,4 @@ export default function AppointmentDetailsModelDoctor({ isOpen, setIsOpen, appoi
       </AlertDialog>
    );
 }
+
