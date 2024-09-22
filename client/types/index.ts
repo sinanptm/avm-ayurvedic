@@ -102,7 +102,7 @@ export enum AppointmentType {
    VIDEO_CONSULTING = "video-consulting",
    IN_PERSON = "in-person",
 }
-export default interface IAppointment {
+export interface IAppointment {
    readonly _id?: string;
    readonly doctorId?: string;
    readonly patientId?: string;

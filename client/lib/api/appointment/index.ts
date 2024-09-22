@@ -1,6 +1,6 @@
 import axios from "axios";
 import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl";
-import IAppointment, { AppointmentStatus } from "@/types";
+import { IAppointment, AppointmentStatus } from "@/types";
 import patientAxiosInstance from "../patient/authorizedRoutes";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
 

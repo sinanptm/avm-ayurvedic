@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetPatientsAdmin } from "@/lib/hooks/admin/useAdminPatients";
 import Pagination from "@/components/navigation/Pagination";
-import IPatient  from "@/types";
+import {IPatient}  from "@/types";
 import AdminPatientProfileModel from "@/components/models/admin/PatientProfileModel";
 import { useRouter } from "next/navigation";
 import TableSkeleton from "@/components/skeletons/TableSkelton";

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import IPatient  from "@/types";
+import {IPatient}  from "@/types";
 import UploadProfileModel from "@/components/models/patient/UploadProfileModel";
 import { ButtonV2 } from "@/components/common/ButtonV2";
 

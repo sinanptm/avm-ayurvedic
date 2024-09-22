@@ -1,5 +1,5 @@
 import axios from "axios";
-import IPatient  from "@/types";
+import {IPatient}  from "@/types";
 
 const axiosInstance = axios.create({
    baseURL: `${process.env.NEXT_PUBLIC_API_URL}/patient/auth`,

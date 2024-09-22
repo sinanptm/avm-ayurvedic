@@ -5,12 +5,12 @@ import {
    getAppointmentDetailsDoctor,
    updateAppointmentStatusDoctor,
 } from "@/lib/api/appointment";
-import IAppointment, {
+import  {
+   IAppointment,
    AppointmentStatus,
    ErrorResponse,
    IDoctor,
    IExtendedAppointment,
-   IPatient,
    MessageResponse,
    PaginatedResult,
 } from "@/types";

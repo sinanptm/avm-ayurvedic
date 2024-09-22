@@ -1,9 +1,10 @@
-import IAppointment, {
+import  {
    AppointmentStatus,
    ErrorResponse,
    IExtendedAppointment,
    MessageResponse,
    PaginatedResult,
+   IAppointment,
 } from "@/types";
 import {
    getAppointmentDetailsPatient,

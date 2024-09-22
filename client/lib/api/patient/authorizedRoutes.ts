@@ -1,4 +1,4 @@
-import IPatient  from "@/types";
+import {IPatient}  from "@/types";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 const getAuthTokens = () => {
