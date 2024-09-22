@@ -21,11 +21,21 @@ export default class UpdateAppointmentUseCase {
       if (status === AppointmentStatus.CANCELLED && appointment) {
          await this.notificationRepository.create({
             appointmentId,
-            message: `Your appointment has been canceled. If you have any questions, please contact your doctor.`,
+            message: `🚫 Your appointment has been canceled. If you have any questions, please contact your doctor.`,
             patientId: appointment.patientId,
             type: NotificationTypes.APPOINTMENT_CANCELED
          });
       }
+      
+      if (status === AppointmentStatus.CONFIRMED && appointment) {
+         await this.notificationRepository.create({
+            appointmentId,
+            message: `✅ Your appointment has been accepted! Please make sure to be available at the scheduled time.`,
+            patientId: appointment.patientId,
+            type: NotificationTypes.APPOINTMENT_CONFIRMED
+         });
+      }      
+   
    }
 
    // By Patient 
@@ -37,7 +47,7 @@ export default class UpdateAppointmentUseCase {
       if (status === AppointmentStatus.CANCELLED && appointment) {
          await this.notificationRepository.create({
             appointmentId,
-            message: `The appointment for patient has been canceled. The slot is now available for other patients.`,
+            message: `🚫 The appointment for patient has been canceled. The slot is now available for other patients.`,
             doctorId: appointment.doctorId,
             type: NotificationTypes.APPOINTMENT_CANCELED
          });

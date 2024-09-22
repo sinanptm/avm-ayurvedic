@@ -15,6 +15,7 @@ import { INotification } from "@/types";
 import getNotificationDetails from "@/lib/utils/getNotificationDetails";
 import { XIcon, Trash2Icon } from "lucide-react";
 import { ButtonV2 } from "../common/ButtonV2";
+import Link from "next/link";
 
 type Props = {
   open: boolean;
@@ -23,6 +24,7 @@ type Props = {
   unauthorized: boolean;
   handleClearSingleNotification: (notificationId: string) => void;
   handleClearAllNotifications: () => void;
+  link: string;
 };
 
 export default function NotificationModal({
@@ -32,6 +34,7 @@ export default function NotificationModal({
   unauthorized,
   handleClearSingleNotification,
   handleClearAllNotifications,
+  link
 }: Props) {
   const closeModal = () => {
     setOpen(false);
@@ -43,7 +46,7 @@ export default function NotificationModal({
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center justify-between text-2xl font-semibold">
             Notifications
-            <ButtonV2 variant="ghost" size="icon" onClick={closeModal}>
+            <ButtonV2 variant="ghost" size="icon" onClick={closeModal} aria-label="Close">
               <XIcon className="h-6 w-6" />
             </ButtonV2>
           </AlertDialogTitle>
@@ -63,32 +66,39 @@ export default function NotificationModal({
                 You are not authorized to view these notifications.
               </p>
             </div>
-          ) : notifications && notifications.length > 0 ? (
+          ) : notifications.length > 0 ? (
             <>
               {notifications.map((notification) => {
                 const { icon, title } = getNotificationDetails(notification.type!);
                 return (
-                  <Card key={notification._id}>
-                    <CardContent className="flex items-center justify-between p-4">
-                      <div className="flex items-center space-x-4">
-                        <Image src={icon} width={24} height={24} alt={title} className="h-6 w-6" />
-                        <div>
-                          <h3 className="font-semibold">{title}</h3>
-                          <p className="text-sm text-muted-foreground">{notification.message}</p>
+                  <Link key={notification.appointmentId} href={`${link}/${notification.appointmentId}`} onClick={closeModal}>
+                    <Card>
+                      <CardContent className="flex items-center justify-between p-4">
+                        <div className="flex items-center space-x-4">
+                          <Image src={icon} width={24} height={24} alt={title} className="h-6 w-6" />
+                          <div>
+                            <h3 className="font-semibold">{title}</h3>
+                            <p className="text-sm text-muted-foreground">{notification.message}</p>
+                          </div>
                         </div>
-                      </div>
-                      <ButtonV2
-                        variant="expandIcon"
-                        size="icon"
-                        onClick={() => handleClearSingleNotification(notification._id!)}
-                        iconPlacement="left"
-                        Icon={Trash2Icon}
-                        className="text-muted-foreground hover:text-primary w-20"
-                      >
-                        Clear
-                      </ButtonV2>
-                    </CardContent>
-                  </Card>
+                        <ButtonV2
+                          variant="expandIcon"
+                          size="icon"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            handleClearSingleNotification(notification._id!);
+                          }}
+                          iconPlacement="left"
+                          Icon={Trash2Icon}
+                          className="text-muted-foreground hover:text-primary w-20"
+                          aria-label="Clear notification"
+                        >
+                          Clear
+                        </ButtonV2>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 );
               })}
             </>
@@ -110,16 +120,17 @@ export default function NotificationModal({
 
         <AlertDialogFooter>
           <div className="flex justify-end space-x-2">
-            {notifications.length > 0 && (
+            {notifications.length > 1 && (
               <ButtonV2
-                variant="outline"
+                variant="gooeyLeft"
                 onClick={handleClearAllNotifications}
                 className="text-muted-foreground hover:text-primary"
+                aria-label="Clear all notifications"
               >
                 Clear All
               </ButtonV2>
             )}
-            <ButtonV2 onClick={closeModal}>Close</ButtonV2>
+            <ButtonV2 variant={'gooeyRight'} onClick={closeModal}>Close</ButtonV2>
           </div>
         </AlertDialogFooter>
       </AlertDialogContent>

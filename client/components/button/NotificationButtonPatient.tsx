@@ -68,6 +68,7 @@ const NotificationButtonPatient = () => {
         unauthorized={unauthorized!}
         handleClearSingleNotification={handleClearSingleNotification}
         handleClearAllNotifications={handleClearAllNotifications}
+        link="/appointments"
       />
     </>
   );
