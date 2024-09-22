@@ -1,7 +1,3 @@
-export enum NotificationStatus {
-    READ = 'read',
-    UNREAD = 'unread'
-}
 export enum NotificationTypes {
     APPOINTMENT_CANCELED = 'appointment_canceled',
     APPOINTMENT_CONFIRMED = 'appointment_confirmed',
@@ -17,5 +13,4 @@ export default interface INotification {
     readonly createdAt?: Date;
     readonly updatedAt?: Date;
     readonly appointmentId?:string
-    status?: NotificationStatus,
 }
