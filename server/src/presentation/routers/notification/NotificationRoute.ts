@@ -34,7 +34,7 @@ router.delete(
 );
 
 router.delete(
-    "/patient/clear/:notificationId",
+    "/patient/:notificationId",
     authorizePatient.exec,
     notificationController.clearSingleNotification.bind(notificationController)
 );
@@ -54,7 +54,7 @@ router.delete(
 );
 
 router.delete(
-    "/doctor/clear/:notificationId",
+    "/doctor/:notificationId",
     authorizeDoctor.exec,
     notificationController.clearSingleNotification.bind(notificationController)
 );
