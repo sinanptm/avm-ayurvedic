@@ -118,7 +118,7 @@ const Page = () => {
                <CardContent className="space-y-4">
                   <div className="flex items-center space-x-2">
                      <Calendar className="w-5 h-5" />
-                     <span>{format(new Date(appointment.appointmentDate!), "PPP")}</span>
+                     <span>{format(new Date(appointment.appointmentDate!), "PPPP")}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                      <Clock className="w-5 h-5" />
@@ -215,13 +215,6 @@ const Page = () => {
                   <CardTitle>Slot Information</CardTitle>
                </CardHeader>
                <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="flex items-center space-x-2">
-                     <Calendar className="w-5 h-5" />
-                     <div>
-                        <p className="font-semibold">Day</p>
-                        <p className="capitalize">{appointment.slot?.day}</p>
-                     </div>
-                  </div>
                   <div className="flex items-center space-x-2">
                      <Clock className="w-5 h-5" />
                      <div>

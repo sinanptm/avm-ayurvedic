@@ -95,7 +95,7 @@ export default function AppointmentDetailsPage() {
           <GetStatusBadge status={appointment.status || AppointmentStatus.PENDING} />
           {appointment.status === AppointmentStatus.PENDING && (
             <>
-              <ButtonV2 variant="linkHover2" onClick={handleAcceptAppointment} disabled={isPending}>
+              <ButtonV2 variant="secondary" onClick={handleAcceptAppointment} disabled={isPending}>
                 Accept
               </ButtonV2>
               <ButtonV2 variant="destructive" onClick={() => setCancelModelOpen(true)}>
@@ -111,7 +111,7 @@ export default function AppointmentDetailsPage() {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center">
@@ -123,7 +123,7 @@ export default function AppointmentDetailsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center space-x-2">
                 <Clock className="w-5 h-5 text-primary" />
-                <span>{format(new Date(appointment.appointmentDate!), "PPP")}</span>
+                <span>{format(new Date(appointment.appointmentDate!), "PPPP")}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="w-5 h-5 text-primary" />
@@ -141,7 +141,7 @@ export default function AppointmentDetailsPage() {
             <div className="bg-muted p-4 rounded-lg">
               <h3 className="font-semibold mb-2 flex items-center">
                 <FileText className="w-5 h-5 mr-2 text-primary" />
-                Reason for Visit
+                Reason for Appointment
               </h3>
               <p>{appointment.reason}</p>
             </div>

@@ -11,6 +11,8 @@ import Pagination from "@/components/navigation/Pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge";
 import { ButtonV2 } from "@/components/common/ButtonV2";
+import { format } from 'date-fns'
+
 
 const columns = [
    { name: "Date", width: "w-1/5" },
@@ -114,7 +116,7 @@ export default function AppointmentTable({ page }: Props) {
                            appointments.map((appointment) => (
                               <TableRow key={appointment._id}>
                                  <TableCell>
-                                    {new Date(appointment.appointmentDate!).toLocaleString().split(",")[0]}
+                                    {format(new Date(appointment.appointmentDate!), "PPPP")}
                                  </TableCell>
                                  <TableCell>{appointment.appointmentType}</TableCell>
                                  <TableCell>{appointment.reason}</TableCell>

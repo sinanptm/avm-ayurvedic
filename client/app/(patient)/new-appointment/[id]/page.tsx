@@ -5,17 +5,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { format } from "date-fns";
 import { XCircle } from "lucide-react";
 import { ButtonV2 } from "@/components/common/ButtonV2";
+import { format } from 'date-fns'
+
 
 export default function AppointmentSuccessPage() {
    const paymentId = useParams().id as string;
-   const { data: appointment, isLoading, isError, error } = useGetAppointmentSuccessPageDetails(paymentId);
-
-   const formatDate = (dateString: string) => {
-      return format(new Date(dateString), "MMMM d, yyyy");
-   };
+   const { data: appointment, isLoading, error } = useGetAppointmentSuccessPageDetails(paymentId);
 
    return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
@@ -89,7 +86,7 @@ export default function AppointmentSuccessPage() {
                            <div>
                               <p className="font-medium">Appointment Date</p>
                               <p className="text-sm text-muted-foreground">
-                                 {formatDate(appointment.appointmentDate!)} , {appointment.slot?.startTime}
+                                 {format(appointment.appointmentDate!, "PPPP")} , {appointment.slot?.startTime}
                               </p>
                            </div>
                         </div>
@@ -124,7 +121,7 @@ export default function AppointmentSuccessPage() {
                         <ButtonV2 variant={"gooeyLeft"} asChild>
                            <Link href={`/appointments/${appointment?._id}`}>Show Details</Link>
                         </ButtonV2>
-                        <ButtonV2 variant={"shine"} asChild>
+                        <ButtonV2 variant={"ringHover"} asChild>
                            <Link href="/new-appointment">Book Another Appointment</Link>
                         </ButtonV2>
                      </div>

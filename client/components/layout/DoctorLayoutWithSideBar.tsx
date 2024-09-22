@@ -207,10 +207,7 @@ const AdminLayoutWithSideBar = ({
           </Sheet>
           <div className="flex flex-1 items-center gap-4 admin-nav:hidden">
             <form className="ml-auto flex-1 sm:flex-initial">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2 h-4 w-4 text-muted-foreground" />
-                <Input type="search" placeholder="Search..." className="pl-8 h-8 text-sm sm:w-[300px]" />
-              </div>
+              <div className="relative" />
             </form>
             <NotificationButtonDoctor />
             <DropdownMenu>
