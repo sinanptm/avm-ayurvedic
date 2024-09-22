@@ -129,7 +129,7 @@ export default function NotificationModal({ open, setOpen, notifications, unauth
                 className="opacity-50"
               />
               <p className="text-center text-muted-foreground text-sm">
-                You're all caught up! No new notifications.
+                You&apos;re all caught up! No new notifications.
               </p>
             </div>
           )}
