@@ -9,17 +9,19 @@ import CreateSlotUseCase from "../../../use_case/slot/CreateSlotUseCase";
 import DeleteSlotUseCase from "../../../use_case/slot/DeleteSlotUseCase";
 import GetSlotUseCase from "../../../use_case/slot/GetSlotUseCase";
 import UpdateSlotUseCase from "../../../use_case/slot/UpdateSlotUseCase";
+import NotificationRepository from "../../../infrastructure/repositories/NotificationRepository";
 
 const router = express.Router();
 
-const slotRepository = new SlotRepository();
 const tokenService = new TokenService();
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
-const appointmentRepository = new AppointmentRepository();
 const validatorService = new JoiService();
+const slotRepository = new SlotRepository();
+const notificationRepository = new NotificationRepository()
+const appointmentRepository = new AppointmentRepository();
 
 const createSlotUseCase = new CreateSlotUseCase(slotRepository, validatorService);
-const deleteSlotUseCase = new DeleteSlotUseCase(slotRepository, appointmentRepository, validatorService);
+const deleteSlotUseCase = new DeleteSlotUseCase(slotRepository, appointmentRepository, validatorService, notificationRepository);
 const getSlotUseCase = new GetSlotUseCase(slotRepository, appointmentRepository, validatorService);
 const updateSlotUseCase = new UpdateSlotUseCase(slotRepository, validatorService);
 

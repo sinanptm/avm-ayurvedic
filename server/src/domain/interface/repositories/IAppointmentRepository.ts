@@ -4,7 +4,7 @@ import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../ent
 export default interface IAppointmentRepository {
    create(appointment: IAppointment): Promise<string>;
    update(appointment: IAppointment): Promise<IAppointment | null>;
-   updateManyBySlotIds(slotIds: string[], fields: IAppointment): Promise<void>;
+   updateManyBySlotIdsNotInStatuses(slotIds: string[], fields: IAppointment, notInStatuses:AppointmentStatus[]): Promise<IAppointment[] | null>;
    findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null>;
    findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null>;
    updateAppointmentStatusToConfirmed(appointmentId: string): Promise<void>;

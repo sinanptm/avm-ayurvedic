@@ -5,20 +5,22 @@ import { AppointmentStatus } from "../../domain/entities/IAppointment";
 import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import INotificationRepository from "../../domain/interface/repositories/INotificationRepository";
+import { NotificationTypes } from "../../domain/entities/INotification";
 
 export default class DeleteSlotUseCase {
    constructor(
       private slotRepository: ISlotRepository,
       private appointmentRepository: IAppointmentRepository,
-      private validatorService: IValidatorService
-   ) {}
+      private validatorService: IValidatorService,
+      private notificationRepository: INotificationRepository
+   ) { }
 
    async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
       this.validateSlotStartTimes(slots);
       this.validatorService.validateEnum(day, Object.values(Days));
 
       const startTimes = slots.map((el) => el.startTime!);
-
       const bookedSlots = await this.slotRepository.findManyByDay(doctorId, day, "booked");
 
       if (bookedSlots?.length) {
@@ -28,11 +30,10 @@ export default class DeleteSlotUseCase {
             .filter((id): id is string => id !== undefined);
 
          if (bookedSlotIds.length > 0) {
-            await this.appointmentRepository.updateManyBySlotIds(bookedSlotIds, {
-               status: AppointmentStatus.CANCELLED,
-            });
+            await this.handleAppointmentUpdates(bookedSlotIds);
          }
       }
+
       await this.slotRepository.deleteManyByDayAndTime(doctorId, day, startTimes);
    }
 
@@ -53,11 +54,28 @@ export default class DeleteSlotUseCase {
             .filter((id): id is string => id !== undefined);
 
          if (bookedSlotIds.length > 0) {
-            await this.appointmentRepository.updateManyBySlotIds(bookedSlotIds, {
-               status: AppointmentStatus.CANCELLED,
-            });
+            await this.handleAppointmentUpdates(bookedSlotIds);
          }
          await this.slotRepository.deleteManyByDaysAndTimes(doctorId, days, startTimes);
+      }
+   }
+
+   private async handleAppointmentUpdates(bookedSlotIds: string[]): Promise<void> {
+      const appointments = await this.appointmentRepository.updateManyBySlotIdsNotInStatuses(
+         bookedSlotIds,
+         { status: AppointmentStatus.CANCELLED },
+         [AppointmentStatus.CANCELLED, AppointmentStatus.COMPLETED]
+      );
+
+      if (appointments) {
+         for (const appointment of appointments) {
+            await this.notificationRepository.create({
+               appointmentId: appointment._id,
+               message: `Your appointment has been canceled. If you have any questions, please contact your doctor.`,
+               patientId: appointment.patientId,
+               type: NotificationTypes.APPOINTMENT_CANCELED,
+            });
+         }
       }
    }
 
@@ -70,4 +88,5 @@ export default class DeleteSlotUseCase {
          this.validatorService.validateLength(slot.startTime, 7, 11);
       });
    }
+
 }
