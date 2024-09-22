@@ -4,7 +4,9 @@
    "private": true,
    "scripts": {
       "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
-      "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\""
+      "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\"",
+      "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\" \"stripe listen --forward-to localhost:8000/api/webhook\"",
+      "stripe":"stripe listen --forward-to localhost:8000/api/webhook"
    },
    "devDependencies": {
       "concurrently": "^8.2.2"

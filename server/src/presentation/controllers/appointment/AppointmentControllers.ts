@@ -63,6 +63,16 @@ export default class AppointmentController {
         }
     }
 
+    async getAppointmentSuccussDetails(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const paymentId = req.params.paymentId
+            const appointment = await this.getAppointmentUseCase.getSuccessPageDetails(paymentId);
+            res.status(StatusCode.Success).json(appointment);
+        } catch (error) {
+            next(error)
+        }
+    }
+
     async updateAppointment(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const { appointmentId, status } = req.body

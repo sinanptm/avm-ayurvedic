@@ -49,8 +49,8 @@ export default class AppointmentUseCase {
         const checkoutSession = await this.paymentService.createCheckoutSession(
             this.bookingAmount,
             'INR',
-            `${process.env.CLIENT_URL}/new-appointment/${appointmentData._id}`,
-            `${process.env.CLIENT_URL}/appointment/cancel`,
+            `${process.env.CLIENT_URL}/new-appointment/${payment._id}`,
+            `${process.env.CLIENT_URL}/new-appointment/cancel/${payment._id}`,
             { paymentId: payment._id?.toString() }
         );
 
@@ -84,7 +84,7 @@ export default class AppointmentUseCase {
             return;
         }
     
-        const payment = await this.verifyPaymentIntent(paymentIntentMetadata.paymentId);
+        await this.verifyPaymentIntent(paymentIntentMetadata.paymentId);
     }
     
     

@@ -66,6 +66,14 @@ export const getAppointmentDetailsPatient = async (appointmentId: string) => {
    return response.data
 }
 
+export const getAppointmentSuccessPageDetails = async (paymentId: string) => {
+   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
+      method: "GET",
+      url: `/succuss/${paymentId}`
+   });
+   return response.data
+}
+
 export const updateStatusAndNotesPatient = async (appointmentId: string, status: AppointmentStatus, notes: string) => {
    const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
       method: "PUT",
