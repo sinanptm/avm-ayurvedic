@@ -2,7 +2,7 @@
 
 import IPayment from "../../domain/entities/IPayment";
 import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
-import PaymentModel from "../database/PaymentModel";
+import PaymentModel from "../model/PaymentModel";
 
 export default class PaymentRepository implements IPaymentRepository {
    model = PaymentModel;

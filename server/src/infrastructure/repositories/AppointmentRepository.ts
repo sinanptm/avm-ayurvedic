@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import { PaginatedResult } from "../../types";
-import AppointmentModel from "../database/AppointmentModel";
+import AppointmentModel from "../model/AppointmentModel";
 import { getPaginatedResult } from "./getPaginatedResult";
 
 export default class AppointmentRepository implements IAppointmentRepository {

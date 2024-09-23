@@ -1,6 +1,6 @@
 import IDoctor from "../../domain/entities/IDoctor";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import DoctorModel from "../database/DoctorModel";
+import DoctorModel from "../model/DoctorModel";
 import { Types } from "mongoose";
 import { PaginatedResult } from "../../types";
 import { getPaginatedResult } from "./getPaginatedResult";

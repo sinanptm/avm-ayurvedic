@@ -2,7 +2,7 @@ import CustomError from "../../domain/entities/CustomError";
 import IPatient  from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import { PaginatedResult, StatusCode } from "../../types";
-import PatientModel from "../database/PatientModel";
+import PatientModel from "../model/PatientModel";
 import { getPaginatedResult } from "./getPaginatedResult";
 
 export default class PatientRepository implements IPatientRepository {
@@ -11,7 +11,6 @@ export default class PatientRepository implements IPatientRepository {
    async findMany(offset: number, limit: number): Promise<PaginatedResult<IPatient>> {
       const totalItems = await this.model.countDocuments();
       const items = await this.model.find().skip(offset).limit(limit).select(["-token", "-password"]).exec();
-
       return getPaginatedResult(totalItems, offset, limit, items);
    }
 
