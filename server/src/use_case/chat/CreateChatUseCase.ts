@@ -25,7 +25,9 @@ export default class CreateChatUseCase {
         } else if (!doctor) {
             throw new CustomError("Invalid doctor id", StatusCode.NotFound);
         }
-        await this.chatRepository.create({ doctorId, patientId, patientName: patient.name, doctorName: doctor.name });
+        await this.chatRepository.create(
+            { doctorId, patientId, patientName: patient.name, doctorName: doctor.name, patientProfile: patient.profile, doctorProfile: doctor.password }
+        );
     }
     async createMessage(chatId: string, receiverId: string, message: string, senderId: string): Promise<void> {
         this.validatorService.validateRequiredFields({ chatId, receiverId, message, senderId });

@@ -146,6 +146,8 @@ export interface IChat {
    readonly _id?: string;
    readonly doctorId?: string;
    readonly patientId?: string;
+   readonly doctorProfile?:string;
+   readonly patientProfile?:string;
    readonly createdAt?: Date;
    readonly updatedAt?: Date;
    readonly doctorName?: string;

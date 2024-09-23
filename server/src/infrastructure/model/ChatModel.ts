@@ -15,6 +15,22 @@ const chatSchema = new Schema<IChat>({
         required: true,
         index: true,
     },
+    doctorName:{
+        type:String,
+        required:true
+    },
+    patientName:{
+        type:String,
+        required:true
+    },
+    patientProfile:{
+        type:String,
+        required:true
+    },
+    doctorProfile:{
+        type:String,
+        required:true
+    }
 },
     {
         timestamps: true,

@@ -6,6 +6,8 @@ export default interface IChat {
     readonly updatedAt?: Date;
     readonly doctorName?: string;
     readonly patientName?: string;
+    readonly doctorProfile?:string;
+    readonly patientProfile?:string;
 }
 
 export interface IChatWithNotSeenCount extends IChat{
