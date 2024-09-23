@@ -28,4 +28,24 @@ export default class ChatController {
             next(error);
         }
     }
+    async createMessageDoctor(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const doctorId = req.doctor?.id;
+            const { chatId, patientId, message } = req.body;
+            await this.createChatUseCase.createMessage(chatId, patientId, message, doctorId!);
+            res.status(StatusCode.Success).json({ message: "Chat has created" });
+        } catch (error: any) {
+            next(error);
+        }
+    }
+    async createMessagePatient(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const doctorId = req.doctor?.id;
+            const { chatId, patientId, message } = req.body;
+            await this.createChatUseCase.createMessage(chatId, patientId, message, doctorId!);
+            res.status(StatusCode.Success).json({ message: "Chat has created" });
+        } catch (error: any) {
+            next(error);
+        }
+    }
 }

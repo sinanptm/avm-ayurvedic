@@ -14,7 +14,7 @@ import UnauthenticatedControllers from "../controllers/UnauthenticatedController
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
 import appointmentRoutes from "./appointment/AppointmentRoutes";
 import notificationRoutes from "./notification/NotificationRoute";
-import chatRouters from "./chat/NotificationRoutes";
+import chatRouters from "./chat/ChatRoutes";
 
 const app = express();
 const tokenService = new TokenService();
