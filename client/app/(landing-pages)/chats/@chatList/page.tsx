@@ -1,6 +1,4 @@
 'use client'
-'/chats/@chatList/page.tsx'
-
 
 import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -8,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { PlusCircle } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 interface Contact {
   id: number
@@ -19,6 +18,7 @@ interface Contact {
 
 export default function ChatList() {
   const [selectedId, setSelectedId] = useState<number | null>(null)
+  const router = useRouter()
 
   const contacts: Contact[] = [
     { id: 1, name: "Alice Johnson", lastMessage: "Hey, how are you?", avatar: "/assets/icons/circle-user.svg", lastSeen: "2m" },
@@ -27,6 +27,11 @@ export default function ChatList() {
     { id: 4, name: "Diana Prince", lastMessage: "Meeting at 3 PM", avatar: "/assets/icons/circle-user.svg", lastSeen: "5h" },
     { id: 5, name: "Ethan Hunt", lastMessage: "Mission accomplished!", avatar: "/assets/icons/circle-user.svg", lastSeen: "1d" },
   ]
+
+  const handleChatSelect = (id: number) => {
+    setSelectedId(id)
+    router.push(`/chats/${id}`)
+  }
 
   return (
     <div className="flex flex-col h-full bg-background">
@@ -39,26 +44,25 @@ export default function ChatList() {
       <ScrollArea className="flex-grow">
         <div className="space-y-1 p-1">
           {contacts.map(({ id, name, lastMessage, avatar, lastSeen }) => (
-            <Link href={`/chats/${id}`} key={id} className="block">
-              <div
-                className={`flex items-center space-x-2 p-2 rounded-lg transition-colors ${
-                  selectedId === id ? 'bg-accent' : 'hover:bg-accent/50'
-                }`}
-                onClick={() => setSelectedId(id)}
-              >
-                <Avatar className="w-8 h-8 flex-shrink-0">
-                  <AvatarImage src={avatar} alt={name} />
-                  <AvatarFallback>{name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div className="min-w-0 flex-1 hidden sm:block">
-                  <div className="flex justify-between items-baseline">
-                    <h3 className="font-medium text-sm truncate">{name}</h3>
-                    <span className="text-xs text-muted-foreground">{lastSeen}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground truncate">{lastMessage}</p>
+            <div
+              key={id}
+              className={`flex items-center space-x-2 p-2 rounded-lg transition-colors cursor-pointer ${
+                selectedId === id ? 'bg-accent' : 'hover:bg-accent/50'
+              }`}
+              onClick={() => handleChatSelect(id)}
+            >
+              <Avatar className="w-10 h-10 flex-shrink-0">
+                <AvatarImage src={avatar} alt={name} />
+                <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div className="min-w-0 flex-1">
+                <div className="flex justify-between items-baseline">
+                  <h3 className="font-medium text-sm truncate">{name}</h3>
+                  <span className="text-xs text-muted-foreground">{lastSeen}</span>
                 </div>
+                <p className="text-xs text-muted-foreground truncate">{lastMessage}</p>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </ScrollArea>

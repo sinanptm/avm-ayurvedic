@@ -1,13 +1,12 @@
 'use client'
-'/chats/@chat/[id]/page.tsx'
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useParams, useRouter } from "next/navigation"
-import { ButtonV2 } from "@/components/common/ButtonV2"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Send } from "lucide-react"
 
 const ChatSection = () => {
   const { id: userId } = useParams()
@@ -27,9 +26,10 @@ const ChatSection = () => {
     <div className="flex flex-col h-full bg-background">
       <header className="p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center space-x-4">
-          <button onClick={() => router.back()} className="sm:hidden">
+          <Button variant="ghost" size="icon" onClick={() => router.push('/chats')} className="sm:hidden">
             <ArrowLeft className="h-6 w-6" />
-          </button>
+            <span className="sr-only">Back to chat list</span>
+          </Button>
           <Avatar className="w-10 h-10">
             <AvatarImage src="/assets/icons/circle-user.svg" alt={`User ${userId}`} />
             <AvatarFallback>{userId}</AvatarFallback>
@@ -59,7 +59,10 @@ const ChatSection = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <ButtonV2 onClick={handleSendMessage}>Send</ButtonV2>
+          <Button onClick={handleSendMessage}>
+            <Send className="h-4 w-4" />
+            <span className="sr-only">Send message</span>
+          </Button>
         </div>
       </footer>
     </div>

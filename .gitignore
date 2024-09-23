@@ -13,6 +13,8 @@
 # Ignore environment files
 **/.env
 
+.23234/
+
 # Build directories
 **/.next/
 **/out/
