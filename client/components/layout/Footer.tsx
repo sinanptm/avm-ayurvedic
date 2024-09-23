@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
    const path = usePathname();
 
-   if (path.includes("signup") || path.includes("signin") || path.includes("admin") || path.includes("doctor")) {
+   if (path.includes("signup") || path.includes("signin") || path.includes("admin") || path.includes("doctor") || path.includes("chats")) {
       return null;
    }
    return (

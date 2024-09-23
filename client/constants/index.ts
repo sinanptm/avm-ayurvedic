@@ -39,7 +39,7 @@ export const DoctorsSidebarLinks: NavLinkType[] = [
 export const NavLinks: NavLinkType[] = [
    { href: "/", label: "Home" },
    { href: "/clinicians", label: "Clinicians" },
-   { href: "/products", label: "Products" },
+   { href: "/chats", label: "Chats" },
    { href: "/services", label: "Services" },
    { href: "/about", label: "About" },
 ];
