@@ -1,5 +1,5 @@
 'use client'
-import ChatSection from "@/components/chat/ChatSection"
+import ChatSection from "@/components/view/chat/ChatSection"
 import { IMessage } from "@/types"
 import { useParams } from "next/navigation"
 
@@ -17,6 +17,7 @@ const Page = () => {
   return (
     <ChatSection
       chatId={chatId as string}
+      isDoctor={false}
       messages={messages}
       onSendMessage={handleSendMessage}
       onBack={handleBack}

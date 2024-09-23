@@ -1,5 +1,5 @@
 'use client'
-import ChatList from "@/components/chat/ChatList"
+import ChatList from "@/components/view/chat/ChatList"
 import { IChat } from "@/types"
 import { useRouter } from "next/navigation";
 
@@ -18,6 +18,7 @@ const Page = () => {
   return (
     <ChatList
       chats={chats} 
+      isDoctor={false}
       onSelectChat={handleSelectChat} 
       onNewChat={handleNewChat} 
     />

@@ -9,13 +9,14 @@ import { IMessage } from "@/types"  // Assuming you have IMessage defined in you
 import { useState } from "react"
 
 interface ChatSectionProps {
-  chatId: string
-  messages: IMessage[]
-  onSendMessage: (message: string) => void
-  onBack: () => void
+  chatId: string;
+  messages: IMessage[];
+  onSendMessage: (message: string) => void;
+  onBack: () => void;
+  isDoctor:boolean
 }
 
-const ChatSection = ({ chatId, messages, onSendMessage, onBack }: ChatSectionProps) => {
+const ChatSection = ({ chatId, messages, onSendMessage, onBack, isDoctor }: ChatSectionProps) => {
   const [message, setMessage] = useState("")
 
   const handleSendMessage = () => {
