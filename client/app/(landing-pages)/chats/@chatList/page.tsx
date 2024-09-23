@@ -1,10 +1,13 @@
 'use client'
+'/chats/@chatList/page.tsx'
+
 
 import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { MoreVertical } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 
 interface Contact {
   id: number
@@ -27,6 +30,12 @@ export default function ChatList() {
 
   return (
     <div className="flex flex-col h-full bg-background">
+      <div className="p-4 border-b">
+        <Button className="w-full" variant="outline">
+          <PlusCircle className="mr-2 h-4 w-4" />
+          New Chat
+        </Button>
+      </div>
       <ScrollArea className="flex-grow">
         <div className="space-y-1 p-1">
           {contacts.map(({ id, name, lastMessage, avatar, lastSeen }) => (

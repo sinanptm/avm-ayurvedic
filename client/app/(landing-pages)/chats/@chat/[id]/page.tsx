@@ -1,4 +1,5 @@
 'use client'
+'/chats/@chat/[id]/page.tsx'
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"

@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+'/chat/layout.tsx'
 
 export default function ChatLayout({
   chatList,
