@@ -39,8 +39,8 @@ export default class AppointmentController {
       try {
          const doctorId = req.doctor?.id;
          const status = req.query.status as AppointmentStatus | "undefined";
-         let offset = parseInt(req.query.offset as string);
-         let limit = parseInt(req.query.limit as string);
+         let offset = +(req.query.offset as string);
+         let limit = +(req.query.limit as string);
 
          offset = isNaN(offset) || offset < 0 ? 0 : offset;
          limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
@@ -81,8 +81,8 @@ export default class AppointmentController {
       try {
          const patientId = req.patient?.id;
          const status = req.query.status as AppointmentStatus | "undefined";
-         let offset = parseInt(req.query.offset as string);
-         let limit = parseInt(req.query.limit as string);
+         let offset = +(req.query.offset as string);
+         let limit = +(req.query.limit as string);
 
          offset = isNaN(offset) || offset < 0 ? 0 : offset;
          limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);

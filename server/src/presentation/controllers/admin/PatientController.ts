@@ -7,8 +7,8 @@ export default class AdminPatientController {
 
    async getPatients(req: Request, res: Response, next: NextFunction) {
       try {
-         const offset = parseInt(req.query.offset as string) || 0;
-         const limit = parseInt(req.query.limit as string) || 10;
+         const offset = +(req.query.offset as string) || 0;
+         const limit = +(req.query.limit as string) || 10;
 
          const patients = await this.adminPatientUseCase.getAll(offset, limit);
          res.status(StatusCode.Success).json(patients);

@@ -31,6 +31,6 @@ export default class CreateChatUseCase {
         this.validatorService.validateRequiredFields({ chatId, receiverId, message, senderId });
         this.validatorService.validateMultipleIds([chatId, receiverId, senderId]);
         this.validatorService.validateLength(message, 1);
-        await this.messageRepository.create({ chatId, message, receiverId, senderId });
+        await this.messageRepository.create({ chatId, message, receiverId, senderId, isReceived: false });
     }
 }

@@ -7,3 +7,7 @@ export default interface IChat {
     readonly doctorName?: string;
     readonly patientName?: string;
 }
+
+export interface IChatWithNotSeenCount extends IChat{
+    notSeenMessages?:number;
+}

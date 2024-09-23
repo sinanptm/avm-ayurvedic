@@ -8,8 +8,8 @@ export default class AdminDoctorController {
 
    async getDoctors(req: Request, res: Response, next: NextFunction) {
       try {
-         let offset = parseInt(req.query.offset as string);
-         let limit = parseInt(req.query.limit as string);
+         let offset = +(req.query.offset as string);
+         let limit = +(req.query.limit as string);
          const type = req.query.type as DoctorsFilter;
 
          offset = isNaN(offset) || offset < 0 ? 0 : offset;

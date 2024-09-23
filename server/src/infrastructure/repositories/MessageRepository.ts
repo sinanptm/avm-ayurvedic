@@ -20,4 +20,11 @@ export default class MessageRepository implements IMessageRepository {
     async markAsRead(messageId: string): Promise<void> {
         await this.model.findByIdAndUpdate(messageId, { isReceived: true });
     }
+    async getUnreadMessageCountGroupedByChat(receiverId: string): Promise<{ _id: string, count: number }[]> {
+        return await this.model.aggregate([
+            { $match: { receiverId, isReceived: false } },  
+            { $group: { _id: "$chatId", count: { $sum: 1 } } }  
+        ]);
+    }
+    
 }
