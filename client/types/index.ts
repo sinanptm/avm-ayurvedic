@@ -92,7 +92,7 @@ export interface ISlot {
 }
 
 export enum AppointmentStatus {
-   PAYMENT_PENDING = "payment-pending",
+   // PAYMENT_PENDING = "payment-pending",
    PENDING = "pending",
    CONFIRMED = "confirmed",
    CANCELLED = "cancelled",
@@ -139,4 +139,27 @@ export interface INotification {
    readonly createdAt?: Date;
    readonly updatedAt?: Date;
    readonly appointmentId?:string
+}
+
+
+export interface IChat {
+   readonly _id?: string;
+   readonly doctorId?: string;
+   readonly patientId?: string;
+   readonly createdAt?: Date;
+   readonly updatedAt?: Date;
+   readonly doctorName?: string;
+   readonly patientName?: string;
+   readonly notSeenMessages?:number;
+}
+
+export interface IMessage {
+   readonly _id?: string;
+   readonly chatId?: string;
+   readonly senderId?:string;
+   readonly receiverId?:string;
+   readonly message?: string;
+   readonly createdAt?: Date;
+   readonly updatedAt?: Date;
+   readonly isReceived?:boolean;
 }

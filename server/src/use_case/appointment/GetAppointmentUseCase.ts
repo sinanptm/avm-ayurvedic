@@ -10,7 +10,7 @@ export default class GetAppointmentUseCase {
       private appointmentRepository: IAppointmentRepository,
       private validatorService: IValidatorService,
       private paymentRepository: IPaymentRepository
-   ) {}
+   ) { }
 
    async getAppointmentsByDoctorId(
       doctorId: string,
@@ -22,7 +22,11 @@ export default class GetAppointmentUseCase {
       if (status) {
          this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
       }
-      return await this.appointmentRepository.findManyByDoctorId(doctorId, offset, limit, status);
+      const appointments = await this.appointmentRepository.findManyByDoctorId(doctorId, offset, limit, status);
+      if (appointments?.items) {
+         appointments.items = appointments?.items.filter(el => el.status !== AppointmentStatus.PAYMENT_PENDING)
+      }
+      return appointments
    }
 
    async getAppointmentDetails(appointmentId: string): Promise<IExtendedAppointment | null> {

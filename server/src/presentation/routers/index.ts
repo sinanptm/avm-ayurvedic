@@ -37,7 +37,7 @@ app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/slots", slotRoutes);
 app.use("/appointments", appointmentRoutes);
 app.use("/notifications", notificationRoutes);
-app.use("/chat", chatRouters)
+app.use("/chats", chatRouters)
 
 app.use(errorHandler.exec.bind(errorHandler));
 

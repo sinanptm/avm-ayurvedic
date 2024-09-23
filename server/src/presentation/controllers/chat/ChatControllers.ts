@@ -37,6 +37,7 @@ export default class ChatController {
             next(error)
         }
     }
+    // create chat
     async createChatPatient(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const patientId = req.patient?.id;
@@ -57,6 +58,7 @@ export default class ChatController {
             next(error);
         }
     }
+    // create message
     async createMessageDoctor(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const doctorId = req.doctor?.id;
@@ -69,9 +71,9 @@ export default class ChatController {
     }
     async createMessagePatient(req: CustomRequest, res: Response, next: NextFunction) {
         try {
-            const doctorId = req.doctor?.id;
-            const { chatId, patientId, message } = req.body;
-            await this.createChatUseCase.createMessage(chatId, patientId, message, doctorId!);
+            const patientId = req.patient?.id;
+            const { chatId, doctorId, message } = req.body;
+            await this.createChatUseCase.createMessage(chatId, patientId!, message, doctorId);
             res.status(StatusCode.Created)
         } catch (error: any) {
             next(error);
