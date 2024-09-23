@@ -45,7 +45,7 @@ const ChatSection = () => {
           </div>
           <div className="flex items-end gap-2 justify-end">
             <div className="rounded-lg bg-primary text-primary-foreground p-3 max-w-[70%]">
-              <p className="text-sm">I'm fine, thanks for asking!</p>
+              <p className="text-sm">I&apos;m fine, thanks for asking!</p>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
-import ChatUserList from './page'
+import ChatList from './page'
 
-export default  () => <ChatUserList />
-
+export default function DefaultChatList() {
+    return <ChatList />;
+}
