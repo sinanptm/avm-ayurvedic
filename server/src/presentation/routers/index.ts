@@ -14,6 +14,7 @@ import UnauthenticatedControllers from "../controllers/UnauthenticatedController
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
 import appointmentRoutes from "./appointment/AppointmentRoutes";
 import notificationRoutes from "./notification/NotificationRoute";
+import chatRouters from "./chat/NotificationRoutes";
 
 const app = express();
 const tokenService = new TokenService();
@@ -36,6 +37,7 @@ app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/slots", slotRoutes);
 app.use("/appointments", appointmentRoutes);
 app.use("/notifications", notificationRoutes);
+app.use("/chat", chatRouters)
 
 app.use(errorHandler.exec.bind(errorHandler));
 
