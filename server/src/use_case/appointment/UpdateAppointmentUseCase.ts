@@ -1,8 +1,8 @@
-import { AppointmentStatus } from "../../domain/entities/IAppointment";
-import { NotificationTypes } from "../../domain/entities/INotification";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import INotificationRepository from "../../domain/interface/repositories/INotificationRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import { AppointmentStatus } from "../../domain/entities/IAppointment";
+import { NotificationTypes } from "../../domain/entities/INotification";
 
 export default class UpdateAppointmentUseCase {
    constructor(

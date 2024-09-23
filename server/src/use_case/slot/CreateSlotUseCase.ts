@@ -1,8 +1,8 @@
-import ISlot, { SlotStatus, Days } from "../../domain/entities/ISlot";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
+import ISlot, { SlotStatus, Days } from "../../domain/entities/ISlot";
 
 export default class CreateSlotUseCase {
    protected interval: number;

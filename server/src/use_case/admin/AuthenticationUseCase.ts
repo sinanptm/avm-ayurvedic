@@ -2,10 +2,10 @@ import IDoctorRepository from "../../domain/interface/repositories/IDoctorReposi
 import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
-import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import { StatusCode, UserRole } from "../../types";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
+import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
+import { StatusCode, UserRole } from "../../types";
 
 export default class AuthenticationUseCase {
    constructor(

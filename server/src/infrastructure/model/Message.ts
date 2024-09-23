@@ -20,6 +20,11 @@ const messageSchema = new Schema<IMessage>({
         type: String,
         required: true,
     },
+    isReceived:{
+        type:Boolean,
+        default:false,
+        required:true
+    }
 }, {
     timestamps: true, 
     versionKey: false,

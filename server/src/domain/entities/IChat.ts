@@ -4,4 +4,6 @@ export default interface IChat {
     readonly patientId?: string;
     readonly createdAt?: Date;
     readonly updatedAt?: Date;
+    readonly doctorName?: string;
+    readonly patientName?: string;
 }

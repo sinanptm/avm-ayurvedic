@@ -1,7 +1,7 @@
-import ISlot, { Days } from "../../domain/entities/ISlot";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import ISlot, { Days } from "../../domain/entities/ISlot";
 
 export default class GetSlotUseCase {
    constructor(

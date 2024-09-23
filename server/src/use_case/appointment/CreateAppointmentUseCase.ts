@@ -1,12 +1,12 @@
-import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
 import CustomError from "../../domain/entities/CustomError";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { StatusCode } from "../../types";
 import IPaymentService from "../../domain/interface/services/IPaymentService";
 import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
 import IPayment, { PaymentStatus } from "../../domain/entities/IPayment";
+import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
+import { StatusCode } from "../../types";
 
 export default class AppointmentUseCase {
    bookingAmount: number;

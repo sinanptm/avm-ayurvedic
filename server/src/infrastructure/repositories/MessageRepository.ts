@@ -12,9 +12,12 @@ export default class MessageRepository implements IMessageRepository {
     async findById(_id: string): Promise<IMessage | null> {
         return await this.model.findById(_id)
     }
-    async findByChatId(chatId: string, limit: number, offset:number): Promise<PaginatedResult<IMessage>> {
+    async findByChatId(chatId: string, limit: number, offset: number): Promise<PaginatedResult<IMessage>> {
         const totalItems = await this.model.countDocuments({ chatId });
         const items = await this.model.find({ chatId }).limit(limit);
         return getPaginatedResult(totalItems, offset, limit, items);
+    }
+    async markAsRead(messageId: string): Promise<void> {
+        await this.model.findByIdAndUpdate(messageId, { isReceived: true });
     }
 }

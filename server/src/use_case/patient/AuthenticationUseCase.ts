@@ -3,10 +3,10 @@ import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
 import IPatient  from "../../domain/entities/IPatient";
-import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import { StatusCode, UserRole } from "../../types";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
+import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
+import { StatusCode, UserRole } from "../../types";
 
 type TokensResponse = {
    accessToken: string;

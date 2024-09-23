@@ -6,4 +6,5 @@ export default interface IMessage {
     readonly message?: string;
     readonly createdAt?: Date;
     readonly updatedAt?: Date;
+    readonly isReceived?:boolean;
 }
