@@ -24,7 +24,19 @@ export default class GetChatUseCase {
         const chats = await this.chatRepository.findAllChatsForDoctor(doctorId);
         return await this.getChatsWithNotSeenMessages(doctorId, chats);
     }
-
+    
+    private async getChatsWithNotSeenMessages(
+        receiverId: string,
+        chats: IChat[]
+    ): Promise<IChatWithNotSeenCount[] | []> {
+        const unreadMessages = await this.messageRepository.getUnreadMessageCountGroupedByChat(receiverId);
+        const unreadMap = new Map(unreadMessages.map(({ _id, count }) => [_id, count])); 
+        return chats.map(chat => ({
+            ...chat,
+            notSeenMessages: unreadMap.get(chat._id!) || 0 
+        }));
+    }
+    
     async getMessagesOfChat(chatId: string, limit: number): Promise<{ data: PaginatedResult<IMessage>, chat: IChat }> {
         this.validatorService.validateIdFormat(chatId);
         const offset = 0;
@@ -32,17 +44,6 @@ export default class GetChatUseCase {
         if (!chat) throw new CustomError("Not found", StatusCode.NotFound);
         const data = await this.messageRepository.findByChatId(chatId, limit, offset);
         return { data, chat }
-    }
-
-    private async getChatsWithNotSeenMessages(
-        receiverId: string,
-        chats: IChat[]
-    ): Promise<IChatWithNotSeenCount[] | []> {
-        const unreadMessages = await this.messageRepository.getUnreadMessageCountGroupedByChat(receiverId);
-        if (!unreadMessages) {
-            return chats.map(el => ({ ...el, notSeenMessages: 0 }));
-        }
-        return chats
     }
 
 }
