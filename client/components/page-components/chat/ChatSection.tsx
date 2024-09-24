@@ -4,19 +4,23 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft, Send } from "lucide-react"
-import { IMessage } from "@/types"  // Assuming you have IMessage defined in your types file
+import { ArrowLeft, Send, AlertCircle } from "lucide-react"
+import { IMessage } from "@/types"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { Spinner } from "@/components/skeletons/spinner"
 
 interface ChatSectionProps {
   chatId: string;
   messages: IMessage[];
   onSendMessage: (message: string) => void;
-  isDoctor:boolean
+  isDoctor: boolean;
+  error?: string;
+  isError: boolean;
+  isLoading: boolean;
 }
 
-const ChatSection = ({ chatId, messages, onSendMessage, isDoctor }: ChatSectionProps) => {
+const ChatSection = ({ chatId, messages, onSendMessage, isDoctor, error, isError, isLoading }: ChatSectionProps) => {
   const [message, setMessage] = useState("");
   const router = useRouter()
 
@@ -26,12 +30,30 @@ const ChatSection = ({ chatId, messages, onSendMessage, isDoctor }: ChatSectionP
       setMessage("")
     }
   }
-  const onBack = ()=>{
+
+  const onBack = () => {
     router.back();
   }
 
-  if (!chatId) {
-    return <div className="flex items-center justify-center h-full">User not found</div>
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Spinner className="h-8 w-8 text-primary" />
+      </div>
+    )
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center space-y-2">
+          <AlertCircle className="h-10 w-10 text-red-500 mx-auto" />
+          <p className="text-lg font-semibold">Error loading chat</p>
+          <p className="text-sm text-muted-foreground">{error || "An unknown error occurred"}</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -70,6 +92,7 @@ const ChatSection = ({ chatId, messages, onSendMessage, isDoctor }: ChatSectionP
             placeholder={`Message user ${chatId}`} 
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
           />
           <Button onClick={handleSendMessage}>
             <Send className="h-4 w-4" />

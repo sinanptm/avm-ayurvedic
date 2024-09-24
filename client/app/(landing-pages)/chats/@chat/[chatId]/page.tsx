@@ -1,29 +1,27 @@
 'use client'
 import ChatSection from "@/components/page-components/chat/ChatSection"
-import { IMessage } from "@/types"
+import { useGetPatientMessages } from "@/lib/hooks/chat/useChatPatient"
 import { useParams } from "next/navigation"
 
 const Page = () => {
-  const { chatId } = useParams()
+  const chatId = useParams().chatId as string;
+  const { data:messages, isError, error, isLoading } = useGetPatientMessages(chatId, 10)
 
   const handleSendMessage = (newMessage: string) => {
-    console.log("New message sent:", newMessage)
-  }
-
+    console.log("New message sent:", newMessage);
+  }  
+  
   return (
     <ChatSection
-      chatId={chatId as string}
+      chatId={chatId}
       isDoctor={false}
-      messages={messages}
+      isLoading={isLoading}
+      messages={messages?.items!}
+      isError={isError}
+      error={error?.response?.data.message}
       onSendMessage={handleSendMessage}
     />
-  )
+  );
 }
 
-export default Page
-
-
-var messages: IMessage[] = [
-  { _id: "1", chatId: "101", senderId: "201", receiverId: "101", message: "Hello, how are you?", isReceived: true, createdAt: new Date() },
-  { _id: "2", chatId: "101", senderId: "101", receiverId: "201", message: "I'm fine, thanks for asking!", isReceived: false, createdAt: new Date() },
-]
+export default Page;

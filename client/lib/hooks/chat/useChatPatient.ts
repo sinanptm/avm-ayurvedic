@@ -1,5 +1,5 @@
 import { getMessagesOfPatientChat, getPatientChats, createChatPatient, createMessagePatient, } from "@/lib/api/chat";
-import { ErrorResponse, MessageResponse } from "@/types";
+import { ErrorResponse, IMessage, MessageResponse, PaginatedResult } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -11,7 +11,7 @@ export const useGetPatientChats = () => {
 }
 
 export const useGetPatientMessages = (chatId: string, limit: number) => {
-    return useQuery({
+    return useQuery<PaginatedResult<IMessage>,AxiosError<ErrorResponse>>({
         queryKey: ['messages', chatId],
         queryFn: () => getMessagesOfPatientChat(chatId, limit)
     })

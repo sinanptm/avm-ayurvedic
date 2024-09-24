@@ -15,7 +15,6 @@ const Page = () => {
   const router = useRouter();
   const doctors: ChatModelUser[] = data?.items.map(({ _id, image, name }) => ({ _id, name, profilePicture: image })) || [];
 
-  console.log(chats);
   
 
   const handleSelectChat = (id: string) => {
