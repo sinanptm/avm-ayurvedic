@@ -2,7 +2,7 @@
 
 import React, { useCallback, useMemo, useState } from "react";
 import { IDoctor } from "@/types";
-import { DoctorCard } from "@/components/patient/clinicians/DoctorCard";
+import { DoctorCard } from "@/components/page-components/landing/clinicians/DoctorCard";
 import Pagination from "@/components/navigation/Pagination";
 
 interface DoctorsListProps {
