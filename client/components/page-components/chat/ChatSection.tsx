@@ -5,22 +5,24 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft, Send, AlertCircle } from "lucide-react"
-import { IMessage } from "@/types"
+import { IChat, IMessage } from "@/types"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/skeletons/spinner"
+import { getSenderData } from "./getSenderData"
 
 interface ChatSectionProps {
-  chatId: string;
+  sender:"doctor"|"patient";
   messages: IMessage[];
   onSendMessage: (message: string) => void;
-  isDoctor: boolean;
-  error?: string;
   isError: boolean;
+  isPending:boolean;
   isLoading: boolean;
+  chat:IChat;
+  error?: string;
 }
 
-const ChatSection = ({ chatId, messages, onSendMessage, isDoctor, error, isError, isLoading }: ChatSectionProps) => {
+const ChatSection = ({ messages, onSendMessage, sender, error, isError, isLoading, chat, isPending }: ChatSectionProps) => {
   const [message, setMessage] = useState("");
   const router = useRouter()
 
@@ -30,11 +32,6 @@ const ChatSection = ({ chatId, messages, onSendMessage, isDoctor, error, isError
       setMessage("")
     }
   }
-
-  const onBack = () => {
-    router.back();
-  }
-
 
   if (isLoading) {
     return (
@@ -60,15 +57,15 @@ const ChatSection = ({ chatId, messages, onSendMessage, isDoctor, error, isError
     <div className="flex flex-col h-full bg-background">
       <header className="p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="icon" onClick={onBack} className="sm:hidden">
+          <Button variant="ghost" size="icon" onClick={()=>router.back()} className="sm:hidden">
             <ArrowLeft className="h-6 w-6" />
             <span className="sr-only">Back to chat list</span>
           </Button>
           <Avatar className="w-10 h-10">
-            <AvatarImage src="/assets/icons/circle-user.svg" alt={`User ${chatId}`} />
-            <AvatarFallback>{chatId}</AvatarFallback>
+            <AvatarImage src={getSenderData(sender,chat.doctorProfile!,chat.patientProfile!)||`/assets/icons/circle-user.svg`} alt={`${getSenderData(sender,chat.doctorName!,chat.patientName!)}`} />
+            <AvatarFallback>{sender}</AvatarFallback>
           </Avatar>
-          <h2 className="text-xl font-semibold">Chat with User {chatId}</h2>
+          <h2 className="text-xl font-semibold">{getSenderData(sender,chat.doctorName!,chat.patientName!)}</h2>
         </div>
       </header>
       <ScrollArea className="flex-grow p-4">
@@ -89,7 +86,7 @@ const ChatSection = ({ chatId, messages, onSendMessage, isDoctor, error, isError
         <div className="flex items-center gap-2">
           <Input 
             className="flex-1" 
-            placeholder={`Message user ${chatId}`} 
+            placeholder={`Message user ${getSenderData(sender,chat.doctorName!,chat.patientName!)}`} 
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}

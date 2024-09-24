@@ -40,7 +40,6 @@ export default class CreateChatUseCase {
     async createMessage(chatId: string, receiverId: string, message: string, senderId: string): Promise<void> {
         this.validatorService.validateRequiredFields({ chatId, receiverId, message, senderId });
         this.validatorService.validateMultipleIds([chatId, receiverId, senderId]);
-        this.validatorService.validateLength(message, 1);
         await this.messageRepository.create({ chatId, message, receiverId, senderId, isReceived: false });
     }
 }

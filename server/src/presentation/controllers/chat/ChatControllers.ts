@@ -31,8 +31,8 @@ export default class ChatController {
             const chatId = req.params.chatId;
             let limit = +(req.query.limit as string);
             limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
-            const messages = await this.getChatUseCase.getMessagesOfChat(chatId, limit);
-            res.status(StatusCode.Success).json(messages);
+            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, limit);
+            res.status(StatusCode.Success).json({ chat, data });
         } catch (error) {
             next(error)
         }

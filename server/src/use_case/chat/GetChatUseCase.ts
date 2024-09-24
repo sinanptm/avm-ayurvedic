@@ -1,9 +1,10 @@
+import CustomError from "../../domain/entities/CustomError";
 import IChat, { IChatWithNotSeenCount } from "../../domain/entities/IChat";
 import IMessage from "../../domain/entities/IMessage";
 import IChatRepository from "../../domain/interface/repositories/IChatRepository";
 import IMessageRepository from "../../domain/interface/repositories/IMessageRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { PaginatedResult } from "../../types";
+import { PaginatedResult, StatusCode } from "../../types";
 
 export default class GetChatUseCase {
     constructor(
@@ -24,10 +25,13 @@ export default class GetChatUseCase {
         return await this.getChatsWithNotSeenMessages(doctorId, chats);
     }
 
-    async getMessagesOfChat(chatId: string, limit: number): Promise<PaginatedResult<IMessage>> {
+    async getMessagesOfChat(chatId: string, limit: number): Promise<{ data: PaginatedResult<IMessage>, chat: IChat }> {
         this.validatorService.validateIdFormat(chatId);
         const offset = 0;
-        return await this.messageRepository.findByChatId(chatId, limit, offset);
+        const chat = await this.chatRepository.findById(chatId);
+        if (!chat) throw new CustomError("Not found", StatusCode.NotFound);
+        const data = await this.messageRepository.findByChatId(chatId, limit, offset);
+        return { data, chat }
     }
 
     private async getChatsWithNotSeenMessages(
@@ -35,10 +39,10 @@ export default class GetChatUseCase {
         chats: IChat[]
     ): Promise<IChatWithNotSeenCount[] | []> {
         const unreadMessages = await this.messageRepository.getUnreadMessageCountGroupedByChat(receiverId);
-        if(!unreadMessages){
-            return chats.map(el=>({...el,notSeenMessages:0}));
+        if (!unreadMessages) {
+            return chats.map(el => ({ ...el, notSeenMessages: 0 }));
         }
         return chats
     }
-    
+
 }

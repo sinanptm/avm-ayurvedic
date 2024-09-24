@@ -9,13 +9,13 @@ import { useState } from "react";
 
 const Page = () => {
   const { data } = useGetDoctorsList();
-  const { mutate: createChat } = useCreateChatPatient();
-  const {data:chats,isLoading} = useGetPatientChats()
+  const { mutate: createChat, } = useCreateChatPatient();
+  const { data: chats, isLoading, refetch } = useGetPatientChats()
   const [isNewChatModalOpen, setNewChatModalOpen] = useState(false)
   const router = useRouter();
   const doctors: ChatModelUser[] = data?.items.map(({ _id, image, name }) => ({ _id, name, profilePicture: image })) || [];
 
-  
+
 
   const handleSelectChat = (id: string) => {
     router.push(`/chats/${id}`);
@@ -29,6 +29,7 @@ const Page = () => {
     createChat({ doctorId }, {
       onSuccess: ({ chatId }) => {
         router.push(`/chats/${chatId}`)
+        refetch();
         setNewChatModalOpen(false)
       },
       onError: ({ response }) => {
@@ -45,8 +46,9 @@ const Page = () => {
   return (
     <>
       <ChatList
-        chats={chats}
-        isDoctorData={false}
+        chats={chats!}
+        sender="doctor"
+        skeltonCount={19}
         isLoading={isLoading}
         onSelectChat={handleSelectChat}
         onNewChat={() => setNewChatModalOpen(true)}
