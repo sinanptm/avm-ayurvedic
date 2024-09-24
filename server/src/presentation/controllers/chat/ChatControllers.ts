@@ -42,8 +42,8 @@ export default class ChatController {
         try {
             const patientId = req.patient?.id;
             const { doctorId } = req.body;
-            await this.createChatUseCase.createChat(doctorId, patientId!);
-            res.status(StatusCode.Created)
+            const chatId = await this.createChatUseCase.createChat(doctorId, patientId!);
+            res.status(StatusCode.Created).json({ chatId })
         } catch (error: any) {
             next(error);
         }
@@ -52,8 +52,8 @@ export default class ChatController {
         try {
             const doctorId = req.doctor?.id;
             const { patientId } = req.body;
-            await this.createChatUseCase.createChat(doctorId!, patientId);
-            res.status(StatusCode.Created)
+            const chatId = await this.createChatUseCase.createChat(doctorId!, patientId);
+            res.status(StatusCode.Created).json({ chatId })
         } catch (error: any) {
             next(error);
         }

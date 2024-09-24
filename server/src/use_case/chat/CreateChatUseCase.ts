@@ -14,20 +14,28 @@ export default class CreateChatUseCase {
         private patientRepository: IPatientRepository,
         private doctorRepository: IDoctorRepository
     ) { }
-    async createChat(doctorId: string, patientId: string): Promise<void> {
+    async createChat(doctorId: string, patientId: string): Promise<string> {
         this.validatorService.validateRequiredFields({ doctorId, patientId });
         this.validatorService.validateIdFormat(doctorId);
         this.validatorService.validateIdFormat(patientId);
         const patient = await this.patientRepository.findById(patientId);
-        const doctor = await this.doctorRepository.findByID(patientId);
+        const doctor = await this.doctorRepository.findByID(doctorId);
         if (!patient) {
             throw new CustomError("Invalid patient id", StatusCode.NotFound);
         } else if (!doctor) {
             throw new CustomError("Invalid doctor id", StatusCode.NotFound);
         }
-        await this.chatRepository.create(
-            { doctorId, patientId, patientName: patient.name, doctorName: doctor.name, patientProfile: patient.profile, doctorProfile: doctor.password }
-        );
+        try {
+            return await this.chatRepository.create(
+                { doctorId, patientId, patientName: patient.name, doctorName: doctor.name, patientProfile: patient.profile, doctorProfile: doctor.image }
+            );
+        } catch (error: any) {
+            if (error.code === 11000) {
+                const chat = await this.chatRepository.findByDoctorAndPatientId(doctorId, patientId);
+                return chat?._id!
+            }
+            throw error;
+        }
     }
     async createMessage(chatId: string, receiverId: string, message: string, senderId: string): Promise<void> {
         this.validatorService.validateRequiredFields({ chatId, receiverId, message, senderId });

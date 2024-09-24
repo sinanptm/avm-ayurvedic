@@ -7,23 +7,27 @@ import { Input } from "@/components/ui/input"
 import { ArrowLeft, Send } from "lucide-react"
 import { IMessage } from "@/types"  // Assuming you have IMessage defined in your types file
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 interface ChatSectionProps {
   chatId: string;
   messages: IMessage[];
   onSendMessage: (message: string) => void;
-  onBack: () => void;
   isDoctor:boolean
 }
 
-const ChatSection = ({ chatId, messages, onSendMessage, onBack, isDoctor }: ChatSectionProps) => {
-  const [message, setMessage] = useState("")
+const ChatSection = ({ chatId, messages, onSendMessage, isDoctor }: ChatSectionProps) => {
+  const [message, setMessage] = useState("");
+  const router = useRouter()
 
   const handleSendMessage = () => {
     if (message.trim()) {
       onSendMessage(message)
       setMessage("")
     }
+  }
+  const onBack = ()=>{
+    router.back();
   }
 
   if (!chatId) {

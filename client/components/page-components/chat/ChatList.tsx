@@ -4,18 +4,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { PlusCircle } from "lucide-react"
-import { IChat, IDoctor } from "@/types"
+import { IChat } from "@/types"
 import getRoleSpecificData from './getRoleSpecificData'
+import ChatListSkeleton from "@/components/skeletons/ChatList"
 
 interface ChatListProps {
   chats: IChat[];
   onSelectChat: (id: string) => void;
   onNewChat: () => void;
-  isDoctor:boolean;
-  doctorsList?:IDoctor[]
+  isDoctorData: boolean;
+  isLoading: boolean;
 }
 
-export default function ChatList({ chats, onSelectChat, onNewChat, isDoctor }: ChatListProps) {
+export default function ChatList({ chats, onSelectChat, onNewChat, isDoctorData, isLoading }: ChatListProps) {
   return (
     <div className="flex flex-col h-full bg-background">
       <div className="p-3 border-b space-y-3">
@@ -26,31 +27,35 @@ export default function ChatList({ chats, onSelectChat, onNewChat, isDoctor }: C
       </div>
       <ScrollArea className="flex-grow">
         <div className="space-y-1 p-2">
-          {chats.map(({ _id, doctorName, patientName, doctorProfile, patientProfile, notSeenMessages }) => (
-            <div
-              key={_id}
-              className="flex items-center space-x-2 p-2 rounded-lg transition-colors cursor-pointer hover:bg-accent/50 border border-border"
-              onClick={() => onSelectChat(_id!)}
-            >
-              <Avatar className="w-8 h-8 flex-shrink-0">
-                <AvatarImage src={ getRoleSpecificData(isDoctor,doctorProfile!,patientProfile!) || "/assets/icons/circle-user.svg"} alt={doctorName || patientName} />
-                <AvatarFallback></AvatarFallback>
-              </Avatar>
-              <div className="min-w-0 flex-1">
-                <div className="flex justify-between items-baseline">
-                  <h3 className="font-medium text-sm truncate">{doctorName || patientName}</h3>
-                  {notSeenMessages! > 0 && (
-                    <span className="bg-primary text-primary-foreground text-xs font-medium px-1.5 py-0.5 rounded-full">
-                      {notSeenMessages}
-                    </span>
-                  )}
+          {isLoading ? (
+            <ChatListSkeleton itemCount={10} />
+          ) : (
+            chats.map(({ _id, doctorName, patientName, doctorProfile, patientProfile, notSeenMessages },i) => (
+              <div
+                key={`${_id},${i}`}
+                className="flex items-center space-x-2 p-2 rounded-lg transition-colors cursor-pointer hover:bg-accent/50 border border-border"
+                onClick={() => onSelectChat(_id!)}
+              >
+                <Avatar className="w-8 h-8 flex-shrink-0">
+                  <AvatarImage src={getRoleSpecificData("patient", doctorProfile!, patientProfile!) || "/assets/icons/circle-user.svg"} alt={doctorName || patientName} />
+                  <AvatarFallback>{(doctorName || patientName)?.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="min-w-0 flex-1">
+                  <div className="flex justify-between items-baseline">
+                    <h3 className="font-medium text-sm truncate">{doctorName || patientName}</h3>
+                    {notSeenMessages! > 0 && (
+                      <span className="bg-primary text-primary-foreground text-xs font-medium px-1.5 py-0.5 rounded-full">
+                        {notSeenMessages}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </ScrollArea>
-      {chats.length === 0 && (
+      {!isLoading && chats.length === 0 && (
         <div className="p-4 text-center text-muted-foreground text-sm">
           No chats found
         </div>

@@ -32,19 +32,13 @@ export default class GetChatUseCase {
 
     private async getChatsWithNotSeenMessages(
         receiverId: string,
-        chats: IChatWithNotSeenCount[]
+        chats: IChat[]
     ): Promise<IChatWithNotSeenCount[] | []> {
         const unreadMessages = await this.messageRepository.getUnreadMessageCountGroupedByChat(receiverId);
-
-        const unreadMessagesMap = unreadMessages.reduce((acc, messageCount) => {
-            acc[messageCount._id] = messageCount.count;
-            return acc;
-        }, {} as { [chatId: string]: number });
-    
-        const updatedChats = chats.map(chat => ({
-            ...chat,
-            notSeenMessages: unreadMessagesMap[chat._id!] || 0, 
-        }));
-        return updatedChats.length ? updatedChats : [];
+        if(!unreadMessages){
+            return chats.map(el=>({...el,notSeenMessages:0}));
+        }
+        return chats
     }
+    
 }

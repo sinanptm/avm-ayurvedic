@@ -10,17 +10,12 @@ const Page = () => {
     console.log("New message sent:", newMessage)
   }
 
-  const handleBack = () => {
-    console.log("Navigating back to chat list")
-  }
-
   return (
     <ChatSection
       chatId={chatId as string}
       isDoctor={false}
       messages={messages}
       onSendMessage={handleSendMessage}
-      onBack={handleBack}
     />
   )
 }

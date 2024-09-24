@@ -18,7 +18,7 @@ export const useGetDoctorMessages = (chatId: string, limit: number) => {
 }
 
 export const useCreateChatDoctor = () => {
-    return useMutation<MessageResponse, AxiosError<ErrorResponse>, { patientId: string }>({
+    return useMutation<{chatId:string}, AxiosError<ErrorResponse>, { patientId: string }>({
         mutationFn: ({ patientId }) => createChatDoctor(patientId),
         onError: (error) => {
             console.error('Error in creating doctor chat,', error);
