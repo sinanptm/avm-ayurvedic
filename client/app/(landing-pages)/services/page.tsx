@@ -1,6 +1,6 @@
-import Featured from "@/components/patient/services/Featured";
-import Services from "@/components/patient/services/Services";
-import WhyOurService from "@/components/patient/services/WhyOurService";
+import Featured from "@/components/page-components/landing/services/Featured";
+import Services from "@/components/page-components/landing/services/Services";
+import WhyOurService from "@/components/page-components/landing/services/WhyOurService";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

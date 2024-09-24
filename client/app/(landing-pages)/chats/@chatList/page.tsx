@@ -1,5 +1,5 @@
 'use client'
-import ChatList from "@/components/view/chat/ChatList"
+import ChatList from "@/components/page-components/chat/ChatList"
 import { IChat } from "@/types"
 import { useRouter } from "next/navigation";
 

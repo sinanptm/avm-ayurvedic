@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import FormSection from "@/components/patient/auth/SignInPageSection";
+import FormSection from "@/components/page-components/patient/auth/SignInPageSection";
 
 export const metadata: Metadata = {
    title: "SignIn",

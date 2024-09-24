@@ -1,4 +1,4 @@
-import ChatLayout from "@/components/patient/chat/Layout"
+import ChatLayout from "@/components/page-components/chat/ChatLayout"
 import { Metadata } from "next";
 import { ReactNode } from "react"
 

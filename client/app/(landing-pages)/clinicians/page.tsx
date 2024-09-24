@@ -1,9 +1,9 @@
 import React from "react";
-import { AyurvedaSection } from "@/components/patient/clinicians/AyurvedaSection";
-import { TestimonialsSection } from "@/components/patient/clinicians/TestimonialsSection";
-import { FAQSection } from "@/components/patient/clinicians/FAQSection";
-import { CTASection } from "@/components/patient/clinicians/CTASection";
-import DoctorsList from "@/components/patient/clinicians/DoctorsList";
+import { AyurvedaSection } from "@/components/page-components/landing/clinicians/AyurvedaSection";
+import { TestimonialsSection } from "@/components/page-components/landing/clinicians/TestimonialsSection";
+import { FAQSection } from "@/components/page-components/landing/clinicians/FAQSection";
+import { CTASection } from "@/components/page-components/landing/clinicians/CTASection";
+import DoctorsList from "@/components/page-components/landing/clinicians/DoctorsList";
 import { DummyDoctors } from "@/constants";
 import { Metadata } from "next";
 

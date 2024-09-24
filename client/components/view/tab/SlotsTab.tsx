@@ -2,8 +2,8 @@
 
 import { Days } from "@/types";
 import { Tabs } from "@/components/ui/tabs-v2";
-import TabContent from "@/components/doctor/slots/SlotsTabContent";
-import MultiSlots from "@/components/doctor/slots/MultiSlots";
+import TabContent from "@/components/page-components/doctor/slots/SlotsTabContent";
+import MultiSlots from "@/components/page-components/doctor/slots/MultiSlots";
 
 export default function TabSection() {
    const tabs = Object.values(Days).map((day) => ({

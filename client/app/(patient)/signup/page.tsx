@@ -1,4 +1,4 @@
-import SignUnFormSection from "@/components/patient/auth/SignUnPageSection";
+import SignUnFormSection from "@/components/page-components/patient/auth/SignUnPageSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -4,18 +4,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { PlusCircle } from "lucide-react"
-import { IChat } from "@/types"
+import { IChat, IDoctor } from "@/types"
 import getRoleSpecificData from './getRoleSpecificData'
 
 interface ChatListProps {
-  chats: IChat[]
-  onSelectChat: (id: string) => void
-  onNewChat: () => void,
-  isDoctor:boolean
+  chats: IChat[];
+  onSelectChat: (id: string) => void;
+  onNewChat: () => void;
+  isDoctor:boolean;
+  doctorsList?:IDoctor[]
 }
 
 export default function ChatList({ chats, onSelectChat, onNewChat, isDoctor }: ChatListProps) {
-  
   return (
     <div className="flex flex-col h-full bg-background">
       <div className="p-3 border-b space-y-3">

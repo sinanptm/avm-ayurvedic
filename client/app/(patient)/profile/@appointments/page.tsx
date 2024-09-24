@@ -5,7 +5,7 @@ import { useGetAppointmentsPatient } from "@/lib/hooks/appointment/useAppointmen
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge";
+import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge";
 import { Calendar, FileText, Video, User } from "lucide-react";
 import { useState } from "react";
 import { ButtonV2 } from "@/components/common/ButtonV2";

@@ -1,5 +1,5 @@
 "use client";
-import NavSection from "@/components/patient/profile/NavSection";
+import NavSection from "@/components/page-components/patient/profile/NavSection";
 import { memo, ReactNode, useState } from "react";
 import ProfileSkeleton from "@/components/skeletons/ProfilePage";
 import { notFound, useRouter } from "next/navigation";

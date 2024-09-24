@@ -1,5 +1,5 @@
 'use client'
-import ChatSection from "@/components/view/chat/ChatSection"
+import ChatSection from "@/components/page-components/chat/ChatSection"
 import { IMessage } from "@/types"
 import { useParams } from "next/navigation"
 

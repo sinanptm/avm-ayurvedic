@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import GetStatusBadge from "@/components/doctor/appointment/GetStatusBadge";
+import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge";
 import { Calendar, Clock, FileText, Video, User, Mail, Phone, Edit2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
