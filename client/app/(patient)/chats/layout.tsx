@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   keywords: 'chat, messages, AVM Ayurvedic, healthcare',
 };
 const layout = ({ chatList, chat }: { chatList: ReactNode; chat: ReactNode }) => {
-  return <ChatLayout chat={chat} chatList={chatList} />
+  return <ChatLayout chat={chat} chatList={chatList} isPatient={true} />
 }
 
 export default layout

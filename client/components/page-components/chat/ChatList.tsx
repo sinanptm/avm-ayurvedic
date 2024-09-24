@@ -2,12 +2,11 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { PlusCircle, LogIn } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 import { IChat } from "@/types"
 import { getSenderData } from './getSenderData'
 import ChatListSkeleton from "@/components/skeletons/ChatList"
 import { ButtonV2 } from "@/components/common/ButtonV2"
-import Link from "next/link"
 
 interface ChatListProps {
   chats: IChat[];
@@ -16,25 +15,9 @@ interface ChatListProps {
   isLoading: boolean;
   sender: "doctor" | "patient";
   skeltonCount: number;
-  isAuthorized: boolean;
 }
 
-export default function ChatList({ chats, onSelectChat, onNewChat, isLoading, sender, skeltonCount, isAuthorized }: ChatListProps) {
-  if (!isAuthorized) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full bg-background p-4">
-        <p className="text-center text-muted-foreground mb-4">
-          You need to sign in to access chats.
-        </p>
-        <Link href="/signin" passHref>
-          <ButtonV2 variant="shine" size="sm">
-            <LogIn className="mr-2 h-4 w-4" />
-            Sign In
-          </ButtonV2>
-        </Link>
-      </div>
-    )
-  }
+export default function ChatList({ chats, onSelectChat, onNewChat, isLoading, sender, skeltonCount }: ChatListProps) {
 
   return (
     <div className="flex flex-col h-full bg-background">

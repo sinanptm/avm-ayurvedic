@@ -12,7 +12,6 @@ import { getSenderData } from "./getSenderData"
 import { format } from "date-fns"
 import dynamic from 'next/dynamic'
 import { EmojiClickData, Theme } from 'emoji-picker-react'
-import Link from "next/link"
 import { ButtonV2 } from "@/components/common/ButtonV2"
 
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false })
@@ -25,7 +24,6 @@ interface ChatSectionProps {
   isPending: boolean
   isLoading: boolean
   chat: IChat
-  isAuthorized: boolean
   error?: string
 }
 
@@ -38,7 +36,6 @@ export default function ChatSection({
   isLoading,
   chat,
   isPending,
-  isAuthorized,
 }: ChatSectionProps) {
   const [message, setMessage] = useState("")
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
@@ -81,25 +78,7 @@ export default function ChatSection({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [])
-
-  if (!isAuthorized) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full bg-background">
-        <AlertCircle className="h-10 w-10 text-yellow-500 mb-4" />
-        <h2 className="text-lg font-semibold mb-2">Authorization Required</h2>
-        <p className="text-sm text-muted-foreground mb-4 text-center">
-          You need to sign in to view and send messages.
-        </p>
-        <Link href="/signin" passHref>
-          <ButtonV2 variant="shine" size="sm">
-            <LogIn className="mr-2 h-4 w-4" />
-            Sign In
-          </ButtonV2>
-        </Link>
-      </div>
-    )
-  }
+  }, []);
 
   if (isLoading) {
     return (
