@@ -2,6 +2,8 @@ import { getMessagesOfPatientChat, getPatientChats, createChatPatient, createMes
 import { ErrorResponse, IChat, IMessage, MessageResponse, PaginatedResult } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+
 
 export const useGetPatientChats = () => {
     return useQuery({
@@ -20,8 +22,12 @@ export const useGetPatientMessages = (chatId: string, limit: number) => {
 }
 
 export const useCreateChatPatient = () => {
+    const router = useRouter()
     return useMutation<{chatId:string}, AxiosError<ErrorResponse>, { doctorId: string }>({
         mutationFn: ({ doctorId }) => createChatPatient(doctorId),
+        onSuccess:({chatId})=>{
+            router.push(`/chats/${chatId}`)
+        },
         onError: (error) => {
             console.error('Error in creating chat', error);
         }

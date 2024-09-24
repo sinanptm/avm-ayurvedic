@@ -46,7 +46,7 @@ const Page = () => {
     }
     createChat({ doctorId }, {
       onSuccess: ({ chatId }) => {
-        router.push(`/chats/${chatId}`)
+        // router.push(`/chats/${chatId}`)
         refetch();
         setNewChatModalOpen(false)
       },
