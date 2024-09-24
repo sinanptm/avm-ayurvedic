@@ -34,6 +34,11 @@ export const DoctorsSidebarLinks: NavLinkType[] = [
       href: "/doctor/slots",
       icon: "/assets/icons/utils/slots.svg",
    },
+   {
+      label: "Chats",
+      href: "/doctor/chats",
+      icon: "/assets/icons/utils/message.svg",
+   }
 ];
 
 export const NavLinks: NavLinkType[] = [

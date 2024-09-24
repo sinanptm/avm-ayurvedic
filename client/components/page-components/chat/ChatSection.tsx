@@ -3,9 +3,8 @@
 import { useRef, useEffect, useState } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft, Send, AlertCircle, Smile } from "lucide-react"
+import { ArrowLeft, Send, AlertCircle, Smile, LogIn } from "lucide-react"
 import { IChat, IMessage } from "@/types"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/skeletons/spinner"
@@ -13,6 +12,8 @@ import { getSenderData } from "./getSenderData"
 import { format } from "date-fns"
 import dynamic from 'next/dynamic'
 import { EmojiClickData, Theme } from 'emoji-picker-react'
+import Link from "next/link"
+import { ButtonV2 } from "@/components/common/ButtonV2"
 
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false })
 
@@ -24,6 +25,7 @@ interface ChatSectionProps {
   isPending: boolean
   isLoading: boolean
   chat: IChat
+  isAuthorized: boolean
   error?: string
 }
 
@@ -36,6 +38,7 @@ export default function ChatSection({
   isLoading,
   chat,
   isPending,
+  isAuthorized,
 }: ChatSectionProps) {
   const [message, setMessage] = useState("")
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
@@ -80,6 +83,24 @@ export default function ChatSection({
     }
   }, [])
 
+  if (!isAuthorized) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full bg-background">
+        <AlertCircle className="h-10 w-10 text-yellow-500 mb-4" />
+        <h2 className="text-lg font-semibold mb-2">Authorization Required</h2>
+        <p className="text-sm text-muted-foreground mb-4 text-center">
+          You need to sign in to view and send messages.
+        </p>
+        <Link href="/signin" passHref>
+          <ButtonV2 variant="shine" size="sm">
+            <LogIn className="mr-2 h-4 w-4" />
+            Sign In
+          </ButtonV2>
+        </Link>
+      </div>
+    )
+  }
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -104,10 +125,10 @@ export default function ChatSection({
     <div className="flex flex-col h-full bg-background">
       <header className="p-4 border-b border-border flex-shrink-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="icon" onClick={() => router.back()} className="sm:hidden">
+          <ButtonV2 variant="ghost" size="icon" onClick={() => router.back()} className="sm:hidden">
             <ArrowLeft className="h-6 w-6" />
             <span className="sr-only">Back to chat list</span>
-          </Button>
+          </ButtonV2>
           <Avatar className="w-10 h-10">
             <AvatarImage
               src={getSenderData(sender, chat.doctorProfile!, chat.patientProfile!) || `/assets/icons/circle-user.svg`}
@@ -169,7 +190,7 @@ export default function ChatSection({
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
           />
           <div className="relative">
-            <Button 
+            <ButtonV2 
               variant="ghost" 
               size="icon" 
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -177,20 +198,20 @@ export default function ChatSection({
               aria-label="Add emoji"
             >
               <Smile className="h-5 w-5" />
-            </Button>
+            </ButtonV2>
             {showEmojiPicker && (
               <div className="absolute bottom-full right-0 mb-2 z-10" ref={emojiPickerRef}>
                 <EmojiPicker theme={Theme.AUTO} onEmojiClick={handleEmojiClick} />
               </div>
             )}
           </div>
-          <Button 
+          <ButtonV2 
             onClick={handleSendMessage} 
-            disabled={!message.trim()}
+            disabled={!message.trim() || isPending}
           >
             <Send className="h-4 w-4 mr-2" />
             Send
-          </Button>
+          </ButtonV2>
         </div>
       </footer>
     </div>
