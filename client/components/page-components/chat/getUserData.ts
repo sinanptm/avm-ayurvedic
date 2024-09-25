@@ -7,8 +7,10 @@ export const getSenderData = (sender: "doctor" | "patient", doctorData: string, 
 }
 
 
-export const getSenderSpecificList = <T>(isDoctor: boolean, doctorData: T[] = [], patientData: T[] = []): T[] => {
-  return isDoctor ? doctorData : patientData;
-};
-
-
+export const getReceiverData = (sender: "doctor" | "patient", doctorData: string, patientData: string):string => {
+  if (sender === 'patient') {
+    return doctorData
+  } else {
+    return patientData ;
+  }
+}

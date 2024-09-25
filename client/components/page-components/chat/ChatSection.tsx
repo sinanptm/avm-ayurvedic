@@ -8,7 +8,7 @@ import { ArrowLeft, Send, AlertCircle, Smile, LogIn } from "lucide-react"
 import { IChat, IMessage } from "@/types"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/skeletons/spinner"
-import { getSenderData } from "./getSenderData"
+import { getSenderData } from "./getUserData"
 import { format } from "date-fns"
 import dynamic from 'next/dynamic'
 import { EmojiClickData, Theme } from 'emoji-picker-react'

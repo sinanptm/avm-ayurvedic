@@ -15,9 +15,8 @@ export default function NotAuthenticated() {
           <LogIn className="h-24 w-24 text-primary" />
         </CardContent>
         <CardFooter className="flex justify-center">
-          <ButtonV2 asChild variant="shine">
+          <ButtonV2 asChild variant="expandIcon"  Icon={LogIn} iconPlacement="right">
             <Link href="/login">
-              <LogIn className="mr-2 h-4 w-4" />
               Log In
             </Link>
           </ButtonV2>

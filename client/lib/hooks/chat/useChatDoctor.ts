@@ -12,7 +12,7 @@ export const useGetDoctorChats = () => {
 }
 
 export const useGetDoctorMessages = (chatId: string, limit: number) => {
-    return useQuery<{ chat: IChat, data: PaginatedResult<IMessage> }>({
+    return useQuery<{ chat: IChat, data: PaginatedResult<IMessage> }, AxiosError<ErrorResponse>>({
         queryKey: ['doctor-messages', chatId],
         queryFn: () => getMessagesOfDoctorChat(chatId, limit)
     });

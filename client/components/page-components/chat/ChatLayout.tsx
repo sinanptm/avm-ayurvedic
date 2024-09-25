@@ -19,26 +19,28 @@ export default function ChatLayout({
   const [isLoading, setLoading] = useState(true);
   const isInChatView = pathname.startsWith('/chats/');
   const { patientToken } = useAuth();
-  const isAuthenticated = !!patientToken;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (isPatient) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 0);
+      return () => clearTimeout(timer);
+    } else {
       setLoading(false);
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, []);
+    }
+  }, [isPatient ]);
 
   if (isLoading) {
     return <ChatLayoutSkeleton />
   }
 
-  if (isPatient && !isAuthenticated) {
+  if (isPatient && !!!patientToken) {
     return <NotAuthenticated />
   }
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
+    <div className={`flex h-[calc(100vh-4rem)] ${!isPatient ? 'border border-border border-r m-0' : ''}`}>
       <aside
         className={`${isInChatView ? 'hidden sm:block' : 'block'
           } w-full sm:w-64 md:w-80 border-r border-border overflow-hidden flex-shrink-0`}
