@@ -2,10 +2,10 @@ import AboutAyurveda from "@/components/page-components/landing/home/AboutAyurve
 import ImageSlider from "@/components/page-components/landing/home/ImageSlider";
 import WhyUs from "@/components/page-components/landing/home/WhyUs";
 import dynamic from "next/dynamic";
-import Loader from "@/components/common/Loader";
+import { Spinner } from "@/components/skeletons/spinner";
 
 const FeaturesList = dynamic(() => import("@/components/page-components/landing/home/FeatureList"), {
-   loading: () => <Loader />,
+   loading: () => <Spinner className="w-10 h-10 justify-center items-center" size="md" />,
 });
 
 const HomePage = () => {

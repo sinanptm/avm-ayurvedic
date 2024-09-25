@@ -3,9 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useState } from "react";
-import UpdateProfilePatient from "@/components/models/patient/UpdateProfilePatient";
 import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
 import { ButtonV2 } from "@/components/common/ButtonV2";
+import dynamic from "next/dynamic";
+import Loading from "@/components/skeletons/Loader";
+
+const UpdateProfilePatient = dynamic(()=>import("@/components/models/patient/UpdateProfilePatient"), { loading: () => <Loading /> });
 
 export default function PatientProfilePage() {
    const { data: patientData, isLoading, refetch } = useGetPatientProfile();

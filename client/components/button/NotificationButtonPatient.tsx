@@ -3,10 +3,12 @@
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ButtonV2 } from "@/components/common/ButtonV2";
-import NotificationModal from "@/components/models/NotificationModel";
 import { useState } from "react";
 import { useGetAllPatientNotifications, useClearPatientNotification, useClearMultiplePatientNotifications } from "@/lib/hooks/notification/useNotificationPatient";
 import { INotification } from "@/types";
+import dynamic from "next/dynamic";
+
+const NotificationModal = dynamic(() => import("@/components/models/NotificationModel"), { ssr: false });
 
 const NotificationButtonPatient = () => {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);

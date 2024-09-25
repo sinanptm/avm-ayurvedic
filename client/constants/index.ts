@@ -2,7 +2,7 @@ import { AnimatedCardProps, AppointmentType, NavLinkType } from "@/types";
 
 export const AdminSideBarLinks: NavLinkType[] = [
    {
-      label: "Dcotors",
+      label: "Doctors",
       href: "/admin/doctors",
       icon: "/assets/icons/doctor.svg",
    },

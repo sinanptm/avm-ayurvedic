@@ -29,8 +29,8 @@ export default class GetChatUseCase {
     }
 
     async getPatientsDoctor(): Promise<IPatient[] | []> {
-        const patients = await this.patientRepository.findAll();
-        return patients;
+        const patients = await this.patientRepository.findAll()!;
+        return patients.filter(patient => patient.profile && patient.name);
     }
 
     private async getChatsWithNotSeenMessages(

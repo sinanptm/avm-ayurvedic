@@ -55,11 +55,11 @@ export default class JoiService implements IValidatorService {
       const schema = Joi.array().items(Joi.string().pattern(new RegExp("^[a-fA-F0-9]{24}$")));
       const { error } = schema.validate(ids);
       if (error) {
-          throw new CustomError("Invalid ID format", StatusCode.BadRequest);
-      } 
+         throw new CustomError("Invalid ID format", StatusCode.BadRequest);
+      }
       return true;
-  }
-  
+   }
+
    public validatePhoneNumber(phoneNumber: string): boolean {
       const schema = Joi.string().min(4).max(15);
       const { error } = schema.validate(phoneNumber);
@@ -102,12 +102,12 @@ export default class JoiService implements IValidatorService {
 
    public validatePassword(password: string): boolean {
       const schema = Joi.string()
-         .min(8)
-         .pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
+         .min(6)
+         .pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/);
       const { error } = schema.validate(password);
       if (error) {
          throw new CustomError(
-            "Password must be at least 8 characters, include at least one uppercase letter, one number, and one special character",
+            "Password must be at least 6 characters, include at least one uppercase letter, one number, and one special character",
             StatusCode.UnprocessableEntity
          );
       }

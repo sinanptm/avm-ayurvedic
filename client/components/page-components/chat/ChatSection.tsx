@@ -118,7 +118,7 @@ export default function ChatSection({
             <AvatarFallback>{sender.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="text-lg font-semibold text-white">{getSenderData(sender, chat.doctorName!, chat.patientName!)}</h2>
+            <h2 className="text-lg font-semibold text-white">{getSenderData(sender, chat.doctorName!, chat.patientName!)||"Unknown"}</h2>
             <p className="text-sm text-gray-400">{sender.charAt(0).toUpperCase() + sender.slice(1)}</p>
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function ChatSection({
         <div className="flex items-center gap-2">
           <Input
             className="flex-1 bg-gray-800 text-white border-gray-700"
-            placeholder={`Message ${getReceiverData(sender, chat.doctorName!, chat.patientName!)}`}
+            placeholder={`Message ${getSenderData(sender, chat.doctorName!, chat.patientName!)}`}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}

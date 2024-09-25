@@ -1,4 +1,5 @@
 'use client'
+import { ButtonV2 } from "@/components/common/ButtonV2";
 import NewChatModal, { ChatModelUser } from "@/components/models/chat/AddChatModel";
 import ChatList from "@/components/page-components/chat/ChatList"
 import { toast } from "@/components/ui/use-toast";
@@ -30,11 +31,20 @@ const Page = () => {
         setNewChatModalOpen(false)
       },
       onError: ({ response }) => {
-        toast({
-          title: "Creating new Chat Failed ❌",
-          description: response?.data.message || "Unknown Error Occurred 🚑",
-          variant: "destructive"
-        })
+        if (response?.status === 400 && response.data.message === 'Patient profile or name is missing') {
+          toast({
+            title: "Oops! Chat Failed ❌",
+            description: "You have to register Your some additional data for starting chat.",
+            variant: "destructive",
+            action:<ButtonV2 variant={'destructive'} size="sm" onClick={()=>router.push("/register")} >Register</ButtonV2>
+          })
+        }else{
+          toast({
+            title: "Creating new Chat Failed ❌",
+            description: response?.data.message || "Unknown Error Occurred 🚑",
+            variant: "destructive"
+          })
+        }
       }
     })
   }

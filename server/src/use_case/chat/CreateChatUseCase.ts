@@ -25,6 +25,9 @@ export default class CreateChatUseCase {
         } else if (!doctor) {
             throw new CustomError("Invalid doctor id", StatusCode.NotFound);
         }
+        if(!patient.profile|| !patient.name){
+            throw new CustomError("Patient profile or name is missing", StatusCode.BadRequest);
+        }
         try {
             return await this.chatRepository.create(
                 { doctorId, patientId, patientName: patient.name, doctorName: doctor.name, patientProfile: patient.profile, doctorProfile: doctor.image }
