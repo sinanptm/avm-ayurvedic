@@ -49,6 +49,14 @@ export const getDoctorChats = async () => {
     return response.data;
 };
 
+export const getPatientsDoctor = async () => {
+    const response = await withTempBaseUrl(doctorAxiosInstance, doctorBaseUrl, {
+        method: "GET",
+        url: "/patients"
+    });
+    return response.data;
+};
+
 export const createChatDoctor = async (patientId: string) => {
     const response = await withTempBaseUrl(doctorAxiosInstance, doctorBaseUrl, {
         method: "POST",

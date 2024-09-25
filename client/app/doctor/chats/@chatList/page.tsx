@@ -2,29 +2,30 @@
 import NewChatModal, { ChatModelUser } from "@/components/models/chat/AddChatModel";
 import ChatList from "@/components/page-components/chat/ChatList"
 import { toast } from "@/components/ui/use-toast";
-import { useGetDoctorsList } from "@/lib/hooks/appointment/useAppointmentDoctor";
-import { useCreateChatPatient, useGetPatientChats } from "@/lib/hooks/chat/useChatPatient";
+import { useGetPatientsDoctor, useCreateChatDoctor,  useGetDoctorChats } from "@/lib/hooks/chat/useChatDoctor";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Page = () => {
-  const { data } = useGetDoctorsList();
-  const { mutate: createChat } = useCreateChatPatient();
-  const { data: chats, isLoading, refetch } = useGetPatientChats()
+  const { data } = useGetPatientsDoctor();
+  const { mutate: createChat } = useCreateChatDoctor();
+  const { data: chats, isLoading, refetch } = useGetDoctorChats()
   const [isNewChatModalOpen, setNewChatModalOpen] = useState(false)
   const router = useRouter();
-  const doctors: ChatModelUser[] = data?.items.map(({ _id, image, name }) => ({ _id, name, profilePicture: image })) || [];
+  const patients: ChatModelUser[] = data?.map(({ _id, profile, name }) => ({ _id, name, profilePicture: profile })) || [];
 
   const handleSelectChat = (id: string) => {
-    router.push(`/chats/${id}`);
+    router.push(`/doctor/chats/${id}`);
   }
+
+  
 
   const handleCloseModal = () => {
     setNewChatModalOpen(false)
   }
 
-  const handleAddDoctorChat = (doctorId: string) => {
-    createChat({ doctorId }, {
+  const handleAddDoctorChat = (patientId: string) => {
+    createChat({ patientId }, {
       onSuccess: () => {
         refetch();
         setNewChatModalOpen(false)
@@ -52,11 +53,11 @@ const Page = () => {
         onSelectChat={handleSelectChat}
         onNewChat={() => setNewChatModalOpen(true)}
       />
-      {doctors && (
+      {patients && (
         <NewChatModal
           isOpen={isNewChatModalOpen}
           onClose={handleCloseModal}
-          users={doctors}
+          users={patients}
           onSelectUser={handleAddDoctorChat}
         />
       )}

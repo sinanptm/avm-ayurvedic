@@ -1,5 +1,5 @@
-import { getDoctorChats, getMessagesOfDoctorChat, createChatDoctor, createMessageDoctor } from "@/lib/api/chat";
-import { ErrorResponse, IChat, IMessage, MessageResponse, PaginatedResult } from "@/types";
+import { getDoctorChats, getMessagesOfDoctorChat, createChatDoctor, createMessageDoctor, getPatientsDoctor } from "@/lib/api/chat";
+import { ErrorResponse, IChat, IMessage, MessageResponse, PaginatedResult, IPatient } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,13 @@ export const useGetDoctorMessages = (chatId: string, limit: number) => {
     return useQuery<{ chat: IChat, data: PaginatedResult<IMessage> }, AxiosError<ErrorResponse>>({
         queryKey: ['doctor-messages', chatId],
         queryFn: () => getMessagesOfDoctorChat(chatId, limit)
+    });
+}
+
+export const useGetPatientsDoctor = () => {
+    return useQuery<IPatient[], AxiosError<ErrorResponse>>({
+        queryKey: ['patients-doctor'],
+        queryFn: () => getPatientsDoctor()
     });
 }
 
