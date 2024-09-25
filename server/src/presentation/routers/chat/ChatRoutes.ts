@@ -34,11 +34,11 @@ const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 router.get('/patient', authorizePatient.exec, chatController.getChatsOfPatient.bind(chatController));
 router.post('/patient', authorizePatient.exec, chatController.createChatPatient.bind(chatController));
 router.post('/patient/message', authorizePatient.exec, chatController.createMessagePatient.bind(chatController));
-router.get('/patient/message/:chatId', authorizePatient.exec, chatController.getMessagesOfChat.bind(chatController));
+router.get('/patient/message/:chatId', authorizePatient.exec, chatController.getMessagesOfChatPatient.bind(chatController));
 
 router.get('/doctor', authorizeDoctor.exec, chatController.getChatsOfDoctor.bind(chatController));
 router.get('/doctor/patients', authorizeDoctor.exec, chatController.getPatientsDoctor.bind(chatController));
-router.get('/doctor/message/:chatId', authorizeDoctor.exec, chatController.getMessagesOfChat.bind(chatController));
+router.get('/doctor/message/:chatId', authorizeDoctor.exec, chatController.getMessagesOfChatDoctor.bind(chatController));
 router.post('/doctor', authorizeDoctor.exec, chatController.createChatDoctor.bind(chatController));
 router.post('/doctor/message', authorizeDoctor.exec, chatController.createMessageDoctor.bind(chatController));
 

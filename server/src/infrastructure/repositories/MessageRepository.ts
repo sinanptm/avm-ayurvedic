@@ -15,13 +15,16 @@ export default class MessageRepository implements IMessageRepository {
     async findByChatId(chatId: string, limit: number, offset: number): Promise<PaginatedResult<IMessage>> {
         const totalItems = await this.model.countDocuments({ chatId });
         const items = await this.model.find({ chatId })
-            .sort({ createdAt: 1 }) 
+            .sort({ createdAt: 1 })
             .limit(limit)
             .skip(offset);
         return getPaginatedResult(totalItems, offset, limit, items);
     }
-    async markAsRead(messageId: string): Promise<void> {
-        await this.model.findByIdAndUpdate(messageId, { isReceived: true });
+    async markAsReadByReceiverAndChatId(receiverId: string, chatId: string): Promise<void> {
+        await this.model.updateMany(
+            { chatId, receiverId, isReceived: false },
+            { $set: { isReceived: true } } 
+        );
     }
     async getUnreadMessageCountGroupedByChat(receiverId: string): Promise<{ _id: string, count: number }[]> {
         return await this.model.aggregate([

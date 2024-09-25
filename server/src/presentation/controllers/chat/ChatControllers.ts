@@ -34,12 +34,26 @@ export default class ChatController {
             next(error)
         }
     }
-    async getMessagesOfChat(req: CustomRequest, res: Response, next: NextFunction) {
+    async getMessagesOfChatPatient(req: CustomRequest, res: Response, next: NextFunction) {
         try {
+            const patientId = req.patient?.id;
             const chatId = req.params.chatId;
             let limit = +(req.query.limit as string);
             limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
-            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, limit);
+            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, limit, patientId!);
+            res.status(StatusCode.Success).json({ chat, data });
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getMessagesOfChatDoctor(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const doctor = req.doctor?.id;
+            const chatId = req.params.chatId;
+            let limit = +(req.query.limit as string);
+            limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
+            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, limit, doctor!);
             res.status(StatusCode.Success).json({ chat, data });
         } catch (error) {
             next(error)
@@ -71,7 +85,7 @@ export default class ChatController {
         try {
             const doctorId = req.doctor?.id;
             const { chatId, patientId, message } = req.body;
-            await this.createChatUseCase.createMessage(chatId, doctorId!, message, patientId);
+            await this.createChatUseCase.createMessage(chatId, patientId, message,doctorId! );
             res.status(StatusCode.Created)
         } catch (error: any) {
             next(error);
@@ -81,7 +95,7 @@ export default class ChatController {
         try {
             const patientId = req.patient?.id;
             const { chatId, doctorId, message } = req.body;
-            await this.createChatUseCase.createMessage(chatId, patientId!, message, doctorId);
+            await this.createChatUseCase.createMessage(chatId, doctorId, message, patientId!);
             res.status(StatusCode.Created)
         } catch (error: any) {
             next(error);

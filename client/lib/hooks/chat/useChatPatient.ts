@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export const useGetPatientChats = () => {
     return useQuery({
-        queryKey: ['patient-chat-list'],
+        queryKey: ['z-chat-list'],
         queryFn: () => getPatientChats()
     })
 }

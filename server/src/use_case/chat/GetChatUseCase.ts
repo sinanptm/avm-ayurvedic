@@ -40,7 +40,7 @@ export default class GetChatUseCase {
         // const unreadMessages = await this.messageRepository.getUnreadMessageCountGroupedByChat(receiverId);
         // if(unreadMessages.length === 0) return chats.map(chat=>({...chat,notSeenMessages:0}));
         // const unreadMap = new Map(unreadMessages.map(({ _id, count }) => [_id, count]));
-        
+
         // const result = chats.map(chat => ({
         //     ...chat,
         //     notSeenMessages: unreadMap.get(chat._id!) || 0 
@@ -48,11 +48,12 @@ export default class GetChatUseCase {
         // console.log(result);
         return chats;
     }
-    
-    async getMessagesOfChat(chatId: string, limit: number): Promise<{ data: PaginatedResult<IMessage>, chat: IChat }> {
+
+    async getMessagesOfChat(chatId: string, limit: number, receiverId: string): Promise<{ data: PaginatedResult<IMessage>, chat: IChat }> {
         this.validatorService.validateIdFormat(chatId);
         const offset = 0;
         const chat = await this.chatRepository.findById(chatId);
+        await this.messageRepository.markAsReadByReceiverAndChatId(receiverId, chatId);
         if (!chat) throw new CustomError("Not found", StatusCode.NotFound);
         const data = await this.messageRepository.findByChatId(chatId, limit, offset);
         return { data, chat }

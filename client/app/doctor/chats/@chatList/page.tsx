@@ -39,8 +39,6 @@ const Page = () => {
       }
     })
   }
-
-  console.log(isLoading);
   
 
   return (
