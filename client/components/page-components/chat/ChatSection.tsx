@@ -1,18 +1,18 @@
 "use client"
 
 import { useRef, useEffect, useState } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft, Send, AlertCircle, Smile, LogIn } from "lucide-react"
+import { ArrowLeft, Send, AlertCircle, Smile } from "lucide-react"
 import { IChat, IMessage } from "@/types"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/skeletons/spinner"
-import { getSenderData } from "./getUserData"
-import { format } from "date-fns"
+import { getReceiverData, getSenderData } from "./getUserData"
 import dynamic from 'next/dynamic'
 import { EmojiClickData, Theme } from 'emoji-picker-react'
 import { ButtonV2 } from "@/components/common/ButtonV2"
+import Messages from "./Messages"
+import { useQueryClient } from "@tanstack/react-query"
 
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false })
 
@@ -40,15 +40,17 @@ export default function ChatSection({
   const [message, setMessage] = useState("")
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const router = useRouter()
-  const scrollAreaRef = useRef<HTMLDivElement>(null)
-  const emojiButtonRef = useRef<HTMLButtonElement>(null)
-  const emojiPickerRef = useRef<HTMLDivElement>(null)
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const emojiButtonRef = useRef<HTMLButtonElement>(null);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+  const query = useQueryClient();
 
   const handleSendMessage = () => {
     if (message.trim()) {
       onSendMessage(message)
       setMessage("")
       setShowEmojiPicker(false)
+      query.invalidateQueries({ queryKey: ['messages', chat._id] })
     }
   }
 
@@ -65,7 +67,7 @@ export default function ChatSection({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        emojiButtonRef.current && 
+        emojiButtonRef.current &&
         !emojiButtonRef.current.contains(event.target as Node) &&
         emojiPickerRef.current &&
         !emojiPickerRef.current.contains(event.target as Node)
@@ -78,7 +80,7 @@ export default function ChatSection({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, []);
+  }, [])
 
   if (isLoading) {
     return (
@@ -101,11 +103,11 @@ export default function ChatSection({
   }
 
   return (
-    <div className="flex flex-col h-full bg-background">
-      <header className="p-4 border-b border-border flex-shrink-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <div className="flex flex-col h-full bg-black">
+      <header className="p-4 border-b border-gray-800 flex-shrink-0 bg-black">
         <div className="flex items-center space-x-4">
           <ButtonV2 variant="ghost" size="icon" onClick={() => router.back()} className="sm:hidden">
-            <ArrowLeft className="h-6 w-6" />
+            <ArrowLeft className="h-6 w-6 text-white" />
             <span className="sr-only">Back to chat list</span>
           </ButtonV2>
           <Avatar className="w-10 h-10">
@@ -113,80 +115,44 @@ export default function ChatSection({
               src={getSenderData(sender, chat.doctorProfile!, chat.patientProfile!) || `/assets/icons/circle-user.svg`}
               alt={`${getSenderData(sender, chat.doctorName!, chat.patientName!)}`}
             />
-            <AvatarFallback>{sender[0].toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{sender.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="text-lg font-semibold">{getSenderData(sender, chat.doctorName!, chat.patientName!)}</h2>
-            <p className="text-sm text-muted-foreground">{sender === "doctor" ? "Patient" : "Doctor"}</p>
+            <h2 className="text-lg font-semibold text-white">{getSenderData(sender, chat.doctorName!, chat.patientName!)}</h2>
+            <p className="text-sm text-gray-400">{sender.charAt(0).toUpperCase() + sender.slice(1)}</p>
           </div>
         </div>
       </header>
-      <ScrollArea className="flex-grow p-4" ref={scrollAreaRef}>
-        <div className="space-y-4">
-          {messages.map(({ _id, message, isReceived, createdAt }) => (
-            <div
-              key={_id}
-              className={`flex items-end gap-2 ${isReceived ? "justify-start" : "justify-end"}`}
-            >
-              {isReceived && (
-                <Avatar className="w-8 h-8">
-                  <AvatarImage
-                    src={getSenderData(sender === "doctor" ? "patient" : "doctor", chat.doctorProfile!, chat.patientProfile!) || `/assets/icons/circle-user.svg`}
-                    alt={`${getSenderData(sender === "doctor" ? "patient" : "doctor", chat.doctorName!, chat.patientName!)}`}
-                  />
-                  <AvatarFallback>{(sender === "doctor" ? "P" : "D")}</AvatarFallback>
-                </Avatar>
-              )}
-              <div className={`flex flex-col ${isReceived ? "items-start" : "items-end"} max-w-[70%]`}>
-                <div className={`rounded-lg p-3 ${isReceived ? "bg-accent" : "bg-primary text-primary-foreground"}`}>
-                  <p className="text-sm">{message}</p>
-                </div>
-                <div className="flex items-center text-xs text-muted-foreground mt-1">
-                  <span className="text-[10px]">{format(new Date(createdAt!), "HH:mm")}</span>
-                  {!isReceived && <span className="text-[10px] ml-1">✔</span>}
-                </div>
-              </div>
-              {!isReceived && (
-                <Avatar className="w-8 h-8">
-                  <AvatarImage
-                    src={getSenderData(sender, chat.doctorProfile!, chat.patientProfile!) || `/assets/icons/circle-user.svg`}
-                    alt={`${getSenderData(sender, chat.doctorName!, chat.patientName!)}`}
-                  />
-                  <AvatarFallback>{sender[0].toUpperCase()}</AvatarFallback>
-                </Avatar>
-              )}
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-      <footer className="border-t border-border p-4 flex-shrink-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <Messages messages={messages} sender={sender} chat={chat} />
+      <footer className="border-t border-gray-800 p-4 flex-shrink-0 bg-black">
         <div className="flex items-center gap-2">
-          <Input 
-            className="flex-1" 
-            placeholder={`Message ${getSenderData(sender, chat.doctorName!, chat.patientName!)}`} 
+          <Input
+            className="flex-1 bg-gray-800 text-white border-gray-700"
+            placeholder={`Message ${getReceiverData(sender, chat.doctorName!, chat.patientName!)}`}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
           />
           <div className="relative">
-            <ButtonV2 
-              variant="ghost" 
-              size="icon" 
+            <ButtonV2
+              variant="ghost"
+              size="icon"
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
               ref={emojiButtonRef}
               aria-label="Add emoji"
             >
-              <Smile className="h-5 w-5" />
+              <Smile className="h-5 w-5 text-white" />
             </ButtonV2>
             {showEmojiPicker && (
               <div className="absolute bottom-full right-0 mb-2 z-10" ref={emojiPickerRef}>
-                <EmojiPicker theme={Theme.AUTO} onEmojiClick={handleEmojiClick} />
+                <EmojiPicker theme={Theme.DARK} onEmojiClick={handleEmojiClick} />
               </div>
             )}
           </div>
-          <ButtonV2 
-            onClick={handleSendMessage} 
-            disabled={!message.trim() || isPending}
+          <ButtonV2
+            onClick={handleSendMessage}
+            disabled={!message.trim()}
+            className="bg-blue-600 text-white hover:bg-blue-700"
           >
             <Send className="h-4 w-4 mr-2" />
             Send

@@ -71,7 +71,7 @@ export default class ChatController {
         try {
             const doctorId = req.doctor?.id;
             const { chatId, patientId, message } = req.body;
-            await this.createChatUseCase.createMessage(chatId, patientId, message, doctorId!);
+            await this.createChatUseCase.createMessage(chatId, doctorId!, message, patientId);
             res.status(StatusCode.Created)
         } catch (error: any) {
             next(error);
