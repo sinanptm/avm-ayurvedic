@@ -22,8 +22,6 @@ export default function Pagination({
    handlePageChange,
    totalPages,
    className,
-   hasNextPage,
-   hasPrevPage,
 }: Props) {
    if (totalPages <= 1) return null;
 
@@ -52,8 +50,9 @@ export default function Pagination({
             <PaginationItem>
                <PaginationPrevious
                   href="#"
+                  isActive={currentPage > 1}
                   onClick={(e) => handleClick(e, currentPage - 1)}
-                  aria-disabled={!hasPrevPage || currentPage <= 1}
+                  aria-disabled={currentPage <= 1}
                />
             </PaginationItem>
             {getPageRange().map((page, index) => (
@@ -74,8 +73,9 @@ export default function Pagination({
             <PaginationItem>
                <PaginationNext
                   href="#"
+                  isActive={currentPage < totalPages}
                   onClick={(e) => handleClick(e, currentPage + 1)}
-                  aria-disabled={!hasNextPage || currentPage >= totalPages}
+                  aria-disabled={currentPage >= totalPages}
                />
             </PaginationItem>
          </PaginationContent>

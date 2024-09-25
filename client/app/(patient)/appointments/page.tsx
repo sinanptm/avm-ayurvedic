@@ -2,22 +2,22 @@
 
 import Pagination from "@/components/navigation/Pagination";
 import { useGetAppointmentsPatient } from "@/lib/hooks/appointment/useAppointmentPatient";
+import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { ButtonV2 } from "@/components/common/ButtonV2";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge";
 import { Calendar, FileText, Video, User } from "lucide-react";
 import { useState } from "react";
-import { ButtonV2 } from "@/components/common/ButtonV2";
 
 const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: number } }) => {
-   const page = searchParams.page || 0;
+   const page = searchParams.page || 1;
    const [currentPage, setCurrentPage] = useState(page);
-   const { data } = useGetAppointmentsPatient(page, 4);
+   const { data, isLoading } = useGetAppointmentsPatient(page-1, 4);
    const router = useRouter();
 
    const handlePageChange = (pageIndex: number) => {
-      if (pageIndex > data?.totalPages!) return null;
+      if (pageIndex > data?.totalPages! || pageIndex < 1) return null;
       router.replace(`/appointments?page=${pageIndex}`);
       setCurrentPage(pageIndex);
    };
@@ -77,14 +77,15 @@ const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: numbe
             ))}
 
             <div className="mt-6">
-               {}
-               <Pagination
-                  currentPage={currentPage}
-                  handlePageChange={handlePageChange}
-                  hasNextPage={data?.hasNextPage!}
-                  hasPrevPage={data?.hasPreviousPage!}
-                  totalPages={data?.totalPages!}
-               />
+               {!isLoading && (
+                  <Pagination
+                     currentPage={currentPage}
+                     handlePageChange={handlePageChange}
+                     hasNextPage={data?.hasNextPage!}
+                     hasPrevPage={data?.hasPreviousPage!}
+                     totalPages={data?.totalPages!}
+                  />
+               )}
             </div>
          </div>
       </div>

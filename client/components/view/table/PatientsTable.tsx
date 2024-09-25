@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetPatientsAdmin } from "@/lib/hooks/admin/useAdminPatients";
 import Pagination from "@/components/navigation/Pagination";
-import {IPatient}  from "@/types";
+import { IPatient } from "@/types";
 import AdminPatientProfileModel from "@/components/models/admin/PatientProfileModel";
 import { useRouter } from "next/navigation";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
    page: number;
@@ -22,7 +22,7 @@ export default function PatientsTable({ page }: Props) {
    const [selectedPatient, setSelectedPatient] = useState({});
    const router = useRouter();
    const limit = 7;
-   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage, limit);
+   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage-1, limit);
    const columns = [
       { name: "Image", width: "w-[80px]" },
       { name: "Name", width: "" },
@@ -35,6 +35,7 @@ export default function PatientsTable({ page }: Props) {
    const patients = data?.items!;
 
    const handlePageChange = (pageIndex: number) => {
+      if (pageIndex > data?.totalPages! || pageIndex < 1) return null;
       setCurrentPage(pageIndex);
       router.push(`/admin/patients?page=${pageIndex}`);
       refetch();
@@ -80,19 +81,15 @@ export default function PatientsTable({ page }: Props) {
                                     <TableRow key={patient._id}>
                                        <TableCell>
                                           <div
-                                             className={`relative w-16 h-16 rounded-full ${
-                                                patient.isBlocked
-                                                   ? "border-4 border-destructive"
-                                                   : "border-4 border-primary"
-                                             }`}
+                                             className={`relative w-16 h-16 rounded-full ${patient.isBlocked
+                                                ? "border-4 border-destructive"
+                                                : "border-4 border-primary"
+                                                }`}
                                           >
-                                             <Image
-                                                src={patient.profile || "/placeholder.svg?height=64&width=64"}
-                                                alt={patient.name || "Profile"}
-                                                width={64}
-                                                height={64}
-                                                className="rounded-full object-cover"
-                                             />
+                                             <Avatar className="w-full h-full" >
+                                                <AvatarImage src={patient.profile || "/assets/icons/circle-user.svg"} alt={patient.name} />
+                                                <AvatarFallback>{(patient.name!||"P").charAt(0)}</AvatarFallback>
+                                             </Avatar>
                                           </div>
                                        </TableCell>
                                        <TableCell className="font-medium">{patient.name}</TableCell>

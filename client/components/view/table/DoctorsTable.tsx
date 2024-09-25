@@ -36,7 +36,7 @@ export default function DoctorsPage({ page, type }: Props) {
    const [tabType, setTabType] = useState<DoctorsFilter>(DoctorsFilter.VERIFIED);
    const router = useRouter();
    const limit = 7;
-   const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage, limit, type);
+   const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage-1, limit, type);
 
    const doctors = useMemo(() => data?.items || [], [data]);
 
@@ -46,6 +46,7 @@ export default function DoctorsPage({ page, type }: Props) {
    };
 
    const handlePageChange = (pageIndex: number) => {
+      if (pageIndex > data?.totalPages! || pageIndex < 1) return null;
       setCurrentPage(pageIndex);
       router.push(`/admin/doctors?page=${pageIndex}&type=${tabType}`);
       refetch();
@@ -53,7 +54,7 @@ export default function DoctorsPage({ page, type }: Props) {
 
    const handleTabChange = (value: DoctorsFilter) => {
       setTabType(value);
-      setCurrentPage(0);
+      setCurrentPage(1);
       router.push(`/admin/doctors?page=${currentPage}&type=${value}`);
       refetch();
    };

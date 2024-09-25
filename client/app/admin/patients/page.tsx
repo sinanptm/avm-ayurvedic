@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const Page = ({ searchParams }: { searchParams: { page: number } }) => {
-   const page = searchParams.page || 0;
+   const page = searchParams.page || 1;
 
    return (
       <main>

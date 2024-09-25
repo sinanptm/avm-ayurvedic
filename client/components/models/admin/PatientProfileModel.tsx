@@ -16,7 +16,7 @@ import { IPatient } from "@/types";
 import { useChangeStatusAdmin } from "@/lib/hooks/admin/useAdminPatients";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
-
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 type Props = {
    open: boolean;
    setOpen: Dispatch<SetStateAction<boolean>>;
@@ -70,13 +70,10 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
             <AlertDialogDescription></AlertDialogDescription>
             <div className="space-y-6">
                <div className="flex items-center space-x-6">
-                  <Image
-                     src={patient.profile || "/assets/icons/user.svg?height=128&width=128"}
-                     alt={patient.name || "Profile"}
-                     width={128}
-                     height={128}
-                     className="rounded-full object-cover"
-                  />
+                  <Avatar className="h-28 w-28 rounded-full object-cover">
+                     <AvatarImage src={patient.profile || "/assets/icons/circle-user.svg"} alt={patient.name} />
+                     <AvatarFallback>{(patient.name!||"P").charAt(0)}</AvatarFallback>
+                  </Avatar>
                   <div>
                      <h3 className="text-2xl font-semibold">{patient.name}</h3>
                      <p className="text-muted-foreground">{patient.gender || "Not specified"}</p>

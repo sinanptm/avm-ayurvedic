@@ -31,7 +31,7 @@ export default function AppointmentTable({ page }: Props) {
    const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "all">("all");
    const limit = 7;
    const { data, isLoading, error, refetch } = useGetAppointmentsDoctor(
-      currentPage,
+      currentPage-1,
       limit,
       statusFilter === "all" ? undefined : statusFilter
    );
@@ -40,6 +40,7 @@ export default function AppointmentTable({ page }: Props) {
    const appointments = useMemo(() => data?.items || [], [data?.items]);
 
    const handlePageChange = (pageIndex: number) => {
+      if (pageIndex > data?.totalPages! || pageIndex < 1) return null;
       setCurrentPage(pageIndex);
       router.replace(`/doctor/appointments?page=${pageIndex}&status=${statusFilter}`);
       refetch();
@@ -51,7 +52,7 @@ export default function AppointmentTable({ page }: Props) {
 
    const handleStatusChange = (status: AppointmentStatus | "all") => {
       setStatusFilter(status);
-      setCurrentPage(0);
+      setCurrentPage(1);
       router.replace(`/doctor/appointments?page=1&status=${status}`);
       refetch();
    };
