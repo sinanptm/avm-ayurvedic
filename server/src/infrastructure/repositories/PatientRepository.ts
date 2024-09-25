@@ -25,6 +25,9 @@ export default class PatientRepository implements IPatientRepository {
          throw error;
       }
    }
+   async findAll(): Promise<IPatient[] | []> {
+      return await this.model.find();
+   }
    async update(patient: IPatient): Promise<IPatient | null> {
       return await this.model.findByIdAndUpdate(patient._id, patient, { new: true });
    }

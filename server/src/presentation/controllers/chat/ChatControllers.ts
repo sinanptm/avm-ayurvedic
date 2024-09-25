@@ -26,6 +26,14 @@ export default class ChatController {
             next(error)
         }
     }
+    async getPatientsDoctor(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const patients = await this.getChatUseCase.getPatientsDoctor();
+            res.status(StatusCode.Success).json(patients)
+        } catch (error) {
+            next(error)
+        }
+    }
     async getMessagesOfChat(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const chatId = req.params.chatId;

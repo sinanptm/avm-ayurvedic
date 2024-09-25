@@ -9,4 +9,5 @@ export default interface IPatientRepository {
    findById(id: string): Promise<IPatient | null>;
    findByEmailWithCredentials(email: string): Promise<IPatient | null>;
    findMany(offset: number, limit: number): Promise<PaginatedResult<IPatient>>;
+   findAll(): Promise<IPatient[] | []>;
 }

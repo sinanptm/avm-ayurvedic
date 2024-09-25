@@ -1,8 +1,10 @@
 import CustomError from "../../domain/entities/CustomError";
 import IChat from "../../domain/entities/IChat";
 import IMessage from "../../domain/entities/IMessage";
+import IPatient from "../../domain/entities/IPatient";
 import IChatRepository from "../../domain/interface/repositories/IChatRepository";
 import IMessageRepository from "../../domain/interface/repositories/IMessageRepository";
+import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { PaginatedResult, StatusCode } from "../../types";
 
@@ -10,7 +12,8 @@ export default class GetChatUseCase {
     constructor(
         private messageRepository: IMessageRepository,
         private chatRepository: IChatRepository,
-        private validatorService: IValidatorService
+        private validatorService: IValidatorService,
+        private patientRepository: IPatientRepository
     ) { }
 
     async getAllChatsWithPatientId(patientId: string): Promise<IChat[] | []> {
@@ -24,7 +27,12 @@ export default class GetChatUseCase {
         const chats = await this.chatRepository.findAllChatsForDoctor(doctorId);
         return await this.getChatsWithNotSeenMessages(doctorId, chats);
     }
-    
+
+    async getPatientsDoctor(): Promise<IPatient[] | []> {
+        const patients = await this.patientRepository.findAll();
+        return patients;
+    }
+
     private async getChatsWithNotSeenMessages(
         receiverId: string,
         chats: IChat[]

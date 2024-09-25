@@ -24,7 +24,7 @@ const createChatUseCase = new CreateChatUseCase(
     messageRepository, chatRepository, validatorService, patientRepository, doctorRepository
 );
 const getChatUseCase = new GetChatUseCase(
-    messageRepository, chatRepository, validatorService
+    messageRepository, chatRepository, validatorService, patientRepository
 );
 
 const chatController = new ChatController(createChatUseCase, getChatUseCase);
@@ -37,6 +37,7 @@ router.post('/patient/message', authorizePatient.exec, chatController.createMess
 router.get('/patient/message/:chatId', authorizePatient.exec, chatController.getMessagesOfChat.bind(chatController));
 
 router.get('/doctor', authorizeDoctor.exec, chatController.getChatsOfDoctor.bind(chatController));
+router.get('/doctor/patients', authorizeDoctor.exec, chatController.getPatientsDoctor.bind(chatController));
 router.get('/doctor/message/:chatId', authorizeDoctor.exec, chatController.getMessagesOfChat.bind(chatController));
 router.post('/doctor', authorizeDoctor.exec, chatController.createChatDoctor.bind(chatController));
 router.post('/doctor/message', authorizeDoctor.exec, chatController.createMessageDoctor.bind(chatController));
