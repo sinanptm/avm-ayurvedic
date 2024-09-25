@@ -1,4 +1,3 @@
-// NavBar.tsx
 "use client";
 
 import Link from "next/link";
@@ -151,6 +150,9 @@ export const NavBar = () => {
               <>
                 <DropdownMenuLabel className="cursor-pointer">
                   <Link href={"/profile"}>My Account</Link>
+                </DropdownMenuLabel>
+                <DropdownMenuLabel className="cursor-pointer">
+                  <Link href={"/appointments"}>Appointments</Link>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer" onSelect={handleLogoutClick}>

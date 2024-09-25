@@ -18,7 +18,7 @@ const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: numbe
 
    const handlePageChange = (pageIndex: number) => {
       if (pageIndex > data?.totalPages!) return null;
-      router.replace(`/profile?page=${pageIndex}`);
+      router.replace(`/appointments?page=${pageIndex}`);
       setCurrentPage(pageIndex);
    };
 
@@ -77,6 +77,7 @@ const AppointmentsPageSection = ({ searchParams }: { searchParams: { page: numbe
             ))}
 
             <div className="mt-6">
+               {}
                <Pagination
                   currentPage={currentPage}
                   handlePageChange={handlePageChange}
