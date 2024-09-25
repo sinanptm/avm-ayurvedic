@@ -22,6 +22,7 @@ import { AppointmentType } from "@/types";
 import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { BreadcrumbCollapsed } from "@/components/navigation/BreadCrumbs";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
 
@@ -29,11 +30,10 @@ const AppointmentForm = () => {
    const { data: doctorsData, isLoading: isDoctorsLoading } = useGetDoctorsList();
    const [isDoctorSelected, setIsDoctorSelected] = useState(false);
    const { mutate: createAppointment, isPending } = useCreateAppointment();
-   const router = useRouter();
    const form = useForm<z.infer<typeof appointmentFormValidation>>({
       resolver: zodResolver(appointmentFormValidation),
       defaultValues: {
-         appointmentType: "",
+         appointmentType: "video-consulting",
          reason: "",
          note: "",
          date: new Date(),
@@ -110,6 +110,7 @@ const AppointmentForm = () => {
                <section className="mb-12 space-y-4">
                   <h1 className="text-2xl font-bold text-gray-200">New Appointment</h1>
                   <p className="text-gray-400">Request New Appointment in 10 seconds</p>
+                  <BreadcrumbCollapsed items={[{ href: "/", label: "Home" }, { href: "/new-appointment", label: "New Appointment" }]} />
                </section>
 
                {/* Appointment Date Field */}
@@ -132,7 +133,7 @@ const AppointmentForm = () => {
                   label="Appointment Type *"
                   placeholder="Select an Appointment"
                >
-                  {AppointmentTypes.map((appointment, i) => (
+                  {AppointmentTypes.slice(0, 1).map((appointment, i) => (
                      <SelectItem key={appointment.id + i} value={appointment.id}>
                         <div className="flex cursor-pointer items-center gap-2">
                            <Image

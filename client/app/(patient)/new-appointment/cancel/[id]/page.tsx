@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { XCircle } from "lucide-react";
 import { ButtonV2 } from "@/components/common/ButtonV2";
 import { useEffect, useState } from "react";
+import { BreadcrumbCollapsed } from "@/components/navigation/BreadCrumbs";
 
 export default function PaymentFailurePage() {
    const paymentId = useParams().id as string;
@@ -18,7 +19,8 @@ export default function PaymentFailurePage() {
 
    return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-         <Link href="/" className="mb-8">
+         <BreadcrumbCollapsed items={[{ href: "/", label: "Home" }, { href: "/new-appointment", label: "New Appointment" },{ href: `/new-appointment/cancel${paymentId}`, label: "Cancel Appointment" }]} />
+         <Link href="/" className="my-9">
             <Image
                src="/assets/icons/logo-full.svg"
                width={200}

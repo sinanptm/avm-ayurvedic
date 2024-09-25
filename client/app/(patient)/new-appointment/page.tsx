@@ -23,7 +23,6 @@ const Appointment = () => {
                   className="mb-12 h-10 w-fit"
                />
                <AppointmentForm />
-
                <p className="copyright py-12">© {new Date().getFullYear()} AVM Ayurvedic.</p>
             </div>
          </section>

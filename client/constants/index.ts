@@ -234,19 +234,6 @@ export const GuaranteeListHonePage: { src: string; text: string; heading: string
 ];
 export const AppointmentTypes = [
    {
-      id: AppointmentType.IN_PERSON,
-      image: "/assets/icons/wheelchair.svg",
-      type: "Inpatient",
-      title: "Inpatient Consulting",
-      description: "Specialized Ayurvedic care without overnight stay",
-      details: [
-         "Quick and efficient Ayurvedic consultations",
-         "Specialized Ayurvedic diagnostic services",
-         "Follow-up Ayurvedic care and monitoring",
-         "Minor Ayurvedic procedures and treatments",
-      ],
-   },
-   {
       id: AppointmentType.VIDEO_CONSULTING,
       image: "/assets/services/ip.svg",
       type: "Online Video Call",
@@ -257,6 +244,19 @@ export const AppointmentTypes = [
          "Personalized treatment plans",
          "Virtual follow-up appointments",
          "Real-time Ayurvedic diagnostic assessments",
+      ],
+   },
+   {
+      id: AppointmentType.IN_PERSON,
+      image: "/assets/icons/wheelchair.svg",
+      type: "Inpatient",
+      title: "Inpatient Consulting",
+      description: "Specialized Ayurvedic care without overnight stay",
+      details: [
+         "Quick and efficient Ayurvedic consultations",
+         "Specialized Ayurvedic diagnostic services",
+         "Follow-up Ayurvedic care and monitoring",
+         "Minor Ayurvedic procedures and treatments",
       ],
    },
 ];
