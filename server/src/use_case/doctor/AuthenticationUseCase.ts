@@ -131,7 +131,7 @@ export default class AuthenticationUseCase {
       this.validatorService.validateIdFormat(id);
       const doctor = await this.doctorRepository.findByID(id);
       if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
-      const key = `profile-images/${id}-${Date.now()}`;
+      const key = `profile-images/doctor/${id}-${Date.now()}`;
       const url = await this.cloudService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
       return { url, key };
    }
