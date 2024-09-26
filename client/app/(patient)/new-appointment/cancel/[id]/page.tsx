@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { XCircle } from "lucide-react";
-import { ButtonV2 } from "@/components/common/ButtonV2";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 import { useEffect, useState } from "react";
 import { BreadcrumbCollapsed } from "@/components/navigation/BreadCrumbs";
 

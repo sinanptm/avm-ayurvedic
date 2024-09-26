@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IPatient } from "@/types";
 import UploadProfileModel from "@/components/models/patient/UploadProfileModel";
-import { ButtonV2 } from "@/components/common/ButtonV2";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 
 interface Props {
   setSection: (state: "profile") => void;

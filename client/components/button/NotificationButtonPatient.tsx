@@ -2,7 +2,7 @@
 
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ButtonV2 } from "@/components/common/ButtonV2";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 import { useState } from "react";
 import { useGetAllPatientNotifications, useClearPatientNotification, useClearMultiplePatientNotifications } from "@/lib/hooks/notification/useNotificationPatient";
 import { INotification } from "@/types";

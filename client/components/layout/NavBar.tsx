@@ -20,7 +20,7 @@ import { useLogoutMutation } from "@/lib/hooks/patient/usePatientAuth";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";
-import { ButtonV2 } from "../common/ButtonV2";
+import { ButtonV2 } from "../button/ButtonV2";
 import NotificationButtonPatient from "../button/NotificationButtonPatient";
 
 export const NavBar = () => {

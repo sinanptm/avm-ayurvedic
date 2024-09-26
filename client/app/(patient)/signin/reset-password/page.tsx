@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import CustomFormField from "@/components/common/CustomFormField";
 import { FormFieldType } from "@/types/fromTypes";
-import SubmitButton from "@/components/common/SubmitButton";
+import SubmitButton from "@/components/button/SubmitButton";
 import { useUpdatePassword } from "@/lib/hooks/patient/usePatientAuth";
 import { Form } from "@/components/ui/form";
 import { useAuth } from "@/lib/hooks/useAuth";

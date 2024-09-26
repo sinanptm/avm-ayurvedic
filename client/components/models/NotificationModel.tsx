@@ -14,7 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { INotification } from "@/types";
 import getNotificationDetails from "@/lib/utils/getNotificationDetails";
 import { XIcon, Trash2Icon } from "lucide-react";
-import { ButtonV2 } from "../common/ButtonV2";
+import { ButtonV2 } from "../button/ButtonV2";
 import Link from "next/link";
 
 type Props = {

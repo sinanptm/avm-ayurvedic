@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
-import SubmitButton from "@/components/common/SubmitButton";
+import SubmitButton from "@/components/button/SubmitButton";
 import { signinFormValidation } from "@/components/forms/actions/userValidation";
 import Link from "next/link";
 import { FormFieldType } from "@/types/fromTypes";

@@ -109,6 +109,39 @@ export const SliderImages: string[] = [
    // "https://images.unsplash.com/photo-1482189349482-3defd547e0e9?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
+export const DoctorDegrees = [
+   "MBBS (Medicine and Surgery)",
+   "MD (Medicine)",
+   "DO (Osteopathic Medicine)",
+   "DDS (Dental Surgery)",
+   "DMD (Dental Medicine)",
+   "BDS (Bachelor of Dental Surgery)",
+   "BAMS (Ayurveda Medicine and Surgery)",
+   "BUMS (Unani Medicine and Surgery)",
+   "BHMS (Homeopathic Medicine and Surgery)",
+   "DPM (Podiatric Medicine)",
+   "DC (Chiropractic)",
+   "OD (Optometry)",
+   "PharmD (Pharmacy)",
+   "DVM (Veterinary Medicine)",
+   "DrPH (Public Health)",
+   "PsyD (Psychology)",
+   "DPT (Physical Therapy)",
+   "OTD (Occupational Therapy)",
+   "AuD (Audiology)",
+   "ND (Naturopathic Medicine)",
+   "DSc (Doctor of Science)",
+   "DNP (Nursing Practice)",
+   "DHSc (Health Science)",
+   "MS (Master of Surgery)",
+   "MCh (Master of Chirurgiae)",
+   "MSc (Master of Science in Medicine)",
+   "PhD (Doctor of Philosophy in Medicine)",
+   "DM (Doctor of Medicine)",
+   "MD-PhD (Dual Degree in Medicine and Research)"
+ ];
+ 
+
 export const DummyDoctors = [
    {
       _id: "66e18ca5f2448c308b75a861",

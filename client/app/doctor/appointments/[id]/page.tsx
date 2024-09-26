@@ -12,7 +12,7 @@ import AppointmentCancellationModal from '@/components/models/appointment/Confir
 import { Calendar, Clock, FileText, Video, User, Phone, AlertCircle } from 'lucide-react'
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { ButtonV2 } from '@/components/common/ButtonV2'
+import { ButtonV2 } from '@/components/button/ButtonV2'
 
 export default function AppointmentDetailsPage() {
   const params = useParams()

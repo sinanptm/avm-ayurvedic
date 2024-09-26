@@ -6,7 +6,7 @@ import { PlusCircle } from "lucide-react"
 import { IChat } from "@/types"
 import { getSenderData } from './getUserData'
 import ChatListSkeleton from "@/components/skeletons/ChatList"
-import { ButtonV2 } from "@/components/common/ButtonV2"
+import { ButtonV2 } from "@/components/button/ButtonV2"
 
 interface ChatListProps {
   chats: IChat[];

@@ -1,5 +1,5 @@
 'use client'
-import { ButtonV2 } from "@/components/common/ButtonV2";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 import NewChatModal, { ChatModelUser } from "@/components/models/chat/AddChatModel";
 import ChatList from "@/components/page-components/chat/ChatList"
 import { toast } from "@/components/ui/use-toast";

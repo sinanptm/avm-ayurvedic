@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useState } from "react";
 import { useGetPatientProfile } from "@/lib/hooks/patient/usePatient";
-import { ButtonV2 } from "@/components/common/ButtonV2";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 import dynamic from "next/dynamic";
 import Loading from "@/components/skeletons/Loader";
 

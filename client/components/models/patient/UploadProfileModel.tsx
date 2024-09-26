@@ -7,7 +7,7 @@ import { Form, FormLabel } from "../../ui/form";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import SubmitButton from "../../common/SubmitButton";
+import SubmitButton from "../../button/SubmitButton";
 import {IPatient}  from "@/types";
 import { Input } from "../../ui/input";
 import { toast } from "../../ui/use-toast";

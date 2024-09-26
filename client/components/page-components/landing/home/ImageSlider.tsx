@@ -4,7 +4,7 @@ import React from "react";
 import { ImagesSlider } from "@/components/ui/images-slider";
 import { SliderImages } from "@/constants";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { ButtonV2 } from "@/components/common/ButtonV2";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 
 const ImageSlider = () => {
    const { patientToken } = useAuth();

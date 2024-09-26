@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
-import SubmitButton from "@/components/common/SubmitButton";
+import SubmitButton from "@/components/button/SubmitButton";
 import { registerFormValidation } from "@/components/forms/actions/userValidation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";

@@ -2,16 +2,15 @@
 
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
-import SubmitButton from "@/components/common/SubmitButton";
+import SubmitButton from "@/components/button/SubmitButton";
 import { FormFieldType } from "@/types/fromTypes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
 import { useSignUpDoctor, useUpdateProfileImageDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 import useCrop from "@/lib/hooks/useCrop";
 import CropImage from "@/components/common/CropImage";
@@ -19,7 +18,8 @@ import getCroppedImg from "@/lib/utils/cropImage";
 import { Input } from "@/components/ui/input";
 import { getPresignedUrlDoctor } from "@/lib/api/doctor/authenticationRoutes";
 import axios from "axios";
-import { PlusCircle, X } from "lucide-react";
+import { DoctorDegrees } from "@/constants";
+import { MultiSelect } from "@/components/ui/multi-select"
 
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -101,13 +101,8 @@ const SignUpForm = () => {
          name: "",
          email: "",
          confirmPassword: "",
-         qualifications: [""],
+         qualifications: [],
       },
-   });
-
-   const { fields, append, remove } = useFieldArray({
-      control: form.control,
-      name: "qualifications" as never,
    });
 
    const onSubmit = async (formData: FormValues) => {
@@ -290,46 +285,16 @@ const SignUpForm = () => {
             <FormField
                control={form.control}
                name="qualifications"
-               render={() => (
+               render={({ field }) => (
                   <FormItem className="space-y-4">
                      <FormLabel>Qualifications *</FormLabel>
-                     <div className="flex flex-wrap items-center gap-2">
-                        {fields.map((field, index) => (
-                           <div key={field.id} className="flex items-center bg-secondary rounded-full pl-3 pr-1 py-1">
-                              <Controller
-                                 name={`qualifications.${index}`}
-                                 control={form.control}
-                                 render={({ field }) => (
-                                    <Input
-                                       {...field}
-                                       placeholder="Enter qualification"
-                                       className="border-none bg-transparent p-0 h-auto text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
-                                    />
-                                 )}
-                              />
-                              <Button
-                                 type="button"
-                                 variant="ghost"
-                                 size="sm"
-                                 className="h-auto p-1 hover:bg-secondary-foreground/10 rounded-full"
-                                 onClick={() => remove(index)}
-                                 aria-label="Remove qualification"
-                              >
-                                 <X className="h-4 w-4" />
-                              </Button>
-                           </div>
-                        ))}
-                        <Button
-                           type="button"
-                           variant="outline"
-                           size="sm"
-                           onClick={() => append("")}
-                           className="rounded-full"
-                        >
-                           <PlusCircle className="h-4 w-4 mr-2" />
-                           Add
-                        </Button>
-                     </div>
+                     <MultiSelect
+                        options={DoctorDegrees.map(degree => ({ label: degree, value: degree }))}
+                        placeholder="Select qualifications"
+                        className="w-full"
+                        {...field}
+                        onValueChange={(value) => field.onChange(value)}
+                     />
                      <FormMessage className="shad-error" />
                   </FormItem>
                )}

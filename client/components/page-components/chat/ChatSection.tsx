@@ -10,7 +10,7 @@ import { Spinner } from "@/components/skeletons/spinner"
 import { getReceiverData, getSenderData } from "./getUserData"
 import dynamic from 'next/dynamic'
 import { EmojiClickData, Theme } from 'emoji-picker-react'
-import { ButtonV2 } from "@/components/common/ButtonV2"
+import { ButtonV2 } from "@/components/button/ButtonV2"
 import Messages from "./Messages"
 import { useQueryClient } from "@tanstack/react-query"
 

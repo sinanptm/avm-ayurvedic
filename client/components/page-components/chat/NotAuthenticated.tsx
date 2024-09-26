@@ -1,4 +1,4 @@
-import { ButtonV2 } from "@/components/common/ButtonV2"
+import { ButtonV2 } from "@/components/button/ButtonV2"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { LogIn } from "lucide-react"
 import Link from "next/link"

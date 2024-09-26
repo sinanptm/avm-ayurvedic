@@ -10,7 +10,7 @@ import TableSkeleton from "@/components/skeletons/TableSkelton";
 import Pagination from "@/components/navigation/Pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge";
-import { ButtonV2 } from "@/components/common/ButtonV2";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 import { format } from 'date-fns'
 
 
