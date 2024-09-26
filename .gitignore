@@ -1,4 +1,4 @@
-
+speech
 /clean.txt
 
 # Ignore all node_modules directories
@@ -43,3 +43,7 @@ Thumbs.db
 *.bak
 *.tmp
 *.swp
+
+*.key
+*.crt
+*.csr

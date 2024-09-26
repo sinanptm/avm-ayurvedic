@@ -21,3 +21,7 @@ npm-debug.log*
 
 # Optional eslint cache
 .eslintcache
+
+*.key
+*.crt
+*.csr
