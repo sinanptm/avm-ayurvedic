@@ -22,6 +22,7 @@ import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";
 import { ButtonV2 } from "../button/ButtonV2";
 import NotificationButtonPatient from "../button/NotificationButtonPatient";
+import VideoButtonPatient from "../button/VideoButtonPatient";
 
 export const NavBar = () => {
   const path = usePathname();
@@ -30,6 +31,7 @@ export const NavBar = () => {
   const { patientToken, setCredentials, logout } = useAuth();
   const [isLogoutModelOpen, setLogoutModelOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const isAuthorized = !!patientToken
 
   if (path.includes("signup") || path.includes("admin") || path.includes("signin") || path.includes("doctor")) {
     return null;
@@ -131,6 +133,7 @@ export const NavBar = () => {
         </SheetContent>
       </Sheet>
       <div className="flex items-center gap-4">
+        <VideoButtonPatient />
         <NotificationButtonPatient /> 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -146,7 +149,7 @@ export const NavBar = () => {
             </ButtonV2>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="mt-3">
-            {patientToken !== "" ? (
+            {isAuthorized ? (
               <>
                 <DropdownMenuLabel className="cursor-pointer">
                   <Link href={"/profile"}>My Account</Link>
