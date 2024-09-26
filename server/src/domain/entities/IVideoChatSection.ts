@@ -5,11 +5,10 @@ export default interface IVideoSection {
   patientName: string;
   createdAt: Date;
   updatedAt: Date;
-  messages: IVideoChatMessage[];
   startTime: Date | string;
   endTime: Date | string;
   link: string;
-
+  status: VideoSectionStatus;
 }
 
 export enum VideoSectionStatus {
@@ -17,11 +16,3 @@ export enum VideoSectionStatus {
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',
 }
-
-export interface IVideoChatMessage {
-  _id: string;
-  sender: string;
-  message: string;
-  timestamp: Date;
-}
-
