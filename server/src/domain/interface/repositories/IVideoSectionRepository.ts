@@ -6,9 +6,8 @@ export interface IVideoSectionRepository {
   update(id: string, videoSection: IVideoSection): Promise<IVideoSection | null>;
   delete(id: string): Promise<void>;
   findByAppointmentId(appointmentId: string): Promise<IVideoSection | null>;
-  findByStartTime(startTime: Date): Promise<IVideoSection | null>;
-  findByEndTime(endTime: Date): Promise<IVideoSection | null>;
   findByStatus(status: VideoSectionStatus): Promise<IVideoSection | null>;
+  findByStartTimeRange(startTime: string, endTime: string): Promise<IVideoSection[] | null>;
 }
 
 
