@@ -2,7 +2,19 @@ import { model, Schema } from "mongoose";
 import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 
 const videoSectionSchema = new Schema<IVideoSection>({
-    appointmentId: { type: String, required: true, index: true },
+    appointmentId: { type: String, required: true },
+    doctorId: {
+        type: Schema.Types.ObjectId,
+        ref: "Doctor",
+        required: true,
+        index: true,
+    },
+    patientId: {
+        type: Schema.Types.ObjectId,
+        ref: "Patient",
+        required: true,
+        index: true,
+    },
     doctorName: { type: String, required: true },
     patientName: { type: String, required: true },
     startTime: { type: Date, required: true, index: true },

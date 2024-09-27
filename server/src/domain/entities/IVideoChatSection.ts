@@ -4,7 +4,9 @@ export default interface IVideoSection {
   doctorName?: string;
   patientName?: string;
   doctorProfile?: string;
+  doctorId?: string;
   patientProfile?: string;
+  patientId?: string;
   createdAt?: Date;
   updatedAt?: Date;
   startTime?: Date | string;

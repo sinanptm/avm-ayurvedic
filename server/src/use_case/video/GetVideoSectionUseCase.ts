@@ -1,13 +1,12 @@
 import IVideoSection from "../../domain/entities/IVideoChatSection";
-// import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import { addHours } from "../../utils/date-formatter";
 
 export default class GetVideoSectionUseCase {
     constructor(
         private readonly videoSectionRepository: IVideoSectionRepository,
         private readonly validatorService: IValidatorService
-        // private readonly appointmentRepository: IAppointmentRepository
     ) { }
 
     async getSectionById(id: string): Promise<IVideoSection | null> {
@@ -20,12 +19,19 @@ export default class GetVideoSectionUseCase {
         return await this.videoSectionRepository.findByAppointmentId(appointmentId);
     }
 
-    async getSectionsInOneHour(): Promise<IVideoSection[] | []> {
+    async getSectionsInOneHourDoctor(doctorId: string): Promise<IVideoSection[] | []> {
+        this.validatorService.validateIdFormat(doctorId)
         const currentTime = new Date();
-        const afterOneHour = new Date(currentTime.getTime() + 60 * 60 * 1000);
-        const sections = await this.videoSectionRepository.findByStartTimeRange(currentTime.toISOString(), afterOneHour.toISOString());
+        const afterOneHour = addHours(currentTime, 1);
+        const sections = await this.videoSectionRepository.findByStartTimeRangeByDoctorId(currentTime.toISOString(), afterOneHour.toISOString(), doctorId);
         return sections ?? [];
     }
 
-
+    async getSectionsInOneHourPatient(patientId: string): Promise<IVideoSection[] | []> {
+        this.validatorService.validateIdFormat(patientId)
+        const currentTime = new Date();
+        const afterOneHour = addHours(currentTime, 1);
+        const sections = await this.videoSectionRepository.findByStartTimeRangeByPatientId(currentTime.toISOString(), afterOneHour.toISOString(), patientId);
+        return sections ?? [];
+    }
 }

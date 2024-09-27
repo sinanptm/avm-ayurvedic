@@ -7,7 +7,8 @@ export interface IVideoSectionRepository {
   delete(id: string): Promise<void>;
   findByAppointmentId(appointmentId: string): Promise<IVideoSection | null>;
   findByStatus(status: VideoSectionStatus): Promise<IVideoSection | null>;
-  findByStartTimeRange(startTime: string, endTime: string): Promise<IVideoSection[] | null>;
+  findByStartTimeRangeByDoctorId(startTime: string, endTime: string, doctorId: string): Promise<IVideoSection[] | null>;
+  findByStartTimeRangeByPatientId(startTime: string, endTime: string, patientId: string): Promise<IVideoSection[] | null>;
 }
 
 
