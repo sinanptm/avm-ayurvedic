@@ -27,7 +27,7 @@ export default class VideoSectionRepository implements IVideoSectionRepository {
 
     async findByStartTimeRangeByDoctorId(startTime: string, endTime: string, doctorId: string): Promise<IVideoSection[] | null> {
         return await this.model.find({
-            startTime: { $gte: startTime, $lte: endTime },
+            startTime: { $gte: new Date(startTime), $lte: new Date(endTime) },
             doctorId
         });
     }

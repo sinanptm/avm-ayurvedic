@@ -19,6 +19,7 @@ export default class GetAppointmentUseCase {
       status?: AppointmentStatus
    ): Promise<PaginatedResult<IAppointment> | null> {
       this.validatorService.validateIdFormat(doctorId);
+
       if (status) {
          this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
       }

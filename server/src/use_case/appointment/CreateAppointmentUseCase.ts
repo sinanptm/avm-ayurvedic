@@ -107,7 +107,9 @@ export default class AppointmentUseCase {
          endTime: calculatedEndTime,
          createdAt: appointment.createdAt as unknown as Date,
          updatedAt: appointment.updatedAt as unknown as Date,
-         status: VideoSectionStatus.PENDING
+         status: VideoSectionStatus.PENDING,
+         patientId: patient._id!,
+         doctorId: doctor._id!
       });
    }
 
