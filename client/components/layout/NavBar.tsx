@@ -22,7 +22,7 @@ import { useState } from "react";
 import LogoutModel from "../models/LogoutModel";
 import { ButtonV2 } from "../button/ButtonV2";
 import NotificationButtonPatient from "../button/NotificationButtonPatient";
-import VideoButtonPatient from "../button/VideoButtonPatient";
+import VideoSectionButtonPatient from "../button/VideoSectionButtonPatient";
 
 export const NavBar = () => {
   const path = usePathname();
@@ -133,7 +133,7 @@ export const NavBar = () => {
         </SheetContent>
       </Sheet>
       <div className="flex items-center gap-4">
-        <VideoButtonPatient />
+        <VideoSectionButtonPatient />
         <NotificationButtonPatient /> 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

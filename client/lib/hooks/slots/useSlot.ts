@@ -11,7 +11,7 @@ import {
    addSlotsAllDayDoctor,
    deleteSlotsAllDayDoctor,
    getSlotsOfDoctor,
-} from "@/lib/api/slots/route";
+} from "@/lib/api/slots";
 
 export const useAddSlotsDoctor = () => {
    return useMutation<MessageResponse, AxiosError<ErrorResponse>, { slots: ISlot[]; day: Days }>({

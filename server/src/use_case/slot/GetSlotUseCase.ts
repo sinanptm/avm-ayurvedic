@@ -46,7 +46,6 @@ export default class GetSlotUseCase {
       return dayNames[dayOfWeek] as Days;
    }
 
-   // parsing the slot start time to date
    private parseTimeStringToDate (timeString: string): Date {
       const [time, modifier] = timeString.split(' ');
       let [hours, minutes] = time.split(':').map(Number);
