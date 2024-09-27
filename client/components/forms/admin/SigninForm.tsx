@@ -8,7 +8,7 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
 import { signinFormValidation } from "@/components/forms/actions/adminValidation";
-import { FormFieldType } from "@/types/fromTypes";
+import { FormFieldType } from "@/types/enum";
 import { useSigninAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";

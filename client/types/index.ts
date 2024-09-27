@@ -1,4 +1,6 @@
-import { ReactNode } from "react";
+import { FC, FormEvent, ReactNode } from "react";
+import { Control } from "react-hook-form";
+import { FormFieldType } from "./enum";
 
 export type NavLinkType = {
    label: string;
@@ -34,5 +36,34 @@ export interface PaginatedResult<T> {
    totalPages: number;
    hasNextPage: boolean;
    hasPreviousPage: boolean;
+}
+
+export interface CustomProps {
+   control: Control<any>;
+   name: string;
+   label?: string;
+   placeholder?: string;
+   iconSrc?: string;
+   iconAlt?: string;
+   disabled?: boolean;
+   dateFormat?: string;
+   showTimeSelect?: boolean;
+   children?: React.ReactNode;
+   renderSkeleton?: (field: any) => React.ReactNode;
+   fieldType: FormFieldType;
+   isLimited?: boolean;
+   availableTimes?: string[];
+   Icon?: FC<{ className?: string; }>;
+   doctor?: string;
+   showDateText?: string;
+}
+
+export interface OtpFromProps {
+   handleVerify: (e: FormEvent) => void;
+   handleResend: () => void;
+   timer: number;
+   isLoading: boolean;
+   otp: string;
+   setOtp: (value: string) => void;
 }
 

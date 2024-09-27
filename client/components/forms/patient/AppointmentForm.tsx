@@ -10,7 +10,7 @@ import { appointmentFormValidation } from "@/components/forms/actions/userValida
 import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import { AppointmentTypes } from "@/constants";
-import { FormFieldType } from "@/types/fromTypes";
+import { FormFieldType } from "@/types/enum";
 import { useCreateAppointment, useGetDoctorsList } from "@/lib/hooks/appointment/useAppointmentDoctor";
 import { useGetSlotsOfDoctor } from "@/lib/hooks/slots/useSlot";
 import { useEffect, useState } from "react";

@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../button/SubmitButton";
 import { IPatient } from "@/types/entities";
 import CustomFormField from "../../common/CustomFormField";
-import { FormFieldType } from "@/types/fromTypes";
+import { FormFieldType } from "@/types/enum";
 import { BloodGroups, GenderOptions } from "@/constants";
 import { SelectItem } from "../../ui/select";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";

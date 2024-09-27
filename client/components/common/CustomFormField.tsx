@@ -3,7 +3,8 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import "react-phone-number-input/style.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { Input } from "@/components/ui/input";
-import { CustomProps, FormFieldType } from "@/types/fromTypes";
+import { CustomProps } from "@/types";
+import { FormFieldType } from "@/types/enum";
 import Image from "next/image";
 import PhoneInput from "react-phone-number-input";
 import ReactDatePicker from "react-datepicker";

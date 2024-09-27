@@ -28,4 +28,14 @@ export enum NotificationTypes {
     APPOINTMENT_CONFIRMED = 'appointment_confirmed',
     APPOINTMENT_REMINDER = 'appointment_reminder'
 }
+export enum FormFieldType {
+   INPUT = "input",
+   TEXTAREA = "textarea",
+   PHONE_INPUT = "phoneInput",
+   CHECKBOX = "checkbox",
+   DATE_PICKER = "datePicker",
+   SELECT = "select",
+   SKELETON = "skeleton",
+   PASSWORD = "password"
+}
 

@@ -3,7 +3,7 @@
 import { FormEvent } from "react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Otptimer } from "otp-timer-ts";
-import { OtpFromProps } from "@/types/fromTypes";
+import { OtpFromProps } from "@/types";
 import SubmitButton from "@/components/button/SubmitButton";
 
 export default function OtpVerificationSection({

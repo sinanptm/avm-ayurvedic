@@ -9,7 +9,7 @@ import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
 import { signinFormValidation } from "@/components/forms/actions/userValidation";
 import Link from "next/link";
-import { FormFieldType } from "@/types/fromTypes";
+import { FormFieldType } from "@/types/enum";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useSignInPatient } from "@/lib/hooks/patient/usePatientAuth";

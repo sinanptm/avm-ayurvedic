@@ -8,7 +8,7 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
 import { signupFormValidation } from "@/components/forms/actions/userValidation";
-import { FormFieldType } from "@/types/fromTypes";
+import { FormFieldType } from "@/types/enum";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
