@@ -10,7 +10,16 @@ export default class AppointmentController {
       private createAppointmentUseCase: CreateAppointmentUseCase,
       private getAppointmentUseCase: GetAppointmentUseCase,
       private updateAppointmentUseCase: UpdateAppointmentUseCase
-   ) {}
+   ) {
+      this.create = this.create.bind(this);
+      this.handleStripeWebhook = this.handleStripeWebhook.bind(this);
+      this.getAppointmentsDoctor = this.getAppointmentsDoctor.bind(this);
+      this.getAppointmentDetails = this.getAppointmentDetails.bind(this);
+      this.getAppointmentSuccussDetails = this.getAppointmentSuccussDetails.bind(this);
+      this.getAppointmentsPatient = this.getAppointmentsPatient.bind(this);
+      this.updateAppointment = this.updateAppointment.bind(this);
+      this.updateStatusAndNotes = this.updateStatusAndNotes.bind(this);
+   }
 
    async create(req: CustomRequest, res: Response, next: NextFunction) {
       try {

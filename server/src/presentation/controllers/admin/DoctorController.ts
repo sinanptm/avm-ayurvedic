@@ -4,7 +4,12 @@ import { DoctorsFilter, StatusCode } from "../../../types";
 import IDoctor from "../../../domain/entities/IDoctor";
 
 export default class AdminDoctorController {
-   constructor(private doctorUseCase: AdminDoctorUseCase) {}
+   constructor(
+      private doctorUseCase: AdminDoctorUseCase
+   ) {
+      this.getDoctors = this.getDoctors.bind(this);
+      this.updateDoctor = this.updateDoctor.bind(this);
+   }
 
    async getDoctors(req: Request, res: Response, next: NextFunction) {
       try {

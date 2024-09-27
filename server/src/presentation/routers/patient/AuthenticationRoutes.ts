@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import BcryptService from "../../../infrastructure/services/BcryptService";
 import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
 import JWTService from "../../../infrastructure/services/JWTService";
@@ -8,7 +8,7 @@ import AuthenticationController from "../../controllers/patient/AuthenticationCo
 import AuthPatientUseCase from "../../../use_case/patient/AuthenticationUseCase";
 import JoiService from "../../../infrastructure/services/JoiService";
 
-const router = express.Router();
+const router = Router();
 
 const tokenService = new JWTService();
 const passwordService = new BcryptService();

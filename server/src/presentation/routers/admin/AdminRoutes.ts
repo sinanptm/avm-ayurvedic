@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import AdminPatientController from "../../controllers/admin/PatientController";
 import AdminPatientUseCase from "../../../use_case/admin/PatientUseCase";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
@@ -9,7 +9,7 @@ import DoctorRepository from "../../../infrastructure/repositories/DoctorReposit
 import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
 import JoiService from "../../../infrastructure/services/JoiService";
 
-const router = express.Router();
+const router = Router();
 
 const patientRepository = new PatientRepository();
 const doctorRepository = new DoctorRepository();
@@ -23,11 +23,11 @@ const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
 
 router
    .route("/patient")
-   .get(adminPatientController.getPatients.bind(adminPatientController))
-   .put(adminPatientController.updatePatient.bind(adminPatientController));
+   .get(adminPatientController.getPatients)
+   .put(adminPatientController.updatePatient);
 router
    .route("/doctor")
-   .get(adminDoctorController.getDoctors.bind(adminDoctorController))
-   .put(adminDoctorController.updateDoctor.bind(adminDoctorController));
+   .get(adminDoctorController.getDoctors)
+   .put(adminDoctorController.updateDoctor);
 
 export default router;

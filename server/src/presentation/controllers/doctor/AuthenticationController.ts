@@ -4,8 +4,18 @@ import { Cookie, StatusCode } from "../../../types";
 import IDoctor from "../../../domain/entities/IDoctor";
 
 export default class AuthDoctorController {
-   constructor(private authDoctorUseCase: AuthenticationUseCase) {}
-
+   constructor(
+      private authDoctorUseCase: AuthenticationUseCase
+   ) {
+      this.signin = this.signin.bind(this);
+      this.validateOtp = this.validateOtp.bind(this);
+      this.resendOtp = this.resendOtp.bind(this);
+      this.forgotPassword = this.forgotPassword.bind(this);
+      this.updatePassword = this.updatePassword.bind(this);
+      this.signup = this.signup.bind(this);
+      this.getUploadUrl = this.getUploadUrl.bind(this);
+      this.uploadProfileImage = this.uploadProfileImage.bind(this);
+   }
    async signin(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, password } = req.body;

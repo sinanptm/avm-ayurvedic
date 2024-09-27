@@ -5,7 +5,12 @@ import NotificationUseCase from "../../../use_case/notification/NotificationUseC
 export default class NotificationController {
     constructor(
         private notificationUseCase: NotificationUseCase
-    ) {}
+    ) {
+        this.getAllPatientNotifications = this.getAllPatientNotifications.bind(this);
+        this.getAllDoctorNotifications = this.getAllDoctorNotifications.bind(this);
+        this.clearMultipleNotifications = this.clearMultipleNotifications.bind(this);
+        this.clearSingleNotification = this.clearSingleNotification.bind(this);
+    }
 
     async getAllPatientNotifications(req: CustomRequest, res: Response, next: NextFunction) {
         try {

@@ -4,6 +4,9 @@ import logger from "../../utils/logger";
 import CustomError from "../../domain/entities/CustomError";
 
 export default class ErrorHandler {
+   constructor() {
+      this.exec = this.exec.bind(this);
+   }
    exec(error: any, req: Request, res: Response, next: NextFunction) {
       const statusCode = error.statusCode || StatusCode.InternalServerError;
       const message = error.message || "Internal Server Error";

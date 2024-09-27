@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import AppointmentRepository from "../../../infrastructure/repositories/AppointmentRepository";
 import SlotRepository from "../../../infrastructure/repositories/SlotRepository";
 import CreateAppointmentUseCase from "../../../use_case/appointment/CreateAppointmentUseCase";
@@ -16,7 +16,7 @@ import VideoSectionRepository from "../../../infrastructure/repositories/VideoSe
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
 
-const router = express.Router();
+const router = Router();
 
 const appointmentRepository = new AppointmentRepository();
 const slotRepository = new SlotRepository();
@@ -53,57 +53,19 @@ const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
 // ! Patient Routes
 
-router.get(
-   "/patient/details/:appointmentId",
-   authorizePatient.exec,
-   appointmentController.getAppointmentDetails.bind(appointmentController)
-);
-
-router.get(
-   "/patient/succuss/:paymentId",
-   authorizePatient.exec,
-   appointmentController.getAppointmentSuccussDetails.bind(appointmentController)
-);
-
-router.post(
-   "/patient/",
-   authorizePatient.exec,
-   appointmentController.create.bind(appointmentController)
-);
-
-router.get(
-   "/patient/",
-   authorizePatient.exec,
-   appointmentController.getAppointmentsPatient.bind(appointmentController)
-);
-
-router.put(
-   "/patient/",
-   authorizePatient.exec,
-   appointmentController.updateStatusAndNotes.bind(appointmentController)
-);
+router.get("/patient/details/:appointmentId", authorizePatient.exec, appointmentController.getAppointmentDetails);
+router.get("/patient/succuss/:paymentId", authorizePatient.exec, appointmentController.getAppointmentSuccussDetails);
+router.post("/patient/", authorizePatient.exec, appointmentController.create);
+router.get("/patient/", authorizePatient.exec, appointmentController.getAppointmentsPatient);
+router.put("/patient/", authorizePatient.exec, appointmentController.updateStatusAndNotes);
 
 // ! Doctor Routes
-
-router.get(
-   "/doctor/details/:appointmentId",
-   authorizeDoctor.exec,
-   appointmentController.getAppointmentDetails.bind(appointmentController)
-);
-
-router.get(
-   "/doctor",
-   authorizeDoctor.exec,
-   appointmentController.getAppointmentsDoctor.bind(appointmentController)
-);
-
-router.put(
-   "/doctor/",
-   authorizeDoctor.exec,
-   appointmentController.updateAppointment.bind(appointmentController)
+router.get("/doctor/details/:appointmentId", authorizeDoctor.exec, appointmentController.getAppointmentDetails);
+router.get("/doctor", authorizeDoctor.exec, appointmentController.getAppointmentsDoctor);
+router.put("/doctor/", authorizeDoctor.exec, appointmentController.updateAppointment
 );
 
 
 export default router;
 
-export const webhook = appointmentController.handleStripeWebhook.bind(appointmentController);
+export const webhook = appointmentController.handleStripeWebhook;

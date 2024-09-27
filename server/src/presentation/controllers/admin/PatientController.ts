@@ -3,7 +3,12 @@ import AdminPatientUseCase from "../../../use_case/admin/PatientUseCase";
 import { StatusCode } from "../../../types";
 
 export default class AdminPatientController {
-   constructor(private adminPatientUseCase: AdminPatientUseCase) {}
+   constructor(
+      private adminPatientUseCase: AdminPatientUseCase
+   ) {
+      this.getPatients = this.getPatients.bind(this);
+      this.updatePatient = this.updatePatient.bind(this);
+   }
 
    async getPatients(req: Request, res: Response, next: NextFunction) {
       try {

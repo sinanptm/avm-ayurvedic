@@ -1,4 +1,4 @@
-import express from "express";
+import {Router} from "express";
 import patientAuthentication from "./patient/AuthenticationRoutes";
 import adminAuthentication from "./admin/AuthenticationRoutes";
 import protectedRoutes from "./patient/PatientRoutes";
@@ -17,7 +17,7 @@ import notificationRoutes from "./notification/NotificationRoute";
 import chatRouters from "./chat/ChatRoutes";
 import videoSectionRoute from "./video/VideoSectionRoute";
 
-const app = express();
+const app = Router();
 const tokenService = new TokenService();
 
 const authorizePatient = new PatientAuthMiddleware(tokenService);

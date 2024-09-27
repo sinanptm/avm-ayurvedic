@@ -1,11 +1,11 @@
-import express from "express";
+import { Router } from "express";
 import PatientUseCase from "../../../use_case/patient/PatientUseCases";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import PatientController from "../../controllers/patient/PatientController";
 import S3StorageService from "../../../infrastructure/services/S3StorageService";
 import JoiService from "../../../infrastructure/services/JoiService";
 
-const router = express.Router();
+const router = Router();
 
 const patientRepository = new PatientRepository();
 const s3StorageService = new S3StorageService();

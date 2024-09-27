@@ -3,7 +3,15 @@ import AuthenticationUseCase from "../../../use_case/admin/AuthenticationUseCase
 import { Cookie, StatusCode } from "../../../types";
 
 export default class AuthenticationController {
-   constructor(private authUseCase: AuthenticationUseCase) {}
+   constructor(
+      private authUseCase: AuthenticationUseCase
+   ) {
+      this.login = this.login.bind(this);
+      this.validateOtp = this.validateOtp.bind(this);
+      this.resendOtp = this.resendOtp.bind(this);
+      this.refreshAccessToken = this.refreshAccessToken.bind(this);
+      this.logout = this.logout.bind(this);
+   }
 
    async login(req: Request, res: Response, next: NextFunction) {
       try {
