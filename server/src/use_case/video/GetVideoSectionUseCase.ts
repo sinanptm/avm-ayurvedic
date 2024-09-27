@@ -19,13 +19,17 @@ export default class GetVideoSectionUseCase {
         return await this.videoSectionRepository.findByAppointmentId(appointmentId);
     }
 
-    async getSectionsInOneHourDoctor(doctorId: string): Promise<IVideoSection[] | []> {
-        this.validatorService.validateIdFormat(doctorId)
-        const currentTime = new Date();
-        const afterOneHour = addHours(currentTime, 1);
-        const sections = await this.videoSectionRepository.findByStartTimeRangeByDoctorId(currentTime.toISOString(), afterOneHour.toISOString(), doctorId);
-        return sections ?? [];
-    }
+   async getSectionInOneDayDoctor(doctorId: string): Promise<IVideoSection[] | []> {
+    this.validatorService.validateIdFormat(doctorId);
+    const currentTime = new Date(getDate(-1)); 
+    const afterOneDay = addHours(currentTime, 24);
+    const sections = await this.videoSectionRepository.findByStartTimeRangeByDoctorId(
+        currentTime.toISOString(), 
+        afterOneDay.toISOString(), 
+        doctorId
+    );
+    return sections ?? [];
+   }
 
     async getSectionsInOneDayPatient(patientId: string): Promise<IVideoSection[] | []> {
         this.validatorService.validateIdFormat(patientId);
