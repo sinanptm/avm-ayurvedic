@@ -1,4 +1,4 @@
-import { AppointmentStatus, AppointmentType, Days, NotificationTypes } from "./enum";
+import { AppointmentStatus, AppointmentType, Days, NotificationTypes, VideoSectionStatus } from "./enum";
 
 export interface IPatient {
    _id?: string;
@@ -36,7 +36,7 @@ export interface ISlot {
    day?: Days;
    startTime?: string;
    endTime?: string;
-   status?:  "available" | "booked";
+   status?: "available" | "booked";
 }
 
 export interface IAppointment {
@@ -95,3 +95,19 @@ export interface IMessage {
    readonly isReceived?: boolean;
 }
 
+export default interface IVideoSection {
+   _id?: string;
+   appointmentId?: string;
+   doctorName?: string;
+   patientName?: string;
+   doctorProfile?: string;
+   doctorId?: string;
+   patientProfile?: string;
+   patientId?: string;
+   createdAt?: Date;
+   updatedAt?: Date;
+   startTime?: Date | string;
+   endTime?: Date | string;
+   link?: string;
+   status?: VideoSectionStatus;
+}

@@ -14,38 +14,28 @@ import { Card, CardContent } from "@/components/ui/card";
 import { XIcon, Video } from "lucide-react";
 import { ButtonV2 } from "../button/ButtonV2";
 import Link from "next/link";
+import IVideoSection from "@/types/entities";
+import { format } from "date-fns"
 
-type Appointment = {
-  _id: string;
-  patientName: string;
-  startTime: Date;
-};
 
 type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  appointments: Appointment[];
+  sections: IVideoSection[];
   link: string;
 };
 
 export default function VideoCallModal({
   open,
   setOpen,
-  appointments,
+  sections,
   link
 }: Props) {
   const closeModal = () => {
     setOpen(false);
   };
 
-  const formatTimeLeft = (startTime: Date) => {
-    const now = new Date();
-    const diff = startTime.getTime() - now.getTime();
-    const minutes = Math.floor(diff / 60000);
-    return `${minutes} minute${minutes !== 1 ? 's' : ''} left`;
-  };
-
-  return (
+   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className="max-w-3xl bg-dark-200">
         <AlertDialogHeader>
@@ -58,17 +48,17 @@ export default function VideoCallModal({
         </AlertDialogHeader>
         <AlertDialogDescription></AlertDialogDescription>
         <div className="space-y-4">
-          {appointments.length > 0 ? (
+          {sections.length > 0 ? (
             <>
-              {appointments.map((appointment) => (
-                <Link key={appointment._id} href={`${link}/${appointment._id}`} onClick={closeModal} >
+              {sections.map((section) => (
+                <Link key={section._id} href={`${link}/${section._id}`} onClick={closeModal} >
                   <Card>
                     <CardContent className="flex items-center justify-between p-4">
                       <div className="flex items-center space-x-4">
                         <Video className="h-6 w-6 text-primary" />
                         <div>
-                          <h3 className="font-semibold">{appointment.patientName}</h3>
-                          <p className="text-sm text-muted-foreground">{formatTimeLeft(appointment.startTime)}</p>
+                          <h3 className="font-semibold">{section.patientName}</h3>
+                          <p className="text-sm text-muted-foreground">{format(section.startTime!,"hh:mm a")}</p>
                         </div>
                       </div>
                       <ButtonV2
@@ -92,11 +82,11 @@ export default function VideoCallModal({
                 src="/assets/icons/emoji/😴.svg"
                 width={64}
                 height={64}
-                alt="No Upcoming Calls"
+                alt="No Upcoming Sections"
                 className="opacity-50"
               />
               <p className="text-center text-muted-foreground text-sm">
-                No upcoming video calls in the next hour.
+                No upcoming video Sections in the next hour.
               </p>
             </div>
           )}

@@ -5,11 +5,13 @@ import { VideoIcon, PhoneIcon } from "lucide-react"
 import VideoChat from '@/components/page-components/video/VideoChat'
 import { ButtonV2 } from '@/components/button/ButtonV2'
 import { useState } from "react"
+import { useParams } from "next/navigation"
 
 export default function VideoCallPage() {
-  const [isCalling, setIsCalling] = useState(false)
-  const [localStream, setLocalStream] = useState<MediaStream | null>(null)
-
+  const [isCalling, setIsCalling] = useState(false);
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const sectionId = useParams().sectionId as string;
+  
   const handleStartCall = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -25,8 +27,8 @@ export default function VideoCallPage() {
     if (localStream) {
       localStream.getTracks().forEach(track => track.stop())
     }
-    setLocalStream(null)
-    setIsCalling(false)
+    setLocalStream(null);
+    setIsCalling(false);
   }
 
   return (

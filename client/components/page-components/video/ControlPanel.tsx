@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { ButtonV2 } from "@/components/button/ButtonV2"
 import { Mic, MicOff, Video, VideoOff, PhoneOff } from 'lucide-react'
 import { useState } from "react"
 
@@ -23,30 +23,30 @@ export default function ControlPanel({ onEndCall }: ControlPanelProps) {
   return (
     <div className="bg-gray-800 border-t border-gray-700 p-4">
       <div className="flex justify-center space-x-4 max-w-md mx-auto">
-        <Button
+        <ButtonV2
           onClick={toggleMute}
           variant={isMuted ? "destructive" : "secondary"}
           size="icon"
           className="rounded-full"
         >
           {isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
-        </Button>
-        <Button
+        </ButtonV2>
+        <ButtonV2
           onClick={toggleVideo}
           variant={isVideoOff ? "destructive" : "secondary"}
           size="icon"
           className="rounded-full"
         >
           {isVideoOff ? <VideoOff className="h-5 w-5" /> : <Video className="h-5 w-5" />}
-        </Button>
-        <Button
+        </ButtonV2>
+        <ButtonV2
           onClick={onEndCall}
           variant="destructive"
           size="icon"
           className="rounded-full"
         >
           <PhoneOff className="h-5 w-5" />
-        </Button>
+        </ButtonV2>
       </div>
     </div>
   )

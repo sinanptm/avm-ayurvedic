@@ -12,7 +12,7 @@ export enum Days {
     Friday = "friday",
     Saturday = "saturday",
     Sunday = "sunday"
-}export enum AppointmentStatus {
+} export enum AppointmentStatus {
     // PAYMENT_PENDING = "payment-pending",
     PENDING = "pending",
     CONFIRMED = "confirmed",
@@ -29,13 +29,17 @@ export enum NotificationTypes {
     APPOINTMENT_REMINDER = 'appointment_reminder'
 }
 export enum FormFieldType {
-   INPUT = "input",
-   TEXTAREA = "textarea",
-   PHONE_INPUT = "phoneInput",
-   CHECKBOX = "checkbox",
-   DATE_PICKER = "datePicker",
-   SELECT = "select",
-   SKELETON = "skeleton",
-   PASSWORD = "password"
+    INPUT = "input",
+    TEXTAREA = "textarea",
+    PHONE_INPUT = "phoneInput",
+    CHECKBOX = "checkbox",
+    DATE_PICKER = "datePicker",
+    SELECT = "select",
+    SKELETON = "skeleton",
+    PASSWORD = "password"
 }
-
+export enum VideoSectionStatus {
+    PENDING = 'pending',
+    IN_PROGRESS = 'in_progress',
+    COMPLETED = 'completed',
+}
