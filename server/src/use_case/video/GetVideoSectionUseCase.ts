@@ -1,7 +1,7 @@
 import IVideoSection from "../../domain/entities/IVideoChatSection";
 import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { addHours } from "../../utils/date-formatter";
+import { addHours, getDate } from "../../utils/date-formatter";
 
 export default class GetVideoSectionUseCase {
     constructor(
@@ -27,11 +27,18 @@ export default class GetVideoSectionUseCase {
         return sections ?? [];
     }
 
-    async getSectionsInOneHourPatient(patientId: string): Promise<IVideoSection[] | []> {
-        this.validatorService.validateIdFormat(patientId)
-        const currentTime = new Date();
-        const afterOneHour = addHours(currentTime, 1);
-        const sections = await this.videoSectionRepository.findByStartTimeRangeByPatientId(currentTime.toISOString(), afterOneHour.toISOString(), patientId);
+    async getSectionsInOneDayPatient(patientId: string): Promise<IVideoSection[] | []> {
+        this.validatorService.validateIdFormat(patientId);
+        
+        const currentTime = new Date(getDate(-1)); 
+        const afterOneDay = addHours(currentTime, 24);
+        
+        const sections = await this.videoSectionRepository.findByStartTimeRangeByPatientId(
+            currentTime.toISOString(), 
+            afterOneDay.toISOString(), 
+            patientId
+        );
+        
         return sections ?? [];
     }
 }

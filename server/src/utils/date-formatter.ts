@@ -1,8 +1,1 @@
-import { parse, format, addMinutes, addHours } from "date-fns";
-
-export {
-    parse,
-    format,
-    addMinutes,
-    addHours
-}
+export { parse, format, addMinutes, addHours, addDays, getDay, getDate } from "date-fns";
