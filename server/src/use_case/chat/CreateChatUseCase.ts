@@ -19,7 +19,7 @@ export default class CreateChatUseCase {
         this.validatorService.validateIdFormat(doctorId);
         this.validatorService.validateIdFormat(patientId);
         const patient = await this.patientRepository.findById(patientId);
-        const doctor = await this.doctorRepository.findByID(doctorId);
+        const doctor = await this.doctorRepository.findById(doctorId);
         if (!patient) {
             throw new CustomError("Invalid patient id", StatusCode.NotFound);
         } else if (!doctor) {

@@ -129,7 +129,7 @@ export default class AuthenticationUseCase {
 
    async getPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
       this.validatorService.validateIdFormat(id);
-      const doctor = await this.doctorRepository.findByID(id);
+      const doctor = await this.doctorRepository.findById(id);
       if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
       const key = `profile-images/doctor/${id}-${Date.now()}`;
       const url = await this.cloudService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
@@ -138,7 +138,7 @@ export default class AuthenticationUseCase {
 
    async updateProfileImage(key: string, id: string): Promise<void> {
       this.validatorService.validateIdFormat(id);
-      const doctor = await this.doctorRepository.findByID(id);
+      const doctor = await this.doctorRepository.findById(id);
       if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
 
@@ -152,7 +152,7 @@ export default class AuthenticationUseCase {
 
    async refresh(token: string): Promise<{ accessToken: string }> {
       const { id } = this.tokenService.verifyRefreshToken(token);
-      const doctor = await this.doctorRepository.findByID(id);
+      const doctor = await this.doctorRepository.findById(id);
       if (!doctor) throw new CustomError("Unauthorized", StatusCode.Unauthorized);
 
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);

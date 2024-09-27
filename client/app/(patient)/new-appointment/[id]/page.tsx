@@ -6,11 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { XCircle, Calendar, User, Stethoscope } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { format } from 'date-fns';
 import { BreadcrumbCollapsed } from "@/components/navigation/BreadCrumbs";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 
 export default function AppointmentSuccessPage() {
   const paymentId = useParams().id as string;
@@ -47,9 +47,9 @@ export default function AppointmentSuccessPage() {
                 {error?.response?.data?.message ||
                   "We couldn't fetch your appointment details. Please try again later."}
               </p>
-              <Button asChild variant="destructive">
+              <ButtonV2 asChild variant="destructive">
                 <Link href="/new-appointment">Try Booking Again</Link>
-              </Button>
+              </ButtonV2>
             </motion.div>
           ) : (
             <>
@@ -143,12 +143,12 @@ export default function AppointmentSuccessPage() {
         </CardContent>
         {!isLoading && !error && (
           <CardFooter className="flex justify-center space-x-4 p-6 bg-primary/5">
-            <Button variant="default" asChild>
+            <ButtonV2 variant="gooeyLeft" asChild>
               <Link href={`/appointments/${appointment?._id}`}>Show Details</Link>
-            </Button>
-            <Button variant="outline" asChild>
+            </ButtonV2>
+            <ButtonV2 variant="gooeyRight" asChild>
               <Link href="/new-appointment">Book Another Appointment</Link>
-            </Button>
+            </ButtonV2>
           </CardFooter>
         )}
       </Card>

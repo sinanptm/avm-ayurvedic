@@ -2,7 +2,7 @@ import { PaginatedResult } from "../../../types";
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../entities/IAppointment";
 
 export default interface IAppointmentRepository {
-   create(appointment: IAppointment): Promise<string>;
+   create(appointment: IAppointment): Promise<IAppointment>;
    update(appointment: IAppointment): Promise<IAppointment | null>;
    updateManyBySlotIdsNotInStatuses(slotIds: string[], fields: IAppointment, notInStatuses:AppointmentStatus[]): Promise<IAppointment[] | null>;
    findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null>;

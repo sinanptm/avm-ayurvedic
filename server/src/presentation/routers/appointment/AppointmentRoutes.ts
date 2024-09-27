@@ -12,6 +12,9 @@ import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentU
 import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
 import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
 import NotificationRepository from "../../../infrastructure/repositories/NotificationRepository";
+import VideoSectionRepository from "../../../infrastructure/repositories/VideoSectionRepository";
+import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
+import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
 
 const router = express.Router();
 
@@ -22,14 +25,20 @@ const validatorService = new JoiService();
 
 const paymentService = new StripeService();
 const paymentRepository = new PaymentRepository();
-const notificationRepository = new NotificationRepository()
+const notificationRepository = new NotificationRepository();
+const videoSectionRepository = new VideoSectionRepository();
+const patientRepository = new PatientRepository();
+const doctorRepository = new DoctorRepository();
 
 const createAppointmentUseCase = new CreateAppointmentUseCase(
    appointmentRepository,
    slotRepository,
    validatorService,
    paymentService,
-   paymentRepository
+   paymentRepository,
+   videoSectionRepository,
+   doctorRepository,
+   patientRepository
 );
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService, paymentRepository);
 const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService, notificationRepository);

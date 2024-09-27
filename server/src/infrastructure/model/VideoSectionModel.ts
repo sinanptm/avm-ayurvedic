@@ -16,6 +16,8 @@ const videoSectionSchema = new Schema<IVideoSection>({
         enum: Object.values(VideoSectionStatus),
         default: VideoSectionStatus.PENDING
     },
+    doctorProfile: { type: String, required: true },
+    patientProfile: { type: String, required: true },
 })
 
 const VideoSectionModel = model<IVideoSection>('VideoSection', videoSectionSchema);

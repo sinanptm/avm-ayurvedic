@@ -1,3 +1,4 @@
+import { parse, format, addHours } from "../../utils/date-formatter";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
@@ -68,22 +69,8 @@ export default class CreateSlotUseCase {
    }
 
    private calculateEndTime(startTime: string): string {
-      const [time, period] = startTime.split(" ");
-      const [hoursStr, minutesStr] = time.split(":");
-      let hours = parseInt(hoursStr, 10);
-      const minutes = parseInt(minutesStr, 10);
-
-      if (period === "PM" && hours < 12) hours += 12;
-      if (period === "AM" && hours === 12) hours = 0;
-
-      if (isNaN(hours) || isNaN(minutes)) {
-         throw new CustomError("Invalid start time format", StatusCode.BadRequest);
-      }
-
-      const endHour = (hours + this.interval) % 24;
-      const endPeriod = endHour >= 12 ? "PM" : "AM";
-      const displayHour = endHour % 12 || 12;
-
-      return `${displayHour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")} ${endPeriod}`;
+      const parsedStartTime = parse(startTime, "hh:mm a", new Date());
+      const endTime = addHours(parsedStartTime, this.interval);
+      return format(endTime, "hh:mm a");
    }
 }

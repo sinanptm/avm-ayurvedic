@@ -10,7 +10,7 @@ export default class DoctorRepository implements IDoctorRepository {
    async findByEmail(email: string): Promise<IDoctor | null> {
       return await this.model.findOne({ email }).select(["-token", "-password"]);
    }
-   async findByID(id: string | Types.ObjectId): Promise<IDoctor | null> {
+   async findById(id: string | Types.ObjectId): Promise<IDoctor | null> {
       return await this.model.findById(id).select(["-token", "-password"]);
    }
    async findByEmailWithCredentials(email: string): Promise<IDoctor | null> {
