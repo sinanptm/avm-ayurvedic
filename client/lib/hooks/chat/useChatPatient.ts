@@ -1,5 +1,6 @@
 import { getMessagesOfPatientChat, getPatientChats, createChatPatient, createMessagePatient, } from "@/lib/api/chat";
-import { ErrorResponse, IChat, IMessage, MessageResponse, PaginatedResult } from "@/types";
+import { ErrorResponse, MessageResponse, PaginatedResult } from "@/types";
+import { IChat, IMessage } from "@/types/entities";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";

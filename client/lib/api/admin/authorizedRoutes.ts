@@ -1,4 +1,4 @@
-import { IDoctor } from "@/types";
+import { IDoctor } from "@/types/entities";
 import axios from "axios";
 
 const axiosInstance = axios.create({

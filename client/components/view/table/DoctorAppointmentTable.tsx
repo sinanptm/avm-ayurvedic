@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetAppointmentsDoctor } from "@/lib/hooks/appointment/useAppointmentDoctor";
-import { AppointmentStatus } from "@/types";
+import { AppointmentStatus } from "@/types/enum";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 import Pagination from "@/components/navigation/Pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

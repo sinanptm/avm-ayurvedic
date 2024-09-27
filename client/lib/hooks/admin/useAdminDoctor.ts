@@ -1,5 +1,7 @@
 import { getDoctors, updateDoctor } from "@/lib/api/admin/authorizedRoutes";
-import { IDoctor, ErrorResponse, PaginatedResult, MessageResponse, DoctorsFilter } from "@/types";
+import { ErrorResponse, PaginatedResult, MessageResponse } from "@/types";
+import { IDoctor } from "@/types/entities";
+import { DoctorsFilter } from "@/types/enum";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 

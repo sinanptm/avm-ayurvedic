@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { AppointmentStatus } from "@/types";
+import { AppointmentStatus } from "@/types/enum";
 
 interface AppointmentStatusBadgeProps {
    status: AppointmentStatus;

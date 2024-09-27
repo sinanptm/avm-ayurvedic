@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react'
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { format } from "date-fns"
-import { IChat, IMessage } from "@/types"
+import { IChat, IMessage } from "@/types/entities"
 import { getReceiverData, getSenderData } from './getUserData'
 
 interface ChatSectionProps {

@@ -1,4 +1,5 @@
-import { AnimatedCardProps, AppointmentType, NavLinkType } from "@/types";
+import { AnimatedCardProps, NavLinkType } from "@/types";
+import { AppointmentType } from "@/types/enum";
 
 export const AdminSideBarLinks: NavLinkType[] = [
    {

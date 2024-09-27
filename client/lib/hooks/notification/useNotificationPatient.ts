@@ -1,5 +1,6 @@
 import { clearMultiplePatientNotifications, getPatientNotifications, clearPatientNotification } from "@/lib/api/notification"
-import { ErrorResponse, INotification, MessageResponse } from "@/types"
+import { ErrorResponse, MessageResponse } from "@/types"
+import { INotification } from "@/types/entities"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 

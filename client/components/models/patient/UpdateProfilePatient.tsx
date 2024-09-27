@@ -8,7 +8,7 @@ import { z } from "zod";
 import { updateProfileFormValidation } from "@/components/forms/actions/userValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../button/SubmitButton";
-import { IPatient } from "@/types";
+import { IPatient } from "@/types/entities";
 import CustomFormField from "../../common/CustomFormField";
 import { FormFieldType } from "@/types/fromTypes";
 import { BloodGroups, GenderOptions } from "@/constants";

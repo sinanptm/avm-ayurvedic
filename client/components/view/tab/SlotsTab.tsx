@@ -1,6 +1,6 @@
 "use client";
 
-import { Days } from "@/types";
+import { Days } from "@/types/enum";
 import { Tabs } from "@/components/ui/tabs-v2";
 import TabContent from "@/components/page-components/doctor/slots/SlotsTabContent";
 import MultiSlots from "@/components/page-components/doctor/slots/MultiSlots";

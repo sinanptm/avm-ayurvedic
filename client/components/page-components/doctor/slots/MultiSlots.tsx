@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/use-toast";
 import ConfirmDeleteSlotsModel from "@/components/models/ConfirmDeleteSlotsModel";
 import { AvailableTimes } from "@/constants";
 import { useQueryClient } from "@tanstack/react-query";
-import { Days } from "@/types";
+import { Days } from "@/types/enum";
 
 const availableTimeOptions = Object.values(AvailableTimes)
    .flat()

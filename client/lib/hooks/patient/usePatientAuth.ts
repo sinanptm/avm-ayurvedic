@@ -1,4 +1,5 @@
-import { ErrorResponse, IPatient, MessageResponse } from "@/types";
+import { ErrorResponse, MessageResponse } from "@/types";
+import { IPatient } from "@/types/entities";
 import { useMutation } from "@tanstack/react-query";
 import {
    forgetPassword,

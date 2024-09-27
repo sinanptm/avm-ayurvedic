@@ -1,7 +1,7 @@
 "use client";
 
 import { useAddSlotsDoctor, useGetSlotsByDayDoctor, useDeleteDoctorByDay } from "@/lib/hooks/slots/useSlot";
-import { Days } from "@/types";
+import { Days } from "@/types/enum";
 import React, { useEffect, useState } from "react";
 import { RenderTimeSlots } from "./RenderTimeSlots";
 import ConfirmDeleteSlotsModal from "@/components/models/ConfirmDeleteSlotsModel";

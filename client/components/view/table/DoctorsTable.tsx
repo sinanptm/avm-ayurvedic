@@ -13,7 +13,8 @@ import { getDefault } from "@/lib/utils";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 import AdminDoctorProfileModel from "../../models/admin/DoctorProfileModel";
 import Pagination from "../../navigation/Pagination";
-import { DoctorsFilter, IDoctor } from "@/types";
+import { IDoctor } from "@/types/entities";
+import { DoctorsFilter } from "@/types/enum";
 
 const columns = [
    { name: "Image", width: "w-[80px]" },

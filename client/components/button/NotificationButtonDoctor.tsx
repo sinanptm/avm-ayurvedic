@@ -8,7 +8,7 @@ import {
   useClearDoctorNotification,
   useClearMultipleDoctorNotifications,
 } from "@/lib/hooks/notification/useNotificationDoctor";
-import { INotification } from "@/types";
+import { INotification } from "@/types/entities";
 
 const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);

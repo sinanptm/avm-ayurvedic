@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IPatient } from "@/types";
+import { IPatient } from "@/types/entities";
 import UploadProfileModel from "@/components/models/patient/UploadProfileModel";
 import { ButtonV2 } from "@/components/button/ButtonV2";
 

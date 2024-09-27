@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent } from "@/components/ui/card";
-import { INotification } from "@/types";
+import { INotification } from "@/types/entities";
 import getNotificationDetails from "@/lib/utils/getNotificationDetails";
 import { XIcon, Trash2Icon } from "lucide-react";
 import { ButtonV2 } from "../button/ButtonV2";

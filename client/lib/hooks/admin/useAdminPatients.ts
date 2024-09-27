@@ -1,5 +1,6 @@
 import { blockPatient, getPatients } from "@/lib/api/admin/authorizedRoutes";
-import { ErrorResponse, IPatient, MessageResponse, PaginatedResult } from "@/types";
+import { ErrorResponse, MessageResponse, PaginatedResult } from "@/types";
+import { IPatient } from "@/types/entities";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 

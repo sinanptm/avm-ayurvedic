@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { PlusCircle } from "lucide-react"
-import { IChat } from "@/types"
+import { IChat } from "@/types/entities"
 import { getSenderData } from './getUserData'
 import ChatListSkeleton from "@/components/skeletons/ChatList"
 import { ButtonV2 } from "@/components/button/ButtonV2"

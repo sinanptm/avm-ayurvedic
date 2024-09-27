@@ -8,7 +8,8 @@ import {
    forgotPasswordDoctor,
    updatePasswordDoctor,
 } from "@/lib/api/doctor/authenticationRoutes";
-import { IDoctor, ErrorResponse, MessageResponse } from "@/types";
+import { ErrorResponse, MessageResponse } from "@/types";
+import { IDoctor } from "@/types/entities";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 

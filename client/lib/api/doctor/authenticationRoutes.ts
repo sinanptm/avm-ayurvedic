@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IDoctor } from "@/types";
+import { IDoctor } from "@/types/entities";
 
 const axiosInstance = axios.create({
    baseURL: `${process.env.NEXT_PUBLIC_API_URL}/doctor/auth`,

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useMemo, useState } from "react";
-import { IDoctor } from "@/types";
+import { IDoctor } from "@/types/entities";
 import { DoctorCard } from "@/components/page-components/landing/clinicians/DoctorCard";
 import Pagination from "@/components/navigation/Pagination";
 

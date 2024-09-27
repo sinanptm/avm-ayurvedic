@@ -1,4 +1,4 @@
-import { NotificationTypes } from "@/types";
+import { NotificationTypes } from "@/types/enum";
 
 export default function getNotificationDetails(type: NotificationTypes) {
     switch (type) {

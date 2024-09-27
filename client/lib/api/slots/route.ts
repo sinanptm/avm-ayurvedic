@@ -1,4 +1,5 @@
-import { ISlot, Days } from "@/types";
+import { ISlot } from "@/types/entities";
+import { Days } from "@/types/enum";
 import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
 

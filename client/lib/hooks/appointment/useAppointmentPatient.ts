@@ -1,11 +1,10 @@
 import  {
-   AppointmentStatus,
    ErrorResponse,
-   IExtendedAppointment,
    MessageResponse,
    PaginatedResult,
-   IAppointment,
 } from "@/types";
+import { IExtendedAppointment, IAppointment } from "@/types/entities";
+import { AppointmentStatus } from "@/types/enum";
 import {
    getAppointmentDetailsPatient,
    getAppointmentsPatient,

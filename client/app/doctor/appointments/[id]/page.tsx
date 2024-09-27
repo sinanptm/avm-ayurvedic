@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useGetAppointmentDetailsDoctor, useUpdateAppointmentStatusDoctor } from '@/lib/hooks/appointment/useAppointmentDoctor'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { AppointmentStatus } from '@/types'
+import { AppointmentStatus } from "@/types/enum"
 import { toast } from '@/components/ui/use-toast'
 import GetStatusBadge from '@/components/page-components/doctor/appointment/GetStatusBadge'
 import AppointmentCancellationModal from '@/components/models/appointment/ConfirmCancelAppointmentDoctor'

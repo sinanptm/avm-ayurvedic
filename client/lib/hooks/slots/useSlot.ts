@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ISlot, Days, ErrorResponse, MessageResponse } from "@/types";
+import { ErrorResponse, MessageResponse } from "@/types";
+import { ISlot } from "@/types/entities";
+import { Days } from "@/types/enum";
 import {
    addSlotsDoctor,
    getSlotsByDayDoctor,
