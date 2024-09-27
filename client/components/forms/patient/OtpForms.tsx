@@ -3,8 +3,16 @@
 import { FormEvent } from "react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Otptimer } from "otp-timer-ts";
-import { OtpFromProps } from "@/types";
 import SubmitButton from "@/components/button/SubmitButton";
+
+export interface Props {
+   handleVerify: (e: FormEvent) => void;
+   handleResend: () => void;
+   timer: number;
+   isLoading: boolean;
+   otp: string;
+   setOtp: (value: string) => void;
+}
 
 export default function OtpVerificationSection({
    handleVerify,
@@ -13,7 +21,7 @@ export default function OtpVerificationSection({
    isLoading,
    otp,
    setOtp,
-}: OtpFromProps) {
+}: Props) {
    return (
       <form className="space-y-6 flex-1" onSubmit={(e: FormEvent) => handleVerify(e)}>
          <section className="mb-12 space-y-4">

@@ -58,12 +58,4 @@ export interface CustomProps {
    showDateText?: string;
 }
 
-export interface OtpFromProps {
-   handleVerify: (e: FormEvent) => void;
-   handleResend: () => void;
-   timer: number;
-   isLoading: boolean;
-   otp: string;
-   setOtp: (value: string) => void;
-}
 
