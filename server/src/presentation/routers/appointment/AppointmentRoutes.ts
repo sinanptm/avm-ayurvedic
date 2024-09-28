@@ -67,4 +67,4 @@ router.put("/doctor/", authorizeDoctor.exec, appointmentController.updateAppoint
 
 export default router;
 
-export const webhook = appointmentController.handleStripeWebhook;
+export const webhook = appointmentController.handleStripeWebhook.bind(appointmentController);

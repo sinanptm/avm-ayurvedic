@@ -31,7 +31,7 @@ const chatController = new ChatController(createChatUseCase, getChatUseCase);
 const authorizePatient = new PatientAuthMiddleware(tokenService);
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
-router.get('/patient', authorizePatient.exec, chatController.getChatsOfPatient);
+router.get('/patient', authorizePatient.exec, chatController.getChatsOfPatient.bind(chatController));
 router.post('/patient', authorizePatient.exec, chatController.createChatPatient.bind(chatController));
 router.post('/patient/message', authorizePatient.exec, chatController.createMessagePatient.bind(chatController));
 router.get('/patient/message/:chatId', authorizePatient.exec, chatController.getMessagesOfChatPatient.bind(chatController));
