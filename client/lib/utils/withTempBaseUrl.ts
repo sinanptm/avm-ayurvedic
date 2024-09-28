@@ -5,13 +5,14 @@ export const withTempBaseUrl = async (
    newBaseUrl: string,
    config: AxiosRequestConfig
 ): Promise<AxiosResponse> => {
-   const originalBaseUrl = instance.defaults.baseURL;
-
+   const updatedConfig = {
+      ...config,
+      baseURL: newBaseUrl, 
+   };
    try {
-      instance.defaults.baseURL = newBaseUrl;
-      const response = await instance(config);
+      const response = await instance(updatedConfig); 
       return response;
-   } finally {
-      instance.defaults.baseURL = originalBaseUrl;
+   } catch (error) {
+      throw error;
    }
 };

@@ -19,8 +19,8 @@ const videoController = new VideoController(getVideoSectionUseCase);
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 const authorizePatient = new PatientAuthMiddleware(tokenService);
 
-router.get("/doctor/day", authorizeDoctor.exec, videoController.getSectionsInOneDayDoctor.bind(videoController));
 router.get("/patient/day", authorizePatient.exec, videoController.getSectionsInOneDayPatient.bind(videoController));
+router.get("/doctor/day", authorizeDoctor.exec, videoController.getSectionsInOneDayDoctor.bind(videoController));
 
 
 export default router;

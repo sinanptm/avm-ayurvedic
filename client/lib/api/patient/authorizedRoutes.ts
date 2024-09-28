@@ -1,5 +1,5 @@
 import { IPatient } from "@/types/entities";
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 
 const getAuthTokens = () => {
    try {
@@ -68,7 +68,7 @@ patientAxiosInstance.interceptors.response.use(
 );
 
 export const getPatientProfile = async () => {
-   const response = await patientAxiosInstance.get(`/profile`);
+   const response = await patientAxiosInstance.get("/profile");
    return response.data;
 };
 
