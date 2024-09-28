@@ -7,17 +7,7 @@ export default class ChatController {
     constructor(
         private createChatUseCase: CreateChatUseCase,
         private getChatUseCase: GetChatUseCase
-    ) { 
-        this.getChatsOfPatient = this.getChatsOfPatient.bind(this);
-        this.getChatsOfDoctor = this.getChatsOfDoctor.bind(this);
-        this.getPatientsDoctor = this.getPatientsDoctor.bind(this);
-        this.getMessagesOfChatPatient = this.getMessagesOfChatPatient.bind(this);
-        this.getMessagesOfChatDoctor = this.getMessagesOfChatDoctor.bind(this);
-        this.createChatPatient = this.createChatPatient.bind(this);
-        this.createChatDoctor = this.createChatDoctor.bind(this);
-        this.createMessageDoctor = this.createMessageDoctor.bind(this);
-        this.createMessagePatient = this.createMessagePatient.bind(this);
-    }
+    ) { }
     async getChatsOfPatient(req: CustomRequest, res: Response, next: NextFunction) {
         try {
             const patientId = req.patient?.id;

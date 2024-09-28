@@ -29,7 +29,7 @@ const unauthenticatedController = new UnauthenticatedControllers(unauthenticated
 
 const errorHandler = new ErrorHandler();
 
-app.get("/doctors", unauthenticatedController.getDoctors.bind(unauthenticatedController));
+app.get("/doctors", unauthenticatedController.getDoctors);
 app.use("/doctor/auth", doctorAuthentication);
 app.use("/patient/auth", patientAuthentication);
 app.use("/patient", authorizePatient.exec, protectedRoutes);

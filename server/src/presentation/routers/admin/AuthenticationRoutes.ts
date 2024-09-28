@@ -27,10 +27,10 @@ const authUseCase = new AuthenticationUseCase(
 );
 const authController = new AuthenticationController(authUseCase);
 
-router.post("/", authController.login);
-router.post("/otp-verification", authController.validateOtp);
-router.post("/resend-otp", authController.resendOtp);
-router.get("/refresh", authController.refreshAccessToken);
-router.post("/logout", authController.logout);
+router.post("/", authController.login.bind(authController));
+router.post("/otp-verification", authController.validateOtp.bind(authController));
+router.post("/resend-otp", authController.resendOtp.bind(authController));
+router.get("/refresh", authController.refreshAccessToken.bind(authController));
+router.post("/logout", authController.logout.bind(authController));
 
 export default router;

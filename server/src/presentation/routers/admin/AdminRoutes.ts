@@ -23,11 +23,11 @@ const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
 
 router
    .route("/patient")
-   .get(adminPatientController.getPatients)
-   .put(adminPatientController.updatePatient);
+   .get(adminPatientController.getPatients.bind(adminPatientController))
+   .put(adminPatientController.updatePatient.bind(adminPatientController));
 router
    .route("/doctor")
-   .get(adminDoctorController.getDoctors)
-   .put(adminDoctorController.updateDoctor);
+   .get(adminDoctorController.getDoctors.bind(adminDoctorController))
+   .put(adminDoctorController.updateDoctor.bind(adminDoctorController));
 
 export default router;

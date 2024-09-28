@@ -53,17 +53,16 @@ const authorizeDoctor = new DoctorAuthMiddleware(tokenService);
 
 // ! Patient Routes
 
-router.get("/patient/details/:appointmentId", authorizePatient.exec, appointmentController.getAppointmentDetails);
-router.get("/patient/succuss/:paymentId", authorizePatient.exec, appointmentController.getAppointmentSuccussDetails);
-router.post("/patient/", authorizePatient.exec, appointmentController.create);
-router.get("/patient/", authorizePatient.exec, appointmentController.getAppointmentsPatient);
-router.put("/patient/", authorizePatient.exec, appointmentController.updateStatusAndNotes);
+router.get("/patient/details/:appointmentId", authorizePatient.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
+router.get("/patient/succuss/:paymentId", authorizePatient.exec, appointmentController.getAppointmentSuccussDetails.bind(appointmentController));
+router.post("/patient/", authorizePatient.exec, appointmentController.create.bind(appointmentController));
+router.get("/patient/", authorizePatient.exec, appointmentController.getAppointmentsPatient.bind(appointmentController));
+router.put("/patient/", authorizePatient.exec, appointmentController.updateStatusAndNotes.bind(appointmentController));
 
 // ! Doctor Routes
-router.get("/doctor/details/:appointmentId", authorizeDoctor.exec, appointmentController.getAppointmentDetails);
-router.get("/doctor", authorizeDoctor.exec, appointmentController.getAppointmentsDoctor);
-router.put("/doctor/", authorizeDoctor.exec, appointmentController.updateAppointment
-);
+router.get("/doctor/details/:appointmentId", authorizeDoctor.exec, appointmentController.getAppointmentDetails.bind(appointmentController));
+router.get("/doctor", authorizeDoctor.exec, appointmentController.getAppointmentsDoctor.bind(appointmentController));
+router.put("/doctor/", authorizeDoctor.exec, appointmentController.updateAppointment.bind(appointmentController));
 
 
 export default router;
