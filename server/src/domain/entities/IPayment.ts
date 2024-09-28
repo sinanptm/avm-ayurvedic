@@ -5,13 +5,13 @@ export enum PaymentStatus {
 }
 
 export default interface IPayment {
-   _id?: string;
-   orderId?: string;
-   paymentId?: string;
-   appointmentId?: string;
-   amount?: number;
-   currency?: string;
-   status?: PaymentStatus;
-   createdAt?: Date;
-   updatedAt?: Date;
+   readonly _id?: string;
+   readonly orderId?: string;
+   readonly paymentId?: string;
+   readonly appointmentId?: string;
+   readonly amount?: number;
+   readonly currency?: string;
+   readonly status?: PaymentStatus;
+   readonly createdAt?: Date;
+   readonly updatedAt?: Date;
 }

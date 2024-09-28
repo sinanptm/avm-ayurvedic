@@ -1,18 +1,18 @@
 export default interface IVideoSection {
-  _id?: string;
-  appointmentId?: string;
-  doctorName?: string;
-  patientName?: string;
-  doctorProfile?: string;
-  doctorId?: string;
-  patientProfile?: string;
-  patientId?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  startTime?: Date | string;
-  endTime?: Date | string;
+  readonly _id?: string;
+  readonly appointmentId?: string;
+  readonly doctorName?: string;
+  readonly patientName?: string;
+  readonly doctorProfile?: string;
+  readonly doctorId?: string;
+  readonly patientProfile?: string;
+  readonly patientId?: string;
+  readonly createdAt?: Date;
+  readonly updatedAt?: Date;
+  readonly startTime?: Date | string;
+  readonly endTime?: Date | string;
   link?: string;
-  status?: VideoSectionStatus;
+  readonly status?: VideoSectionStatus;
 }
 
 export enum VideoSectionStatus {
