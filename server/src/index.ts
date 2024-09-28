@@ -1,4 +1,5 @@
 import express from "express";
+import { createServer } from "http";
 import { connectDB } from "./config/connectDB";
 import routes from "./presentation/routers/index";
 import cors from "cors";
@@ -7,10 +8,13 @@ import helmet from "helmet";
 import bodyParser from "body-parser";
 import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
 import { CLIENT_URL, NODE_ENV, PORT } from "./config/env";
+import initializeSocket from "./presentation/socket"; 
 
 const port = PORT || 8080;
 
 const app = express();
+const server = createServer(app); 
+
 app.use(helmet());
 app.use(
    cors({
@@ -27,9 +31,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 
 connectDB().then(() => {
-   app.listen(port, () => {
+   server.listen(port, () => {
       if (NODE_ENV !== "production") {
          console.log(`Server start listening on port: ${port}`);
       }
    });
 });
+
+initializeSocket(server); 

@@ -28,6 +28,7 @@
       "jsonwebtoken": "^9.0.2",
       "mongoose": "^8.5.3",
       "nodemailer": "^6.9.14",
+      "socket.io": "^4.8.0",
       "stripe": "^16.12.0",
       "uuid": "^10.0.0",
       "winston": "^3.14.2",
