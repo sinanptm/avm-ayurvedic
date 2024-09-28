@@ -21,3 +21,27 @@ export const getSectionsInOneDayDoctor = async () => {
    return response.data;
 };
 
+export const getSectionByIdPatient = async (sectionId: string) => {
+   const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {
+      method: "GET",
+      url: `/${sectionId}`,
+   });
+   return response.data;
+};
+
+export const getSectionByIdDoctor = async (sectionId: string) => {
+   const response = await withTempBaseUrl(doctorAxiosInstance, doctorBaseUrl, {
+      method: "GET",
+      url: `/${sectionId}`,
+   });
+   return response.data;
+};
+
+export const getAllSectionsDoctor = async () => {
+   const response = await withTempBaseUrl(doctorAxiosInstance, doctorBaseUrl, {
+      method: "GET",
+      url: `/`,
+   });
+   return response.data;
+};
+

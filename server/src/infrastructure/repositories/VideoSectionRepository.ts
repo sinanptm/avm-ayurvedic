@@ -21,6 +21,10 @@ export default class VideoSectionRepository implements IVideoSectionRepository {
         await this.model.findByIdAndDelete(id);
     }
 
+    async findAllSectionsByDoctorId(doctorId: string, status: VideoSectionStatus): Promise<IVideoSection[] | null> {
+        return this.model.find({ doctorId, status })
+    }
+
     async findByAppointmentId(appointmentId: string): Promise<IVideoSection | null> {
         return await this.model.findOne({ appointmentId });
     }

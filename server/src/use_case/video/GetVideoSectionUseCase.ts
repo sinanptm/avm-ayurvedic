@@ -1,4 +1,4 @@
-import IVideoSection from "../../domain/entities/IVideoChatSection";
+import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { addDays } from "../../utils/date-formatter";
@@ -14,9 +14,9 @@ export default class GetVideoSectionUseCase {
         return await this.videoSectionRepository.findById(id);
     }
 
-    async getSectionByAppointmentId(appointmentId: string): Promise<IVideoSection | null> {
-        this.validatorService.validateIdFormat(appointmentId)
-        return await this.videoSectionRepository.findByAppointmentId(appointmentId);
+    async getSectionsByDoctorId(doctorId: string): Promise<IVideoSection[] | []> {
+        const sections = await this.videoSectionRepository.findAllSectionsByDoctorId(doctorId, VideoSectionStatus.PENDING)
+        return sections ? sections : [];
     }
 
     async getSectionInOneDayDoctor(doctorId: string): Promise<IVideoSection[] | []> {
