@@ -4,20 +4,30 @@ import { Card } from "@/components/ui/card"
 import { VideoIcon, PhoneIcon } from "lucide-react"
 import VideoChat from '@/components/page-components/video/VideoChat'
 import { ButtonV2 } from '@/components/button/ButtonV2'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 
 export default function VideoCallPage() {
   const [isCalling, setIsCalling] = useState(false);
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const sectionId = useParams().sectionId as string;
-  
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRemoteStream(new MediaStream());
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [sectionId]);
+
+
   const handleStartCall = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       setLocalStream(stream)
       setIsCalling(true)
-      
+
     } catch (error) {
       console.error('Error accessing media devices:', error)
     }
@@ -34,7 +44,7 @@ export default function VideoCallPage() {
   return (
     <div className="h-screen flex flex-col bg-gradient-to-b text-white">
       {isCalling ? (
-        <VideoChat localStream={localStream} isCalling={isCalling} handleEndCall={handleEndCall} />
+        <VideoChat localStream={localStream} isCalling={isCalling} handleEndCall={handleEndCall} remoteStream={remoteStream} isDoctor={false} remoteAvatar="" selfAvatar="" />
       ) : (
         <Card className="flex flex-col items-center justify-center flex-grow bg-transparent border-0 shadow-none">
           <VideoIcon className="w-24 h-24 mb-8 text-blue-500" />

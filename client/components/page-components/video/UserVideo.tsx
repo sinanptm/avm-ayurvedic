@@ -1,24 +1,25 @@
-import { useEffect, useRef } from "react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useEffect, useRef } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface UserVideoProps {
-  stream: MediaStream | null
-  isSelf: boolean
-  fullScreen?: boolean
+  stream: MediaStream | null;
+  isSelf: boolean;
+  avatarUrl?: string;
+  fullScreen?: boolean;
 }
 
-export default function UserVideo({ stream, isSelf, fullScreen = false }: UserVideoProps) {
-  const videoRef = useRef<HTMLVideoElement>(null)
+export default function UserVideo({ stream, isSelf, avatarUrl, fullScreen = false }: UserVideoProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream
+      videoRef.current.srcObject = stream;
     }
-  }, [stream])
+  }, [stream]);
 
   const videoClasses = fullScreen
     ? "absolute inset-0 w-full h-full object-cover"
-    : "w-full h-full object-cover rounded-lg"
+    : "w-full h-full object-cover rounded-lg";
 
   return (
     <div className={`relative ${fullScreen ? 'h-full' : 'aspect-video'}`}>
@@ -33,8 +34,7 @@ export default function UserVideo({ stream, isSelf, fullScreen = false }: UserVi
       ) : (
         <div className={`flex items-center justify-center bg-gray-800 ${videoClasses}`}>
           <Avatar className={fullScreen ? "w-40 h-40" : "w-16 h-16"}>
-            <AvatarImage src={isSelf ? "/your-avatar.png" : "/remote-avatar.png"} />
-            <AvatarFallback>{isSelf ? "You" : "Peer"}</AvatarFallback>
+            <AvatarImage src={avatarUrl??"/assets/icons/circle-user.svg"} alt={isSelf ? "Your Avatar" : "Peer Avatar"} />
           </Avatar>
         </div>
       )}
@@ -42,5 +42,5 @@ export default function UserVideo({ stream, isSelf, fullScreen = false }: UserVi
         {isSelf ? 'You' : 'Remote User'}
       </div>
     </div>
-  )
+  );
 }

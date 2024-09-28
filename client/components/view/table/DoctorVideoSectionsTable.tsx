@@ -1,9 +1,14 @@
+"use client"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { useGetAllSectionsDoctor } from "@/lib/hooks/video/useDoctor"
+import { useGetAllSectionsDoctor } from "@/lib/hooks/video/useDoctor";
+import { format } from 'date-fns';
+import { ButtonV2 } from "@/components/button/ButtonV2"
+import Link from "next/link"
+
 
 export default function VideoSectionsTable() {
   const { data: sections, isLoading } = useGetAllSectionsDoctor();
@@ -11,8 +16,8 @@ export default function VideoSectionsTable() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Video Sections</CardTitle>
-        <CardDescription>A list of all video sections including doctor and patient details.</CardDescription>
+        <CardTitle>Upcoming Video Sections</CardTitle>
+        <CardDescription>A list of the first 10 upcoming video sections, including doctor and patient details.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
@@ -23,7 +28,7 @@ export default function VideoSectionsTable() {
                 <TableHead>Patient Name</TableHead>
                 <TableHead>Start Time</TableHead>
                 <TableHead>End Time</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -52,14 +57,10 @@ export default function VideoSectionsTable() {
                       />
                     </TableCell>
                     <TableCell>{section.patientName}</TableCell>
-                    <TableCell>{new Date(section.startTime!).toLocaleString()}</TableCell>
-                    <TableCell>{new Date(section.endTime!).toLocaleString()}</TableCell>
+                    <TableCell>{format(new Date(section.startTime!), 'PP, hh:mm a ')}</TableCell>
+                    <TableCell>{format(new Date(section.endTime!), 'hh:mm a')}</TableCell>
                     <TableCell>
-                      <Badge
-                        variant={section.status === 'pending' ? 'outline' : 'default'}
-                      >
-                        {section.status}
-                      </Badge>
+                      <ButtonV2 variant={'linkHover2'} ><Link href={`/doctor/video-sections/${section._id}`}>Join Now</Link></ButtonV2>
                     </TableCell>
                   </TableRow>
                 ))

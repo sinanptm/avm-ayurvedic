@@ -11,13 +11,11 @@ export default function ControlPanel({ onEndCall }: ControlPanelProps) {
   const [isVideoOff, setIsVideoOff] = useState(false)
 
   const toggleMute = () => {
-    setIsMuted(!isMuted)
-    // Here you would actually mute/unmute the WebRTC audio track
+    setIsMuted(!isMuted);
   }
 
   const toggleVideo = () => {
-    setIsVideoOff(!isVideoOff)
-    // Here you would actually enable/disable the WebRTC video track
+    setIsVideoOff(!isVideoOff);
   }
 
   return (

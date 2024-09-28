@@ -2,7 +2,7 @@ import { getAllSectionsDoctor, getSectionByIdDoctor, getSectionsInOneDayDoctor }
 import { IVideoSection } from "@/types/entities";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ErrorResponse, MessageResponse } from "@/types";
+import { ErrorResponse } from "@/types";
 
 export const useGetSectionsInOneDayDoctor = () => {
     return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
@@ -12,7 +12,7 @@ export const useGetSectionsInOneDayDoctor = () => {
 };
 
 export const useGetSectionByIdDoctor = (sectionId: string) => {
-    return useQuery<IVideoSection, AxiosError<ErrorResponse>>({
+    return useQuery<{section:IVideoSection}, AxiosError<ErrorResponse>>({
         queryKey: ["section-doctor", sectionId],
         queryFn: () => getSectionByIdDoctor(sectionId),
     });

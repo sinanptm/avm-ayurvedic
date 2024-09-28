@@ -11,7 +11,7 @@ export interface IVideoSectionRepository {
   findByStatus(status: VideoSectionStatus): Promise<IVideoSection | null>;
   findByStartTimeRangeByDoctorId(startTime: string, endTime: string, doctorId: string): Promise<IVideoSection[] | null>;
   findByStartTimeRangeByPatientId(startTime: string, endTime: string, patientId: string): Promise<IVideoSection[] | null>;
-  findAllSectionsByDoctorId(doctorId:string,status:VideoSectionStatus):Promise<IVideoSection[] | null>;
+  findAllSectionsByDoctorId(doctorId:string,status:VideoSectionStatus,limit:number):Promise<IVideoSection[] | null>;
 }
 
 

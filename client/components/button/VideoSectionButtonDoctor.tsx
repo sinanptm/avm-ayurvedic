@@ -14,7 +14,6 @@ const VideoSectionButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
         setIsModalOpen(true);
     };
 
-    console.log(upcomingSections);
     if (isLoading) return null;
 
     return (
