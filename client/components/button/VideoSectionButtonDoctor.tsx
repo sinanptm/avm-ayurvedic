@@ -7,19 +7,19 @@ import { Badge } from '@/components/ui/badge';
 import VideoSectionsModel from '@/components/models/VideoSectionsModel';
 import { useGetSectionsInOneDayDoctor } from '@/lib/hooks/video/useDoctor';
 
-const VideoSectionButtonDoctor =forwardRef<HTMLButtonElement>((props, ref) => {
+const VideoSectionButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
     const { data: upcomingSections, isLoading } = useGetSectionsInOneDayDoctor();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleClick = () => {
         setIsModalOpen(true);
-    }
+    };
 
     console.log(upcomingSections);
-    if (isLoading) return null
+    if (isLoading) return null;
 
     return (
         <>
-            <ButtonV2 variant="ghost" size="icon"  ref={ref} className="relative" onClick={handleClick}>
+            <ButtonV2 variant="ghost" size="icon" ref={ref} className="relative" onClick={handleClick}>
                 <Image
                     src="/assets/icons/utils/video.svg"
                     width={20}
@@ -42,10 +42,12 @@ const VideoSectionButtonDoctor =forwardRef<HTMLButtonElement>((props, ref) => {
                 setOpen={setIsModalOpen}
                 sections={upcomingSections!}
                 link="/doctor/video-section"
-                user='doctor'
+                user="doctor"
             />
         </>
-    )
+    );
 });
+
+VideoSectionButtonDoctor.displayName = 'VideoSectionButtonDoctor';
 
 export default memo(VideoSectionButtonDoctor);
