@@ -14,7 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { XIcon, Video } from "lucide-react";
 import { ButtonV2 } from "../button/ButtonV2";
 import Link from "next/link";
-import IVideoSection from "@/types/entities";
+import {IVideoSection} from "@/types/entities";
 import { format } from "date-fns"
 
 

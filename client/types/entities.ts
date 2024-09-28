@@ -95,7 +95,7 @@ export interface IMessage {
    readonly isReceived?: boolean;
 }
 
-export default interface IVideoSection {
+export interface IVideoSection {
    _id?: string;
    appointmentId?: string;
    doctorName?: string;

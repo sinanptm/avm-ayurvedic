@@ -1,23 +1,25 @@
 import { getAllSectionsDoctor, getSectionByIdDoctor, getSectionsInOneDayDoctor } from "@/lib/api/video";
-import IVideoSection from "@/types/entities";
+import { IVideoSection } from "@/types/entities";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { ErrorResponse, MessageResponse } from "@/types";
 
 export const useGetSectionsInOneDayDoctor = () => {
-    return useQuery<IVideoSection[]>({
+    return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
         queryKey: ["section-day-doctor"],
         queryFn: () => getSectionsInOneDayDoctor(),
     });
 };
 
 export const useGetSectionByIdDoctor = (sectionId: string) => {
-    return useQuery<IVideoSection>({
-        queryKey: ["section-doctor",sectionId],
+    return useQuery<IVideoSection, AxiosError<ErrorResponse>>({
+        queryKey: ["section-doctor", sectionId],
         queryFn: () => getSectionByIdDoctor(sectionId),
     });
 };
 
 export const useGetAllSectionsDoctor = () => {
-    return useQuery<IVideoSection[]>({
+    return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
         queryKey: ["sections-doctor"],
         queryFn: () => getAllSectionsDoctor(),
     });

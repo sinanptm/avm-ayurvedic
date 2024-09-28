@@ -1,13 +1,13 @@
 'use client';
 
-import React, { memo, useState } from 'react';
+import React, { forwardRef, memo, useState } from 'react';
 import { ButtonV2 } from './ButtonV2';
 import Image from 'next/image';
-import { Badge } from '@/components/ui/badge'
-import VideoSectionsModel from '@/components/models/VideoSectionsModel'
+import { Badge } from '@/components/ui/badge';
+import VideoSectionsModel from '@/components/models/VideoSectionsModel';
 import { useGetSectionsInOneDayDoctor } from '@/lib/hooks/video/useDoctor';
 
-const VideoSectionButtonDoctor = () => {
+const VideoSectionButtonDoctor =forwardRef<HTMLButtonElement>((props, ref) => {
     const { data: upcomingSections, isLoading } = useGetSectionsInOneDayDoctor();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleClick = () => {
@@ -17,10 +17,9 @@ const VideoSectionButtonDoctor = () => {
     console.log(upcomingSections);
     if (isLoading) return null
 
-
     return (
         <>
-            <ButtonV2 variant="ghost" size="icon" className="relative" onClick={handleClick}>
+            <ButtonV2 variant="ghost" size="icon"  ref={ref} className="relative" onClick={handleClick}>
                 <Image
                     src="/assets/icons/utils/video.svg"
                     width={20}
@@ -47,6 +46,6 @@ const VideoSectionButtonDoctor = () => {
             />
         </>
     )
-}
+});
 
-export default memo(VideoSectionButtonDoctor)
+export default memo(VideoSectionButtonDoctor);
