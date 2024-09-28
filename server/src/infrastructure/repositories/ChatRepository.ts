@@ -13,6 +13,13 @@ export default class ChatRepository implements IChatRepository {
     async update({ _id, ...chat }: IChat): Promise<void> {
         await this.model.findByIdAndUpdate({ _id }, chat)
     }
+    async findByDoctorIdAndUpdate(doctorId: string, chat: IChat): Promise<void> {
+        await this.model.updateMany({ doctorId }, chat)
+    }
+    async findByPatientIdAndUpdate(patientId: string, chat: IChat): Promise<void> {
+        await this.model.updateMany({ patientId }, chat )
+    }
+
     async findAllChatsForPatient(patientId: string): Promise<IChat[]> {
         return await this.model.find({ patientId });
     }

@@ -1,17 +1,21 @@
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
-import IPatient  from "../../domain/entities/IPatient";
+import IPatient from "../../domain/entities/IPatient";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
 import { AWS_REGION, S3_BUCKET_NAME } from "../../config/env";
+import IChatRepository from "../../domain/interface/repositories/IChatRepository";
+import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
 
 export default class PatientUseCase {
    constructor(
       private patientRepository: IPatientRepository,
       private cloudStorageService: ICloudStorageService,
-      private validatorService: IValidatorService
-   ) {}
+      private validatorService: IValidatorService,
+      private chatRepository: IChatRepository,
+      private videoSectionRepository: IVideoSectionRepository
+   ) { }
 
    async getUserProfile(id: string): Promise<IPatient> {
       this.validatorService.validateIdFormat(id);
@@ -30,7 +34,10 @@ export default class PatientUseCase {
       const existingPatient = await this.patientRepository.findById(id);
       if (!existingPatient) throw new CustomError("Patient not found", StatusCode.NotFound);
       if (existingPatient.isBlocked) throw new CustomError("Patient account is blocked", StatusCode.Forbidden);
-
+      if (existingPatient.name !== patient.name) {
+         await this.videoSectionRepository.findByPatientIdAndUpdate(id, { patientName: patient.name });
+         await this.chatRepository.findByPatientIdAndUpdate(id, { patientName: patient.name });
+      }
       await this.patientRepository.findByIdAndUpdate(id, patient);
    }
 
@@ -61,6 +68,8 @@ export default class PatientUseCase {
 
       const imageUrl = `https://${S3_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${key}`;
       patient.profile = imageUrl;
+      await this.videoSectionRepository.findByPatientIdAndUpdate(id, { patientProfile: imageUrl });
+      await this.chatRepository.findByPatientIdAndUpdate(id, { patientProfile: imageUrl });
       await this.patientRepository.update(patient);
    }
 }

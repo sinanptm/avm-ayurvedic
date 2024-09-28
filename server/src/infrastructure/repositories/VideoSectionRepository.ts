@@ -17,6 +17,14 @@ export default class VideoSectionRepository implements IVideoSectionRepository {
         return await this.model.findByIdAndUpdate(id, videoSection, { new: true });
     }
 
+    async findByPatientIdAndUpdate(patientId: string, section: IVideoSection): Promise<void> {
+        await this.model.updateMany({ patientId }, { $set: { ...section } });
+    }
+
+    async findByDoctorIdAndUpdate(doctorId: string, section: IVideoSection): Promise<void> {
+        await this.model.updateMany({ doctorId }, { $set: { ...section } });
+    }
+
     async delete(id: string): Promise<void> {
         await this.model.findByIdAndDelete(id);
     }
