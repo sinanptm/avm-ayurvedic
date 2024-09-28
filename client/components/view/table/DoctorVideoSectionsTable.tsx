@@ -3,14 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { IVideoSection } from "@/types/entities"
+import { useGetAllSectionsDoctor } from "@/lib/hooks/video/useDoctor"
 
-interface VideoSectionsTableProps {
-  sections: IVideoSection[];
-  isLoading: boolean;
-}
+export default function VideoSectionsTable() {
+  const { data: sections, isLoading } = useGetAllSectionsDoctor();
 
-export default function VideoSectionsTable({ sections, isLoading }: VideoSectionsTableProps) {
   return (
     <Card>
       <CardHeader>
@@ -42,8 +39,8 @@ export default function VideoSectionsTable({ sections, isLoading }: VideoSection
                     <TableCell><Skeleton className="h-6 w-[80px]" /></TableCell>
                   </TableRow>
                 ))
-              ) : sections.length > 0 ? (
-                sections.map((section) => (
+              ) : sections!.length > 0 ? (
+                sections!.map((section) => (
                   <TableRow key={section._id!}>
                     <TableCell>
                       <Image
@@ -58,7 +55,7 @@ export default function VideoSectionsTable({ sections, isLoading }: VideoSection
                     <TableCell>{new Date(section.startTime!).toLocaleString()}</TableCell>
                     <TableCell>{new Date(section.endTime!).toLocaleString()}</TableCell>
                     <TableCell>
-                      <Badge 
+                      <Badge
                         variant={section.status === 'pending' ? 'outline' : 'default'}
                       >
                         {section.status}
