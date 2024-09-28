@@ -25,7 +25,7 @@ const videoSectionSchema = new Schema<IVideoSection>({
     patientName: { type: String, required: true },
     startTime: { type: Date, required: true, index: true },
     endTime: { type: Date, required: true },
-    link: { type: String },
+    roomId: { type: String },
     status: {
         type: String,
         required: true,

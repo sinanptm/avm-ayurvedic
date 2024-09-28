@@ -29,6 +29,7 @@
       "mongoose": "^8.5.3",
       "nodemailer": "^6.9.14",
       "stripe": "^16.12.0",
+      "uuid": "^10.0.0",
       "winston": "^3.14.2",
       "winston-daily-rotate-file": "^5.0.0"
    },
@@ -41,6 +42,7 @@
       "@types/mongoose": "^5.11.97",
       "@types/node": "^22.5.0",
       "@types/nodemailer": "^6.4.15",
+      "@types/uuid": "^10.0.0",
       "concurrently": "^8.2.2",
       "nodemon": "^3.1.4",
       "prettier": "^3.3.3",

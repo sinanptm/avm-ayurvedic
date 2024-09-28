@@ -15,6 +15,7 @@ import IPatient from "../../domain/entities/IPatient";
 import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 import { addMinutes, parse, format } from "../../utils/date-formatter";
 import { CLIENT_URL } from "../../config/env";
+import IUUIDService from "../../domain/interface/services/IUUIDService";
 
 export default class AppointmentUseCase {
    bookingAmount: number;
@@ -27,7 +28,8 @@ export default class AppointmentUseCase {
       private paymentRepository: IPaymentRepository,
       private videoSectionRepository: IVideoSectionRepository,
       private doctorRepository: IDoctorRepository,
-      private patientRepository: IPatientRepository
+      private patientRepository: IPatientRepository,
+      private uuIdService: IUUIDService
    ) {
       this.bookingAmount = 300;
    }
@@ -97,6 +99,8 @@ export default class AppointmentUseCase {
    
       const calculatedStartTime = format(slotStartTimeFormatted, "yyyy-MM-dd'T'HH:mm:ssXXX");
       const calculatedEndTime = format(slotEndTime, "yyyy-MM-dd'T'HH:mm:ssXXX");
+
+      const randomId = this.uuIdService.generate()
    
       await this.videoSectionRepository.create({
          appointmentId: appointment._id!,
@@ -110,9 +114,10 @@ export default class AppointmentUseCase {
          updatedAt: appointment.updatedAt as unknown as Date,
          status: VideoSectionStatus.PENDING,
          patientId: patient._id!,
-         doctorId: doctor._id!
+         doctorId: doctor._id!,
+         roomId: randomId
       });
-   }
+   };
 
    async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
       const result = await this.paymentService.handleWebhookEvent(body, signature);

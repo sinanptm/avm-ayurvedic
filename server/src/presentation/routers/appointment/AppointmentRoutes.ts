@@ -15,15 +15,17 @@ import NotificationRepository from "../../../infrastructure/repositories/Notific
 import VideoSectionRepository from "../../../infrastructure/repositories/VideoSectionRepository";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
+import UUIDService from "../../../infrastructure/services/UUIDService";
 
 const router = Router();
 
-const appointmentRepository = new AppointmentRepository();
 const slotRepository = new SlotRepository();
-const tokenService = new JWTService();
 const validatorService = new JoiService();
-
 const paymentService = new StripeService();
+const tokenService = new JWTService();
+const uuIdService = new UUIDService()
+
+const appointmentRepository = new AppointmentRepository();
 const paymentRepository = new PaymentRepository();
 const notificationRepository = new NotificationRepository();
 const videoSectionRepository = new VideoSectionRepository();
@@ -38,7 +40,8 @@ const createAppointmentUseCase = new CreateAppointmentUseCase(
    paymentRepository,
    videoSectionRepository,
    doctorRepository,
-   patientRepository
+   patientRepository,
+   uuIdService
 );
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService, paymentRepository);
 const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService, notificationRepository);

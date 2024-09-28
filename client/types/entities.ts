@@ -108,6 +108,6 @@ export interface IVideoSection {
    updatedAt?: Date;
    startTime?: Date | string;
    endTime?: Date | string;
-   link?: string;
+   roomId?: string;
    status?: VideoSectionStatus;
 }

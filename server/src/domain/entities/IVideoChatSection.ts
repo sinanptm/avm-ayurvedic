@@ -11,7 +11,7 @@ export default interface IVideoSection {
   readonly updatedAt?: Date;
   readonly startTime?: Date | string;
   readonly endTime?: Date | string;
-  link?: string;
+  readonly roomId?: string;
   readonly status?: VideoSectionStatus;
 }
 
