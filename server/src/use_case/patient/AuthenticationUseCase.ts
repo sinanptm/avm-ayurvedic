@@ -7,6 +7,7 @@ import IValidatorService from "../../domain/interface/services/IValidatorService
 import CustomError from "../../domain/entities/CustomError";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { StatusCode, UserRole } from "../../types";
+import { CLIENT_URL } from "../../config/env";
 
 type TokensResponse = {
    accessToken: string;
@@ -146,7 +147,7 @@ export default class AuthenticationUseCase {
          name: patient.name!,
          pathOfTemplate: "../../../public/resetPasswordTemplate.html",
          subject: "Password Reset",
-         link: `${process.env.CLIENT_URL}/signin/reset-password`,
+         link: `${CLIENT_URL}/signin/reset-password`,
       });
    }
 

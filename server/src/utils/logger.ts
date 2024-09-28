@@ -1,6 +1,7 @@
 import { createLogger, format, transports } from "winston";
 import path from "path";
 import "winston-daily-rotate-file";
+import { NODE_ENV } from "../config/env";
 
 const logDirectory = path.resolve(path.join(__dirname,'../../'), "logs");
 
@@ -41,7 +42,7 @@ const logger = createLogger({
    ],
 });
 
-if (process.env.NODE_ENV !== "production") {
+if (NODE_ENV !== "production") {
    logger.add(
       new transports.Console({
          level: "debug",

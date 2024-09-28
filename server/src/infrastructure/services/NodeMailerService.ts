@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
+import { NODEMAILER_PASSKEY, SENDER_EMAIL } from "../../config/env";
 
 const readFileAsync = promisify(fs.readFile);
 
@@ -23,13 +24,13 @@ export default class NodeMailerService implements IEmailService {
       const transporter = nodemailer.createTransport({
          service: "gmail",
          auth: {
-            user: process.env.SENDER_EMAIL,
-            pass: process.env.NODEMAILER_PASSKEY,
+            user: SENDER_EMAIL,
+            pass: NODEMAILER_PASSKEY,
          },
       });
 
       await transporter.sendMail({
-         from: process.env.SENDER_EMAIL,
+         from: SENDER_EMAIL,
          to: email,
          subject: subject || "No Reply Mail",
          html: htmlTemplate,

@@ -8,6 +8,7 @@ import IValidatorService from "../../domain/interface/services/IValidatorService
 import CustomError from "../../domain/entities/CustomError";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import { StatusCode, UserRole } from "../../types";
+import { AWS_REGION, CLIENT_URL, S3_BUCKET_NAME } from "../../config/env";
 
 export default class AuthenticationUseCase {
    constructor(
@@ -96,7 +97,7 @@ export default class AuthenticationUseCase {
          name: doctor.name!,
          pathOfTemplate: "../../../public/resetPasswordTemplate.html",
          subject: "No Reply Mail: Password Reset",
-         link: `${process.env.CLIENT_URL}/doctor/reset-password`,
+         link: `${CLIENT_URL}/doctor/reset-password`,
       });
    }
 
@@ -132,7 +133,7 @@ export default class AuthenticationUseCase {
       const doctor = await this.doctorRepository.findById(id);
       if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
       const key = `profile-images/doctor/${id}-${Date.now()}`;
-      const url = await this.cloudService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
+      const url = await this.cloudService.generatePreSignedUrl(S3_BUCKET_NAME!, key, 30);
       return { url, key };
    }
 
@@ -143,9 +144,9 @@ export default class AuthenticationUseCase {
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
 
       if (doctor.image) {
-         await this.cloudService.deleteFile(process.env.S3_BUCKET_NAME!, doctor.image.split("amazonaws.com/").pop()!);
+         await this.cloudService.deleteFile(S3_BUCKET_NAME!, doctor.image.split("amazonaws.com/").pop()!);
       }
-      const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${key}`;
       doctor.image = imageUrl;
       await this.doctorRepository.update(doctor);
    }

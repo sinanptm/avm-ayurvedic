@@ -1,5 +1,4 @@
 import express from "express";
-import dotenv from "dotenv";
 import { connectDB } from "./config/connectDB";
 import routes from "./presentation/routers/index";
 import cors from "cors";
@@ -7,16 +6,15 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
+import { CLIENT_URL, NODE_ENV, PORT } from "./config/env";
 
-dotenv.config();
-
-const port = process.env.PORT || 8080;
+const port = PORT || 8080;
 
 const app = express();
 app.use(helmet());
 app.use(
    cors({
-      origin: process.env.CLIENT_URL,
+      origin: CLIENT_URL,
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
@@ -30,7 +28,7 @@ app.use("/api", routes);
 
 connectDB().then(() => {
    app.listen(port, () => {
-      if (process.env.NODE_ENV !== "production") {
+      if (NODE_ENV !== "production") {
          console.log(`Server start listening on port: ${port}`);
       }
    });

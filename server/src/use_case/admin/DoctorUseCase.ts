@@ -4,6 +4,7 @@ import IDoctorRepository from "../../domain/interface/repositories/IDoctorReposi
 import IEmailService from "../../domain/interface/services/IEmailService";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { DoctorsFilter, PaginatedResult, StatusCode } from "../../types";
+import { CLIENT_URL } from "../../config/env";
 
 export default class AdminDoctorUseCase {
    constructor(
@@ -35,7 +36,7 @@ export default class AdminDoctorUseCase {
             name: "Admin",
             pathOfTemplate: "../../../public/notifyVerificationTemplate.html",
             subject: "No Reply Mail: Doctor Verification Notification",
-            link: `${process.env.CLIENT_URL}/doctor`,
+            link: `${CLIENT_URL}/doctor`,
          });
       }
    }

@@ -4,6 +4,7 @@ import IPatient  from "../../domain/entities/IPatient";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
+import { AWS_REGION, S3_BUCKET_NAME } from "../../config/env";
 
 export default class PatientUseCase {
    constructor(
@@ -39,7 +40,7 @@ export default class PatientUseCase {
       if (!patient) throw new CustomError("Patient not found", StatusCode.NotFound);
 
       const key = `profile-images/patient/${id}-${Date.now()}`;
-      const url = await this.cloudStorageService.generatePreSignedUrl(process.env.S3_BUCKET_NAME!, key, 30);
+      const url = await this.cloudStorageService.generatePreSignedUrl(S3_BUCKET_NAME!, key, 30);
       return { url, key };
    }
 
@@ -53,12 +54,12 @@ export default class PatientUseCase {
 
       if (patient.profile) {
          await this.cloudStorageService.deleteFile(
-            process.env.S3_BUCKET_NAME!,
+            S3_BUCKET_NAME!,
             patient.profile.split("amazonaws.com/").pop()!
          );
       }
 
-      const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${key}`;
       patient.profile = imageUrl;
       await this.patientRepository.update(patient);
    }

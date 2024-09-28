@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { StatusCode } from "../../types/index";
 import logger from "../../utils/logger";
 import CustomError from "../../domain/entities/CustomError";
+import { NODE_ENV } from "../../config/env";
 
 export default class ErrorHandler {
    constructor() {
@@ -61,7 +62,7 @@ export default class ErrorHandler {
 
       res.status(statusCode).json({
          message,
-         ...(process.env.NODE_ENV !== "production" && { stack: error.stack }),
+         ...(NODE_ENV !== "production" && { stack: error.stack }),
       });
    }
 }

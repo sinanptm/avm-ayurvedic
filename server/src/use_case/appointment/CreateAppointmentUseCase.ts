@@ -14,6 +14,7 @@ import IDoctor from "../../domain/entities/IDoctor";
 import IPatient from "../../domain/entities/IPatient";
 import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 import { addMinutes, parse, format } from "../../utils/date-formatter";
+import { CLIENT_URL } from "../../config/env";
 
 export default class AppointmentUseCase {
    bookingAmount: number;
@@ -64,8 +65,8 @@ export default class AppointmentUseCase {
       const checkoutSession = await this.paymentService.createCheckoutSession(
          this.bookingAmount,
          "INR",
-         `${process.env.CLIENT_URL}/new-appointment/${payment._id}`,
-         `${process.env.CLIENT_URL}/new-appointment/cancel/${payment._id}`,
+         `${CLIENT_URL}/new-appointment/${payment._id}`,
+         `${CLIENT_URL}/new-appointment/cancel/${payment._id}`,
          { paymentId: payment._id?.toString() }
       );
 

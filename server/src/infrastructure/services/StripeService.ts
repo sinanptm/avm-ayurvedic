@@ -3,8 +3,9 @@ import IPaymentService from "../../domain/interface/services/IPaymentService";
 import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
 import logger from "../../utils/logger";
+import { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } from "../../config/env";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+const stripe = new Stripe(STRIPE_SECRET_KEY as string, {
    apiVersion: "2024-06-20",
 });
 
@@ -61,7 +62,7 @@ class StripePaymentService implements IPaymentService {
 
    async handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string }> {
       try {
-         const event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
+         const event = stripe.webhooks.constructEvent(body, signature, STRIPE_WEBHOOK_SECRET!);
          let res: { event: any; transactionId: string } = { event: null, transactionId: "" };
          switch (event.type) {
             case "payment_intent.succeeded":
