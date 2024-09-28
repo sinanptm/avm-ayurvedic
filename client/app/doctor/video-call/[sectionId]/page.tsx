@@ -1,56 +1,62 @@
 'use client'
-import VideoChat from '@/components/page-components/video/VideoChat';
-import { useGetSectionByIdDoctor } from '@/lib/hooks/video/useDoctor';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-const VideoCallPage = () => {
-    const { sectionId } = useParams();
-    const [isCalling, setIsCalling] = useState(false);
-    const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-    const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
-    const { data, isLoading } = useGetSectionByIdDoctor(sectionId as string);
-    const section = data?.section
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setRemoteStream(new MediaStream());
-        }, 2000);
+import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
+import { useGetSectionByIdDoctor } from '@/lib/hooks/video/useDoctor'
+import JoinPage from './Join-page'
+import VideoChat from '@/components/page-components/video/VideoChat'
 
-        return () => clearTimeout(timer);
-    }, [sectionId]);
+export default function VideoCallPage() {
+  const { sectionId } = useParams()
+  const [hasJoined, setHasJoined] = useState(false)
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null)
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
+  const { data, isLoading } = useGetSectionByIdDoctor(sectionId as string)
+  const section = data?.section
 
-    const handleStartCall = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            setLocalStream(stream);
-            setIsCalling(true);
-        } catch (error) {
-            console.error('Error accessing media devices:', error);
-        }
-    };
+  useEffect(() => {
+    if (hasJoined) {
+      const timer = setTimeout(() => {
+        setRemoteStream(new MediaStream())
+      }, 2000)
 
-    const handleEndCall = () => {
-        if (localStream) {
-            localStream.getTracks().forEach(track => track.stop());
-        }
-        setLocalStream(null);
-        setRemoteStream(null);
-        setIsCalling(false);
-    };
+      return () => clearTimeout(timer)
+    }
+  }, [hasJoined, sectionId])
 
-    if (isLoading) return <div>Loading...</div>; 
+  const handleJoin = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      setLocalStream(stream)
+      setHasJoined(true)
+    } catch (error) {
+      console.error('Error accessing media devices:', error)
+    }
+  }
 
-    return (
-        <VideoChat
-          localStream={localStream}
-          remoteStream={remoteStream}
-          handleEndCall={handleEndCall}
-          isCalling={isCalling}
-          isDoctor={true} 
-          selfAvatar={section?.doctorProfile!}
-          remoteAvatar={section?.patientProfile!}
-        />
-    );
+  const handleEndCall = () => {
+    if (localStream) {
+      localStream.getTracks().forEach(track => track.stop())
+    }
+    setLocalStream(null)
+    setRemoteStream(null)
+    setHasJoined(false)
+  }
+
+  if (isLoading) return <div className="flex items-center justify-center h-screen">Loading...</div>
+
+  if (!hasJoined) {
+    return <JoinPage onJoin={handleJoin} section={section!} />
+  }
+
+  return (
+    <VideoChat
+      localStream={localStream}
+      remoteStream={remoteStream}
+      handleEndCall={handleEndCall}
+      isDoctor={true}
+      selfAvatar={section?.doctorProfile!}
+      remoteAvatar={section?.patientProfile!}
+    />
+  )
 }
-
-export default VideoCallPage;

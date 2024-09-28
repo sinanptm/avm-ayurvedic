@@ -41,6 +41,8 @@ const AdminLayoutWithSideBar = ({
   const { setCredentials } = useAuth();
   const router = useRouter();
 
+  const isVideoCall = pathname.includes("/video-call/")
+
   const handleLogout = () => {
     logout(
       {},
@@ -171,7 +173,7 @@ const AdminLayoutWithSideBar = ({
           </div>
         </aside>
       </TooltipProvider>
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+      <div className={`flex flex-col sm:gap-4 sm:py-4 sm:pl-14 ${isVideoCall&&"gap-0 m-0 p-0 "} `}>
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>

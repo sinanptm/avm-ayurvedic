@@ -40,7 +40,7 @@ const VideoSectionButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
                 open={isModalOpen}
                 setOpen={setIsModalOpen}
                 sections={upcomingSections!}
-                link="/doctor/video-section"
+                link="/doctor/video-call"
                 user="doctor"
             />
         </>
