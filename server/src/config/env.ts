@@ -16,7 +16,7 @@ const {
     S3_BUCKET_NAME,
     STRIPE_PUBLISHABLE_KEY,
     STRIPE_SECRET_KEY,
-    STRIPE_WEBHOOK_SECRET,   
+    STRIPE_WEBHOOK_SECRET,
 } = process.env;
 
 export {

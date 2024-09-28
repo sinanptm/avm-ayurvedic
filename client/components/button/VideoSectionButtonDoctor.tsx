@@ -4,11 +4,11 @@ import React, { memo, useState } from 'react';
 import { ButtonV2 } from './ButtonV2';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge'
-import { useGetSectionsInOneDayPatient } from '@/lib/hooks/video/usePatient';
 import VideoSectionsModel from '@/components/models/VideoSectionsModel'
+import { useGetSectionsInOneDayDoctor } from '@/lib/hooks/video/useDoctor';
 
-const VideoSectionButtonPatient = () => {
-    const { data: upcomingSections, isLoading } = useGetSectionsInOneDayPatient();
+const VideoSectionButtonDoctor = () => {
+    const { data: upcomingSections, isLoading } = useGetSectionsInOneDayDoctor();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleClick = () => {
         setIsModalOpen(true);
@@ -42,11 +42,11 @@ const VideoSectionButtonPatient = () => {
                 open={isModalOpen}
                 setOpen={setIsModalOpen}
                 sections={upcomingSections!}
-                link="/video-section"
-                user='patient'
+                link="/doctor/video-section"
+                user='doctor'
             />
         </>
     )
 }
 
-export default memo(VideoSectionButtonPatient)
+export default memo(VideoSectionButtonDoctor)

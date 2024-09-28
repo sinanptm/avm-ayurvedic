@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Package2, PanelLeft, Search } from "lucide-react";
+import { Package2, PanelLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,7 +17,6 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { NavLinkType } from "@/types";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -26,6 +25,7 @@ import { useAuth } from "@/lib/hooks/useAuth";
 import LogoutModel from "../models/LogoutModel";
 import { useLogoutDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 import NotificationButtonDoctor from "../button/NotificationButtonDoctor";
+import VideoSectionButtonDoctor from "../button/VideoSectionButtonDoctor";
 
 const AdminLayoutWithSideBar = ({
   children,
@@ -106,6 +106,17 @@ const AdminLayoutWithSideBar = ({
             ))}
           </nav>
           <div className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+              <VideoSectionButtonDoctor />
+              </TooltipTrigger>
+              <TooltipContent
+                side="right"
+                className="bg-green-700 bg-opacity-55 border-white cursor-pointer"
+              >
+                Video Sections
+              </TooltipContent>
+            </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
                 <NotificationButtonDoctor />
@@ -201,6 +212,7 @@ const AdminLayoutWithSideBar = ({
                     {item.label}
                   </Link>
                 ))}
+                <VideoSectionButtonDoctor />
                 <NotificationButtonDoctor />
               </nav>
             </SheetContent>
@@ -209,6 +221,7 @@ const AdminLayoutWithSideBar = ({
             <form className="ml-auto flex-1 sm:flex-initial">
               <div className="relative" />
             </form>
+            <VideoSectionButtonDoctor />
             <NotificationButtonDoctor />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

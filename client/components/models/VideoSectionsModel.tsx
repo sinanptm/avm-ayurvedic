@@ -23,13 +23,15 @@ type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   sections: IVideoSection[];
   link: string;
+  user:"patient"|"doctor"
 };
 
 export default function VideoCallModal({
   open,
   setOpen,
   sections,
-  link
+  link,
+  user
 }: Props) {
   const closeModal = () => {
     setOpen(false);
@@ -40,7 +42,7 @@ export default function VideoCallModal({
       <AlertDialogContent className="max-w-3xl bg-dark-200">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center justify-between text-2xl font-semibold">
-            Upcoming Video Calls
+            Upcoming Online Appointments
             <ButtonV2 variant="ghost" size="icon" onClick={closeModal} aria-label="Close">
               <XIcon className="h-6 w-6" />
             </ButtonV2>
@@ -57,7 +59,7 @@ export default function VideoCallModal({
                       <div className="flex items-center space-x-4">
                         <Video className="h-6 w-6 text-primary" />
                         <div>
-                          <h3 className="font-semibold">{section.patientName}</h3>
+                          <h3 className="font-semibold">{user==='patient'?section.doctorName:section.patientName}</h3>
                           <p className="text-sm text-muted-foreground">{format(section.startTime!,"hh:mm a")}</p>
                         </div>
                       </div>
@@ -79,7 +81,7 @@ export default function VideoCallModal({
           ) : (
             <div className="flex flex-col items-center justify-center space-y-2 py-6">
               <Image
-                src="/assets/icons/emoji/😴.svg"
+                src="/assets/icons/emoji/😑.svg"
                 width={64}
                 height={64}
                 alt="No Upcoming Sections"
