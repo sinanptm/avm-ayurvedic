@@ -44,7 +44,7 @@ export default function VideoCallPage() {
   return (
     <div className="h-screen flex flex-col bg-gradient-to-b text-white">
       {isCalling ? (
-        <VideoChat localStream={localStream} isCalling={isCalling} handleEndCall={handleEndCall} remoteStream={remoteStream} isDoctor={false} remoteAvatar="" selfAvatar="" />
+        <VideoChat localStream={localStream}  handleEndCall={handleEndCall} remoteStream={remoteStream} isDoctor={false} remoteAvatar="/assets/icons/circle-user" selfAvatar="/assets/icons/circle-user" />
       ) : (
         <Card className="flex flex-col items-center justify-center flex-grow bg-transparent border-0 shadow-none">
           <VideoIcon className="w-24 h-24 mb-8 text-blue-500" />
