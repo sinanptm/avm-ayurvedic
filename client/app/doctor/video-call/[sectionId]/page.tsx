@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import { useGetSectionByIdDoctor } from '@/lib/hooks/video/useDoctor'
 import JoinPage from './Join-page'
 import VideoChat from '@/components/page-components/video/VideoChat'
+import createPeerConnection from '@/lib/webrtc/createPeerConnection'
 
 export default function VideoCallPage() {
   const { sectionId } = useParams()
@@ -12,17 +13,21 @@ export default function VideoCallPage() {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null)
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
   const { data, isLoading } = useGetSectionByIdDoctor(sectionId as string)
-  const section = data?.section
-
+  const section = data?.section;
+  
   useEffect(() => {
-    if (hasJoined) {
-      const timer = setTimeout(() => {
-        setRemoteStream(new MediaStream())
-      }, 2000)
-
-      return () => clearTimeout(timer)
+    if (hasJoined && section) {
+      const connection = createPeerConnection(section.roomId ?? "id", 'doctor');
+      
+      if (connection) {
+        setRemoteStream(connection.remoteStream); 
+  
+        return () => {
+          connection.peerConnection.close();
+        };
+      }
     }
-  }, [hasJoined, sectionId])
+  }, [hasJoined, section]);
 
   const handleJoin = async () => {
     try {
@@ -46,7 +51,7 @@ export default function VideoCallPage() {
   if (isLoading) return <div className="flex items-center justify-center h-screen">Loading...</div>
 
   if (!hasJoined) {
-    return <JoinPage onJoin={handleJoin} section={section!} />
+    return <JoinPage handleStart={handleJoin} section={section!} />
   }
 
   return (

@@ -1,10 +1,13 @@
+import peerConfiguration from "@/config/webRTCStuntServer";
 import connectSocketIO from "../socket.io/connectSocketIO";
-import peerConfiguration from "./peerConfiguration";
 
-const createPeerConnection = (roomId: string, role: 'patient' | 'doctor') => {
+const createPeerConnection = (roomId: string, role: 'patient' | 'doctor'): {
+    peerConnection: RTCPeerConnection,
+    remoteStream: MediaStream
+}|null => {
     try {
         const socket = connectSocketIO({ role, namespace: 'video' });
-        const peerConnection = new RTCPeerConnection(peerConfiguration());
+        const peerConnection = new RTCPeerConnection(peerConfiguration);
 
         const remoteStream = new MediaStream();
 
@@ -18,7 +21,7 @@ const createPeerConnection = (roomId: string, role: 'patient' | 'doctor') => {
             event.streams[0].getTracks().forEach((track) => {
                 remoteStream.addTrack(track);
             });
-        };[]
+        };
 
         socket.on('ice-candidate', (candidate) => {
             peerConnection.addIceCandidate(new RTCIceCandidate(candidate));

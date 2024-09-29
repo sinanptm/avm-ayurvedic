@@ -60,7 +60,7 @@ export default function VideoSectionsTable() {
                     <TableCell>{format(new Date(section.startTime!), 'PP, hh:mm a ')}</TableCell>
                     <TableCell>{format(new Date(section.endTime!), 'hh:mm a')}</TableCell>
                     <TableCell>
-                      <ButtonV2 variant={'linkHover2'} ><Link href={`/doctor/video-sections/${section._id}`}>Join Now</Link></ButtonV2>
+                      <ButtonV2 variant={'linkHover2'} ><Link href={`/doctor/video-call/${section._id}`}>Join Now</Link></ButtonV2>
                     </TableCell>
                   </TableRow>
                 ))

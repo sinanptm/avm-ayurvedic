@@ -1,41 +1,64 @@
-import { Button } from "@/components/ui/button"
-import { IVideoSection } from "@/types/entities";
-import { Video } from "lucide-react"
+'use client'
 
-interface JoinPageProps {
-  onJoin: () => void;
-  section:IVideoSection
-}
+import { useState, useEffect } from "react"
+import { Card } from "@/components/ui/card"
+import { VideoIcon, InfoIcon } from "lucide-react"
+import { ButtonV2 } from "@/components/button/ButtonV2"
+import { IVideoSection } from "@/types/entities"
+import Link from "next/link"
 
-export default function JoinPage({ onJoin , section}: JoinPageProps) {
-   // useEffect(() => {
-    //     if (section) {
-    //         const checkMeetingTime = () => {
-    //             const now = new Date()
-    //             const meetingTime = new Date(section.startTime!)
-    //             const timeDiff = meetingTime.getTime() - now.getTime()
-    //             const minutesDiff = Math.floor(timeDiff / (1000 * 60))
-    //             setCanStartMeeting(minutesDiff <= 10 && minutesDiff >= 0)
-    //         }
+export default function VideoCallPage({ handleStart, section }: { handleStart: () => void, section: IVideoSection }) {
+  const [canStartMeeting, setCanStartMeeting] = useState(true)
 
-    //         checkMeetingTime()
-    //         const timer = setInterval(checkMeetingTime, 60000)
+  // useEffect(() => {
+  //     if (section) {
+  //         const checkMeetingTime = () => {
+  //             const now = new Date()
+  //             const meetingTime = new Date(section.startTime!)
+  //             const timeDiff = meetingTime.getTime() - now.getTime()
+  //             const minutesDiff = Math.floor(timeDiff / (1000 * 60))
+  //             setCanStartMeeting(minutesDiff <= 10 && minutesDiff >= 0)
+  //         }
 
-    //         return () => clearInterval(timer)
-    //     }
-    // }, [section])
+  //         checkMeetingTime()
+  //         const timer = setInterval(checkMeetingTime, 60000)
 
+  //         return () => clearInterval(timer)
+  //     }
+  // }, [section])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Video Call</h1>
-        <p className="text-xl text-gray-400">Click the button below to join the room</p>
-      </div>
-      <Button onClick={onJoin} size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-        <Video className="mr-2 h-5 w-5" />
-        Join Video Call
-      </Button>
-    </div>
+    <Card className="flex flex-col items-center justify-center p-8 bg-gray-900 text-white">
+      <VideoIcon className="w-24 h-24 mb-8 text-blue-500" />
+      <h1 className="text-4xl font-bold mb-6 text-center">Video Call</h1>
+      <ButtonV2
+        onClick={handleStart}
+        variant={'gooeyLeft'}
+        size="lg"
+        className={`mb-4 ${canStartMeeting
+          ? "bg-blue-500 hover:bg-blue-600"
+          : "bg-gray-500 cursor-not-allowed"
+          }`}
+        disabled={!canStartMeeting}
+      >
+        {canStartMeeting ? "Start Meeting" : "Meeting Not Ready"}
+      </ButtonV2>
+      <ButtonV2
+        onClick={() => { }}
+        variant="gooeyLeft"
+        size="sm"
+        className="text-blue-500 border-blue-500 hover:bg-blue-500 hover:text-white"
+      >
+        <InfoIcon className="mr-2 h-4 w-4" />
+        <Link href={`/doctor/appointments/${section?.appointmentId}`}>
+          View Appointment Details
+        </Link>
+      </ButtonV2>
+      {!canStartMeeting && section && (
+        <p className="mt-4 text-sm text-gray-400">
+          Meeting will be available 10 minutes before the scheduled time.
+        </p>
+      )}
+    </Card>
   )
 }
