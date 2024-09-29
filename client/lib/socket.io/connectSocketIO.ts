@@ -19,11 +19,10 @@ const connectSocketIO = ({ role, namespace }: Props) => {
         token = auth.doctorToken;
     }
 
-    const socket = io(`${process.env.NEXT_PUBLIC_API_URL!}/${namespace}`, {
+    const socket = io(`${process.env.NEXT_PUBLIC_API_URL?.split('/api')[0]}/${namespace}`, {
         auth: {
             token: token,
         },
-
     });
 
     existingSocket = socket;

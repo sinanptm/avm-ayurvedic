@@ -1,59 +1,64 @@
 'use client'
 
-import { Card } from "@/components/ui/card"
-import { VideoIcon, PhoneIcon } from "lucide-react"
-import VideoChat from '@/components/page-components/video/VideoChat'
-import { ButtonV2 } from '@/components/button/ButtonV2'
-import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import JoinPage from './Join-page';
+import VideoChat from '@/components/page-components/video/VideoChat';
+import createPeerConnection from '@/lib/webrtc/createPeerConnection';
+import { useGetSectionByIdPatient } from '@/lib/hooks/video/usePatient';
 
-export default function VideoCallPage() {
-  const [isCalling, setIsCalling] = useState(false);
+export default function PatientVideoCallPage() {
+  const { sectionId } = useParams();
+  const [hasJoined, setHasJoined] = useState(false);
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-  const sectionId = useParams().sectionId as string;
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+  const { data, isLoading } = useGetSectionByIdPatient(sectionId as string);
+  const section = data?.section;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setRemoteStream(new MediaStream());
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [sectionId]);
-
-
-  const handleStartCall = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      setLocalStream(stream)
-      setIsCalling(true)
-
-    } catch (error) {
-      console.error('Error accessing media devices:', error)
+    if (hasJoined && section && localStream) {
+      createPeerConnection(section.roomId ?? "id", 'patient', localStream).then(connection => {
+        if (connection) {
+          setRemoteStream(connection.remoteStream); 
+          return () => connection.peerConnection.close();
+        }
+      });
     }
-  }
+  }, [hasJoined, section, localStream]);
+
+  const handleJoin = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      setLocalStream(stream);
+      setHasJoined(true);
+    } catch (error) {
+      console.error('Error accessing media devices:', error);
+    }
+  };
 
   const handleEndCall = () => {
     if (localStream) {
-      localStream.getTracks().forEach(track => track.stop())
+      localStream.getTracks().forEach(track => track.stop());
     }
     setLocalStream(null);
-    setIsCalling(false);
+    setRemoteStream(null);
+    setHasJoined(false);
+  };
+
+  if (isLoading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
+
+  if (!hasJoined) {
+    return <JoinPage onJoin={handleJoin} section={section!} />;
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-b text-white">
-      {isCalling ? (
-        <VideoChat localStream={localStream}  handleEndCall={handleEndCall} remoteStream={remoteStream} isDoctor={false} remoteAvatar="/assets/icons/circle-user" selfAvatar="/assets/icons/circle-user" />
-      ) : (
-        <Card className="flex flex-col items-center justify-center flex-grow bg-transparent border-0 shadow-none">
-          <VideoIcon className="w-24 h-24 mb-8 text-blue-500" />
-          <h1 className="text-4xl font-bold mb-6 text-center">Start a Video Call</h1>
-          <ButtonV2 onClick={handleStartCall} size="lg" className="bg-blue-500 hover:bg-blue-600" variant={'ringHover'}>
-            <PhoneIcon className="mr-2 h-5 w-5" /> Start Call
-          </ButtonV2>
-        </Card>
-      )}
-    </div>
-  )
+    <VideoChat
+      localStream={localStream}
+      remoteStream={remoteStream}
+      handleEndCall={handleEndCall}
+      isDoctor={false}
+      selfAvatar={section?.patientProfile!}
+      remoteAvatar={section?.doctorProfile!}
+    />
+  );
 }

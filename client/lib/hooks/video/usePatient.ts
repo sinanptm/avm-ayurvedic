@@ -12,7 +12,7 @@ export const useGetSectionsInOneDayPatient = () => {
 };
 
 export const useGetSectionByIdPatient = (sectionId: string) => {
-    return useQuery<IVideoSection, AxiosError<ErrorResponse>>({
+    return useQuery<{section:IVideoSection}, AxiosError<ErrorResponse>>({
         queryKey: ["section-patient", sectionId],
         queryFn: () => getSectionByIdPatient(sectionId),
     });

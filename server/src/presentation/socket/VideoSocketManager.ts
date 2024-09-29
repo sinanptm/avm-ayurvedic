@@ -10,8 +10,8 @@ export default class VideoSocketManager {
 
     private initializeVideoNamespace() {
         this.io.on("connection", (socket: Socket) => {
-            logger.info(`User connected to Video namespace: ${socket.id}`);
 
+            logger.info(`User connected to Video namespace: ${socket.id}`);
             // Join a video room
             socket.on("join-room", (roomId) => {
                 socket.join(roomId);
