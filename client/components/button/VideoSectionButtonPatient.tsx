@@ -13,8 +13,7 @@ const VideoSectionButtonPatient = () => {
     const handleClick = () => {
         setIsModalOpen(true);
     }
-
-    console.log(upcomingSections);
+    
     if (isLoading) return null
 
 
@@ -38,13 +37,15 @@ const VideoSectionButtonPatient = () => {
                 )}
                 <span className="sr-only">View Upcoming Video Calls</span>
             </ButtonV2>
-            <VideoSectionsModel
-                open={isModalOpen}
-                setOpen={setIsModalOpen}
-                sections={upcomingSections!}
-                link="/video-section"
-                user='patient'
-            />
+            {upcomingSections && (
+                <VideoSectionsModel
+                    open={isModalOpen}
+                    setOpen={setIsModalOpen}
+                    sections={upcomingSections!}
+                    link="/video-section"
+                    user='patient'
+                />
+            )}
         </>
     )
 }

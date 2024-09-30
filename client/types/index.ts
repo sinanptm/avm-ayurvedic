@@ -58,4 +58,15 @@ export interface CustomProps {
    showDateText?: string;
 }
 
-
+export interface VideoChatProps {
+   localStream: MediaStream | null;
+   remoteStream: MediaStream | null;
+   handleEndCall: () => void;
+   toggleMute: () => void;
+   toggleVideo: () => void;
+   isMuted: boolean;
+   isVideoOff: boolean;
+   isDoctor: boolean;
+   selfAvatar: string;
+   remoteAvatar: string;
+}
