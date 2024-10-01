@@ -6,26 +6,36 @@ import { VideoIcon, InfoIcon } from "lucide-react"
 import { ButtonV2 } from "@/components/button/ButtonV2"
 import { IVideoSection } from "@/types/entities"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 
 export default function VideoCallPage({ handleStart, section }: { handleStart: () => void, section: IVideoSection }) {
   const [canStartMeeting, setCanStartMeeting] = useState(true)
 
-  // useEffect(() => {
-  //     if (section) {
-  //         const checkMeetingTime = () => {
-  //             const now = new Date()
-  //             const meetingTime = new Date(section.startTime!)
-  //             const timeDiff = meetingTime.getTime() - now.getTime()
-  //             const minutesDiff = Math.floor(timeDiff / (1000 * 60))
-  //             setCanStartMeeting(minutesDiff <= 10 && minutesDiff >= 0)
-  //         }
+  useEffect(() => {
+    const now = new Date()
+      if (section) {
+          const checkMeetingTime = () => {
+              const meetingTime = new Date(section.startTime!)
+              const timeDiff = meetingTime.getTime() - now.getTime()
+              const minutesDiff = Math.floor(timeDiff / (1000 * 60))
+              setCanStartMeeting(minutesDiff <= 10 && minutesDiff >= 0)
+          }
 
-  //         checkMeetingTime()
-  //         const timer = setInterval(checkMeetingTime, 60000)
+          if (section.startTime && section.startTime < new Date(now.getTime() - 1000 * 60 * 60)) {
+            setCanStartMeeting(true)
+          } else {
+            notFound()
+          }
 
-  //         return () => clearInterval(timer)
-  //     }
-  // }, [section])
+          checkMeetingTime()
+          const timer = setInterval(checkMeetingTime, 60000)
+
+          return () => clearInterval(timer)
+      }else{
+        notFound()
+      }
+
+  }, [section])
 
   return (
     <Card className="flex flex-col items-center justify-center p-8 bg-gray-900 text-white">
