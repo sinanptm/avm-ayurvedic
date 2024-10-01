@@ -39,7 +39,7 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
         });
       }
     });
-  }, []);
+  }, [role]);
 
   const toggleMute = useCallback(() => {
     if (localStream) {

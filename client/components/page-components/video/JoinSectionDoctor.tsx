@@ -53,7 +53,7 @@ export default function VideoCallPage({ handleStart, section }: { handleStart: (
           <div className="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full bg-blue-500 bg-opacity-20">
             <VideoIcon className="w-10 h-10 text-blue-500" />
           </div>
-          <h1 className="text-3xl font-bold mb-6 text-center">{section?.patientName}'s Video Section</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">{section?.patientName}&apos;s Video Section</h1>
           {canStartMeeting ? (
             <>
               <ButtonV2
