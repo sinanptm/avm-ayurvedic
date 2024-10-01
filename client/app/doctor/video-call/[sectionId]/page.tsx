@@ -15,12 +15,12 @@ export default function DoctorVideoCallPage() {
     hasJoined,
     localStream,
     remoteStream,
-    handleJoin,
-    handleEndCall,
     isMuted,
     isVideoOff,
+    handleJoin,
+    handleEndCall,
     toggleMute,
-    toggleVideo
+    toggleVideo,
   } = useVideoCall(section, 'doctor');
 
   if (isLoading) return <div className="flex items-center justify-center h-screen">Loading...</div>;

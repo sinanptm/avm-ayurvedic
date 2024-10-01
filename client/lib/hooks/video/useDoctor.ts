@@ -15,6 +15,7 @@ export const useGetSectionByIdDoctor = (sectionId: string) => {
     return useQuery<{section:IVideoSection}, AxiosError<ErrorResponse>>({
         queryKey: ["section-doctor", sectionId],
         queryFn: () => getSectionByIdDoctor(sectionId),
+        refetchInterval: 10000 * 60,
     });
 };
 

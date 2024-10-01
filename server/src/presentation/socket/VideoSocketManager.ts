@@ -15,7 +15,6 @@ export default class VideoSocketManager {
             socket.on("join-room", (roomId: string) => {
                 if (roomId) {
                     socket.join(roomId);
-                    logger.info(`Socket ${socket.id} joined room ${roomId}`);
                 } else {
                     logger.warn(`Socket ${socket.id} attempted to join a room without a roomId`);
                 }
@@ -25,6 +24,7 @@ export default class VideoSocketManager {
                 try {
                     if (offer && roomId) {
                         this.io.to(roomId).emit("offer", offer);
+                        logger.info(`Offer sent to room ${roomId} by socket ${socket.id}`);
                     } else {
                         logger.warn(`Invalid offer or roomId received from socket ${socket.id}`);
                     }
@@ -33,7 +33,6 @@ export default class VideoSocketManager {
                 }
             });
 
-            // Handle WebRTC answer signaling
             socket.on("answer", (answer: RTCSessionDescriptionInit, roomId: string) => {
                 try {
                     if (answer && roomId) {
@@ -78,7 +77,6 @@ export default class VideoSocketManager {
         this.io.to(roomId).emit("user-left", { userId: socketId });
     }
 
-    // Handle user disconnection and cleanup
     private handleUserDisconnection(socket: Socket) {
         const rooms = Array.from(socket.rooms).filter(room => room !== socket.id); 
         rooms.forEach((roomId) => {

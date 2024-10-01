@@ -15,9 +15,9 @@ export default function PatientVideoCallPage() {
     hasJoined,
     localStream,
     remoteStream,
+    isMuted,
     handleJoin,
     handleEndCall,
-    isMuted,
     isVideoOff,
     toggleMute,
     toggleVideo
@@ -33,14 +33,14 @@ export default function PatientVideoCallPage() {
     <VideoChat
       isMuted={isMuted}
       isVideoOff={isVideoOff}
-      toggleMute={toggleMute}
-      toggleVideo={toggleVideo}
       localStream={localStream}
       remoteStream={remoteStream}
-      handleEndCall={handleEndCall}
       isDoctor={false}
       selfAvatar={section?.patientProfile!}
       remoteAvatar={section?.doctorProfile!}
+      toggleMute={toggleMute}
+      toggleVideo={toggleVideo}
+      handleEndCall={handleEndCall}
     />
   );
 }

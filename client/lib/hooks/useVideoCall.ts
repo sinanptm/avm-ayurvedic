@@ -1,47 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import createPeerConnection from '@/lib/webrtc/createPeerConnection';
 
 export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
   const [hasJoined, setHasJoined] = useState(false);
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-  const [remoteStream, setRemoteStream] = useState<MediaStream>(new MediaStream()); // Initialize to a new MediaStream
+  const [remoteStream, setRemoteStream] = useState<MediaStream>(new MediaStream()); 
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
 
   useEffect(() => {
     let peerConnection: RTCPeerConnection | null = null;
-  
-    if (hasJoined && section && localStream) {
-      createPeerConnection(section.roomId!, role, localStream).then(connection => {
+
+    if (hasJoined && section?.roomId && localStream) {
+      createPeerConnection(section.roomId, role, localStream).then(connection => {
         if (connection) {
           peerConnection = connection.peerConnection;
-  
-          peerConnection.ontrack = (event) => {
-            const [stream] = event.streams;
-            console.log('Received remote track:', stream);
-            if (stream) {
-              stream.getTracks().forEach(track => {
-                console.log('Remote track info:', track); // Log each track
-                remoteStream.addTrack(track);
-              });
-              setRemoteStream(new MediaStream(remoteStream));  // Trigger state update
-            }
-          };
-          
-          
+          setRemoteStream(connection.remoteStream);
         }
       });
     }
 
-    
-  
     return () => {
       if (peerConnection) {
         peerConnection.close();
       }
     };
   }, [hasJoined, section, localStream, role]);
-  
 
   const handleJoin = async () => {
     try {
@@ -58,7 +42,7 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
       localStream.getTracks().forEach(track => track.stop());
     }
     setLocalStream(null);
-    setRemoteStream(new MediaStream()); // Reset remote stream
+    setRemoteStream(new MediaStream()); 
     setHasJoined(false);
   };
 
@@ -74,9 +58,9 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
   const toggleVideo = () => {
     if (localStream) {
       localStream.getVideoTracks().forEach(track => {
-        track.enabled = !track.enabled; // Toggle the enabled state
+        track.enabled = !track.enabled; 
       });
-      setIsVideoOff(prev => !prev); // Update the isVideoOff state
+      setIsVideoOff(prev => !prev); 
     }
   };
 

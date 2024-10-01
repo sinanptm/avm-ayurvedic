@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Mic, MicOff, Video, VideoOff, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,36 +15,43 @@ export default function VideoChat({
   isVideoOff,
   isDoctor,
   selfAvatar,
-  remoteAvatar
+  remoteAvatar,
 }: VideoChatProps) {
+  const [isRemoteStream, setIsRemoteStream] = useState(false);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     if (localVideoRef.current && localStream) {
-      localVideoRef.current.srcObject = localStream;
+      if (localVideoRef.current !== null) {
+        localVideoRef.current.srcObject = localStream;
+      }
     }
   }, [localStream, isVideoOff]);
 
 
   useEffect(() => {
     if (remoteVideoRef.current && remoteStream) {
-      console.log('Setting remote stream');
       remoteVideoRef.current.srcObject = remoteStream;
-    } else {
-      console.log('Remote stream is not available');
+    }
+    if (remoteStream && remoteStream.getTracks().length > 0) {
+      setIsRemoteStream(true);
     }
   }, [remoteStream]);
+
+
   
 
   return (
     <div className="relative w-full max-w-3xl mx-auto aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-lg">
       {/* Remote Video */}
       <div className="absolute inset-0 flex items-center justify-center">
-        {remoteStream ? (
+        {isRemoteStream ? (
           <video
             ref={remoteVideoRef}
             autoPlay
             playsInline
+            id="remoteVideo"
             className="w-full h-full object-cover"
           />
         ) : (

@@ -61,22 +61,43 @@ const createPeerConnection = async (
     await peerConnection.setLocalDescription(offer);
     socket.emit('offer', offer, roomId);
 
+    socket.on('offer', async (offer) => {
+      console.log('Received offer:', offer);
+      console.log('Current signaling state before setting remote description:', peerConnection.signalingState);
+      
+      if (peerConnection.signalingState === 'stable' || peerConnection.signalingState === 'have-local-offer') {
+        try {
+          await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+          const answer = await peerConnection.createAnswer();
+          await peerConnection.setLocalDescription(answer);
+          socket.emit('answer', answer, roomId);
+          console.log('Sent answer:', answer);
+        } catch (error) {
+          console.error('Error handling the offer:', error);
+        }
+      } else {
+        console.warn('PeerConnection is not in a valid state to process the offer:', peerConnection.signalingState);
+      }
+    });
+    
     socket.on('answer', async (answer) => {
-      if (peerConnection.signalingState !== 'closed') {
-        await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
-        await processIceCandidates(); // Process queued candidates
+      console.log('Received answer:', answer);
+      console.log('Current signaling state before setting remote description:', peerConnection.signalingState);
+      
+      if (peerConnection.signalingState === 'have-local-offer') {
+        try {
+          await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+          console.log('Set remote description with answer');
+        } catch (error) {
+          console.error('Error setting remote description with answer:', error);
+        }
+      } else {
+        console.warn('Cannot set remote description in signaling state:', peerConnection.signalingState);
       }
     });
 
-    socket.on('offer', async (offer) => {
-      if (peerConnection.signalingState === 'stable') {
-        const answer = await peerConnection.createAnswer();
-        await peerConnection.setLocalDescription(answer);
-        socket.emit('answer', answer, roomId);
-      } else {
-        console.warn('Received an offer while in a non-stable state; ignoring.');
-      }
-    });
+    
+    processIceCandidates();
 
     return { peerConnection, remoteStream };
 
