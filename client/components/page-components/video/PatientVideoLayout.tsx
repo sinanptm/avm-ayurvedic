@@ -20,7 +20,7 @@ const PatientVideoLayout = ({ children }: { children: ReactNode }) => {
         }
     }, [isPatient]);
 
-    if(isLoading){
+    if (isLoading) {
         return <VideoCallSkeleton />
     }
 
@@ -28,7 +28,9 @@ const PatientVideoLayout = ({ children }: { children: ReactNode }) => {
         notFound()
     }
     return (
-        <div>{children}</div>
+        <div className='w-full h-full pt-7'>
+            {children}
+        </div>
     )
 }
 

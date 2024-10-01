@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import Peer from 'simple-peer';
-import { io, Socket } from 'socket.io-client';
+import { Socket } from 'socket.io-client';
 import connectSocketIO from '@/lib/socket.io/connectSocketIO';
 import { toast } from '@/components/ui/use-toast';
 
@@ -18,7 +18,6 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
     socketRef.current = socket;
 
     socket.on('signal', (signalData: any) => {
-      console.log("Received signal from server:", signalData);
       if (peerRef.current) {
         peerRef.current.signal(signalData);
       }
@@ -29,7 +28,7 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
         toast({
           title: 'Patient has left the room',
           variant: 'destructive',
-          description: 'Patient has left the room. you can end the call now or wait for the patient to join again',
+          description: 'Patient has left the room. you can end the call now or wait for the patient to join again'
         });
       }
       else{
