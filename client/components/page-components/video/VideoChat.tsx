@@ -17,7 +17,6 @@ export default function VideoChat({
   selfAvatar,
   remoteAvatar,
 }: VideoChatProps) {
-  const [isRemoteStream, setIsRemoteStream] = useState(false);
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
@@ -34,9 +33,6 @@ export default function VideoChat({
     if (remoteVideoRef.current && remoteStream) {
       remoteVideoRef.current.srcObject = remoteStream;
     }
-    if (remoteStream && remoteStream.getTracks().length > 0) {
-      setIsRemoteStream(true);
-    }
   }, [remoteStream]);
 
 
@@ -46,7 +42,7 @@ export default function VideoChat({
     <div className="relative w-full max-w-3xl mx-auto aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-lg">
       {/* Remote Video */}
       <div className="absolute inset-0 flex items-center justify-center">
-        {isRemoteStream ? (
+        {remoteStream ? (
           <video
             ref={remoteVideoRef}
             autoPlay
