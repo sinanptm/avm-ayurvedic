@@ -17,7 +17,6 @@ export default class VideoSocketManager {
             socket.on("join-room", (roomId: string) => {
                 if (roomId) {
                     socket.join(roomId);
-                    logger.info(`Socket ${socket.id} joined room ${roomId}`);
                 } else {
                     logger.warn(`Socket ${socket.id} attempted to join a room without a roomId`);
                 }
@@ -27,7 +26,6 @@ export default class VideoSocketManager {
                 try {
                     if (signalData && roomId) {
                         socket.to(roomId).emit("signal", signalData);
-                        logger.info(`Signal relayed to room ${roomId} from socket ${socket.id}`);
                     } else {
                         logger.warn(`Invalid signal data or roomId from socket ${socket.id}`);
                     }
@@ -44,7 +42,6 @@ export default class VideoSocketManager {
                 if (roomId) {
                     socket.leave(roomId);
                     this.notifyRoomAboutLeaving(roomId, socket.id);
-                    logger.info(`Socket ${socket.id} left room ${roomId}`);
                 } else {
                     logger.warn(`Socket ${socket.id} attempted to leave a room without a roomId`);
                 }
@@ -53,7 +50,7 @@ export default class VideoSocketManager {
     }
 
     private notifyRoomAboutLeaving(roomId: string, socketId: string) {
-        this.io.to(roomId).emit("user-left", { userId: socketId });
+        this.io.to(roomId).emit("leave-room", { userId: socketId });
     }
 
     private handleUserDisconnection(socket: Socket) {
@@ -61,7 +58,6 @@ export default class VideoSocketManager {
         rooms.forEach((roomId) => {
             socket.leave(roomId);
             this.notifyRoomAboutLeaving(roomId, socket.id);
-            logger.info(`Socket ${socket.id} disconnected and left room ${roomId}`);
         });
     }
 }

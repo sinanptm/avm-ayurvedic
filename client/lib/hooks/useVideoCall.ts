@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import Peer from 'simple-peer';
 import { io, Socket } from 'socket.io-client';
 import connectSocketIO from '@/lib/socket.io/connectSocketIO';
+import { toast } from '@/components/ui/use-toast';
 
 export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
   const [hasJoined, setHasJoined] = useState(false);
@@ -13,17 +14,33 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
   const socketRef = useRef<Socket | null>(null);
 
   const connectSocket = useCallback(() => {
-    const socket = connectSocketIO({ role, namespace: 'video' });
+    const socket = connectSocketIO({ namespace: 'video', role: role });
     socketRef.current = socket;
 
-    // Listen for incoming signals from the server
     socket.on('signal', (signalData: any) => {
       console.log("Received signal from server:", signalData);
       if (peerRef.current) {
         peerRef.current.signal(signalData);
       }
     });
-  }, [role]);
+
+    socket.on('leave-room', () => {
+      if(role === 'doctor'){
+        toast({
+          title: 'Patient has left the room',
+          variant: 'destructive',
+          description: 'Patient has left the room. you can end the call now or wait for the patient to join again',
+        });
+      }
+      else{
+        toast({
+          title: 'Doctor has left the room',
+          variant: 'destructive',
+          description: 'Doctor has left the room. you can end the call now or wait for the doctor to join again',
+        });
+      }
+    });
+  }, []);
 
   const toggleMute = useCallback(() => {
     if (localStream) {
@@ -41,29 +58,26 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
 
   const handleJoin = useCallback(async () => {
     try {
-      console.log("Connecting to socket");
       connectSocket();
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       setLocalStream(stream);
 
       const peer = new Peer({
-        initiator: role === 'doctor', // Doctor sends offer, patient responds with answer
+        initiator: true,  
         stream,
-        trickle: false,
+        trickle: false, 
       });
 
       peerRef.current = peer;
+      
 
-      // When the peer sends a signal (offer/answer), emit it to the server
       peer.on('signal', (signal) => {
-        console.log("Sending signal to server:", signal);
         socketRef.current?.emit('signal', signal, section.roomId ?? "random");
       });
 
-      // When receiving a remote stream, add it to the remoteStream state
+      
       peer.on('stream', (remoteStream: MediaStream) => {
-        console.log("Received remote stream:", remoteStream);
         setRemoteStream((prevStream) => {
           const updatedStream = new MediaStream(prevStream);
           remoteStream.getTracks().forEach(track => updatedStream.addTrack(track));
@@ -71,7 +85,6 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
         });
       });
 
-      console.log("Joining room:", section.roomId ?? "random");
 
       socketRef.current?.emit('join-room', section.roomId ?? "random");
       setHasJoined(true);
@@ -79,7 +92,7 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
     } catch (error) {
       console.error('Failed to join the room:', error);
     }
-  }, [connectSocket, role, section]);
+  }, [connectSocket, section]);
 
   const handleEndCall = useCallback(() => {
     if (peerRef.current) {
