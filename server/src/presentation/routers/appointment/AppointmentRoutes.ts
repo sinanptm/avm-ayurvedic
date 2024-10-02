@@ -44,7 +44,7 @@ const createAppointmentUseCase = new CreateAppointmentUseCase(
    uuIdService
 );
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService, paymentRepository);
-const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService, notificationRepository);
+const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService, notificationRepository, videoSectionRepository);
 
 const appointmentController = new AppointmentController(
    createAppointmentUseCase,

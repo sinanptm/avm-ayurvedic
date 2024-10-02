@@ -1,4 +1,4 @@
-import { AppointmentStatus } from "../../domain/entities/IAppointment";
+import IAppointment, { AppointmentStatus } from "../../domain/entities/IAppointment";
 import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
@@ -19,7 +19,7 @@ export default class GetVideoSectionUseCase {
 
     async getSectionsByDoctorId(doctorId: string): Promise<IVideoSection[] | []> {
         const limit = 10
-        const sections = await this.videoSectionRepository.findAllSectionsByDoctorId(doctorId, VideoSectionStatus.PENDING, limit)
+        const sections = await this.videoSectionRepository.findAllSectionsByDoctorId(doctorId, VideoSectionStatus.PENDING, limit);       
         return sections ? sections : [];
     }
 
@@ -35,9 +35,7 @@ export default class GetVideoSectionUseCase {
         const ids = sections?.map(section => section.appointmentId!.toString());
         if(ids){
             const appointments = await this.appointmentRepository.findManyByIds(ids as string[]);
-            const confirmedAppointments = appointments?.filter(appointment => appointment.status === AppointmentStatus.CONFIRMED);
-            const confirmedAppointmentsIds = confirmedAppointments?.map(appointment => appointment._id!.toString());
-            const filteredSections = sections?.filter(section => confirmedAppointmentsIds?.includes(section.appointmentId!.toString()));
+            const filteredSections = this.filterSectionsByAppointmentStatus(sections!, appointments!);
             return filteredSections ?? [];
         }
 
@@ -59,13 +57,17 @@ export default class GetVideoSectionUseCase {
         const ids = sections?.map(section => section.appointmentId!.toString());    
         if (ids && ids.length > 0) {
             const appointments = await this.appointmentRepository.findManyByIds(ids as string[]);
-            const confirmedAppointments = appointments?.filter(appointment => appointment.status === AppointmentStatus.CONFIRMED);
-            const confirmedAppointmentsIds = confirmedAppointments?.map(appointment => appointment._id!.toString());    
-            const filteredSections = sections?.filter(section => confirmedAppointmentsIds?.includes(section.appointmentId!.toString()));    
+            const filteredSections = this.filterSectionsByAppointmentStatus(sections!, appointments!);
             return filteredSections ?? [];
         }
-    
+
         return [];
+    }
+
+    private filterSectionsByAppointmentStatus(sections: IVideoSection[], appointments: IAppointment[]): IVideoSection[] {
+        const confirmedAppointments = appointments?.filter(appointment => appointment.status === AppointmentStatus.CONFIRMED);
+        const confirmedAppointmentsIds = confirmedAppointments?.map(appointment => appointment._id!.toString());
+        return sections?.filter(section => confirmedAppointmentsIds?.includes(section.appointmentId!.toString()));
     }
     
 }

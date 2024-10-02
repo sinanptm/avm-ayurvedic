@@ -3,12 +3,15 @@ import INotificationRepository from "../../domain/interface/repositories/INotifi
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
 import { NotificationTypes } from "../../domain/entities/INotification";
+import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
+import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 
 export default class UpdateAppointmentUseCase {
    constructor(
       private appointmentRepository: IAppointmentRepository,
       private validatorService: IValidatorService,
-      private notificationRepository: INotificationRepository
+      private notificationRepository: INotificationRepository,
+      private videoSectionRepository: IVideoSectionRepository
    ) { }
 
    // By Doctor
@@ -25,6 +28,7 @@ export default class UpdateAppointmentUseCase {
             patientId: appointment.patientId,
             type: NotificationTypes.APPOINTMENT_CANCELED
          });
+         await this.videoSectionRepository.findByAppointmentIdAndUpdate(appointmentId, { status: VideoSectionStatus.CANCELLED });
       }
       
       if (status === AppointmentStatus.CONFIRMED && appointment) {
