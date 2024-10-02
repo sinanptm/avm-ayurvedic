@@ -6,6 +6,7 @@ import PatientAuthMiddleware from "../../middlewares/PatientAuthMiddleware";
 import JWTService from "../../../infrastructure/services/JWTService";
 import VideoSectionRepository from "../../../infrastructure/repositories/VideoSectionRepository";
 import JoiService from "../../../infrastructure/services/JoiService";
+import AppointmentRepository from "../../../infrastructure/repositories/AppointmentRepository";
 
 const router = Router();
 
@@ -13,7 +14,8 @@ const tokenService = new JWTService();
 const validatorService = new JoiService;
 
 const videoSectionRepository = new VideoSectionRepository();
-const getVideoSectionUseCase = new GetVideoSectionUseCase(videoSectionRepository, validatorService);
+const appointmentRepository = new AppointmentRepository();
+const getVideoSectionUseCase = new GetVideoSectionUseCase(videoSectionRepository, validatorService, appointmentRepository);
 const videoController = new VideoController(getVideoSectionUseCase);
 
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);

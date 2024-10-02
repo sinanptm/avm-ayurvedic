@@ -15,6 +15,10 @@ export default class AppointmentRepository implements IAppointmentRepository {
       return await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true });
    }
 
+   async findManyByIds(ids: string[]): Promise<IAppointment[] | null> {
+      return await this.model.find({ _id: { $in: ids } });
+   }
+
    async findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null> {
       const objectId = new mongoose.Types.ObjectId(appointmentId);
 

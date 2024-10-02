@@ -21,4 +21,5 @@ export default interface IAppointmentRepository {
       limit: number,
       status?: AppointmentStatus
    ): Promise<PaginatedResult<IAppointment> | null>;
+   findManyByIds(ids: string[]): Promise<IAppointment[] | null>;
 }

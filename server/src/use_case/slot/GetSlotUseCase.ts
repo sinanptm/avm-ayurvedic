@@ -40,6 +40,8 @@ export default class GetSlotUseCase {
 
       const isToday = new Date(date).toDateString() === new Date().toDateString();
 
+      // TODO: sort slots by start time
+
       // Filter today's slots based on time (slots after the current time + 1 hour)
       return slots
          ? slots.filter(slot => {
