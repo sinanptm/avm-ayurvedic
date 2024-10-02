@@ -41,6 +41,26 @@ const buttonVariants = cva(
    }
 );
 
+type ButtonVariantProps = VariantProps<typeof buttonVariants>;
+
+export type ButtonColorVariant =
+   | "default"
+   | "primary"
+   | "secondary"
+   | "accent"
+   | "info"
+   | "success"
+   | "warning"
+   | "danger"
+   | "purple"
+   | "teal"
+   | "orange"
+   | "pink"
+   | "indigo"
+   | "cyan"
+   | "lime"
+   | "emerald";
+
 interface IconProps {
    Icon: React.ElementType;
    iconPlacement: "left" | "right";
@@ -53,17 +73,51 @@ interface IconRefProps {
 
 export interface ButtonProps
    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-      VariantProps<typeof buttonVariants> {
+   ButtonVariantProps {
    asChild?: boolean;
+   color?: ButtonColorVariant | string;
 }
 
 export type ButtonIconProps = IconProps | IconRefProps;
 
+const colorVariants: Record<ButtonColorVariant, string> = {
+   default: "bg-zinc-800 text-zinc-100 hover:bg-zinc-700",
+   primary: "bg-blue-700 text-white hover:bg-blue-600",
+   secondary: "bg-zinc-700 text-white hover:bg-zinc-600",
+   accent: "bg-amber-600 text-white hover:bg-amber-500",
+   info: "bg-sky-700 text-white hover:bg-sky-600",
+   success: "bg-green-700 text-white hover:bg-green-600",
+   warning: "bg-yellow-600 text-black hover:bg-yellow-500",
+   danger: "bg-red-700 text-white hover:bg-red-600",
+   purple: "bg-purple-700 text-white hover:bg-purple-600",
+   teal: "bg-teal-700 text-white hover:bg-teal-600",
+   orange: "bg-orange-700 text-white hover:bg-orange-600",
+   pink: "bg-pink-700 text-white hover:bg-pink-600",
+   indigo: "bg-indigo-700 text-white hover:bg-indigo-600",
+   cyan: "bg-cyan-700 text-white hover:bg-cyan-600",
+   lime: "bg-lime-700 text-white hover:bg-lime-600",
+   emerald: "bg-emerald-700 text-white hover:bg-emerald-600"
+};
+
 const ButtonV2 = React.forwardRef<HTMLButtonElement, ButtonProps & ButtonIconProps>(
-   ({ className, variant, size, asChild = false, Icon, iconPlacement, ...props }, ref) => {
+   ({ className, variant, size, color, asChild = false, Icon, iconPlacement, ...props }, ref) => {
       const Comp = asChild ? Slot : "button";
+
+      const colorClass = color
+         ? color in colorVariants
+            ? colorVariants[color as ButtonColorVariant]
+            : `bg-${color}-500 text-white hover:bg-${color}-600`
+         : "";
+
       return (
-         <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props}>
+         <Comp
+            className={cn(
+               buttonVariants({ variant, size, className }),
+               colorClass
+            )}
+            ref={ref}
+            {...props}
+         >
             {Icon && iconPlacement === "left" && (
                <div className="w-0 translate-x-[0%] pr-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-100 group-hover:pr-2 group-hover:opacity-100">
                   <Icon />
