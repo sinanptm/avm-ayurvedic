@@ -14,7 +14,7 @@ export default class PatientRepository implements IPatientRepository {
       return getPaginatedResult(totalItems, offset, limit, items);
    }
 
-   async create(patient: IPatient): Promise<IPatient | never> {
+   async create(patient: IPatient): Promise<IPatient> {
       try {
          const patientModel = new this.model(patient);
          return await patientModel.save();
@@ -26,10 +26,10 @@ export default class PatientRepository implements IPatientRepository {
       }
    }
    async findAll(): Promise<IPatient[] | []> {
-      return await this.model.find();
+      return await this.model.find().select(["-password", "-token"]);
    }
-   async update(patient: IPatient): Promise<IPatient | null> {
-      return await this.model.findByIdAndUpdate(patient._id, patient, { new: true });
+   async update(id: string, patient: IPatient): Promise<IPatient | null> {
+      return await this.model.findByIdAndUpdate(id, patient, { new: true });
    }
    async findByEmail(email: string): Promise<IPatient | null> {
       return await this.model.findOne({ email }).select(["-password", "-token"]);

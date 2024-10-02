@@ -38,7 +38,7 @@ export default class PatientUseCase {
          await this.videoSectionRepository.findByPatientIdAndUpdate(id, { patientName: patient.name });
          await this.chatRepository.findByPatientIdAndUpdate(id, { patientName: patient.name });
       }
-      await this.patientRepository.findByIdAndUpdate(id, patient);
+      await this.patientRepository.update(id, patient);
    }
 
    async createPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
@@ -70,6 +70,6 @@ export default class PatientUseCase {
       patient.profile = imageUrl;
       await this.videoSectionRepository.findByPatientIdAndUpdate(id, { patientProfile: imageUrl });
       await this.chatRepository.findByPatientIdAndUpdate(id, { patientProfile: imageUrl });
-      await this.patientRepository.update(patient);
+      await this.patientRepository.update(id, patient);
    }
 }

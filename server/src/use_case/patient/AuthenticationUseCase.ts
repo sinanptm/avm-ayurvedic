@@ -116,7 +116,7 @@ export default class AuthenticationUseCase {
       const accessToken = this.tokenService.createAccessToken(patient.email!, patient._id!, UserRole.Patient);
 
       patient.token = refreshToken;
-      await this.patientRepository.update(patient);
+      await this.patientRepository.update(patient._id!, patient!);
 
       await this.otpRepository.deleteMany(email);
 
@@ -160,7 +160,7 @@ export default class AuthenticationUseCase {
       if (patient.isBlocked) throw new CustomError("Account is blocked", StatusCode.Forbidden);
 
       patient.password = await this.passwordService.hash(newPassword);
-      await this.patientRepository.update(patient);
+      await this.patientRepository.update(patient._id!, patient!);
    }
 
    private generateOTP(length: number): string {

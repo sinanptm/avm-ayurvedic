@@ -6,7 +6,7 @@ import { PaginatedResult } from "../../types";
 export default class AdminPatientUseCase {
    constructor(
       private patientRepository: IPatientRepository,
-      private validatorService: IValidatorService
+      private validatorService:IValidatorService
    ) {}
 
    async getAll(offset: number, limit: number): Promise<PaginatedResult<IPatient>> {
@@ -14,6 +14,8 @@ export default class AdminPatientUseCase {
    }
 
    async blockUnblock(id: string, isBlocked: boolean) {
-      return await this.patientRepository.update({ _id: id, isBlocked: !isBlocked });
-   }
+      this.validatorService.validateIdFormat(id);
+      this.validatorService.validateBoolean(isBlocked);
+      return await this.patientRepository.update(id, { isBlocked: !isBlocked });
+   } 
 }
