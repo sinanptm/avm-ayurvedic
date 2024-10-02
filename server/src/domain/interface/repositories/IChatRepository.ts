@@ -2,7 +2,6 @@ import IChat from "../../entities/IChat";
 import IRepository from "./IRepository";
 
 export default interface IChatRepository extends IRepository<IChat> {
-   findById(id: string): Promise<IChat | null>;
    findAllChatsForPatient(patientId: string): Promise<IChat[]>;
    findAllChatsForDoctor(doctorId: string): Promise<IChat[]>;
    findByDoctorIdAndUpdate(doctorId: string, chat: IChat): Promise<void>;
