@@ -16,6 +16,7 @@ import VideoSectionRepository from "../../../infrastructure/repositories/VideoSe
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
 import UUIDService from "../../../infrastructure/services/UUIDService";
+import PrescriptionRepository from "../../../infrastructure/repositories/PrescriptionRepository";
 
 const router = Router();
 
@@ -31,6 +32,7 @@ const notificationRepository = new NotificationRepository();
 const videoSectionRepository = new VideoSectionRepository();
 const patientRepository = new PatientRepository();
 const doctorRepository = new DoctorRepository();
+const prescriptionRepository = new PrescriptionRepository()
 
 const createAppointmentUseCase = new CreateAppointmentUseCase(
    appointmentRepository,
@@ -43,7 +45,7 @@ const createAppointmentUseCase = new CreateAppointmentUseCase(
    patientRepository,
    uuIdService
 );
-const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService, paymentRepository);
+const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService, paymentRepository, prescriptionRepository);
 const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService, notificationRepository, videoSectionRepository);
 
 const appointmentController = new AppointmentController(

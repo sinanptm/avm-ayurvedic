@@ -1,15 +1,18 @@
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
+import IPrescriptionRepository from "../../domain/interface/repositories/IPrescriptionRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
 import { PaginatedResult, StatusCode } from "../../types";
+import IPrescription from "../../domain/entities/IPrescription";
 
 export default class GetAppointmentUseCase {
    constructor(
       private appointmentRepository: IAppointmentRepository,
       private validatorService: IValidatorService,
-      private paymentRepository: IPaymentRepository
+      private paymentRepository: IPaymentRepository,
+      private prescriptionRepository: IPrescriptionRepository
    ) { }
 
    async getAppointmentsByDoctorId(
@@ -17,19 +20,37 @@ export default class GetAppointmentUseCase {
       offset: number,
       limit: number,
       status?: AppointmentStatus
-   ): Promise<PaginatedResult<IAppointment> | null> {
+   ): Promise<PaginatedResult<IExtendedAppointment> | []> {
       this.validatorService.validateIdFormat(doctorId);
-
+   
       if (status) {
          this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
       }
       const appointments = await this.appointmentRepository.findManyByDoctorId(doctorId, offset, limit, status);
-      if (appointments?.items) {
-         appointments.items = appointments?.items.filter(el => el.status !== AppointmentStatus.PAYMENT_PENDING)
+   
+      if (!appointments || !appointments.items || appointments.items.length === 0) {
+         return [];
       }
-      return appointments
+   
+      const appointmentIds = appointments.items.map(appointment => appointment._id!);
+   
+      const prescriptions = await this.prescriptionRepository.findManyByAppointmentIds(appointmentIds);
+   
+      const prescriptionMap = new Map<string, boolean>();
+      prescriptions!.forEach(prescription => {
+         prescriptionMap.set(prescription.appointmentId!, true);
+      });
+   
+      appointments.items = appointments.items
+         .filter(appointment => appointment.status !== AppointmentStatus.PAYMENT_PENDING) 
+         .map(appointment => ({
+            ...appointment,
+            isPrescriptionAdded: prescriptionMap.has(appointment._id!)
+         }));
+   
+      return appointments;
    }
-
+   
    async getAppointmentDetails(appointmentId: string): Promise<IExtendedAppointment | null> {
       this.validatorService.validateIdFormat(appointmentId);
       return await this.appointmentRepository.findDetailsById(appointmentId);

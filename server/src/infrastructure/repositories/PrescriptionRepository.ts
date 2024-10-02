@@ -16,5 +16,9 @@ export default class PrescriptionRepository implements IPrescriptionRepository {
     async findByAppointmentId(appointmentId: string): Promise<IPrescription | null> {
         return this.model.findOne({ appointmentId });
     }
+
+    async findManyByAppointmentIds(appointmentIds: string[]): Promise<IPrescription[] | null> {
+        return await this.model.find({_id:{$in:appointmentIds}});
+    }
     
 }
