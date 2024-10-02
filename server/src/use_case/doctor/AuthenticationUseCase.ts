@@ -60,7 +60,7 @@ export default class AuthenticationUseCase {
 
       doctor!.token = refreshToken;
 
-      await this.doctorRepository.update(doctor!);
+      await this.doctorRepository.update(doctor._id!, doctor!);
 
       await this.otpRepository.deleteMany(email);
 
@@ -109,7 +109,7 @@ export default class AuthenticationUseCase {
       if (doctor.isBlocked) throw new CustomError("Doctor is Blocked", StatusCode.Forbidden);
 
       doctor.password = await this.passwordService.hash(password);
-      await this.doctorRepository.update(doctor);
+      await this.doctorRepository.update(doctor._id!, doctor!);
    }
 
    async register(doctor: IDoctor): Promise<string> {
@@ -124,8 +124,8 @@ export default class AuthenticationUseCase {
       this.validatorService.validateEmailFormat(doctor.email!);
       this.validatorService.validatePhoneNumber(doctor.phone!);
       doctor.password = await this.passwordService.hash(doctor.password!);
-      const id = await this.doctorRepository.create(doctor);
-      return id;
+      const createdDoctor = await this.doctorRepository.create(doctor);
+      return createdDoctor._id!;
    }
 
    async getPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
@@ -148,7 +148,7 @@ export default class AuthenticationUseCase {
       }
       const imageUrl = `https://${S3_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${key}`;
       doctor.image = imageUrl;
-      await this.doctorRepository.update(doctor);
+      await this.doctorRepository.update(doctor._id!, doctor!);
    }
 
    async refresh(token: string): Promise<{ accessToken: string }> {

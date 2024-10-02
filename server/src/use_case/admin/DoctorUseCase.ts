@@ -28,7 +28,7 @@ export default class AdminDoctorUseCase {
    }
 
    async update(doctor: IDoctor): Promise<void> {
-      const updatedDoctor = await this.doctorRepository.update(doctor);
+      const updatedDoctor = await this.doctorRepository.update(doctor._id!, doctor!);
       if (!updatedDoctor) throw new CustomError("Not Found", StatusCode.NotFound);
       if (updatedDoctor?.isVerified! && doctor.isVerified) {
          await this.emailService.sendMail({
