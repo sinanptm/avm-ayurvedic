@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge";
 import { ButtonV2 } from "@/components/button/ButtonV2";
 import { format } from 'date-fns'
+import { toast } from "@/components/ui/use-toast";
 
 
 const columns = [
@@ -36,6 +37,22 @@ export default function AppointmentTable({ page }: Props) {
       statusFilter === "all" ? undefined : statusFilter
    );
    const router = useRouter();
+   const { data:response } = useGetAppointmentsDoctor(0,100,AppointmentStatus.PENDING);
+   const notAcceptedAppointments = response?.items.length;
+
+   console.log(notAcceptedAppointments);
+   useEffect(() => {
+      if(notAcceptedAppointments!>0){
+         setStatusFilter(AppointmentStatus.PENDING);
+         toast({
+            title: "Pending Appointments 🚨",
+            description: "You have " + notAcceptedAppointments + " appointments pending for confirmation.",
+            variant: "destructive",
+         });
+         router.replace(`/doctor/appointments?page=1&status=${AppointmentStatus.PENDING}`);
+      }
+   }, [notAcceptedAppointments]);
+   
 
    const appointments = useMemo(() => data?.items || [], [data?.items]);
 
