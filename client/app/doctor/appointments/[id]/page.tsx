@@ -9,12 +9,13 @@ import { AppointmentStatus } from "@/types/enum"
 import { toast } from '@/components/ui/use-toast'
 import GetStatusBadge from '@/components/page-components/doctor/appointment/GetStatusBadge'
 import AppointmentCancellationModal from '@/components/models/appointment/ConfirmCancelAppointmentDoctor'
-import { Calendar, Clock, FileText, Video, User, Phone, AlertCircle } from 'lucide-react'
+import { Calendar, Clock, FileText, Video, User, Phone, AlertCircle, Pill } from 'lucide-react'
 import { format } from 'date-fns'
 import { useCallback, useState } from 'react'
 import { ButtonV2, ButtonColorVariant } from '@/components/button/ButtonV2'
 import { BreadcrumbCollapsed } from '@/components/navigation/BreadCrumbs'
 import PrescriptionModel from '@/components/models/doctor/PrescriptionModel'
+import { Separator } from '@/components/ui/separator'
 
 export default function AppointmentDetailsPage() {
   const params = useParams();
@@ -46,9 +47,7 @@ export default function AppointmentDetailsPage() {
         },
       }
     )
-  }, [appointmentId]);
-
-
+  }, [appointmentId, updateStatus, refetch]);
 
   const handleCancelAppointment = useCallback(async () => {
     if (!appointmentId) return
@@ -73,11 +72,9 @@ export default function AppointmentDetailsPage() {
         },
       }
     )
-  }, [appointmentId]);
+  }, [appointmentId, updateStatus, refetch]);
 
-
-  const handlePrescriptionClick = useCallback(() => setPrescriptionModelOpen(true), [isPrescriptionModelOpen, appointmentId]);
-
+  const handlePrescriptionClick = useCallback(() => setPrescriptionModelOpen(true), []);
 
   if (isLoading) {
     return (
@@ -112,9 +109,11 @@ export default function AppointmentDetailsPage() {
               </ButtonV2>
             </>
           ) : (
-            <ButtonV2 variant="gooeyLeft" color={'teal' as ButtonColorVariant} onClick={handlePrescriptionClick}>
-              Prescription
-            </ButtonV2>
+            !appointment.prescription && (
+              <ButtonV2 variant="gooeyLeft" color={'teal' as ButtonColorVariant} onClick={handlePrescriptionClick}>
+                Prescription
+              </ButtonV2>
+            )
           )}
           {appointment.status === AppointmentStatus.CONFIRMED && (
             <ButtonV2 variant="gooeyRight" color={'danger' as ButtonColorVariant} onClick={() => setCancelModelOpen(true)}>
@@ -127,8 +126,8 @@ export default function AppointmentDetailsPage() {
         <BreadcrumbCollapsed items={[{ href: '/doctor/appointments', label: 'Appointments' }, { href: '/doctor/appointments/' + appointment._id, label: 'Appointment Details' }]} />
       </div>
 
-      <div className="grid grid-cols-1 gap-6">
-        <Card className="lg:col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="md:col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Calendar className="w-5 h-5 mr-2 text-primary" />
@@ -209,6 +208,71 @@ export default function AppointmentDetailsPage() {
             </div>
           </CardContent>
         </Card>
+
+        {appointment.prescription && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Pill className="w-5 h-5 mr-2 text-primary" />
+                Prescription
+              </CardTitle>
+            </CardHeader>
+            <Card>
+              <CardContent className="p-6">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4 flex items-center">
+                      <Pill className="w-5 h-5 mr-2 text-primary" />
+                      Medications
+                    </h3>
+                    {appointment.prescription?.medications!.map((med, index) => (
+                      <div key={index} className="bg-muted p-4 rounded-lg mb-4 last:mb-0">
+                        <h4 className="text-md font-medium mb-2">{med.name}</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                          <div className="flex items-center">
+                            <Clock className="w-4 h-4 mr-2 text-muted-foreground" />
+                            <span className="text-muted-foreground">Dosage: {med.dosage}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-2 text-muted-foreground" />
+                            <span className="text-muted-foreground">Frequency: {med.frequency}</span>
+                          </div>
+                          <div className="flex items-center sm:col-span-2">
+                            <Clock className="w-4 h-4 mr-2 text-muted-foreground" />
+                            <span className="text-muted-foreground">Duration: {med.duration}</span>
+                          </div>
+                        </div>
+                        {med.additionalInstructions && med.additionalInstructions.length > 0 && (
+                          <div className="mt-2 flex items-start">
+                            <AlertCircle className="w-4 h-4 mr-2 text-muted-foreground shrink-0 mt-1" />
+                            <p className="text-sm text-muted-foreground">
+                              Additional Instructions: {med.additionalInstructions}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {appointment.prescription.notes && (
+                    <>
+                      <Separator />
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center">
+                          <FileText className="w-5 h-5 mr-2 text-primary" />
+                          Notes
+                        </h3>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="text-sm text-muted-foreground">{appointment.prescription.notes}</p>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </Card>
+        )}
       </div>
 
       <PrescriptionModel
