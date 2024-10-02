@@ -13,6 +13,7 @@ import { Calendar, Clock, FileText, Video, User, Phone, AlertCircle } from 'luci
 import { format } from 'date-fns'
 import { useState } from 'react'
 import { ButtonV2 } from '@/components/button/ButtonV2'
+import { BreadcrumbCollapsed } from '@/components/navigation/BreadCrumbs'
 
 export default function AppointmentDetailsPage() {
   const params = useParams()
@@ -110,7 +111,10 @@ export default function AppointmentDetailsPage() {
           )}
         </div>
       </div>
-      
+      <div className="mb-6">
+        <BreadcrumbCollapsed items={[{ href: '/doctor/appointments', label: 'Appointments' }, { href: '/doctor/appointments/' + appointment._id, label: 'Appointment Details' }]} />
+      </div>
+
       <div className="grid grid-cols-1 gap-6">
         <Card className="lg:col-span-2">
           <CardHeader>

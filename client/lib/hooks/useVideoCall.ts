@@ -3,6 +3,7 @@ import Peer from 'simple-peer';
 import { Socket } from 'socket.io-client';
 import connectSocketIO from '@/lib/socket.io/connectSocketIO';
 import { toast } from '@/components/ui/use-toast';
+import config from '@/config/webRTCStuntServer';
 
 export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
   const [hasJoined, setHasJoined] = useState(false);
@@ -18,6 +19,8 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
     socketRef.current = socket;
 
     socket.on('signal', (signalData: any) => {
+      console.log('signal ', signalData);
+      
       if (peerRef.current) {
         peerRef.current.signal(signalData);
       }
@@ -66,6 +69,7 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
         initiator: true,  
         stream,
         trickle: false, 
+        // config
       });
 
       peerRef.current = peer;
@@ -75,6 +79,14 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
         socketRef.current?.emit('signal', signal, section.roomId ?? "random");
       });
 
+      peer.on('error', (err) => {
+        if(err.message.includes("User-Initiated Abort")){
+          console.log('user left the room')
+        }
+        else{
+          console.error('Peer connection error:', err)
+        }
+      });
       
       peer.on('stream', (remoteStream: MediaStream) => {
         setRemoteStream((prevStream) => {
