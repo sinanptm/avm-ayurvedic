@@ -58,6 +58,7 @@ export interface IExtendedAppointment extends IAppointment {
    slot?: ISlot;
    doctor?: IDoctor;
    prescription?:IPrescription;
+   isPrescriptionAdded?:boolean;
 }
 
 export interface INotification {

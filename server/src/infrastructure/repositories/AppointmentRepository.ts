@@ -104,13 +104,13 @@ export default class AppointmentRepository implements IAppointmentRepository {
       offset: number,
       limit: number,
       status?: AppointmentStatus
-   ): Promise<PaginatedResult<IAppointment> | null> {
+   ): Promise<PaginatedResult<IAppointment>> {
       const filter: { doctorId: string; status?: AppointmentStatus } = { doctorId };
       if (status) {
          filter.status = status;
       }
       const totalItems = await this.model.countDocuments(filter);
-      const items = await this.model.find(filter).skip(offset).limit(limit).exec();
+      const items = await this.model.find(filter).skip(offset).limit(limit).lean(true).exec();
       return getPaginatedResult(totalItems, offset, limit, items);
    }
 
