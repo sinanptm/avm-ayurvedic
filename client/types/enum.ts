@@ -43,3 +43,10 @@ export enum VideoSectionStatus {
     IN_PROGRESS = 'in_progress',
     COMPLETED = 'completed',
 }
+
+export enum PrescriptionStatus {
+    PENDING = 'pending',
+    ISSUED = 'issued',
+    CANCELLED = 'cancelled',
+  }
+  
