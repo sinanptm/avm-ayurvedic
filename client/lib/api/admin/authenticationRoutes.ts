@@ -1,7 +1,8 @@
 import axios from "axios";
+import apiUrls from '@/config/apiConfig'
 
 const axiosInstance = axios.create({
-   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/admin/auth`,
+   baseURL: `${apiUrls.ADMIN}/auth`,
    headers: {
       "Content-Type": "application/json",
    },

@@ -1,8 +1,9 @@
 import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl"
 import doctorAxiosInstance from "../doctor/authorizedRoutes"
 import { IPrescription } from "@/types/entities"
+import apiUrls from "@/config/apiConfig";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/prescription`
+const baseUrl = `${apiUrls.PRESCRIPTION}`
 
 export const createPrescription = async (prescription: IPrescription) => {
     const response = await withTempBaseUrl(doctorAxiosInstance, baseUrl, {

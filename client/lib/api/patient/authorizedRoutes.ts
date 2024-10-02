@@ -1,3 +1,4 @@
+import apiUrls from "@/config/apiConfig";
 import { IPatient } from "@/types/entities";
 import axios from "axios";
 
@@ -15,7 +16,7 @@ const setAuthTokens = (tokens: Record<string, string>) => {
 };
 
 const patientAxiosInstance = axios.create({
-   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/patient`,
+   baseURL: `${apiUrls.PATIENT}`,
    headers: {
       "Content-Type": "application/json",
    },

@@ -4,12 +4,13 @@ import { IAppointment } from "@/types/entities";
 import { AppointmentStatus } from "@/types/enum";
 import patientAxiosInstance from "../patient/authorizedRoutes";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
+import apiUrls, { baseUrl } from "@/config/apiConfig";
 
-const patientBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments/patient`;
-const doctorBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments/doctor`;
+const patientBaseUrl = `${apiUrls.APPOINTMENT}/patient`;
+const doctorBaseUrl = `${apiUrls.APPOINTMENT}/doctor`;
 
 export const getDoctorsList = async () => {
-   const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/doctors`);
+   const response = await axios.get(`${baseUrl}/doctors`);
    return response.data;
 };
 

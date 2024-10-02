@@ -1,8 +1,9 @@
 import axios from "axios";
 import { IDoctor } from "@/types/entities";
+import apiUrls from "@/config/apiConfig";
 
 const axiosInstance = axios.create({
-   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/doctor/auth`,
+   baseURL: `${apiUrls.DOCTOR}/auth`,
    headers: {
       "Content-Type": "application/json",
    },

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { IPatient } from "@/types/entities";
+import apiUrls from "@/config/apiConfig";
 
 const axiosInstance = axios.create({
-   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/patient/auth`,
+   baseURL: `${apiUrls.PATIENT}/auth`,
    headers: {
       "Content-Type": "application/json",
    },

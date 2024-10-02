@@ -1,9 +1,10 @@
 import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl";
 import patientAxiosInstance from "../patient/authorizedRoutes";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
+import apiUrls from "@/config/apiConfig";
 
-const patientBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/chats/patient`;
-const doctorBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/chats/doctor`;
+const patientBaseUrl = `${apiUrls.CHAT}/patient`;
+const doctorBaseUrl = `${apiUrls.CHAT}/doctor`;
 
 // Patient Routes
 export const getPatientChats = async () => {

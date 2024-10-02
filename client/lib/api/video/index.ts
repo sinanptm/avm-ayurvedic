@@ -1,9 +1,10 @@
 import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl";
 import patientAxiosInstance from "../patient/authorizedRoutes";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
+import apiUrls from "@/config/apiConfig";
 
-const patientBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/video/patient`;
-const doctorBaseUrl = `${process.env.NEXT_PUBLIC_API_URL}/video/doctor`;
+const patientBaseUrl = `${apiUrls.VIDEO}/patient`;
+const doctorBaseUrl = `${apiUrls.VIDEO}/doctor`;
 
 export const getSectionsInOneDayPatient = async () => {
    const response = await withTempBaseUrl(patientAxiosInstance, patientBaseUrl, {

@@ -1,7 +1,8 @@
+import apiUrls from "@/config/apiConfig";
 import axios from "axios";
 
 export const doctorAxiosInstance = axios.create({
-   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/doctor`,
+   baseURL: `${apiUrls.DOCTOR}`,
    headers: {
       "Content-Type": "application/json",
    },

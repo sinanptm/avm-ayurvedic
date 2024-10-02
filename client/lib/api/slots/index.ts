@@ -2,8 +2,9 @@ import { ISlot } from "@/types/entities";
 import { Days } from "@/types/enum";
 import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl";
 import doctorAxiosInstance from "../doctor/authorizedRoutes";
+import apiUrls from "@/config/apiConfig";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/slots`;
+const baseUrl = `${apiUrls.SLOT}`;
 
 // =================================================================== //
 
