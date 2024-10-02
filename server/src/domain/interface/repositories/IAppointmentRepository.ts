@@ -1,9 +1,8 @@
 import { PaginatedResult } from "../../../types";
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../entities/IAppointment";
+import IRepository from "./IRepository";
 
-export default interface IAppointmentRepository {
-   create(appointment: IAppointment): Promise<IAppointment>;
-   update(appointment: IAppointment): Promise<IAppointment | null>;
+export default interface IAppointmentRepository extends IRepository<IAppointment> {
    updateManyBySlotIdsNotInStatuses(slotIds: string[], fields: IAppointment, notInStatuses:AppointmentStatus[]): Promise<IAppointment[] | null>;
    findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null>;
    findManyByDateAndDoctorId(appointmentDate: string, doctorId: string): Promise<IAppointment[] | null>;

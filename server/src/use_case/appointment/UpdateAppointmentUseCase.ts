@@ -3,7 +3,7 @@ import INotificationRepository from "../../domain/interface/repositories/INotifi
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
 import { NotificationTypes } from "../../domain/entities/INotification";
-import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
+import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
 import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 
 export default class UpdateAppointmentUseCase {
@@ -19,7 +19,7 @@ export default class UpdateAppointmentUseCase {
       this.validatorService.validateRequiredFields({ appointmentId, status });
       this.validatorService.validateIdFormat(appointmentId);
       this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
-      const appointment = await this.appointmentRepository.update({ _id: appointmentId, status });
+      const appointment = await this.appointmentRepository.update(appointmentId, { status });
       // notify patient
       if (status === AppointmentStatus.CANCELLED && appointment) {
          await this.notificationRepository.create({
@@ -46,7 +46,7 @@ export default class UpdateAppointmentUseCase {
    async updateStatusAndNote(appointmentId: string, status: AppointmentStatus, notes: string): Promise<void> {
       this.validatorService.validateRequiredFields({ appointmentId, status, notes });
       this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
-      const appointment = await this.appointmentRepository.update({ _id: appointmentId, status, notes });
+      const appointment = await this.appointmentRepository.update(appointmentId, { status, notes });
       // notify doctor
       if (status === AppointmentStatus.CANCELLED && appointment) {
          await this.notificationRepository.create({

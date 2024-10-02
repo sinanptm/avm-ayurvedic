@@ -1,5 +1,5 @@
 import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
-import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
+import IVideoSectionRepository  from "../../domain/interface/repositories/IVideoSectionRepository";
 import VideoSectionModel from "../model/VideoSectionModel";
 
 export default class VideoSectionRepository implements IVideoSectionRepository {

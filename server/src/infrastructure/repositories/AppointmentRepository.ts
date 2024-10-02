@@ -11,8 +11,13 @@ export default class AppointmentRepository implements IAppointmentRepository {
    async create(appointment: IAppointment): Promise<IAppointment> {
       return (await this.model.create(appointment));
    }
-   async update(appointment: IAppointment): Promise<IAppointment | null> {
-      return await this.model.findByIdAndUpdate(appointment._id, appointment, { new: true });
+
+   async findById(id: string): Promise<IAppointment | null> {
+      return await this.model.findById(id);
+   }
+
+   async update(id: string, appointment: IAppointment): Promise<IAppointment | null> {
+      return await this.model.findByIdAndUpdate(id, appointment, { new: true });
    }
 
    async findManyByIds(ids: string[]): Promise<IAppointment[] | null> {

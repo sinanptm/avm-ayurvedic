@@ -1,12 +1,9 @@
 import IVideoSection, { VideoSectionStatus } from "../../entities/IVideoChatSection";
+import IRepository from "./IRepository";
 
-export interface IVideoSectionRepository {
-  create(videoSection: IVideoSection): Promise<IVideoSection>;
-  findById(id: string): Promise<IVideoSection | null>;
-  update(id: string, videoSection: IVideoSection): Promise<IVideoSection | null>;
+export default interface IVideoSectionRepository extends IRepository<IVideoSection> {
   findByPatientIdAndUpdate(patientId: string, section: IVideoSection): Promise<void>;
   findByDoctorIdAndUpdate(doctorId: string, section: IVideoSection): Promise<void>;
-  delete(id: string): Promise<void>;
   findByAppointmentId(appointmentId: string): Promise<IVideoSection | null>;
   findByStatus(status: VideoSectionStatus): Promise<IVideoSection | null>;
   findByStartTimeRangeByDoctorId(startTime: string, endTime: string, doctorId: string): Promise<IVideoSection[] | null>;

@@ -1,7 +1,7 @@
 import IAppointment, { AppointmentStatus } from "../../domain/entities/IAppointment";
 import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
+import IVideoSectionRepository  from "../../domain/interface/repositories/IVideoSectionRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { addDays } from "../../utils/date-formatter";
 

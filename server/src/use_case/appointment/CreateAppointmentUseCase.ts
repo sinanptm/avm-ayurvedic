@@ -7,7 +7,7 @@ import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepo
 import IPayment, { PaymentStatus } from "../../domain/entities/IPayment";
 import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
 import { StatusCode } from "../../types";
-import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
+import IVideoSectionRepository  from "../../domain/interface/repositories/IVideoSectionRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import IDoctor from "../../domain/entities/IDoctor";

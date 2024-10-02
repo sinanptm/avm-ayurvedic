@@ -6,7 +6,7 @@ import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
 import { AWS_REGION, S3_BUCKET_NAME } from "../../config/env";
 import IChatRepository from "../../domain/interface/repositories/IChatRepository";
-import { IVideoSectionRepository } from "../../domain/interface/repositories/IVideoSectionRepository";
+import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
 
 export default class PatientUseCase {
    constructor(
