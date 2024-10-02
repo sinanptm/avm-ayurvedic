@@ -1,7 +1,7 @@
 import ISlot, { Days, SlotStatus } from "../../entities/ISlot";
+import IRepository from "./IRepository";
 
-export default interface ISlotRepository {
-   update(slot: ISlot): Promise<void>;
+export default interface ISlotRepository extends IRepository<ISlot> {
    createMany(slots: ISlot[]): Promise<void>;
    deleteManyByDayAndTime(doctorId: string, day: Days, startTimes: string[]): Promise<void>;
    deleteManyByDaysAndTimes(doctorId: string, days: Days[], startTimes: string[]): Promise<void>;

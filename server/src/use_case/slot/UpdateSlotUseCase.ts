@@ -11,6 +11,6 @@ export default class UpdateSlotUseCase {
    async update(slot: ISlot): Promise<void> {
       this.validatorService.validateIdFormat(slot._id!);
       this.validatorService.validateTimeFormat(slot.startTime!);
-      await this.slotRepository.update(slot);
+      await this.slotRepository.update(slot._id!, slot);
    }
 }

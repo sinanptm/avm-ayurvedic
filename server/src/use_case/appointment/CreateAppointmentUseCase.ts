@@ -53,7 +53,7 @@ export default class AppointmentUseCase {
          if (bookedAppointment) throw new CustomError("Slot already booked", StatusCode.Conflict);
       } else {
          slot.status = "booked";
-         await this.slotRepository.update(slot);
+         await this.slotRepository.update(slot._id!, slot);
       }
 
       const payment = await this.paymentRepository.create({

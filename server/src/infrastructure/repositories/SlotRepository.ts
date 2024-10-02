@@ -9,6 +9,10 @@ export default class SlotRepository implements ISlotRepository {
       await this.model.create(slots);
    }
 
+   async create(slot: ISlot): Promise<ISlot> {
+      return await this.model.create(slot);
+   }
+
    async deleteManyByDayAndTime(doctorId: string, day: Days, startTimes: string[]): Promise<void> {
       await this.model.deleteMany({ doctorId, day, startTime: { $in: startTimes } });
    }
@@ -34,8 +38,8 @@ export default class SlotRepository implements ISlotRepository {
          _id: { $nin: excludedSlotIds },
       });
    }
-   async update(slot: ISlot): Promise<void> {
-      await this.model.findByIdAndUpdate(slot._id, slot, { upsert: true });
+   async update(id: string, slot: ISlot): Promise<ISlot | null> {
+      return await this.model.findByIdAndUpdate(id, slot, { upsert: true });
    }
 
    async findMany(doctorId: string): Promise<ISlot[] | null> {
