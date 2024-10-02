@@ -35,6 +35,7 @@ const prescriptionSchema = new Schema<IPrescription>(
             type: String
         },
         status: {
+            type:String,
             enum: Object.values(PrescriptionStatus),
             required: true,
             default: PrescriptionStatus.PENDING

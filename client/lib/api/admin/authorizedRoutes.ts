@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
 
          try {
             const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
-            const refreshResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/auth/refresh`, {
+            const refreshResponse = await axios.get(`${apiUrls.ADMIN}/auth/refresh`, {
                withCredentials: true,
             });
 

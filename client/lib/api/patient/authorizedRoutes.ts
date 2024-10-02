@@ -47,7 +47,7 @@ patientAxiosInstance.interceptors.response.use(
       if (error.response?.status === 401 && !originalRequest._retry) {
          originalRequest._retry = true;
          try {
-            const refreshResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/patient/auth/refresh`, {
+            const refreshResponse = await axios.get(`${apiUrls.PATIENT}/auth/refresh`, {
                withCredentials: true,
             });
 
