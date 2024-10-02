@@ -1,4 +1,4 @@
-import {Router} from "express";
+import { Router } from "express";
 import patientAuthentication from "./patient/AuthenticationRoutes";
 import adminAuthentication from "./admin/AuthenticationRoutes";
 import protectedRoutes from "./patient/PatientRoutes";
@@ -14,8 +14,9 @@ import UnauthenticatedControllers from "../controllers/UnauthenticatedController
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
 import appointmentRoutes from "./appointment/AppointmentRoutes";
 import notificationRoutes from "./notification/NotificationRoute";
-import chatRouters from "./chat/ChatRoutes";
-import videoSectionRoute from "./video/VideoSectionRoute";
+import chatRoutes from "./chat/ChatRoutes";
+import videoSectionRoutes from "./video/VideoSectionRoute";
+import prescriptionRoutes from "./prescription/PrescriptionRoutes";
 
 const app = Router();
 const tokenService = new TokenService();
@@ -38,8 +39,9 @@ app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/slots", slotRoutes);
 app.use("/appointments", appointmentRoutes);
 app.use("/notifications", notificationRoutes);
-app.use("/chats", chatRouters);
-app.use("/video", videoSectionRoute);
+app.use("/chats", chatRoutes);
+app.use("/video", videoSectionRoutes);
+app.use("/prescription", prescriptionRoutes)
 
 app.use(errorHandler.exec.bind(errorHandler));
 
