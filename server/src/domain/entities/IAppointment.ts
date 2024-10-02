@@ -1,5 +1,6 @@
 import IDoctor from "./IDoctor";
 import IPatient from "./IPatient";
+import IPrescription from "./IPrescription";
 import ISlot from "./ISlot";
 
 export enum AppointmentStatus {
@@ -32,4 +33,5 @@ export interface IExtendedAppointment extends IAppointment {
    patient?: IPatient;
    slot?: ISlot;
    doctor?: IDoctor;
+   prescription?:IPrescription;
 }
