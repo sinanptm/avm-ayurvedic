@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, memo, SetStateAction } from "react";
 import {
    AlertDialog,
    AlertDialogCancel,
@@ -18,7 +18,7 @@ interface Props {
    handleCancelAppointment: () => void;
 }
 
-export default function AppointmentCancellationModal({ open, setOpen, handleCancelAppointment }: Props) {
+const  AppointmentCancellationModal = ({ open, setOpen, handleCancelAppointment }: Props) =>{
    return (
       <AlertDialog open={open} onOpenChange={setOpen}>
          <AlertDialogContent className="sm:max-w-[425px] w-[95vw] p-6 bg-black bg-opacity-65">
@@ -59,3 +59,5 @@ export default function AppointmentCancellationModal({ open, setOpen, handleCanc
       </AlertDialog>
    );
 }
+
+export default memo(AppointmentCancellationModal)

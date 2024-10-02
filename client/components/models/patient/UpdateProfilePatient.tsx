@@ -76,7 +76,7 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
                         width={20}
                         height={20}
                         alt="close-icon"
-                        onClick={() => closeModal()}
+                        onClick={closeModal}
                         className="cursor-pointer"
                      />
                   </AlertDialogTitle>

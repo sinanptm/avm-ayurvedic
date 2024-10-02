@@ -11,18 +11,20 @@ import GetStatusBadge from '@/components/page-components/doctor/appointment/GetS
 import AppointmentCancellationModal from '@/components/models/appointment/ConfirmCancelAppointmentDoctor'
 import { Calendar, Clock, FileText, Video, User, Phone, AlertCircle } from 'lucide-react'
 import { format } from 'date-fns'
-import { useState } from 'react'
-import { ButtonV2 } from '@/components/button/ButtonV2'
+import { useCallback, useState } from 'react'
+import { ButtonV2, ButtonColorVariant } from '@/components/button/ButtonV2'
 import { BreadcrumbCollapsed } from '@/components/navigation/BreadCrumbs'
+import PrescriptionModel from '@/components/models/doctor/PrescriptionModel'
 
 export default function AppointmentDetailsPage() {
-  const params = useParams()
-  const appointmentId = params.id as string
-  const [isCancelModelOpen, setCancelModelOpen] = useState(false)
-  const { data: appointment, isLoading, error, refetch } = useGetAppointmentDetailsDoctor(appointmentId)
-  const { mutate: updateStatus, isPending } = useUpdateAppointmentStatusDoctor()
+  const params = useParams();
+  const appointmentId = params.id as string;
+  const [isCancelModelOpen, setCancelModelOpen] = useState(false);
+  const [isPrescriptionModelOpen, setPrescriptionModelOpen] = useState(false);
+  const { data: appointment, isLoading, error, refetch } = useGetAppointmentDetailsDoctor(appointmentId);
+  const { mutate: updateStatus, isPending } = useUpdateAppointmentStatusDoctor();
 
-  const handleAcceptAppointment = () => {
+  const handleAcceptAppointment = useCallback(() => {
     if (!appointmentId) return
     updateStatus(
       { appointmentId, status: AppointmentStatus.CONFIRMED },
@@ -44,9 +46,11 @@ export default function AppointmentDetailsPage() {
         },
       }
     )
-  }
+  }, [appointmentId]);
 
-  const handleCancelAppointment = async () => {
+
+
+  const handleCancelAppointment = useCallback(async () => {
     if (!appointmentId) return
     updateStatus(
       { appointmentId, status: AppointmentStatus.CANCELLED },
@@ -69,7 +73,11 @@ export default function AppointmentDetailsPage() {
         },
       }
     )
-  }
+  }, [appointmentId]);
+
+
+  const handlePrescriptionClick = useCallback(() => setPrescriptionModelOpen(true), [isPrescriptionModelOpen, appointmentId]);
+
 
   if (isLoading) {
     return (
@@ -94,7 +102,7 @@ export default function AppointmentDetailsPage() {
         <h1 className="text-3xl font-bold mb-2 md:mb-0">Appointment Details</h1>
         <div className="flex items-center space-x-4">
           <GetStatusBadge status={appointment.status || AppointmentStatus.PENDING} />
-          {appointment.status === AppointmentStatus.PENDING && (
+          {appointment.status === AppointmentStatus.PENDING ? (
             <>
               <ButtonV2 variant="secondary" onClick={handleAcceptAppointment} disabled={isPending}>
                 Accept
@@ -103,9 +111,13 @@ export default function AppointmentDetailsPage() {
                 Reject
               </ButtonV2>
             </>
+          ) : (
+            <ButtonV2 variant="gooeyLeft" color={'teal' as ButtonColorVariant} onClick={handlePrescriptionClick}>
+              Prescription
+            </ButtonV2>
           )}
           {appointment.status === AppointmentStatus.CONFIRMED && (
-            <ButtonV2 variant="destructive" onClick={() => setCancelModelOpen(true)}>
+            <ButtonV2 variant="gooeyRight" color={'danger' as ButtonColorVariant} onClick={() => setCancelModelOpen(true)}>
               Cancel
             </ButtonV2>
           )}
@@ -170,7 +182,7 @@ export default function AppointmentDetailsPage() {
             <div className="flex items-center space-x-4">
               <div className="relative w-16 h-16 rounded-full overflow-hidden">
                 <Image
-                  src={appointment.patient?.profile || "/placeholder.svg?height=64&width=64"}
+                  src={appointment.patient?.profile || "/assets/icons/circle-user.svg?height=64&width=64"}
                   alt={appointment.patient?.name || "Patient"}
                   layout="fill"
                   objectFit="cover"
@@ -198,6 +210,14 @@ export default function AppointmentDetailsPage() {
           </CardContent>
         </Card>
       </div>
+
+      <PrescriptionModel
+        isOpen={isPrescriptionModelOpen}
+        setOpen={setPrescriptionModelOpen}
+        appointmentId={appointment._id!}
+        refetch={refetch}
+        patientId={appointment.patientId!}
+      />
 
       <AppointmentCancellationModal
         open={isCancelModelOpen}

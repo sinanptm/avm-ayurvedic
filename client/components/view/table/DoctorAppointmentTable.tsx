@@ -13,6 +13,7 @@ import GetStatusBadge from "@/components/page-components/doctor/appointment/GetS
 import { ButtonV2 } from "@/components/button/ButtonV2";
 import { format } from 'date-fns'
 import { toast } from "@/components/ui/use-toast";
+import { Badge } from "@/components/ui/badge";
 
 
 const columns = [
@@ -20,6 +21,7 @@ const columns = [
    { name: "Type", width: "w-1/5" },
    { name: "Reason", width: "w-1/5" },
    { name: "Status", width: "w-1/5" },
+   { name: "Prescription", width: "w-1/5" },
    { name: "Actions", width: "w-1/5 text-right pr-10" },
 ];
 
@@ -32,17 +34,17 @@ export default function AppointmentTable({ page }: Props) {
    const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "all">("all");
    const limit = 7;
    const { data, isLoading, error, refetch } = useGetAppointmentsDoctor(
-      currentPage-1,
+      currentPage - 1,
       limit,
       statusFilter === "all" ? undefined : statusFilter
    );
    const router = useRouter();
-   const { data:response } = useGetAppointmentsDoctor(0,100,AppointmentStatus.PENDING);
+   const { data: response } = useGetAppointmentsDoctor(0, 100, AppointmentStatus.PENDING);
    const notAcceptedAppointments = response?.items.length;
 
    console.log(notAcceptedAppointments);
    useEffect(() => {
-      if(notAcceptedAppointments!>0){
+      if (notAcceptedAppointments! > 0) {
          setStatusFilter(AppointmentStatus.PENDING);
          toast({
             title: "Pending Appointments 🚨",
@@ -52,7 +54,7 @@ export default function AppointmentTable({ page }: Props) {
          router.replace(`/doctor/appointments?page=1&status=${AppointmentStatus.PENDING}`);
       }
    }, [notAcceptedAppointments,]);
-   
+
 
    const appointments = useMemo(() => data?.items || [], [data?.items]);
 
@@ -140,6 +142,11 @@ export default function AppointmentTable({ page }: Props) {
                                  <TableCell>{appointment.reason}</TableCell>
                                  <TableCell>
                                     <GetStatusBadge status={appointment.status!} />
+                                 </TableCell>
+                                 <TableCell>
+                                    <Badge variant={`${appointment.isPrescriptionAdded?"success":"warning"}`}>
+                                       {appointment.isPrescriptionAdded ? "Added" : "Not Added"}
+                                    </Badge>
                                  </TableCell>
                                  <TableCell className="text-right">
                                     <ButtonV2

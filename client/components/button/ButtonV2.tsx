@@ -88,7 +88,7 @@ const colorVariants: Record<ButtonColorVariant, string> = {
    info: "bg-sky-700 text-white hover:bg-sky-600",
    success: "bg-green-700 text-white hover:bg-green-600",
    warning: "bg-yellow-600 text-black hover:bg-yellow-500",
-   danger: "bg-red-700 text-white hover:bg-red-600",
+   danger: "bg-red-900 text-red-100 hover:bg-red-800",
    purple: "bg-purple-700 text-white hover:bg-purple-600",
    teal: "bg-teal-700 text-white hover:bg-teal-600",
    orange: "bg-orange-700 text-white hover:bg-orange-600",

@@ -41,7 +41,7 @@ export const useCreateAppointment = () => {
 };
 
 export const useGetAppointmentsDoctor = (offset: number, limit: number, status?: AppointmentStatus) => {
-   return useQuery<PaginatedResult<IAppointment>, AxiosError<ErrorResponse>>({
+   return useQuery<PaginatedResult<IExtendedAppointment>, AxiosError<ErrorResponse>>({
       queryKey: ["appointments", status, offset, limit],
       queryFn: () => getAppointmentsDoctor(offset, limit, status),
    });

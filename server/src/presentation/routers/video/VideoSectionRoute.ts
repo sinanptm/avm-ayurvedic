@@ -1,5 +1,5 @@
 import { Router } from "express";
-import VideoController from "../../../presentation/controllers/video/VideoController";
+import VideoController from "../../controllers/video/VideoController";
 import GetVideoSectionUseCase from "../../../use_case/video/GetVideoSectionUseCase";
 import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
 import PatientAuthMiddleware from "../../middlewares/PatientAuthMiddleware";

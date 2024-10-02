@@ -13,8 +13,8 @@ export default class CreatePrescriptionUseCase {
     ) { }
 
     async create(doctorId: string, prescription: IPrescription): Promise<void> {
-        await this.validatePrescription({ doctorId, ...prescription });
-        this.prescriptionRepository.create({ doctorId, ...prescription });
+        await this.validatePrescription({ doctorId, ...prescription });        
+        this.prescriptionRepository.create({ doctorId, ...prescription, status:PrescriptionStatus.ISSUED });
     };
 
     async update(prescription: IPrescription): Promise<void> {
@@ -23,10 +23,9 @@ export default class CreatePrescriptionUseCase {
         await this.prescriptionRepository.update(prescription._id!, prescription);
     }
 
-    private async validatePrescription({ appointmentId, medications, notes, patientId, status, doctorId }: IPrescription):Promise<void> {
-        this.validatorService.validateRequiredFields({ doctorId, appointmentId, notes, status, patientId, medications });
+    private async validatePrescription({ appointmentId, medications, notes, patientId, doctorId }: IPrescription):Promise<void> {
+        this.validatorService.validateRequiredFields({ doctorId, appointmentId, notes, patientId, medications });
         this.validatorService.validateMultipleIds([doctorId!, appointmentId!, patientId!]);
-        this.validatorService.validateEnum(status!, Object.values(PrescriptionStatus));
         medications?.forEach(({ dosage, duration, frequency, name }) => {
             this.validatorService.validateRequiredFields({ dosage, duration, frequency, name });
         });
