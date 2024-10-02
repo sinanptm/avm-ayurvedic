@@ -3,6 +3,7 @@ import IMessageRepository from "../../domain/interface/repositories/IMessageRepo
 import { PaginatedResult } from "../../types";
 import MessageModel from "../model/Message";
 import { getPaginatedResult } from "./getPaginatedResult";
+import { ObjectId } from 'mongodb'
 
 export default class MessageRepository implements IMessageRepository {
     model = MessageModel;
@@ -26,13 +27,13 @@ export default class MessageRepository implements IMessageRepository {
     async markAsReadByReceiverAndChatId(receiverId: string, chatId: string): Promise<void> {
         await this.model.updateMany(
             { chatId, receiverId, isReceived: false },
-            { $set: { isReceived: true } } 
+            { $set: { isReceived: true } }
         );
     }
     async getUnreadMessageCountGroupedByChat(receiverId: string): Promise<{ _id: string, count: number }[]> {
         return await this.model.aggregate([
-            { $match: { receiverId, isReceived: false } },
+            { $match: { receiverId: new ObjectId(receiverId), isReceived: false } },
             { $group: { _id: "$chatId", count: { $sum: 1 } } }
-        ]);
+        ]).exec();
     }
 }

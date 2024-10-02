@@ -21,10 +21,10 @@ export default class ChatRepository implements IChatRepository {
     }
 
     async findAllChatsForPatient(patientId: string): Promise<IChat[]> {
-        return await this.model.find({ patientId });
+        return await this.model.find({ patientId }).lean(true);
     }
     async findAllChatsForDoctor(doctorId: string): Promise<IChat[]> {
-        return await this.model.find({ doctorId });
+        return await this.model.find({ doctorId }).lean(true);
     }
 
     async findByDoctorAndPatientId(doctorId: string, patientId: string): Promise<IChat | null> {
