@@ -6,11 +6,14 @@ import { getPaginatedResult } from "./getPaginatedResult";
 
 export default class MessageRepository implements IMessageRepository {
     model = MessageModel;
-    async create(message: IMessage): Promise<void> {
-        await this.model.create(message)
+    async create(message: IMessage): Promise<IMessage> {
+        return await this.model.create(message)
     }
     async findById(_id: string): Promise<IMessage | null> {
         return await this.model.findById(_id)
+    }
+    async update(id: string, message: IMessage): Promise<IMessage | null> {
+        return await this.model.findByIdAndUpdate(id, message)
     }
     async findByChatId(chatId: string, limit: number, offset: number): Promise<PaginatedResult<IMessage>> {
         const totalItems = await this.model.countDocuments({ chatId });

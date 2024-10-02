@@ -4,14 +4,14 @@ import ChatModel from "../model/ChatModel";
 
 export default class ChatRepository implements IChatRepository {
     model = ChatModel;
-    async create(chat: IChat): Promise<string> {
-        return (await this.model.create(chat))._id
+    async create(chat: IChat): Promise<IChat> {
+        return (await this.model.create(chat))
     }
     async findById(id: string): Promise<IChat | null> {
         return await this.model.findById(id)
     }
-    async update({ _id, ...chat }: IChat): Promise<void> {
-        await this.model.findByIdAndUpdate({ _id }, chat)
+    async update(id: string, chat: IChat): Promise<IChat | null> {
+        return await this.model.findByIdAndUpdate({ _id: id }, chat)
     }
     async findByDoctorIdAndUpdate(doctorId: string, chat: IChat): Promise<void> {
         await this.model.updateMany({ doctorId }, chat)

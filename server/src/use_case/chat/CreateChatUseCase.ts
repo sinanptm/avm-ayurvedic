@@ -29,9 +29,10 @@ export default class CreateChatUseCase {
             throw new CustomError("Patient profile or name is missing", StatusCode.BadRequest);
         }
         try {
-            return await this.chatRepository.create(
+            const chat = await this.chatRepository.create(
                 { doctorId, patientId, patientName: patient.name, doctorName: doctor.name, patientProfile: patient.profile, doctorProfile: doctor.image }
             );
+            return chat._id!
         } catch (error: any) {
             if (error.code === 11000) {
                 const chat = await this.chatRepository.findByDoctorAndPatientId(doctorId, patientId);
