@@ -46,7 +46,7 @@ export default function ChatList({ chats, onSelectChat, onNewChat, isLoading, se
                   <div className="flex justify-between items-baseline">
                     <h3 className="font-medium text-sm truncate">{getSenderData(sender, doctorName!, patientName!)}</h3>
                     {notSeenMessages! > 0 && (
-                      <span className="bg-primary text-primary-foreground text-xs font-medium px-1.5 py-0.5 rounded-full">
+                      <span className="bg-green-700 text-xs font-medium px-1.5 py-0.5 rounded-full">
                         {notSeenMessages}
                       </span>
                     )}

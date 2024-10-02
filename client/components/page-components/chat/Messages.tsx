@@ -15,19 +15,21 @@ interface ChatSectionProps {
 
 export default function Messages({ messages, sender, chat }: ChatSectionProps) {
     const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const bottomRef = useRef<HTMLDivElement>(null);
 
+    const scrollToBottom = () => {
+        bottomRef.current?.scrollIntoView({ behavior: 'auto' });
+    };
 
     useEffect(() => {
-        if (scrollAreaRef.current) {
-            scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
-        }
-    }, [messages])
+        scrollToBottom();
+    }, [messages]);
 
     return (
         <ScrollArea className="flex-grow p-4" ref={scrollAreaRef}>
             <div className="space-y-4">
                 {messages.map(({ _id, message, senderId, createdAt, isReceived }, i) => {
-                    const isSenderMessage = senderId === (sender === 'patient' ? chat.patientId:  chat.doctorId);
+                    const isSenderMessage = senderId === (sender === 'patient' ? chat.patientId : chat.doctorId);
                     if (isSenderMessage) {
                         return (
                             <div key={_id} className="flex items-end space-x-2 justify-start">
@@ -40,7 +42,7 @@ export default function Messages({ messages, sender, chat }: ChatSectionProps) {
                                         <p className="text-sm">{message}</p>
                                     </div>
                                     <span className="text-xs text-gray-400 mt-1">
-                                        {format(new Date(createdAt!), "HH:mm")}
+                                        {format(new Date(createdAt!), "hh:mm a")}
                                     </span>
                                 </div>
                             </div>
@@ -53,7 +55,7 @@ export default function Messages({ messages, sender, chat }: ChatSectionProps) {
                                         <p className="text-sm">{message}</p>
                                     </div>
                                     <span className="text-xs text-gray-400 mt-1">
-                                        {format(new Date(createdAt!), "HH:mm")} {isReceived && '✔️'}
+                                        {format(new Date(createdAt!), "hh:mm a")} {isReceived && '✔️'}
                                     </span>
                                 </div>
                                 <Avatar className="w-8 h-8 ring-2 ring-gray-300">
@@ -64,6 +66,7 @@ export default function Messages({ messages, sender, chat }: ChatSectionProps) {
                         );
                     }
                 })}
+                <div ref={bottomRef} />
             </div>
         </ScrollArea>
     )

@@ -17,6 +17,7 @@ const Page = () => {
   const doctors: ChatModelUser[] = data?.items.map(({ _id, image, name }) => ({ _id, name, profilePicture: image })) || [];
 
   const handleSelectChat = (id: string) => {
+    refetch();
     router.push(`/chats/${id}`);
   }
 
