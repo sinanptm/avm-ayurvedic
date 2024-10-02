@@ -54,9 +54,18 @@ export default class AppointmentRepository implements IAppointmentRepository {
                   as: "doctor",
                },
             },
+            {
+               $lookup: {
+                  from: "prescriptions",
+                  localField: "_id",
+                  foreignField: "appointmentId",
+                  as: "prescription"
+               }
+            },
             { $unwind: { path: "$patient", preserveNullAndEmptyArrays: true } },
             { $unwind: { path: "$slot", preserveNullAndEmptyArrays: true } },
             { $unwind: { path: "$doctor", preserveNullAndEmptyArrays: true } },
+            { $unwind: { path: "$prescription", preserveNullAndEmptyArrays: true } },
             {
                $project: {
                   "patient.password": 0,
@@ -70,7 +79,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
 
       if (!appointment || appointment.length === 0) {
          return null;
-      }
+      }    
 
       return appointment[0] as IExtendedAppointment;
    }
