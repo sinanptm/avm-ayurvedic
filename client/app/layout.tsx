@@ -8,6 +8,7 @@ import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/lib/providers/query-provider";
 import { AuthProvider } from "@/lib/providers/auth-provider";
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Plus_Jakarta_Sans({
    subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
                      <NavBar />
                      <Toaster />
                      {children}
+                     <Analytics />
                      <Footer />
                   </AuthProvider>
                </ThemeProvider>
