@@ -37,8 +37,8 @@ export default class VideoSectionRepository implements IVideoSectionRepository {
         await this.model.findByIdAndDelete(id);
     }
 
-    async findAllSectionsByDoctorId(doctorId: string, status: VideoSectionStatus, limit: number): Promise<IVideoSection[] | null> {
-        return this.model.find({ doctorId, status }).sort({ startTime: 1 }).limit(limit);
+    async findAllSectionsByDoctorId(doctorId: string, startTime: string, status: VideoSectionStatus, limit: number): Promise<IVideoSection[] | null> {
+        return this.model.find({ doctorId, status, startTime: { $gte: startTime } }).sort({ startTime: 1 }).limit(limit);
     }
 
     async findByAppointmentId(appointmentId: string): Promise<IVideoSection | null> {

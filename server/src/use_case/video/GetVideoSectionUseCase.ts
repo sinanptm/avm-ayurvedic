@@ -19,7 +19,8 @@ export default class GetVideoSectionUseCase {
 
     async getSectionsByDoctorId(doctorId: string): Promise<IVideoSection[] | []> {
         const limit = 10
-        const sections = await this.videoSectionRepository.findAllSectionsByDoctorId(doctorId, VideoSectionStatus.PENDING, limit);       
+        const startTime = new Date();
+        const sections = await this.videoSectionRepository.findAllSectionsByDoctorId(doctorId,startTime.toISOString() , VideoSectionStatus.PENDING, limit);       
         return sections ? sections : [];
     }
 
