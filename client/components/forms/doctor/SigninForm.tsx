@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form, FormMessage } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { signinFormSchema } from "@/components/forms/schema/adminSchema";
+import { signinFormSchema } from "@/lib/form-schema/adminSchema";
 import { FormFieldType } from "@/types/enum";
 import Link from "next/link";
 import { useSignInDoctor } from "@/lib/hooks/doctor/useDoctorAuth";

@@ -5,7 +5,7 @@ import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } 
 import { Form, FormControl } from "../../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { updateProfileFormSchema } from "@/components/forms/schema/patientSchema";
+import { updateProfileFormSchema } from "@/lib/form-schema/patientSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../button/SubmitButton";
 import { IPatient } from "@/types/entities";

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { signinFormSchema } from "@/components/forms/schema/adminSchema";
+import { signinFormSchema } from "@/lib/form-schema/adminSchema";
 import { FormFieldType } from "@/types/enum";
 import { useSigninAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { toast } from "@/components/ui/use-toast";

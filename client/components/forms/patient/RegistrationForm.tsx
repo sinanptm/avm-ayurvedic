@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { registerFormSchema } from "@/components/forms/schema/patientSchema";
+import { registerFormSchema } from "@/lib/form-schema/patientSchema";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
 import { BloodGroups, GenderOptions } from "@/constants";

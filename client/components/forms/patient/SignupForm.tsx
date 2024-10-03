@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { signupFormSchema } from "@/components/forms/schema/patientSchema";
+import { signupFormSchema } from "@/lib/form-schema/patientSchema";
 import { FormFieldType } from "@/types/enum";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { appointFormSchema } from "@/components/forms/schema/patientSchema";
+import { appointFormSchema } from "@/lib/form-schema/patientSchema";
 import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import { AppointmentTypes } from "@/constants";

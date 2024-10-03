@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { signinFormSchema } from "@/components/forms/schema/patientSchema";
+import { signinFormSchema } from "@/lib/form-schema/patientSchema";
 import Link from "next/link";
 import { FormFieldType } from "@/types/enum";
 import { useToast } from "@/components/ui/use-toast";
