@@ -1,11 +1,11 @@
-import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
-import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import CustomError from "../../domain/entities/CustomError";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
 import INotificationRepository from "../../domain/interface/repositories/INotificationRepository";
-import ISlot, { Days } from "../../domain/entities/ISlot";
+import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { NotificationTypes } from "../../domain/entities/INotification";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
+import CustomError from "../../domain/entities/CustomError";
+import ISlot, { Days } from "../../domain/entities/ISlot";
 import { StatusCode } from "../../types";
 
 export default class DeleteSlotUseCase {

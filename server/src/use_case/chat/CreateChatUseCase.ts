@@ -1,9 +1,9 @@
-import CustomError from "../../domain/entities/CustomError";
-import IChatRepository from "../../domain/interface/repositories/IChatRepository";
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import IMessageRepository from "../../domain/interface/repositories/IMessageRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
+import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
+import IChatRepository from "../../domain/interface/repositories/IChatRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import CustomError from "../../domain/entities/CustomError";
 import { StatusCode } from "../../types";
 
 export default class CreateChatUseCase {

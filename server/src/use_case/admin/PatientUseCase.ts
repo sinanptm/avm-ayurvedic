@@ -1,6 +1,6 @@
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import IPatient  from "../../domain/entities/IPatient";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import IPatient  from "../../domain/entities/IPatient";
 import { PaginatedResult } from "../../types";
 
 export default class AdminPatientUseCase {

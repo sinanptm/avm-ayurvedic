@@ -1,7 +1,7 @@
 import { createLogger, format, transports } from "winston";
-import path from "path";
-import "winston-daily-rotate-file";
 import { NODE_ENV } from "../config/env";
+import "winston-daily-rotate-file";
+import path from "path";
 
 const logDirectory = path.resolve(path.join(__dirname,'../../'), "logs");
 

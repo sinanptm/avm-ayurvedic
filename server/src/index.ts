@@ -1,17 +1,17 @@
 import express from "express";
 import { createServer } from "http";
-import { connectDB } from "./config/connectDB";
-import routes from "./presentation/routers/index";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
+import logger from "./utils/logger";
 import bodyParser from "body-parser";
-import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
+import { connectDB } from "./config/connectDB";
+import routes from "./presentation/routers/index";
 import { CLIENT_URL, PORT } from "./config/env";
 import JWTService from "./infrastructure/services/JWTService";
 import SocketServer from "./presentation/socket/SocketServer";
+import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
 import VideoSocketManager from "./presentation/socket/VideoSocketManager";
-import logger from "./utils/logger";
 
 const port = PORT || 8080;
 

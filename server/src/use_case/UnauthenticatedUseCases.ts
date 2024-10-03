@@ -1,5 +1,5 @@
-import IDoctor from "../domain/entities/IDoctor";
 import IDoctorRepository from "../domain/interface/repositories/IDoctorRepository";
+import IDoctor from "../domain/entities/IDoctor";
 import { PaginatedResult } from "../types";
 
 export default class UnauthenticatedUseCases {

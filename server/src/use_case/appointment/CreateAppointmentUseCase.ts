@@ -1,21 +1,21 @@
-import CustomError from "../../domain/entities/CustomError";
+import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
+import IVideoSectionRepository  from "../../domain/interface/repositories/IVideoSectionRepository";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
+import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
+import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import IPaymentService from "../../domain/interface/services/IPaymentService";
-import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
-import IPayment, { PaymentStatus } from "../../domain/entities/IPayment";
-import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
-import { StatusCode } from "../../types";
-import IVideoSectionRepository  from "../../domain/interface/repositories/IVideoSectionRepository";
-import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import IDoctor from "../../domain/entities/IDoctor";
-import IPatient from "../../domain/entities/IPatient";
 import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
-import { addMinutes, parse, format } from "../../utils/date-formatter";
-import { CLIENT_URL } from "../../config/env";
+import IPayment, { PaymentStatus } from "../../domain/entities/IPayment";
 import IUUIDService from "../../domain/interface/services/IUUIDService";
+import { addMinutes, parse, format } from "../../utils/date-formatter";
+import CustomError from "../../domain/entities/CustomError";
+import IPatient from "../../domain/entities/IPatient";
+import IDoctor from "../../domain/entities/IDoctor";
+import { CLIENT_URL } from "../../config/env";
+import { StatusCode } from "../../types";
 
 export default class AppointmentUseCase {
    bookingAmount: number;

@@ -1,14 +1,14 @@
-import IDoctor from "../../domain/entities/IDoctor";
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
+import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
 import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
+import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
+import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
 import IEmailService from "../../domain/interface/services/IEmailService";
 import ITokenService from "../../domain/interface/services/ITokenService";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import CustomError from "../../domain/entities/CustomError";
-import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import { StatusCode, UserRole } from "../../types";
 import { AWS_REGION, CLIENT_URL, S3_BUCKET_NAME } from "../../config/env";
+import CustomError from "../../domain/entities/CustomError";
+import IDoctor from "../../domain/entities/IDoctor";
+import { StatusCode, UserRole } from "../../types";
 
 export default class AuthenticationUseCase {
    constructor(

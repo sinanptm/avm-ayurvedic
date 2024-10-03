@@ -1,9 +1,9 @@
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
 import INotificationRepository from "../../domain/interface/repositories/INotificationRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
 import { NotificationTypes } from "../../domain/entities/INotification";
-import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
 import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 
 export default class UpdateAppointmentUseCase {

@@ -1,11 +1,10 @@
+import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
+import IPrescriptionRepository from "../../domain/interface/repositories/IPrescriptionRepository";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
-import IPrescriptionRepository from "../../domain/interface/repositories/IPrescriptionRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
-import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
 import { PaginatedResult, StatusCode } from "../../types";
-import logger from "../../utils/logger";
 
 export default class GetAppointmentUseCase {
    constructor(

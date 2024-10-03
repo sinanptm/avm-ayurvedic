@@ -1,9 +1,9 @@
-import IDoctor from "../../domain/entities/IDoctor";
-import CustomError from "../../domain/entities/CustomError";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import IEmailService from "../../domain/interface/services/IEmailService";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import IEmailService from "../../domain/interface/services/IEmailService";
 import { DoctorsFilter, PaginatedResult, StatusCode } from "../../types";
+import CustomError from "../../domain/entities/CustomError";
+import IDoctor from "../../domain/entities/IDoctor";
 import { CLIENT_URL } from "../../config/env";
 
 export default class AdminDoctorUseCase {

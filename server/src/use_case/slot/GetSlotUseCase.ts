@@ -1,5 +1,5 @@
-import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
+import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import ISlot, { Days } from "../../domain/entities/ISlot";
 import { addHours } from "../../utils/date-formatter";

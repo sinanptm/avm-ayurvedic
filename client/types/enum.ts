@@ -48,5 +48,4 @@ export enum PrescriptionStatus {
     PENDING = 'pending',
     ISSUED = 'issued',
     CANCELLED = 'cancelled',
-  }
-  
+}

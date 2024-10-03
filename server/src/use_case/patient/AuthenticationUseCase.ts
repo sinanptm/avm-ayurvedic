@@ -1,11 +1,11 @@
-import ITokenService from "../../domain/interface/services/ITokenService";
-import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
-import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import IEmailService from "../../domain/interface/services/IEmailService";
-import IPatient  from "../../domain/entities/IPatient";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import CustomError from "../../domain/entities/CustomError";
 import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
+import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
+import IValidatorService from "../../domain/interface/services/IValidatorService";
+import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
+import ITokenService from "../../domain/interface/services/ITokenService";
+import IEmailService from "../../domain/interface/services/IEmailService";
+import CustomError from "../../domain/entities/CustomError";
+import IPatient  from "../../domain/entities/IPatient";
 import { StatusCode, UserRole } from "../../types";
 import { CLIENT_URL } from "../../config/env";
 

@@ -1,6 +1,6 @@
-import INotification from "../../domain/entities/INotification";
 import INotificationRepository from "../../domain/interface/repositories/INotificationRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import INotification from "../../domain/entities/INotification";
 
 export default class NotificationUseCase {
     constructor(

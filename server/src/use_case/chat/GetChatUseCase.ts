@@ -1,12 +1,12 @@
-import CustomError from "../../domain/entities/CustomError";
-import IChat from "../../domain/entities/IChat";
-import IMessage from "../../domain/entities/IMessage";
-import IPatient from "../../domain/entities/IPatient";
-import IChatRepository from "../../domain/interface/repositories/IChatRepository";
 import IMessageRepository from "../../domain/interface/repositories/IMessageRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
+import IChatRepository from "../../domain/interface/repositories/IChatRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
+import CustomError from "../../domain/entities/CustomError";
 import { PaginatedResult, StatusCode } from "../../types";
+import IMessage from "../../domain/entities/IMessage";
+import IPatient from "../../domain/entities/IPatient";
+import IChat from "../../domain/entities/IChat";
 
 export default class GetChatUseCase {
     constructor(

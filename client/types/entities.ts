@@ -128,8 +128,8 @@ export interface IPrescription {
 
 export interface IMedication {
    readonly name: string;
-   readonly dosage: string;          // e.g., '2 tablets'
-   readonly frequency: string;       // e.g., 'twice a day'
-   readonly duration: string;        // e.g., '5 days'
+   readonly dosage: string;
+   readonly frequency: string;
+   readonly duration: string;
    readonly additionalInstructions?: string;
 }
