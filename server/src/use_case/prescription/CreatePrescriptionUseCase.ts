@@ -14,7 +14,7 @@ export default class CreatePrescriptionUseCase {
 
     async create(doctorId: string, prescription: IPrescription): Promise<void> {
         await this.validatePrescription({ doctorId, ...prescription });        
-        this.prescriptionRepository.create({ doctorId, ...prescription, status:PrescriptionStatus.ISSUED });
+        await this.prescriptionRepository.create({ doctorId, ...prescription, status:PrescriptionStatus.ISSUED });
     };
 
     async update(prescription: IPrescription): Promise<void> {

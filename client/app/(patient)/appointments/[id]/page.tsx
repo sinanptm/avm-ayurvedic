@@ -25,6 +25,9 @@ export default function AppointmentDetailsPage() {
    const [newNote, setNewNote] = useState("")
    const { patientToken } = useAuth()
 
+   console.log(appointment);
+   
+
    const handleUpdateNote = async () => {
       if (newNote.trim()) {
          update(

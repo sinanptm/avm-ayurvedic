@@ -44,24 +44,23 @@ const PrescriptionModal = ({ isOpen, setOpen, appointmentId, patientId, refetch 
         create(
             { prescription: { ...data, patientId, appointmentId } },
             {
-                onError:(error)=>{
+                onError: (error) => {
                     toast({
-                        title:"Error in creating Prescription",
-                        description:error.response?.data.message||"Unknown error Occurred",
-                        variant:"destructive"
+                        title: "Error in creating Prescription",
+                        description: error.response?.data.message || "Unknown error Occurred",
+                        variant: "destructive"
                     })
                 },
-                onSuccess:()=>{
+                onSuccess: ({message}) => {
                     toast({
-                        title:"Prescription creation successful",
-                        variant:"success"
+                        title: "Prescription creation successful",
+                        variant: "success"
                     })
-                    
+                    closeModal();
+                    refetch();
                 }
             },
         );
-        closeModal();
-        refetch();
     }
 
     return (

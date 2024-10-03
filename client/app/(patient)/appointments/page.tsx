@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { format } from "date-fns"
 import { FileText, Video, User } from "lucide-react"
@@ -12,9 +12,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ButtonV2 } from "@/components/button/ButtonV2"
 
 export default function AppointmentsPageSection({ searchParams }: { searchParams: { page: number } }) {
-  const page = searchParams.page || 1
+  const page = +searchParams.page || 1
   const [currentPage, setCurrentPage] = useState(page)
-  const { data, isLoading } = useGetAppointmentsPatient(page - 1, 4)
+  const { data, isLoading } = useGetAppointmentsPatient(page-1, 4)
   const router = useRouter()
 
   const handlePageChange = (pageIndex: number) => {
@@ -22,6 +22,11 @@ export default function AppointmentsPageSection({ searchParams }: { searchParams
     router.replace(`/appointments?page=${pageIndex}`)
     setCurrentPage(pageIndex)
   }
+  
+  useEffect(() => {
+    setCurrentPage(page);
+  }, [page]);
+  
 
   const handleViewDetails = (appointmentId: string) => {
     router.push(`/appointments/${appointmentId}`)
