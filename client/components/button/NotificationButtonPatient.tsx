@@ -12,9 +12,10 @@ const NotificationModal = dynamic(() => import("@/components/models/Notification
 
 const NotificationButtonPatient = () => {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const { data: notifications, refetch, error } = useGetAllPatientNotifications();
+  const { data, refetch, error } = useGetAllPatientNotifications();
   const { mutate: clearSingleNotification } = useClearPatientNotification();
   const { mutate: clearMultipleNotification } = useClearMultiplePatientNotifications();
+  let notifications = data;
 
   const notificationCount = notifications?.length || 0;
   const unauthorized = error?.status === 401 || error?.status === 403;
@@ -24,6 +25,7 @@ const NotificationButtonPatient = () => {
   };
 
   const handleClearSingleNotification = (notificationId: string) => {
+    notifications = notifications?.filter(el => el._id !== notificationId);
     clearSingleNotification(
       { notificationId },
       {
@@ -36,7 +38,9 @@ const NotificationButtonPatient = () => {
   };
 
   const handleClearAllNotifications = () => {
-    const notificationIds = notifications!.map((notification) => notification._id!);
+    if (!notifications || notifications.length === 0) return;
+    const notificationIds = notifications.map((notification) => notification._id!);
+    notifications = notifications?.filter(el => !notificationIds.includes(el._id!));
     clearMultipleNotification(
       { notificationIds },
       {

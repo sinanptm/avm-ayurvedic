@@ -12,9 +12,10 @@ import { INotification } from "@/types/entities";
 
 const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const { data: notifications = [], refetch, error } = useGetAllDoctorNotifications();
+  const { data, refetch, error } = useGetAllDoctorNotifications();
   const { mutate: clearSingleNotification } = useClearDoctorNotification();
   const { mutate: clearMultipleNotification } = useClearMultipleDoctorNotifications();
+  let notifications = data;
 
   const notificationCount = notifications?.length || 0;
   const unauthorized = error?.status === 401 || error?.status === 403;
@@ -24,6 +25,7 @@ const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
   };
 
   const handleClearSingleNotification = (notificationId: string) => {
+    notifications = notifications?.filter(el => el._id !== notificationId);
     clearSingleNotification(
       { notificationId },
       {
@@ -39,6 +41,7 @@ const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
     if (!notifications || notifications.length === 0) return;
 
     const notificationIds = notifications.map((notification) => notification._id!);
+    notifications = notifications?.filter(el=>!notificationIds.includes(el._id!));
     clearMultipleNotification(
       { notificationIds },
       {

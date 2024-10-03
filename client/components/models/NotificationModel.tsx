@@ -1,7 +1,9 @@
-'use client';
+'use client'
 
-import { Dispatch, SetStateAction } from "react";
-import Image from "next/image";
+import { Dispatch, SetStateAction } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { XIcon, Trash2Icon } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogContent,
@@ -9,23 +11,22 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Card, CardContent } from "@/components/ui/card";
-import { INotification } from "@/types/entities";
-import getNotificationDetails from "@/lib/utils/getNotificationDetails";
-import { XIcon, Trash2Icon } from "lucide-react";
-import { ButtonV2 } from "../button/ButtonV2";
-import Link from "next/link";
+} from "@/components/ui/alert-dialog"
+import { Card, CardContent } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { ButtonV2 } from "@/components/button/ButtonV2"
+import { INotification } from "@/types/entities"
+import getNotificationDetails from "@/lib/utils/getNotificationDetails"
 
 type Props = {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  notifications: INotification[];
-  unauthorized: boolean;
-  handleClearSingleNotification: (notificationId: string) => void;
-  handleClearAllNotifications: () => void;
-  link: string;
-};
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  notifications: INotification[]
+  unauthorized: boolean
+  handleClearSingleNotification: (notificationId: string) => void
+  handleClearAllNotifications: () => void
+  link: string
+}
 
 export default function NotificationModal({
   open,
@@ -37,8 +38,8 @@ export default function NotificationModal({
   link
 }: Props) {
   const closeModal = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -51,25 +52,26 @@ export default function NotificationModal({
             </ButtonV2>
           </AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogDescription></AlertDialogDescription>
-        <div className="space-y-4">
-          {unauthorized ? (
-            <div className="flex flex-col items-center justify-center space-y-2 py-6 my-1">
-              <Image
-                src="/assets/icons/cancelled.svg"
-                width={64}
-                height={64}
-                alt="Unauthorized"
-                className="opacity-50"
-              />
-              <p className="text-center text-muted-foreground text-sm">
-                You are not authorized to view these notifications.
-              </p>
-            </div>
-          ) : notifications.length > 0 ? (
-            <>
+        <AlertDialogDescription className="sr-only">Your notifications</AlertDialogDescription>
+        
+        {unauthorized ? (
+          <div className="flex flex-col items-center justify-center space-y-2 py-6 my-1">
+            <Image
+              src="/assets/icons/cancelled.svg"
+              width={64}
+              height={64}
+              alt="Unauthorized"
+              className="opacity-50"
+            />
+            <p className="text-center text-muted-foreground text-sm">
+              You are not authorized to view these notifications.
+            </p>
+          </div>
+        ) : notifications.length > 0 ? (
+          <ScrollArea className="h-[50vh] pr-4">
+            <div className="space-y-4">
               {notifications.map((notification) => {
-                const { icon, title } = getNotificationDetails(notification.type!);
+                const { icon, title } = getNotificationDetails(notification.type!)
                 return (
                   <Link key={notification.appointmentId} href={`${link}/${notification.appointmentId}`} onClick={closeModal}>
                     <Card>
@@ -85,9 +87,9 @@ export default function NotificationModal({
                           variant="expandIcon"
                           size="icon"
                           onClick={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            handleClearSingleNotification(notification._id!);
+                            e.stopPropagation()
+                            e.preventDefault()
+                            handleClearSingleNotification(notification._id!)
                           }}
                           iconPlacement="left"
                           Icon={Trash2Icon}
@@ -99,25 +101,25 @@ export default function NotificationModal({
                       </CardContent>
                     </Card>
                   </Link>
-                );
+                )
               })}
-            </>
-          ) : (
-            <div className="flex flex-col items-center justify-center space-y-2 py-6">
-              <Image
-                src="/assets/icons/emoji/😑.svg"
-                width={64}
-                height={64}
-                alt="No Notifications"
-                className="opacity-50"
-              />
-              <p className="text-center text-muted-foreground text-sm">
-                You&apos;re all caught up! No new notifications.
-              </p>
             </div>
-          )}
-        </div>
-
+          </ScrollArea>
+        ) : (
+          <div className="flex flex-col items-center justify-center space-y-2 py-6">
+            <Image
+              src="/assets/icons/emoji/😑.svg"
+              width={64}
+              height={64}
+              alt="No Notifications"
+              className="opacity-50"
+            />
+            <p className="text-center text-muted-foreground text-sm">
+              You&apos;re all caught up! No new notifications.
+            </p>
+          </div>
+        )}
+        
         <AlertDialogFooter>
           <div className="flex justify-end space-x-2">
             {notifications.length > 1 && (
@@ -130,10 +132,10 @@ export default function NotificationModal({
                 Clear All
               </ButtonV2>
             )}
-            <ButtonV2 variant={'gooeyRight'} onClick={closeModal}>Close</ButtonV2>
+            <ButtonV2 variant="gooeyRight" onClick={closeModal}>Close</ButtonV2>
           </div>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
 }
