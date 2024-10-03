@@ -25,35 +25,51 @@ export default class AppointmentRepository implements IAppointmentRepository {
       return await this.model.find({ _id: { $in: ids } });
    }
 
-   async findPatientsByDoctorId(doctorId: string): Promise<IPatient[] | []> {
-      return await this.model.aggregate([
-          {
-              $match: { doctorId: new ObjectId(doctorId) }
-          },
-          {
-              $group: { _id: "$patientId" }
-          },
-          {
-              $lookup: {
-                  from: "patients",
-                  localField: "_id",
-                  foreignField: "_id",
-                  as: "patientInfo"
-              }
-          },
-          {
-              $unwind: "$patientInfo"
-          },
-          {
-              $replaceRoot: { newRoot: "$patientInfo" } 
-          },
-          {
-              $project: {
-                  password: 0,  
-                  token: 0
-              }
-          }
-      ]).exec();
+   async findPatientsByDoctorId(doctorId: string, limit:number, offset:number): Promise<PaginatedResult<IPatient>> {
+      const result = await this.model.aggregate([
+         {
+             $match: { doctorId: new ObjectId(doctorId) }
+         },
+         {
+             $group: { _id: "$patientId" }
+         },
+         {
+             $lookup: {
+                 from: "patients",
+                 localField: "_id",
+                 foreignField: "_id",
+                 as: "patientInfo"
+             }
+         },
+         {
+             $unwind: "$patientInfo"
+         },
+         {
+             $replaceRoot: { newRoot: "$patientInfo" }
+         },
+         {
+             $facet: {
+                 paginatedResults: [
+                     { $skip: offset },
+                     { $limit: limit },
+                     { 
+                         $project: {
+                             password: 0,
+                             token: 0
+                         }
+                     }
+                 ],
+                 totalCount: [
+                     { $count: "count" }
+                 ]
+             }
+         }
+     ]).exec();
+ 
+     const patients = result[0].paginatedResults;
+     const totalItems = result[0].totalCount.length > 0 ? result[0].totalCount[0].count : 0;
+ 
+     return getPaginatedResult(totalItems, offset, limit, patients);
   }
   
 
