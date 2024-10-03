@@ -5,7 +5,7 @@ import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } 
 import { Form, FormControl } from "../../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { updateProfileFormValidation } from "@/components/forms/actions/userValidation";
+import { updateProfileFormSchema } from "@/components/forms/schema/patientSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../button/SubmitButton";
 import { IPatient } from "@/types/entities";
@@ -26,8 +26,8 @@ type Props = {
 };
 
 const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) => {
-   const form = useForm<z.infer<typeof updateProfileFormValidation>>({
-      resolver: zodResolver(updateProfileFormValidation),
+   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
+      resolver: zodResolver(updateProfileFormSchema),
       defaultValues: {
          address: patientData.address,
          dob: patientData.dob,
@@ -43,7 +43,7 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
       setOpen(!open);
    };
 
-   const onSubmit = (data: z.infer<typeof updateProfileFormValidation>) => {
+   const onSubmit = (data: z.infer<typeof updateProfileFormSchema>) => {
       updateProfile(data, {
          onSuccess: () => {
             closeModal();

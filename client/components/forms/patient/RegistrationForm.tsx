@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { registerFormValidation } from "@/components/forms/actions/userValidation";
+import { registerFormSchema } from "@/components/forms/schema/patientSchema";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@radix-ui/react-label";
 import { BloodGroups, GenderOptions } from "@/constants";
@@ -17,8 +17,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 
 const RegistrationForm = ({ refetch }: { refetch: any }) => {
-   const form = useForm<z.infer<typeof registerFormValidation>>({
-      resolver: zodResolver(registerFormValidation),
+   const form = useForm<z.infer<typeof registerFormSchema>>({
+      resolver: zodResolver(registerFormSchema),
       defaultValues: {
          birthDate: new Date(Date.now()),
          gender: "Male",
@@ -36,7 +36,7 @@ const RegistrationForm = ({ refetch }: { refetch: any }) => {
 
    const router = useRouter();
 
-   const onSubmit = (values: z.infer<typeof registerFormValidation>) => {
+   const onSubmit = (values: z.infer<typeof registerFormSchema>) => {
       registerInfo(
          {
             address: values.address,

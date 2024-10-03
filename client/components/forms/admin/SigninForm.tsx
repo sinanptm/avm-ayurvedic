@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { signinFormValidation } from "@/components/forms/actions/adminValidation";
+import { signinFormSchema } from "@/components/forms/schema/adminSchema";
 import { FormFieldType } from "@/types/enum";
 import { useSigninAdmin } from "@/lib/hooks/admin/useAdminAuth";
 import { toast } from "@/components/ui/use-toast";
@@ -15,8 +14,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/hooks/useAuth";
 
 const AdminSigninForm = () => {
-   const form = useForm<z.infer<typeof signinFormValidation>>({
-      resolver: zodResolver(signinFormValidation),
+   const form = useForm<z.infer<typeof signinFormSchema>>({
+      resolver: zodResolver(signinFormSchema),
       defaultValues: {
          email: "",
          password: "",
@@ -26,7 +25,7 @@ const AdminSigninForm = () => {
    const router = useRouter();
    const { setCredentials } = useAuth();
 
-   const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
+   const onSubmit = async (values: z.infer<typeof signinFormSchema>) => {
       signin(values, {
          onSuccess: () => {
             toast({

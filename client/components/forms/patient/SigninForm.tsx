@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { signinFormValidation } from "@/components/forms/actions/userValidation";
+import { signinFormSchema } from "@/components/forms/schema/patientSchema";
 import Link from "next/link";
 import { FormFieldType } from "@/types/enum";
 import { useToast } from "@/components/ui/use-toast";
@@ -24,15 +24,15 @@ const LoginForm = () => {
    const { setCredentials } = useAuth();
    const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
 
-   const form = useForm<z.infer<typeof signinFormValidation>>({
-      resolver: zodResolver(signinFormValidation),
+   const form = useForm<z.infer<typeof signinFormSchema>>({
+      resolver: zodResolver(signinFormSchema),
       defaultValues: {
          email: "",
          password: "",
       },
    });
 
-   const onSubmit = async ({ email, password }: z.infer<typeof signinFormValidation>) => {
+   const onSubmit = async ({ email, password }: z.infer<typeof signinFormSchema>) => {
       signIn(
          { email, password },
          {

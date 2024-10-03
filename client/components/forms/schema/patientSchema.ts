@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-export const signinFormValidation = z.object({
+export const signinFormSchema = z.object({
    email: z.string().trim().email("Invalid email address"),
    password: z.string().trim().min(4, "Password must be at least 4 characters long"),
 });
 
-export const signupFormValidation = z
+export const signupFormSchema = z
    .object({
       name: z
          .string()
@@ -38,7 +38,7 @@ export const signupFormValidation = z
          });
       }
    });
-export const registerFormValidation = z.object({
+export const registerFormSchema = z.object({
    birthDate: z.coerce.date().max(new Date(Date.now()), "Please select a birth date before todays."),
    gender: z.enum(["Male", "Female", "Other"]),
    bloodGroup: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
@@ -65,7 +65,7 @@ export const registerFormValidation = z.object({
    phone: z.string(),
 });
 
-export const updateProfileFormValidation = z.object({
+export const updateProfileFormSchema = z.object({
    dob: z.coerce.date().max(new Date(Date.now()), "Please select a birth date before todays."),
    gender: z.enum(["Male", "Female", "Other"]),
    bloodGroup: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
@@ -75,7 +75,7 @@ export const updateProfileFormValidation = z.object({
    name: z.string().min(3, "Name is Required"),
 });
 
-export const appointmentFormValidation = z.object({
+export const appointFormSchema = z.object({
    appointmentType: z
       .string({
          required_error: "Appointment type is required",

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { appointmentFormValidation } from "@/components/forms/actions/userValidation";
+import { appointFormSchema } from "@/components/forms/schema/patientSchema";
 import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import { AppointmentTypes } from "@/constants";
@@ -30,8 +30,8 @@ const AppointmentForm = () => {
    const { data: doctorsData, isLoading: isDoctorsLoading } = useGetDoctorsList();
    const [isDoctorSelected, setIsDoctorSelected] = useState(false);
    const { mutate: createAppointment, isPending } = useCreateAppointment();
-   const form = useForm<z.infer<typeof appointmentFormValidation>>({
-      resolver: zodResolver(appointmentFormValidation),
+   const form = useForm<z.infer<typeof appointFormSchema>>({
+      resolver: zodResolver(appointFormSchema),
       defaultValues: {
          appointmentType: "video-consulting",
          reason: "",
@@ -66,7 +66,7 @@ const AppointmentForm = () => {
       return () => subscription.unsubscribe();
    }, [form]);
 
-   const onSubmit = async (formData: z.infer<typeof appointmentFormValidation>) => {
+   const onSubmit = async (formData: z.infer<typeof appointFormSchema>) => {
       createAppointment(
          {
             appointment: {

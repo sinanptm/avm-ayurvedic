@@ -24,7 +24,7 @@ import { MultiSelect } from "@/components/ui/multi-select"
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-const doctorSignupFormValidation = z
+const doctorsignupFormSchema = z
    .object({
       name: z
          .string()
@@ -69,7 +69,7 @@ const doctorSignupFormValidation = z
       }
    });
 
-type FormValues = z.infer<typeof doctorSignupFormValidation>;
+type FormValues = z.infer<typeof doctorsignupFormSchema>;
 
 const SignUpForm = () => {
    const [error, setError] = useState<string>("");
@@ -94,7 +94,7 @@ const SignUpForm = () => {
    } = useCrop();
 
    const form = useForm<FormValues>({
-      resolver: zodResolver(doctorSignupFormValidation),
+      resolver: zodResolver(doctorsignupFormSchema),
       defaultValues: {
          phone: "",
          password: "",

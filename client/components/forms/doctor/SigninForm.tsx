@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form, FormMessage } from "@/components/ui/form";
 import CustomFormField from "@/components/common/CustomFormField";
 import SubmitButton from "@/components/button/SubmitButton";
-import { signinFormValidation } from "@/components/forms/actions/adminValidation";
+import { signinFormSchema } from "@/components/forms/schema/adminSchema";
 import { FormFieldType } from "@/types/enum";
 import Link from "next/link";
 import { useSignInDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
@@ -17,8 +17,8 @@ import { useState } from "react";
 import ForgotPasswordModalDoctor from "./ForgetPasswordForm";
 
 const AdminSigninForm = () => {
-   const form = useForm<z.infer<typeof signinFormValidation>>({
-      resolver: zodResolver(signinFormValidation),
+   const form = useForm<z.infer<typeof signinFormSchema>>({
+      resolver: zodResolver(signinFormSchema),
       defaultValues: {
          email: "",
          password: "",
@@ -29,7 +29,7 @@ const AdminSigninForm = () => {
    const router = useRouter();
    const [isForgetPasswordModelOpen, setForgetPasswordModelOpen] = useState(false);
 
-   const onSubmit = async (values: z.infer<typeof signinFormValidation>) => {
+   const onSubmit = async (values: z.infer<typeof signinFormSchema>) => {
       signin(values, {
          onSuccess: () => {
             toast({
