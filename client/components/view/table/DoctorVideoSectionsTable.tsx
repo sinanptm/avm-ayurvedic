@@ -3,7 +3,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
 import { useGetAllSectionsDoctor } from "@/lib/hooks/video/useDoctor";
 import { format } from 'date-fns';
 import { ButtonV2 } from "@/components/button/ButtonV2"
@@ -60,7 +59,11 @@ export default function VideoSectionsTable() {
                     <TableCell>{format(new Date(section.startTime!), 'PP, hh:mm a ')}</TableCell>
                     <TableCell>{format(new Date(section.endTime!), 'hh:mm a')}</TableCell>
                     <TableCell>
-                      <ButtonV2 variant={'linkHover2'} ><Link href={`/doctor/video-call/${section._id}`}>Join Now</Link></ButtonV2>
+                      <ButtonV2
+                        variant={'linkHover2'}
+                      >
+                        <Link href={`/doctor/video-call/${section._id}`}>Join Now</Link>
+                      </ButtonV2>
                     </TableCell>
                   </TableRow>
                 ))

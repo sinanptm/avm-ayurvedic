@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetPatientsAdmin } from "@/lib/hooks/admin/useAdminPatients";
@@ -11,6 +10,7 @@ import AdminPatientProfileModel from "@/components/models/admin/PatientProfileMo
 import { useRouter } from "next/navigation";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ButtonColorVariant, ButtonV2 } from "@/components/button/ButtonV2";
 
 type Props = {
    page: number;
@@ -22,7 +22,7 @@ export default function PatientsTable({ page }: Props) {
    const [selectedPatient, setSelectedPatient] = useState({});
    const router = useRouter();
    const limit = 7;
-   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage-1, limit);
+   const { data, isLoading, refetch } = useGetPatientsAdmin(currentPage - 1, limit);
    const columns = [
       { name: "Image", width: "w-[80px]" },
       { name: "Name", width: "" },
@@ -81,14 +81,14 @@ export default function PatientsTable({ page }: Props) {
                                     <TableRow key={patient._id}>
                                        <TableCell>
                                           <div
-                                             className={`relative w-16 h-16 rounded-full ${patient.isBlocked
+                                             className={`relative w-13 h-13 rounded-full ${patient.isBlocked
                                                 ? "border-4 border-destructive"
                                                 : "border-4 border-primary"
                                                 }`}
                                           >
                                              <Avatar className="w-full h-full" >
                                                 <AvatarImage src={patient.profile || "/assets/icons/circle-user.svg"} alt={patient.name} />
-                                                <AvatarFallback>{(patient.name!||"P").charAt(0)}</AvatarFallback>
+                                                <AvatarFallback>{(patient.name! || "P").charAt(0)}</AvatarFallback>
                                              </Avatar>
                                           </div>
                                        </TableCell>
@@ -97,9 +97,14 @@ export default function PatientsTable({ page }: Props) {
                                        <TableCell>{patient.phone}</TableCell>
                                        <TableCell>{patient.bloodGroup}</TableCell>
                                        <TableCell className="text-right">
-                                          <Button variant="link" size="sm" onClick={() => handleViewProfile(patient)}>
+                                          <ButtonV2
+                                             size="sm"
+                                             variant="linkHover2"
+                                             color={"link" as ButtonColorVariant}
+                                             onClick={() => handleViewProfile(patient)}
+                                          >
                                              View Profile
-                                          </Button>
+                                          </ButtonV2>
                                        </TableCell>
                                     </TableRow>
                                  ))

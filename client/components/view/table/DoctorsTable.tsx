@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,6 +14,7 @@ import AdminDoctorProfileModel from "../../models/admin/DoctorProfileModel";
 import Pagination from "../../navigation/Pagination";
 import { IDoctor } from "@/types/entities";
 import { DoctorsFilter } from "@/types/enum";
+import { ButtonColorVariant, ButtonV2 } from "@/components/button/ButtonV2";
 
 const columns = [
    { name: "Image", width: "w-[80px]" },
@@ -37,7 +37,7 @@ export default function DoctorsPage({ page, type }: Props) {
    const [tabType, setTabType] = useState<DoctorsFilter>(DoctorsFilter.VERIFIED);
    const router = useRouter();
    const limit = 7;
-   const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage-1, limit, type);
+   const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage - 1, limit, type);
 
    const doctors = useMemo(() => data?.items || [], [data]);
 
@@ -78,9 +78,33 @@ export default function DoctorsPage({ page, type }: Props) {
             >
                <div className="flex items-center justify-between">
                   <TabsList>
-                     <TabsTrigger value={DoctorsFilter.VERIFIED}>Verified</TabsTrigger>
-                     <TabsTrigger value={DoctorsFilter.NOT_VERIFIED}>Not Verified</TabsTrigger>
-                     <TabsTrigger value={DoctorsFilter.BLOCKED}>Blocked</TabsTrigger>
+                     <TabsTrigger value={DoctorsFilter.VERIFIED}>
+                        <ButtonV2
+                           variant={'outline'}
+                           color={"success" as ButtonColorVariant}
+                           className={`${tabType === DoctorsFilter.VERIFIED && "bg-opacity-45 border-white border-solid hover:bg-opacity-45"}`}
+                        >
+                           Verified
+                        </ButtonV2>
+                     </TabsTrigger>
+                     <TabsTrigger value={DoctorsFilter.BLOCKED} >
+                        <ButtonV2
+                           variant={'outline'}
+                           color={"warning" as ButtonColorVariant}
+                           className={`${tabType === DoctorsFilter.BLOCKED && "bg-opacity-45 border-white border-solid hover:bg-opacity-45"}`}
+                        >
+                           Blocked
+                        </ButtonV2>
+                     </TabsTrigger>
+                     <TabsTrigger value={DoctorsFilter.NOT_VERIFIED} >
+                        <ButtonV2
+                           variant={'outline'}
+                           color={"danger" as ButtonColorVariant}
+                           className={`${tabType === DoctorsFilter.NOT_VERIFIED && "bg-opacity-45 border-white border-solid hover:bg-opacity-45"}`}
+                        >
+                           Not Verified
+                        </ButtonV2>
+                     </TabsTrigger>
                   </TabsList>
                </div>
                <TabsContent value={tabType} className="space-y-4">
@@ -138,14 +162,15 @@ export default function DoctorsPage({ page, type }: Props) {
                                                 </Badge>
                                              </TableCell>
                                              <TableCell className="text-right">
-                                                <Button
-                                                   variant="link"
+                                                <ButtonV2
                                                    size="sm"
-                                                   onClick={() => handleViewProfile(doctor)}
+                                                   variant="linkHover2"
+                                                   color={"link" as ButtonColorVariant}
+                                                   onClick={() => handleViewProfile(doctor!)}
                                                    aria-label={`View profile of ${doctor.name}`}
                                                 >
                                                    View Profile
-                                                </Button>
+                                                </ButtonV2>
                                              </TableCell>
                                           </TableRow>
                                        ))

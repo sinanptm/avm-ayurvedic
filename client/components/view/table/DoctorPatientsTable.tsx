@@ -20,7 +20,6 @@ export default function DoctorPatientsTable({ page }: Props) {
    const router = useRouter();
    const limit = 7;
    const { data, isLoading, refetch } = useGetPatientsDoctor(currentPage-1,limit);
-   console.log(data);
    const columns = [
       { name: "Image", width: "w-[80px]" },
       { name: "Name", width: "" },
@@ -39,7 +38,7 @@ export default function DoctorPatientsTable({ page }: Props) {
       refetch();
    };
 
-   const handleViewProfile = (patient: IPatient) => {
+   const handleViewProfile = (patientId:string) => {
 
    };
 
@@ -95,7 +94,7 @@ export default function DoctorPatientsTable({ page }: Props) {
                                        <TableCell>{patient.phone}</TableCell>
                                        <TableCell>{patient.bloodGroup}</TableCell>
                                        <TableCell className="text-right">
-                                          <ButtonV2 variant="linkHover2" color={"link" as ButtonColorVariant} size="sm" onClick={() => handleViewProfile(patient)}>
+                                          <ButtonV2 variant="linkHover2" color={"link" as ButtonColorVariant} size="sm" onClick={() => handleViewProfile(patient._id!)}>
                                              Medical History
                                           </ButtonV2>
                                        </TableCell>
