@@ -106,7 +106,7 @@ const AppointmentForm = () => {
    return (
       <Form {...form}>
          <Elements stripe={stripePromise}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
                <section className="mb-12 space-y-4">
                   <h1 className="text-2xl font-bold text-gray-200">New Appointment</h1>
                   <p className="text-gray-400">Request New Appointment in 10 seconds</p>
