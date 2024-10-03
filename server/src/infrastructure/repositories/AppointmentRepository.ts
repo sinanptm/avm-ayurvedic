@@ -27,34 +27,35 @@ export default class AppointmentRepository implements IAppointmentRepository {
 
    async findPatientsByDoctorId(doctorId: string): Promise<IPatient[] | []> {
       return await this.model.aggregate([
-         {
-            $match: { doctorId: new ObjectId(doctorId) }
-         },
-         {
-            $group: { _id: "$patientId" }
-         },
-         {
-            $lookup: {
-               from: "patients",
-               localField: "_id",
-               foreignField: "_id",
-               as: "patients"
-            }
-         },
-         {
-            $unwind: "$patients"
-         },
-         {
-            $replaceRoot: { newRoot: "patients" }
-         },
-         {
-            $project: {
-               "patients.password": 0,
-               "patients.token": 0
-            }
-         }
+          {
+              $match: { doctorId: new ObjectId(doctorId) }
+          },
+          {
+              $group: { _id: "$patientId" }
+          },
+          {
+              $lookup: {
+                  from: "patients",
+                  localField: "_id",
+                  foreignField: "_id",
+                  as: "patientInfo"
+              }
+          },
+          {
+              $unwind: "$patientInfo"
+          },
+          {
+              $replaceRoot: { newRoot: "$patientInfo" } 
+          },
+          {
+              $project: {
+                  password: 0,  
+                  token: 0
+              }
+          }
       ]).exec();
-   }
+  }
+  
 
    async findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null> {
       const objectId = new ObjectId(appointmentId);
