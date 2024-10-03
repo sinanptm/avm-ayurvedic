@@ -1,5 +1,5 @@
 import { IVideoSection } from "@/types/entities"
-import { Video, Clock, Info, InfoIcon } from "lucide-react"
+import { Video, Clock, InfoIcon } from "lucide-react"
 import { notFound } from "next/navigation"
 import { useEffect, useState } from "react"
 import { format } from "date-fns"

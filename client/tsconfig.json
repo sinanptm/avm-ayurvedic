@@ -20,7 +20,9 @@
       ],
       "paths": {
          "@/*": ["./*"]
-      }
+      },
+      "typeRoots": ["./types", "./node_modules/@types"],
+      "types": ["html2pdf.js"],
    },
    "include": [
       "next-env.d.ts",
