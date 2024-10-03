@@ -1,11 +1,12 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "@/components/ui/alert-dialog";
+import { updateProfileFormSchema } from "@/lib/form-schema/patientSchema";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { Form, FormControl } from "../../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { updateProfileFormSchema } from "@/lib/form-schema/patientSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../button/SubmitButton";
 import { IPatient } from "@/types/entities";
@@ -17,6 +18,7 @@ import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Label } from "../../ui/label";
 import { useUpdatePatientProfile } from "@/lib/hooks/patient/usePatient";
 import { toast } from "../../ui/use-toast";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 type Props = {
    open: boolean;
@@ -66,21 +68,22 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
 
    return (
       <AlertDialog open={open} onOpenChange={setOpen}>
-         <AlertDialogContent>
-            <AlertDialogContent className="shad-alert-dialog">
-               <AlertDialogHeader>
-                  <AlertDialogTitle className="flex items-start justify-between">
-                     <p className="sub-header">Update Profile</p>
-                     <Image
-                        src={`/assets/icons/close.svg`}
-                        width={20}
-                        height={20}
-                        alt="close-icon"
-                        onClick={closeModal}
-                        className="cursor-pointer"
-                     />
-                  </AlertDialogTitle>
-               </AlertDialogHeader>
+         <AlertDialogContent className="max-w-3xl bg-dark-300 max-h-[90vh] flex flex-col">
+            <AlertDialogHeader>
+               <AlertDialogTitle className="flex items-start justify-between">
+                  <p className="sub-header">Update Profile</p>
+                  <Image
+                     src={`/assets/icons/close.svg`}
+                     width={20}
+                     height={20}
+                     alt="close-icon"
+                     onClick={closeModal}
+                     className="cursor-pointer"
+                  />
+               </AlertDialogTitle>
+            </AlertDialogHeader>
+
+            <ScrollArea className="flex-grow overflow-y-auto remove-scrollbar">
                <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)}>
                      <div className="flex flex-col gap-4">
@@ -178,7 +181,10 @@ const UpdateProfilePatient = ({ open, setOpen, patientData, refetch }: Props) =>
                      </div>
                   </form>
                </Form>
-            </AlertDialogContent>
+            </ScrollArea>
+            <VisuallyHidden>
+               <AlertDialogDescription />
+            </VisuallyHidden>
          </AlertDialogContent>
       </AlertDialog>
    );

@@ -39,7 +39,7 @@ export default function DoctorPatientsTable({ page }: Props) {
    };
 
    const handleViewProfile = (patientId:string) => {
-
+      router.push(`/doctor/patients/${patientId}`)
    };
 
    
