@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import { PaginatedResult } from "../../types";
 import AppointmentModel from "../model/AppointmentModel";
 import { getPaginatedResult } from "./getPaginatedResult";
+import IPatient from "../../domain/entities/IPatient";
+import { ObjectId } from "mongodb";
 
 export default class AppointmentRepository implements IAppointmentRepository {
    model = AppointmentModel;
@@ -24,8 +25,39 @@ export default class AppointmentRepository implements IAppointmentRepository {
       return await this.model.find({ _id: { $in: ids } });
    }
 
+   async findPatientsByDoctorId(doctorId: string): Promise<IPatient[] | []> {
+      return await this.model.aggregate([
+         {
+            $match: { doctorId: new ObjectId(doctorId) }
+         },
+         {
+            $group: { _id: "$patientId" }
+         },
+         {
+            $lookup: {
+               from: "patients",
+               localField: "_id",
+               foreignField: "_id",
+               as: "patients"
+            }
+         },
+         {
+            $unwind: "$patients"
+         },
+         {
+            $replaceRoot: { newRoot: "patients" }
+         },
+         {
+            $project: {
+               "patients.password": 0,
+               "patients.token": 0
+            }
+         }
+      ]).exec();
+   }
+
    async findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null> {
-      const objectId = new mongoose.Types.ObjectId(appointmentId);
+      const objectId = new ObjectId(appointmentId);
 
       const appointment = await this.model
          .aggregate([
@@ -79,7 +111,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
 
       if (!appointment || appointment.length === 0) {
          return null;
-      }    
+      }
 
       return appointment[0] as IExtendedAppointment;
    }

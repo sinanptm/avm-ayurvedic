@@ -6,7 +6,7 @@ import UpdateSlotUseCase from "../../../use_case/slot/UpdateSlotUseCase";
 import GetSlotUseCase from "../../../use_case/slot/GetSlotUseCase";
 import DeleteSlotUseCase from "../../../use_case/slot/DeleteSlotUseCase";
 
-export default class DoctorController {
+export default class SlotController {
    constructor(
       private createSlotUseCase: CreateSlotUseCase,
       private updateSlotUseCase: UpdateSlotUseCase,

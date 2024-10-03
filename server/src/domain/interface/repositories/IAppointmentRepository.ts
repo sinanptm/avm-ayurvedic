@@ -1,5 +1,6 @@
 import { PaginatedResult } from "../../../types";
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../entities/IAppointment";
+import IPatient from "../../entities/IPatient";
 import IRepository from "./IRepository";
 
 export default interface IAppointmentRepository extends IRepository<IAppointment> {
@@ -21,4 +22,5 @@ export default interface IAppointmentRepository extends IRepository<IAppointment
       status?: AppointmentStatus
    ): Promise<PaginatedResult<IAppointment> | null>;
    findManyByIds(ids: string[]): Promise<IAppointment[] | null>;
+   findPatientsByDoctorId(doctorId:string):Promise<IPatient[]|[]>;
 }

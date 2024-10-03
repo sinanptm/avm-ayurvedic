@@ -53,7 +53,7 @@ export default function VideoCallModal({
           {sections.length > 0 ? (
             <>
               {sections.map((section) => (
-                <Link key={section._id} href={`${link}/${section._id}`} onClick={closeModal} >
+                <Link key={section._id} href={`${link}/${section._id}`} onClick={closeModal} className="my-1" >
                   <Card>
                     <CardContent className="flex items-center justify-between p-4">
                       <div className="flex items-center space-x-4">

@@ -54,7 +54,7 @@ export default function NotificationModal({
         <AlertDialogDescription></AlertDialogDescription>
         <div className="space-y-4">
           {unauthorized ? (
-            <div className="flex flex-col items-center justify-center space-y-2 py-6">
+            <div className="flex flex-col items-center justify-center space-y-2 py-6 my-1">
               <Image
                 src="/assets/icons/cancelled.svg"
                 width={64}

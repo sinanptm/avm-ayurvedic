@@ -22,12 +22,6 @@ export default class GetSlotUseCase {
       return await this.slotRepository.findManyByDay(doctorId, day);
    }
 
-   private getDayFromDate(date: string): Days {
-      const dayOfWeek = new Date(date).getUTCDay();
-      const dayNames = Object.values(Days);
-      return dayNames[dayOfWeek] as Days;
-   }
-
    async getSlotsByDate(doctorId: string, date: string): Promise<ISlot[] | []> {
       this.validatorService.validateIdFormat(doctorId);
       this.validatorService.validateDateFormat(date);
@@ -41,7 +35,7 @@ export default class GetSlotUseCase {
       const isToday = new Date(date).toDateString() === new Date().toDateString();
 
       // TODO: sort slots by start time
-
+      
       // Filter today's slots based on time (slots after the current time + 1 hour)
       return slots
          ? slots.filter(slot => {
@@ -52,7 +46,7 @@ export default class GetSlotUseCase {
             return true; // Return all slots for future dates
          })
          : [];
-   }
+      }
 
 
 
@@ -67,4 +61,10 @@ export default class GetSlotUseCase {
       date.setHours(hours, minutes, 0, 0);
       return date;
    };
+   
+   private getDayFromDate(date: string): Days {
+      const dayOfWeek = new Date(date).getUTCDay();
+      const dayNames = Object.values(Days);
+      return dayNames[dayOfWeek] as Days;
+   }
 }
