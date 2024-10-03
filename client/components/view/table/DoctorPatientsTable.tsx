@@ -1,16 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Pagination from "@/components/navigation/Pagination";
 import { IPatient } from "@/types/entities";
-import AdminPatientProfileModel from "@/components/models/admin/PatientProfileModel";
 import { useRouter } from "next/navigation";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetPatientsDoctor } from "@/lib/hooks/doctor/useDoctor";
+import { ButtonV2, ButtonColorVariant } from "@/components/button/ButtonV2";
 
 type Props = {
    page: number;
@@ -18,8 +17,6 @@ type Props = {
 
 export default function DoctorPatientsTable({ page }: Props) {
    const [currentPage, setCurrentPage] = useState(page);
-   const [isModelOpen, setModelOpen] = useState(false);
-   const [selectedPatient, setSelectedPatient] = useState({});
    const router = useRouter();
    const limit = 7;
    const { data, isLoading, refetch } = useGetPatientsDoctor(currentPage-1,limit);
@@ -43,8 +40,7 @@ export default function DoctorPatientsTable({ page }: Props) {
    };
 
    const handleViewProfile = (patient: IPatient) => {
-      setSelectedPatient(patient);
-      setModelOpen(true);
+
    };
 
    
@@ -83,7 +79,7 @@ export default function DoctorPatientsTable({ page }: Props) {
                                     <TableRow key={patient._id}>
                                        <TableCell>
                                           <div
-                                             className={`relative w-16 h-16 rounded-full ${patient.isBlocked
+                                             className={`relative w-13 h-13 rounded-full ${patient.isBlocked
                                                 ? "border-4 border-destructive"
                                                 : "border-4 border-primary"
                                                 }`}
@@ -99,9 +95,9 @@ export default function DoctorPatientsTable({ page }: Props) {
                                        <TableCell>{patient.phone}</TableCell>
                                        <TableCell>{patient.bloodGroup}</TableCell>
                                        <TableCell className="text-right">
-                                          <Button variant="link" size="sm" onClick={() => handleViewProfile(patient)}>
-                                             View Profile
-                                          </Button>
+                                          <ButtonV2 variant="linkHover2" color={"link" as ButtonColorVariant} size="sm" onClick={() => handleViewProfile(patient)}>
+                                             Medical History
+                                          </ButtonV2>
                                        </TableCell>
                                     </TableRow>
                                  ))
@@ -127,12 +123,6 @@ export default function DoctorPatientsTable({ page }: Props) {
                </>
             )}
          </div>
-         <AdminPatientProfileModel
-            open={isModelOpen}
-            setOpen={setModelOpen}
-            patient={selectedPatient}
-            refetch={refetch}
-         />
       </main>
    );
 }

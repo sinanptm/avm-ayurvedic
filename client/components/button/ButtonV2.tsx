@@ -59,7 +59,8 @@ export type ButtonColorVariant =
    | "indigo"
    | "cyan"
    | "lime"
-   | "emerald";
+   | "emerald"
+   | "link";
 
 interface IconProps {
    Icon: React.ElementType;
@@ -96,7 +97,8 @@ const colorVariants: Record<ButtonColorVariant, string> = {
    indigo: "bg-indigo-700 text-white hover:bg-indigo-600",
    cyan: "bg-cyan-700 text-white hover:bg-cyan-600",
    lime: "bg-lime-700 text-white hover:bg-lime-600",
-   emerald: "bg-emerald-700 text-white hover:bg-emerald-600"
+   emerald: "bg-emerald-700 text-white hover:bg-emerald-600",
+   link:"text-green-500 underline-offset-4 "
 };
 
 const ButtonV2 = React.forwardRef<HTMLButtonElement, ButtonProps & ButtonIconProps>(

@@ -16,7 +16,7 @@ export default class DoctorController {
             offset = isNaN(offset) || offset < 0 ? 0 : offset;
             limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
 
-            const patients = this.getPatientUseCase.exec(doctorId, limit, offset);
+            const patients = await this.getPatientUseCase.exec(doctorId, limit, offset);            
             res.status(StatusCode.Success).json(patients);
         } catch (error) {
             next(error)
