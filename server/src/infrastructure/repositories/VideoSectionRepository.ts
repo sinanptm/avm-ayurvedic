@@ -1,5 +1,5 @@
 import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
-import IVideoSectionRepository  from "../../domain/interface/repositories/IVideoSectionRepository";
+import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
 import VideoSectionModel from "../model/VideoSectionModel";
 
 export default class VideoSectionRepository implements IVideoSectionRepository {
@@ -7,6 +7,10 @@ export default class VideoSectionRepository implements IVideoSectionRepository {
 
     async create(videoSection: IVideoSection): Promise<IVideoSection> {
         return await this.model.create(videoSection);
+    }
+
+    async findByRoomId(roomId: string): Promise<IVideoSection | null> {
+        return await this.model.findOne({ roomId });
     }
 
     async findById(id: string): Promise<IVideoSection | null> {

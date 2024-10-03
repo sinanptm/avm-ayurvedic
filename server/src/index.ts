@@ -8,10 +8,8 @@ import bodyParser from "body-parser";
 import { connectDB } from "./config/connectDB";
 import routes from "./presentation/routers/index";
 import { CLIENT_URL, PORT } from "./config/env";
-import JWTService from "./infrastructure/services/JWTService";
-import SocketServer from "./presentation/socket/SocketServer";
 import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
-import VideoSocketManager from "./presentation/socket/VideoSocketManager";
+import { initializeSocketIO } from "./presentation/socket";
 
 const port = PORT || 8080;
 
@@ -37,8 +35,6 @@ connectDB().then(() => {
     server.listen(port, () => {
         logger.info(`Server started listening on port: ${port}`);
 
-        const tokenService = new JWTService();
-        const socketServer = new SocketServer(server, tokenService);
-        new VideoSocketManager(socketServer.getIO());
+        initializeSocketIO(server);
     });
 });

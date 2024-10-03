@@ -10,6 +10,7 @@ export default interface IVideoSectionRepository extends IRepository<IVideoSecti
   findByStartTimeRangeByPatientId(startTime: string, endTime: string, patientId: string): Promise<IVideoSection[] | null>;
   findAllSectionsByDoctorId(doctorId:string,status:VideoSectionStatus,limit:number):Promise<IVideoSection[] | null>;
   findByAppointmentIdAndUpdate(appointmentId: string, videoSection: IVideoSection): Promise<void>;
+  findByRoomId(roomId:string):Promise<IVideoSection|null>
 }
 
 

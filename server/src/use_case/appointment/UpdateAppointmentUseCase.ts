@@ -30,7 +30,7 @@ export default class UpdateAppointmentUseCase {
          });
          await this.videoSectionRepository.findByAppointmentIdAndUpdate(appointmentId, { status: VideoSectionStatus.CANCELLED });
       }
-      
+
       if (status === AppointmentStatus.CONFIRMED && appointment) {
          await this.notificationRepository.create({
             appointmentId,
@@ -38,8 +38,8 @@ export default class UpdateAppointmentUseCase {
             patientId: appointment.patientId,
             type: NotificationTypes.APPOINTMENT_CONFIRMED
          });
-      }      
-   
+      }
+
    }
 
    // By Patient 
@@ -56,5 +56,17 @@ export default class UpdateAppointmentUseCase {
             type: NotificationTypes.APPOINTMENT_CANCELED
          });
       }
+   }
+   async updateCompleteSection(roomId: string, doctorId: string) {
+      const room = await this.videoSectionRepository.findByRoomId(roomId);
+      if (!room) {
+         throw new Error("Invalid Room Id")
+      }
+      const appointment = await this.appointmentRepository.findById(room.appointmentId!);
+      if (doctorId !== appointment?.doctorId?.toString()) {
+         throw new Error("Unauthorized doctor");
+      }
+      await this.appointmentRepository.update(appointment?._id!, { status: AppointmentStatus.COMPLETED });
+      await this.videoSectionRepository.update(room._id!, { status: VideoSectionStatus.COMPLETED });
    }
 }

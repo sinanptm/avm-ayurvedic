@@ -52,7 +52,7 @@ export default function AppointmentTable({ page }: Props) {
          });
          router.replace(`/doctor/appointments?page=1&status=${AppointmentStatus.PENDING}`);
       }
-   }, [notAcceptedAppointments,]);
+   }, [notAcceptedAppointments,router]);
 
 
    const appointments = useMemo(() => data?.items || [], [data?.items]);
