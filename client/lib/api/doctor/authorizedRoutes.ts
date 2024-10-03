@@ -67,4 +67,9 @@ doctorAxiosInstance.interceptors.response.use(
    }
 );
 
+export const getPatientsOfDoctor=async()=>{
+   const response = await doctorAxiosInstance.get('/');
+   return response.data;
+}
+
 export default doctorAxiosInstance;

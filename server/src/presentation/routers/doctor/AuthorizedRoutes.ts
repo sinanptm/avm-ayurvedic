@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import DoctorController from '../../controllers/doctor/DoctorController';
 import AppointmentRepository from '../../../infrastructure/repositories/AppointmentRepository';
 import GetPatientUseCaseDoctor from '../../../use_case/doctor/GetPatientUseCase';
+import DoctorController from '../../controllers/doctor/DoctorController';
 
 const router = Router();
 
