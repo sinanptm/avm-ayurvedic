@@ -1,11 +1,11 @@
 'use client'
 import { useParams } from "next/navigation"
 
-const page = () => {
+const Page = () => {
     const params = useParams()
     return (
-        <div>pagePP {params.patientId}</div>
+        <div>PagePP {params.patientId}</div>
     )
 }
 
-export default page
+export default Page
