@@ -8,7 +8,7 @@ export default class PrescriptionRepository implements IPrescriptionRepository {
         return (await this.model.create(prescription));
     }
     async update(id: string, prescription: IPrescription): Promise<IPrescription | null> {
-        return await this.model.findByIdAndUpdate(id,prescription);
+        return await this.model.findByIdAndUpdate(id, prescription);
     }
     async findById(id: string): Promise<IPrescription | null> {
         return this.model.findById(id)
@@ -18,7 +18,7 @@ export default class PrescriptionRepository implements IPrescriptionRepository {
     }
 
     async findManyByAppointmentIds(appointmentIds: string[]): Promise<IPrescription[] | null> {
-        return await this.model.find({_id:{$in:appointmentIds}});
+        return await this.model.find({ appointmentId: { $in: appointmentIds } }).lean(true);
     }
-    
+
 }

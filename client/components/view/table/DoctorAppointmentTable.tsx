@@ -42,7 +42,6 @@ export default function AppointmentTable({ page }: Props) {
    const { data: response } = useGetAppointmentsDoctor(0, 100, AppointmentStatus.PENDING);
    const notAcceptedAppointments = response?.items.length;
 
-   console.log(notAcceptedAppointments);
    useEffect(() => {
       if (notAcceptedAppointments! > 0) {
          setStatusFilter(AppointmentStatus.PENDING);
