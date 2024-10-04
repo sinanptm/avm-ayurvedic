@@ -1,8 +1,7 @@
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import { Server as HTTPServer } from "http";
 import { CLIENT_URL } from "../../config/env";
 import logger from "../../utils/logger";
-import { UserRole } from "../../types";
 
 export default class SocketServer {
     private io: Server;
