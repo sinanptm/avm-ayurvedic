@@ -21,7 +21,6 @@ const connectSocketIO = ({ role, namespace }: Props) => {
         auth: {
             token: token,
         },
-        transports: ['websocket'],
     });
 
     existingSocket = socket;
