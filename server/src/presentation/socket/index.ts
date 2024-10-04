@@ -5,17 +5,17 @@ import AppointmentRepository from "../../infrastructure/repositories/Appointment
 import UpdateAppointmentUseCase from "../../use_case/appointment/UpdateAppointmentUseCase";
 import MessageRepository from "../../infrastructure/repositories/MessageRepository";
 import PatientRepository from "../../infrastructure/repositories/PatientRepository";
+import NotificationSocketManager from "./socketManagers/NotificationSocketManager";
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
+import NotificationUseCase from "../../use_case/notification/NotificationUseCae";
 import ChatRepository from "../../infrastructure/repositories/ChatRepository";
 import CreateChatUseCase from "../../use_case/chat/CreateChatUseCase";
+import VideoSocketManager from "./socketManagers/VideoSocketManager";
+import ChatSocketManager from "./socketManagers/ChatSocketManager";
 import JoiService from "../../infrastructure/services/JoiService";
 import JWTService from "../../infrastructure/services/JWTService";
 import GetChatUseCase from "../../use_case/chat/GetChatUseCase";
-import VideoSocketManager from "./video/VideoSocketManager";
-import ChatSocketManager from "./chat/ChatSocketManager";
-import SocketServer from "./SocketServer/SocketServer";
-import NotificationSocketManager from "./notification/NotificationSocketManager";
-import NotificationUseCase from "../../use_case/notification/NotificationUseCae";
+import SocketServer from "./SocketServer";
 
 const tokenService = new JWTService();
 const validationService = new JoiService();
@@ -41,10 +41,12 @@ const notificationUseCase = new NotificationUseCase(
     notificationRepository, validationService
 )
 
-export function initializeSocketIO(server: HTTPServer) {
+const initializeSocketIO = (server: HTTPServer) => {
     const socketServer = new SocketServer(server);
     const io = socketServer.getIO()
     new VideoSocketManager(io, updateAppointmentUseCase, tokenService);
     new ChatSocketManager(io, tokenService, createChatUseCase, getChatUseCase);
     new NotificationSocketManager(io, notificationUseCase, tokenService)
 }
+
+export default initializeSocketIO;

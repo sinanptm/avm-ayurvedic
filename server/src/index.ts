@@ -9,7 +9,7 @@ import { connectDB } from "./config/connectDB";
 import routes from "./presentation/routers/index";
 import { CLIENT_URL, PORT } from "./config/env";
 import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
-import { initializeSocketIO } from "./presentation/socket";
+import initializeSocketIO from "./presentation/socket";
 
 const port = PORT || 8080;
 
