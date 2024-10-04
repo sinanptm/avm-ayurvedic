@@ -1,12 +1,12 @@
 import { Router } from "express";
+import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import AdminPatientController from "../../controllers/admin/PatientController";
 import AdminPatientUseCase from "../../../use_case/admin/PatientUseCase";
-import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 
-import AdminDoctorController from "../../controllers/admin/DoctorController";
-import AdminDoctorUseCase from "../../../use_case/admin/DoctorUseCase";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
 import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
+import AdminDoctorController from "../../controllers/admin/DoctorController";
+import AdminDoctorUseCase from "../../../use_case/admin/DoctorUseCase";
 import JoiService from "../../../infrastructure/services/JoiService";
 
 const router = Router();

@@ -1,22 +1,22 @@
 import { Router } from "express";
-import AppointmentRepository from "../../../infrastructure/repositories/AppointmentRepository";
-import SlotRepository from "../../../infrastructure/repositories/SlotRepository";
-import CreateAppointmentUseCase from "../../../use_case/appointment/CreateAppointmentUseCase";
-import AppointmentController from "../../controllers/appointment/AppointmentControllers";
-import PatientAuthMiddleware from "../../middlewares/PatientAuthMiddleware";
-import JWTService from "../../../infrastructure/services/JWTService";
-import JoiService from "../../../infrastructure/services/JoiService";
-import StripeService from "../../../infrastructure/services/StripeService";
-import PaymentRepository from "../../../infrastructure/repositories/PaymentRepository";
-import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentUseCase";
-import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
-import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
 import NotificationRepository from "../../../infrastructure/repositories/NotificationRepository";
 import VideoSectionRepository from "../../../infrastructure/repositories/VideoSectionRepository";
-import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
-import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
-import UUIDService from "../../../infrastructure/services/UUIDService";
 import PrescriptionRepository from "../../../infrastructure/repositories/PrescriptionRepository";
+import AppointmentRepository from "../../../infrastructure/repositories/AppointmentRepository";
+import CreateAppointmentUseCase from "../../../use_case/appointment/CreateAppointmentUseCase";
+import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
+import AppointmentController from "../../controllers/appointment/AppointmentControllers";
+import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentUseCase";
+import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
+import PaymentRepository from "../../../infrastructure/repositories/PaymentRepository";
+import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
+import SlotRepository from "../../../infrastructure/repositories/SlotRepository";
+import PatientAuthMiddleware from "../../middlewares/PatientAuthMiddleware";
+import StripeService from "../../../infrastructure/services/StripeService";
+import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
+import UUIDService from "../../../infrastructure/services/UUIDService";
+import JWTService from "../../../infrastructure/services/JWTService";
+import JoiService from "../../../infrastructure/services/JoiService";
 
 const router = Router();
 

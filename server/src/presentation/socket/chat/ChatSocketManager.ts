@@ -1,8 +1,8 @@
 import { Server, Socket, Namespace } from "socket.io";
-import logger from "../../utils/logger";
-import ITokenService from "../../domain/interface/services/ITokenService";
-import CreateChatUseCase from "../../use_case/chat/CreateChatUseCase";
-import GetChatUseCase from "../../use_case/chat/GetChatUseCase";
+import ITokenService from "../../../domain/interface/services/ITokenService";
+import CreateChatUseCase from "../../../use_case/chat/CreateChatUseCase";
+import GetChatUseCase from "../../../use_case/chat/GetChatUseCase";
+import logger from "../../../utils/logger";
 
 export default class ChatSocketManager {
     private io: Namespace;

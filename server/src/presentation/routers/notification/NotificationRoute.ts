@@ -1,11 +1,11 @@
 import { Router } from "express";
 import NotificationRepository from "../../../infrastructure/repositories/NotificationRepository";
-import JoiService from "../../../infrastructure/services/JoiService";
 import NotificationController from "../../controllers/notification/NotificationController";
-import JWTService from "../../../infrastructure/services/JWTService";
-import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
-import PatientAuthMiddleware from "../../middlewares/PatientAuthMiddleware";
 import NotificationUseCase from "../../../use_case/notification/NotificationUseCae";
+import PatientAuthMiddleware from "../../middlewares/PatientAuthMiddleware";
+import DoctorAuthMiddleware from "../../middlewares/DoctorAuthMiddleware";
+import JoiService from "../../../infrastructure/services/JoiService";
+import JWTService from "../../../infrastructure/services/JWTService";
 
 const router = Router();
 

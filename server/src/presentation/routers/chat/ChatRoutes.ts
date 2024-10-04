@@ -3,13 +3,13 @@ import ChatRepository from '../../../infrastructure/repositories/ChatRepository'
 import MessageRepository from '../../../infrastructure/repositories/MessageRepository';
 import PatientRepository from '../../../infrastructure/repositories/PatientRepository';
 import DoctorRepository from '../../../infrastructure/repositories/DoctorRepository';
-import CreateChatUseCase from '../../../use_case/chat/CreateChatUseCase';
-import JoiService from '../../../infrastructure/services/JoiService';
-import GetChatUseCase from '../../../use_case/chat/GetChatUseCase';
-import ChatController from '../../controllers/chat/ChatControllers';
-import JWTService from '../../../infrastructure/services/JWTService';
 import PatientAuthMiddleware from '../../middlewares/PatientAuthMiddleware';
 import DoctorAuthMiddleware from '../../middlewares/DoctorAuthMiddleware';
+import CreateChatUseCase from '../../../use_case/chat/CreateChatUseCase';
+import JWTService from '../../../infrastructure/services/JWTService';
+import JoiService from '../../../infrastructure/services/JoiService';
+import ChatController from '../../controllers/chat/ChatControllers';
+import GetChatUseCase from '../../../use_case/chat/GetChatUseCase';
 
 const router = Router();
 

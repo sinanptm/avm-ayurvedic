@@ -1,7 +1,7 @@
 import { Server, Socket, Namespace } from "socket.io";
-import logger from "../../utils/logger";
-import UpdateAppointmentUseCase from "../../use_case/appointment/UpdateAppointmentUseCase";
-import ITokenService from "../../domain/interface/services/ITokenService";
+import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
+import ITokenService from "../../../domain/interface/services/ITokenService";
+import logger from "../../../utils/logger";
 
 export default class VideoSocketManager {
     private io: Namespace;

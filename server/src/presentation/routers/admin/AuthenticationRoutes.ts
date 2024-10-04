@@ -1,11 +1,11 @@
 import { Router } from "express";
 import AuthenticationController from "../../controllers/admin/AuthenticationController";
-import AuthenticationUseCase from "../../../use_case/admin/AuthenticationUseCase";
+import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
+import AuthenticationUseCase from "../../../use_case/admin/AuthenticationUseCase";
+import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
 import BcryptService from "../../../infrastructure/services/BcryptService";
 import JWTService from "../../../infrastructure/services/JWTService";
-import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
-import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
 import JoiService from "../../../infrastructure/services/JoiService";
 
 const router = Router();

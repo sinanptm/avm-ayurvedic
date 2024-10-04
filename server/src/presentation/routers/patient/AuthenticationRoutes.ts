@@ -1,11 +1,11 @@
 import { Router } from "express";
-import BcryptService from "../../../infrastructure/services/BcryptService";
-import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
-import JWTService from "../../../infrastructure/services/JWTService";
-import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
-import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
 import AuthenticationController from "../../controllers/patient/AuthenticationController";
+import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
+import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
 import AuthPatientUseCase from "../../../use_case/patient/AuthenticationUseCase";
+import OtpRepository from "../../../infrastructure/repositories/OtpRepository";
+import BcryptService from "../../../infrastructure/services/BcryptService";
+import JWTService from "../../../infrastructure/services/JWTService";
 import JoiService from "../../../infrastructure/services/JoiService";
 
 const router = Router();
