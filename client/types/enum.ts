@@ -13,7 +13,7 @@ export enum Days {
     Saturday = "saturday",
     Sunday = "sunday"
 } export enum AppointmentStatus {
-    // PAYMENT_PENDING = "payment-pending",
+    PAYMENT_PENDING = "payment-pending",
     PENDING = "pending",
     CONFIRMED = "confirmed",
     CANCELLED = "cancelled",

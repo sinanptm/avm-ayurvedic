@@ -1,7 +1,6 @@
 import IDoctor from "../../domain/entities/IDoctor";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
 import DoctorModel from "../model/DoctorModel";
-import { Types } from "mongoose";
 import { PaginatedResult } from "../../types";
 import { getPaginatedResult } from "./getPaginatedResult";
 
@@ -31,7 +30,7 @@ export default class DoctorRepository implements IDoctorRepository {
       const totalItems = await this.model.countDocuments({ isVerified, isBlocked });
       const items = await this.model
          .find({ isVerified, isBlocked })
-         .skip(offset)
+         .skip(limit * offset)
          .limit(limit)
          .select("-password -token");
 

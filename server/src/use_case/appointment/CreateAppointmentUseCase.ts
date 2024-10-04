@@ -164,8 +164,8 @@ export default class AppointmentUseCase {
       this.validatorService.validateIdFormat(patientId!);
       this.validatorService.validateEnum(appointmentType!, Object.values(AppointmentType));
       this.validatorService.validateDateFormat(appointmentDate! as string);
-      this.validatorService.validateLength(reason!, 1, 255);
+      this.validatorService.validateLength(reason!, 1, 500);
 
-      if (notes) this.validatorService.validateLength(notes, 0, 255);
+      if (notes) this.validatorService.validateLength(notes, 0, 500);
    }
 }

@@ -32,8 +32,8 @@ export default class AppointmentRepository implements IAppointmentRepository {
    ): Promise<PaginatedResult<IExtendedAppointment>> {
       const result = await this.model.aggregate([
          {
-            $match: { 
-               patientId: new ObjectId(patientId) ,
+            $match: {
+               patientId: new ObjectId(patientId),
                status: AppointmentStatus.COMPLETED
             }
          },
@@ -68,7 +68,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
             $unwind: "$doctor"
          },
          {
-            $unwind:"$prescription"
+            $unwind: "$prescription"
          },
          {
             $project: {
@@ -81,7 +81,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
          {
             $facet: {
                paginatedResults: [
-                  { $skip: offset },
+                  { $skip: limit * offset },
                   { $limit: limit }
                ],
                totalCount: [
@@ -123,7 +123,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
          {
             $facet: {
                paginatedResults: [
-                  { $skip: offset },
+                  { $skip: limit * offset },
                   { $limit: limit },
                   {
                      $project: {
@@ -212,12 +212,19 @@ export default class AppointmentRepository implements IAppointmentRepository {
       limit: number,
       status?: AppointmentStatus
    ): Promise<PaginatedResult<IAppointment>> {
-      const filter: { patientId: string; status?: AppointmentStatus } = { patientId };
+      const filter: { patientId: string; status?: any } = { patientId };
       if (status) {
-         filter.status = status;
+         filter.status = { $nin: [AppointmentStatus.PAYMENT_PENDING], $eq: status };
+      } else {
+         filter.status = { $nin: [AppointmentStatus.PAYMENT_PENDING] };
       }
       const totalItems = await this.model.countDocuments(filter);
-      const items = await this.model.find(filter).skip(offset).limit(limit).exec();
+      const items = await this.model
+         .find(filter)
+         .sort({ createdAt: -1 })
+         .skip(limit * offset)
+         .limit(limit)
+         .exec();
       return getPaginatedResult(totalItems, offset, limit, items);
    }
 
@@ -227,12 +234,20 @@ export default class AppointmentRepository implements IAppointmentRepository {
       limit: number,
       status?: AppointmentStatus
    ): Promise<PaginatedResult<IAppointment>> {
-      const filter: { doctorId: string; status?: AppointmentStatus } = { doctorId };
+      const filter: { doctorId: string; status?: any } = { doctorId };
       if (status) {
-         filter.status = status;
+         filter.status = { $nin: [AppointmentStatus.PAYMENT_PENDING], $eq: status };
+      } else {
+         filter.status = { $nin: [AppointmentStatus.PAYMENT_PENDING] };
       }
       const totalItems = await this.model.countDocuments(filter);
-      const items = await this.model.find(filter).skip(offset).limit(limit).lean(true).exec();
+      const items = await this.model
+         .find(filter)
+         .sort({ createdAt: -1 })
+         .skip(limit * offset)
+         .limit(limit)
+         .lean(true)
+         .exec();
       return getPaginatedResult(totalItems, offset, limit, items);
    }
 

@@ -20,8 +20,8 @@ export default class MessageRepository implements IMessageRepository {
         const totalItems = await this.model.countDocuments({ chatId });
         const items = await this.model.find({ chatId })
             .sort({ createdAt: 1 })
-            .limit(limit)
-            .skip(offset);
+            .skip(limit * offset)
+            .limit(limit);
         return getPaginatedResult(totalItems, offset, limit, items);
     }
     async markAsReadByReceiverAndChatId(receiverId: string, chatId: string): Promise<void> {

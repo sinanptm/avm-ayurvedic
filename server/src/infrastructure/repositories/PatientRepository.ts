@@ -10,7 +10,11 @@ export default class PatientRepository implements IPatientRepository {
 
    async findMany(offset: number, limit: number): Promise<PaginatedResult<IPatient>> {
       const totalItems = await this.model.countDocuments();
-      const items = await this.model.find().skip(offset).limit(limit).select(["-token", "-password"]).exec();
+      const items = await this.model.find()
+         .skip(limit * offset)
+         .limit(limit)
+         .select(["-token", "-password"])
+         .exec();
       return getPaginatedResult(totalItems, offset, limit, items);
    }
 
