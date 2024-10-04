@@ -20,7 +20,7 @@ export default interface IAppointmentRepository extends IRepository<IAppointment
       offset: number,
       limit: number,
       status?: AppointmentStatus
-   ): Promise<PaginatedResult<IAppointment> | null>;
+   ): Promise<PaginatedResult<IAppointment>>;
    findManyByIds(ids: string[]): Promise<IAppointment[] | null>;
    findPatientsByDoctorId(doctorId:string, limit:number, offset:number):Promise<PaginatedResult<IPatient>>;
 }

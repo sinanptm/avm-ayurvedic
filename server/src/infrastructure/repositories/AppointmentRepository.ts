@@ -138,7 +138,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
       offset: number,
       limit: number,
       status?: AppointmentStatus
-   ): Promise<PaginatedResult<IAppointment> | null> {
+   ): Promise<PaginatedResult<IAppointment>> {
       const filter: { patientId: string; status?: AppointmentStatus } = { patientId };
       if (status) {
          filter.status = status;

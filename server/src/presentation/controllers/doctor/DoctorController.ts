@@ -16,8 +16,23 @@ export default class DoctorController {
             offset = isNaN(offset) || offset < 0 ? 0 : offset;
             limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
 
-            const patients = await this.getPatientUseCase.exec(doctorId, limit, offset);            
+            const patients = await this.getPatientUseCase.exec(doctorId, limit, offset);
             res.status(StatusCode.Success).json(patients);
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getMedicalHistory(req: CustomRequest, res: Response, next: NextFunction) {
+        try {
+            const patientId = req.params.patientId
+            let offset = +(req.query.offset as string);
+            let limit = +(req.query.limit as string);
+
+            offset = isNaN(offset) || offset < 0 ? 0 : offset;
+            limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
+            const history = await this.getPatientUseCase.getMedicalHistory(patientId, offset, limit);
+            res.status(StatusCode.Success).json(history);
         } catch (error) {
             next(error)
         }

@@ -13,6 +13,7 @@ const doctorUseCase = new GetPatientUseCaseDoctor(appointmentRepository, validat
 const doctorController = new DoctorController(doctorUseCase)
 
 router.get("/", doctorController.getPatients.bind(doctorController));
+router.get("/medical-history/:patientId", doctorController.getMedicalHistory.bind(doctorController))
 
 
 export default router;
