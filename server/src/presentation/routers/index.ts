@@ -8,7 +8,6 @@ import AdminAuthMiddleware from "../middlewares/AdminAuthMiddleware";
 import TokenService from "../../infrastructure/services/JWTService";
 import patientAuthentication from "./patient/AuthenticationRoutes";
 import prescriptionRoutes from "./prescription/PrescriptionRoutes";
-import notificationRoutes from "./notification/NotificationRoute";
 import doctorAuthentication from "./doctor/AuthenticationRoutes";
 import appointmentRoutes from "./appointment/AppointmentRoutes";
 import adminAuthentication from "./admin/AuthenticationRoutes";
@@ -42,7 +41,6 @@ app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/slots", slotRoutes);
 app.use("/appointments", appointmentRoutes);
-app.use("/notifications", notificationRoutes);
 app.use("/chats", chatRoutes);
 app.use("/video", videoSectionRoutes);
 app.use("/prescription", prescriptionRoutes)
