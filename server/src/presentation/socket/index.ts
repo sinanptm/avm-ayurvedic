@@ -13,7 +13,7 @@ import JWTService from "../../infrastructure/services/JWTService";
 import GetChatUseCase from "../../use_case/chat/GetChatUseCase";
 import VideoSocketManager from "./video/VideoSocketManager";
 import ChatSocketManager from "./chat/ChatSocketManager";
-import SocketServer from "./SocketServer";
+import SocketServer from "./SocketServer/SocketServer";
 
 const tokenService = new JWTService();
 const validationService = new JoiService();

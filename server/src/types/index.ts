@@ -61,3 +61,9 @@ export enum DoctorsFilter {
    NOT_VERIFIED = "not-verified",
    VERIFIED = "verified",
 }
+
+export type TokenPayload = {
+   id: string;
+   role: UserRole;
+   email: string
+}

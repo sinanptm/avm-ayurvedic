@@ -3,6 +3,7 @@ import ITokenService from "../../../domain/interface/services/ITokenService";
 import CreateChatUseCase from "../../../use_case/chat/CreateChatUseCase";
 import GetChatUseCase from "../../../use_case/chat/GetChatUseCase";
 import logger from "../../../utils/logger";
+import { TokenPayload } from "../../../types";
 
 export default class ChatSocketManager {
     private io: Namespace;
@@ -35,31 +36,10 @@ export default class ChatSocketManager {
 
     private initializeChatNamespace() {
         this.io.on("connection", (socket: Socket) => {
-            
-            socket.on("disconnect", () => {
-                this.handleUserDisconnection(socket);
-            });
-
-            socket.on("leave-room", (roomId: string) => {
-                if (roomId) {
-                    socket.leave(roomId);
-                    this.notifyRoomAboutLeaving(roomId, socket.id);
-                } else {
-                    logger.warn(`Socket ${socket.id} attempted to leave a room without a roomId`);
-                }
-            });
+            const user = socket.data.user as TokenPayload;
+           
         });
     }
 
-    private notifyRoomAboutLeaving(roomId: string, socketId: string) {
-        this.io.to(roomId).emit("leave-room", { userId: socketId });
-    }
-
-    private handleUserDisconnection(socket: Socket) {
-        const rooms = Array.from(socket.rooms).filter(room => room !== socket.id);
-        rooms.forEach((roomId) => {
-            socket.leave(roomId);
-            this.notifyRoomAboutLeaving(roomId, socket.id);
-        });
-    }
+  
 }
