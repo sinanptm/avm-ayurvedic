@@ -22,7 +22,7 @@ type Props = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   notifications: INotification[]
-  unauthorized: boolean
+  isUnauthorized: boolean
   handleClearSingleNotification: (notificationId: string) => void
   handleClearAllNotifications: () => void
   link: string
@@ -32,7 +32,7 @@ export default function NotificationModal({
   open,
   setOpen,
   notifications,
-  unauthorized,
+  isUnauthorized,
   handleClearSingleNotification,
   handleClearAllNotifications,
   link
@@ -54,7 +54,7 @@ export default function NotificationModal({
         </AlertDialogHeader>
         <AlertDialogDescription className="sr-only">Your notifications</AlertDialogDescription>
         
-        {unauthorized ? (
+        {isUnauthorized ? (
           <div className="flex flex-col items-center justify-center space-y-2 py-6 my-1">
             <Image
               src="/assets/icons/cancelled.svg"

@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import connectSocketIO from "../socket.io/connectSocketIO";
 import { INotification } from "@/types/entities";
+import refreshToken from "../socket.io/refreshToken";
+import { useAuth } from "./useAuth";
 
 type Props = {
     role: "patient" | "doctor";
@@ -11,6 +13,7 @@ const useNotification = ({ role }: Props) => {
     const socketRef = useRef<Socket | null>(null);
     const [notifications, setNotifications] = useState<INotification[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const { setCredentials } = useAuth();
 
     const connectSocket = useCallback(() => {
         if (socketRef.current) {
@@ -38,8 +41,26 @@ const useNotification = ({ role }: Props) => {
             );
         });
 
-        socket.on("error", (err: string) => {
-            setError(err);
+        socket.on("error", async (err: string) => {
+            if (err === 'Invalid token') {
+                try {
+                    const refreshedToken = await refreshToken(role);
+
+                    if (role === "doctor") {
+                        setCredentials("doctorToken", refreshedToken);
+                    } else {
+                        setCredentials("patientToken", refreshedToken);
+                    }
+
+                    socket.emit('authenticate', { token: refreshedToken });
+                    setError(null); 
+                } catch (refreshError) {
+                    console.error('Token refresh failed, disconnecting socket', refreshError);
+                    socket.disconnect();
+                }
+            } else {
+                setError(err);
+            }
         });
 
         socket.on("connect_error", () => {
@@ -47,10 +68,10 @@ const useNotification = ({ role }: Props) => {
         });
 
         socket.on("reconnect", () => {
-            setError(null); 
+            setError(null);
             socket.emit("getNotifications");
         });
-    }, [role]);
+    }, [role, setCredentials]);
 
     const clearNotification = useCallback((notificationId: string) => {
         if (socketRef.current) {

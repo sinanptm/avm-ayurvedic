@@ -9,7 +9,8 @@ const apiUrls = {
     NOTIFICATION:`${baseUrl}/notifications`,
     CHAT:`${baseUrl}/chats`,
     VIDEO:`${baseUrl}/video`,
-    PRESCRIPTION:`${baseUrl}/prescription`
+    PRESCRIPTION:`${baseUrl}/prescription`,
+    BASE_URL:baseUrl?.split("/api")[0]
 }
 
 export default apiUrls

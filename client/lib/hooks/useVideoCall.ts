@@ -18,9 +18,7 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
     const socket = connectSocketIO({ namespace: 'video', role: role });
     socketRef.current = socket;
 
-    socket.on('signal', (signalData: any) => {
-      console.log('signal ', signalData);
-      
+    socket.on('signal', (signalData: any) => {     
       if (peerRef.current) {
         peerRef.current.signal(signalData);
       }

@@ -39,7 +39,7 @@ export default function RootLayout({
                      <NavBar />
                      <Toaster />
                      {children}
-                     <Analytics />
+                     <Analytics debug={false} />
                      <Footer />
                   </AuthProvider>
                </ThemeProvider>

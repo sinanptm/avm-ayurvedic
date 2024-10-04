@@ -21,8 +21,8 @@ export default class NotificationSocketManager {
     private setupMiddleware() {
         this.io.use((socket, next) => {
             const token = socket.handshake.auth.token;
+
             if (!token) {
-                logger.warn(`Socket ${socket.id} attempted connection without token`);
                 return next(new Error("Authentication error"));
             }
 
@@ -30,7 +30,6 @@ export default class NotificationSocketManager {
                 socket.data.user = this.tokenService.verifyAccessToken(token);
                 next();
             } catch (error: any) {
-                logger.error(`Invalid token for socket ${socket.id}: ${error.message}`);
                 return next(new Error("Invalid token"));
             }
         });
@@ -38,14 +37,21 @@ export default class NotificationSocketManager {
 
     private initializeNotificationNamespace() {
         this.io.on("connection", (socket: Socket) => {
-            const user = socket.data.user as TokenPayload;
-            logger.info(`User ${user.email} connected to /notification`);
-
-            this.initializeEvents(socket);
-
-            socket.on("disconnect", (reason) => {
-                logger.info(`User ${user.email} disconnected: ${reason}`);
+            socket.on('authenticate', ({ token }) => {
+                try {
+                    const user = this.tokenService.verifyAccessToken(token);
+                    socket.data.user = user;
+                } catch (err) {
+                    socket.disconnect();
+                }
             });
+
+            if (socket.data.user) {
+                this.initializeEvents(socket);
+            } else {
+                socket.emit("error", "User is not authenticated");
+                socket.disconnect();
+            }
         });
     }
 

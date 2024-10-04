@@ -2,55 +2,30 @@ import React, { forwardRef, useState } from "react";
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ButtonV2 } from "@/components/button/ButtonV2";
-import NotificationModal from "@/components/models/NotificationModel";
-import {
-  useGetAllDoctorNotifications,
-  useClearDoctorNotification,
-  useClearMultipleDoctorNotifications,
-} from "@/lib/hooks/notification/useNotificationDoctor";
-import { INotification } from "@/types/entities";
+import dynamic from "next/dynamic";
+import useNotification from "@/lib/hooks/useNotification";
+
+const NotificationModal = dynamic(() => import("@/components/models/NotificationModel"), { ssr: false });
 
 const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const { data, refetch, error } = useGetAllDoctorNotifications();
-  const { mutate: clearSingleNotification } = useClearDoctorNotification();
-  const { mutate: clearMultipleNotification } = useClearMultipleDoctorNotifications();
-  let notifications = data;
+  const { notifications, clearAllNotifications, clearNotification } = useNotification({ role: "doctor" });
 
-  const notificationCount = notifications?.length || 0;
-  const unauthorized = error?.status === 401 || error?.status === 403;
+  const notificationCount = notifications.length;
 
   const handleNotificationClick = () => {
     setIsNotificationModalOpen(true);
   };
 
   const handleClearSingleNotification = (notificationId: string) => {
-    notifications = notifications?.filter(el => el._id !== notificationId);
-    clearSingleNotification(
-      { notificationId },
-      {
-        onSuccess: () => refetch(),
-        onError: (error) => {
-          console.error("Failed to clear notification:", error);
-        },
-      }
-    );
+    clearNotification(notificationId);
   };
 
   const handleClearAllNotifications = () => {
     if (!notifications || notifications.length === 0) return;
 
     const notificationIds = notifications.map((notification) => notification._id!);
-    notifications = notifications?.filter(el=>!notificationIds.includes(el._id!));
-    clearMultipleNotification(
-      { notificationIds },
-      {
-        onSuccess: () => refetch(),
-        onError: (error) => {
-          console.error("Failed to clear multiple notifications:", error);
-        },
-      }
-    );
+    clearAllNotifications(notificationIds);
   };
 
   return (
@@ -78,8 +53,8 @@ const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
         <NotificationModal
           open={isNotificationModalOpen}
           setOpen={setIsNotificationModalOpen}
-          notifications={notifications as INotification[]}
-          unauthorized={!!unauthorized}
+          notifications={notifications}
+          isUnauthorized={false}
           handleClearSingleNotification={handleClearSingleNotification}
           handleClearAllNotifications={handleClearAllNotifications}
           link="/doctor/appointments"

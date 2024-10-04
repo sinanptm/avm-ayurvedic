@@ -1,3 +1,4 @@
+import apiUrls from '@/config/apiConfig';
 import { io, Socket } from 'socket.io-client';
 
 type Props = {
@@ -11,18 +12,16 @@ const connectSocketIO = ({ role, namespace }: Props) => {
     if (existingSocket && existingSocket.connected) {
         return existingSocket;
     }
-    let auth = JSON.parse(localStorage.getItem('auth') || '{}');
-    let token;
-    if (role === 'patient') {
-        token = auth.patientToken;
-    } else {
-        token = auth.doctorToken;
-    }
 
-    const socket = io(`${process.env.NEXT_PUBLIC_API_URL?.split('/api')[0]}/${namespace}`, {
+    let auth = JSON.parse(localStorage.getItem('auth') || '{}');
+    
+    const token = role === 'doctor' ? auth.doctorToken : auth.patientToken
+
+    const socket = io(`${apiUrls.BASE_URL}/${namespace}`, {
         auth: {
             token: token,
         },
+        transports: ['websocket'],
     });
 
     existingSocket = socket;
