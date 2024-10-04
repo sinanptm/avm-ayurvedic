@@ -67,7 +67,7 @@ export default class GetAppointmentUseCase {
       limit: number,
       status?: AppointmentStatus
    ): Promise<PaginatedResult<IAppointment> | null> {
-      return await this.appointmentRepository.findMayByPatientId(patientId, offset, limit, status);
+      return await this.appointmentRepository.findManyByPatientId(patientId, offset, limit, status);
    }
 
    async getSuccessPageDetails(paymentId: string): Promise<IAppointment | null> {

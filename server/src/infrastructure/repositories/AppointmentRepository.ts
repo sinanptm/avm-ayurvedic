@@ -25,53 +25,112 @@ export default class AppointmentRepository implements IAppointmentRepository {
       return await this.model.find({ _id: { $in: ids } });
    }
 
-   async findPatientsByDoctorId(doctorId: string, limit:number, offset:number): Promise<PaginatedResult<IPatient>> {
+   async findManyAsExtendedByPatientId(
+      patientId: string,
+      limit: number,
+      offset: number
+   ): Promise<PaginatedResult<IExtendedAppointment>> {
       const result = await this.model.aggregate([
          {
-             $match: { doctorId: new ObjectId(doctorId) }
+            $match: { patientId: new ObjectId(patientId) }
          },
          {
-             $group: { _id: "$patientId" }
+            $lookup: {
+               from: "patients",
+               localField: "patientId",
+               foreignField: "_id",
+               as: "patient"
+            }
          },
          {
-             $lookup: {
-                 from: "patients",
-                 localField: "_id",
-                 foreignField: "_id",
-                 as: "patientInfo"
-             }
+            $lookup: {
+               from: "doctors",
+               localField: "doctorId",
+               foreignField: "_id",
+               as: "doctor"
+            }
          },
          {
-             $unwind: "$patientInfo"
+            $unwind: "$patient"
          },
          {
-             $replaceRoot: { newRoot: "$patientInfo" }
+            $unwind: "$doctor"
          },
          {
-             $facet: {
-                 paginatedResults: [
-                     { $skip: offset },
-                     { $limit: limit },
-                     { 
-                         $project: {
-                             password: 0,
-                             token: 0
-                         }
-                     }
-                 ],
-                 totalCount: [
-                     { $count: "count" }
-                 ]
-             }
+            $project: {
+               "patient.password": 0,
+               "patient.token": 0,
+               "doctor.password": 0,
+               "doctor.token": 0
+            }
+         },
+         {
+            $facet: {
+               paginatedResults: [
+                  { $skip: offset },
+                  { $limit: limit }
+               ],
+               totalCount: [
+                  { $count: "count" }
+               ]
+            }
          }
-     ]).exec();
- 
-     const patients = result[0].paginatedResults;
-     const totalItems = result[0].totalCount.length > 0 ? result[0].totalCount[0].count : 0;
- 
-     return getPaginatedResult(totalItems, offset, limit, patients);
-  }
-  
+      ]).exec();
+
+      const appointments = result[0].paginatedResults;
+      const totalItems = result[0].totalCount.length > 0 ? result[0].totalCount[0].count : 0;
+
+      return getPaginatedResult(totalItems, offset, limit, appointments);
+   }
+
+
+   async findPatientsByDoctorId(doctorId: string, limit: number, offset: number): Promise<PaginatedResult<IPatient>> {
+      const result = await this.model.aggregate([
+         {
+            $match: { doctorId: new ObjectId(doctorId) }
+         },
+         {
+            $group: { _id: "$patientId" }
+         },
+         {
+            $lookup: {
+               from: "patients",
+               localField: "_id",
+               foreignField: "_id",
+               as: "patientInfo"
+            }
+         },
+         {
+            $unwind: "$patientInfo"
+         },
+         {
+            $replaceRoot: { newRoot: "$patientInfo" }
+         },
+         {
+            $facet: {
+               paginatedResults: [
+                  { $skip: offset },
+                  { $limit: limit },
+                  {
+                     $project: {
+                        password: 0,
+                        token: 0
+                     }
+                  }
+               ],
+               totalCount: [
+                  { $count: "count" }
+               ]
+            }
+         }
+      ]).exec();
+
+      const patients = result[0].paginatedResults;
+      const totalItems = result[0].totalCount.length > 0 ? result[0].totalCount[0].count : 0;
+
+      return getPaginatedResult(totalItems, offset, limit, patients);
+   }
+
 
    async findDetailsById(appointmentId: string): Promise<IExtendedAppointment | null> {
       const objectId = new ObjectId(appointmentId);
@@ -133,7 +192,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
       return appointment[0] as IExtendedAppointment;
    }
 
-   async findMayByPatientId(
+   async findManyByPatientId(
       patientId: string,
       offset: number,
       limit: number,
