@@ -32,7 +32,10 @@ export default class AppointmentRepository implements IAppointmentRepository {
    ): Promise<PaginatedResult<IExtendedAppointment>> {
       const result = await this.model.aggregate([
          {
-            $match: { patientId: new ObjectId(patientId) }
+            $match: { 
+               patientId: new ObjectId(patientId) ,
+               status: AppointmentStatus.COMPLETED
+            }
          },
          {
             $lookup: {
@@ -51,10 +54,21 @@ export default class AppointmentRepository implements IAppointmentRepository {
             }
          },
          {
+            $lookup: {
+               from: "prescriptions",
+               localField: "_id",
+               foreignField: "appointmentId",
+               as: "prescription"
+            }
+         },
+         {
             $unwind: "$patient"
          },
          {
             $unwind: "$doctor"
+         },
+         {
+            $unwind:"$prescription"
          },
          {
             $project: {
