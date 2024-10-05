@@ -63,12 +63,12 @@ export default class ChatSocketManager {
             await this.handleError(socket, this.createChat(socket, receiverId));
         });
 
-        socket.on("createMessage", async ({chatId, receiverId, message}) => {
+        socket.on("createMessage", async ({ chatId, receiverId, message }) => {
             await this.handleError(socket, this.createMessage(socket, chatId, receiverId, message));
         });
     }
 
-    private async joinChatRoom(socket: Socket, chatId:string) {
+    private async joinChatRoom(socket: Socket, chatId: string) {
         const user = socket.data.user as TokenPayload;
 
         const isAuthorized = await this.getChatUseCase.isAuthorizedInChat(chatId, user.id);
@@ -82,17 +82,17 @@ export default class ChatSocketManager {
 
     private async createChat(socket: Socket, receiverId: string) {
         const user = socket.data.user as TokenPayload;
-        console.log(user);
-        
-        const chatId = (user.role === UserRole.Doctor)
-            ? await this.createChatUseCase.createChat(user.id, receiverId)
-            : await this.createChatUseCase.createChat(receiverId, user.id);
+
+        const doctorId = user.role === UserRole.Doctor ? user.id : receiverId;
+        const patientId = user.role === UserRole.Patient ? user.id : receiverId
+
+        const chatId = await this.createChatUseCase.createChat(doctorId, patientId);
 
         socket.join(chatId.toString());
-        
+
         socket.emit("joinedRoom", chatId.toString())
         console.log('joined');
-        
+
     }
 
     private async createMessage(socket: Socket, chatId: string, receiverId: string, message: string) {
@@ -103,11 +103,11 @@ export default class ChatSocketManager {
     }
 
     private async getChats(socket: Socket) {
-        const user = socket.data.user as TokenPayload;        
+        const user = socket.data.user as TokenPayload;
         const chats = (user.role === UserRole.Doctor)
             ? await this.getChatUseCase.getAllChatsWithDoctorId(user.id)
             : await this.getChatUseCase.getAllChatsWithPatientId(user.id);
-
+        
         socket.emit("chats", chats);
     }
 
@@ -115,7 +115,8 @@ export default class ChatSocketManager {
         const user = socket.data.user as TokenPayload;
         const response = await this.getChatUseCase.getMessagesOfChat(chatId, user.id);
         socket.emit("messages", response.data.items);
-        socket.emit("chat",response.chat)
+        socket.emit("chat", response.chat);
+        await this.getChats(socket);
     }
 
     private async getPatients(socket: Socket) {

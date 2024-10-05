@@ -37,6 +37,7 @@ const useChats = ({ role, messagePath }: Props) => {
         });
 
         socket.on("joinedRoom", (chatId) => {
+            socket.emit("getChats");
             router.push(`${messagePath}/${chatId}`);
         });
 
@@ -70,10 +71,8 @@ const useChats = ({ role, messagePath }: Props) => {
     }, [role, messagePath, setCredentials, router]);
 
     const joinChatRoom = useCallback((chatId: string) => {
-        
         if (socketRef.current) {
             socketRef.current.emit("joinRoom", chatId.toString());
-            
         }
     }, []);
 

@@ -21,6 +21,7 @@ const Page = () => {
   const handleCloseModal = () => {
     setNewChatModalOpen(false)
   }
+  
 
   const handleJoinChat = (chatId: string) => {
     joinChatRoom(chatId);

@@ -17,7 +17,7 @@ const Page = () => {
   }, [messages, chat])
 
   const handleSendMessage = async (newMessage: string) => {
-    createMessage(chatId, newMessage, chat?.doctorId!)
+    createMessage(chatId, newMessage, chat?.patientId!)
     if (error) {
       toast({
         title: `Message sending failed ${error.statusCode && `with ${error.statusCode}`}`,

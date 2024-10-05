@@ -25,10 +25,10 @@ const useMessages = ({ role, chatId }: Props) => {
         socketRef.current = socket;
 
         socket.emit("joinRoom", chatId);
-
         socket.emit("getMessages", chatId);
 
         socket.on("messages", messages => {
+            socket.emit("getChats");
             setMessages(messages);
         });
 
@@ -39,12 +39,12 @@ const useMessages = ({ role, chatId }: Props) => {
         socket.on("disconnect", () => {
             socket.emit("joinRoom", chatId);
         });
-        
+
 
         socket.on("newMessage", (newMessage) => {
             setMessages((prevMessages) => [...prevMessages, newMessage]);
         });
-    
+
 
         socket.on("connect_error", () => {
             setError({ message: "Connection failed. Reconnecting..." });
@@ -66,7 +66,7 @@ const useMessages = ({ role, chatId }: Props) => {
             } else {
                 setError({ message: error.message, statusCode: error.statusCode });
                 console.log(error);
-                
+
             }
         });
 
