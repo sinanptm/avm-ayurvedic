@@ -70,3 +70,8 @@ export interface VideoChatProps {
    selfAvatar: string;
    remoteAvatar: string;
 }
+
+export interface CustomError {
+   message: string,
+   statusCode?: number
+}

@@ -16,9 +16,7 @@ const useNotification = ({ role }: Props) => {
     const { setCredentials } = useAuth();
 
     const connectSocket = useCallback(() => {
-        if (socketRef.current) {
-            socketRef.current.disconnect();
-        }
+        if (socketRef.current) return;
 
         const socket = connectSocketIO({ role, namespace: "notification" });
         socketRef.current = socket;
@@ -46,11 +44,9 @@ const useNotification = ({ role }: Props) => {
                 try {
                     const refreshedToken = await refreshToken(role);
 
-                    if (role === "doctor") {
-                        setCredentials("doctorToken", refreshedToken);
-                    } else {
-                        setCredentials("patientToken", refreshedToken);
-                    }
+                    role === 'doctor'
+                    ? setCredentials("doctorToken", refreshedToken)
+                    : setCredentials("patientToken", refreshedToken)
 
                     socket.emit('authenticate', { token: refreshedToken });
                     setError(null); 
@@ -95,6 +91,7 @@ const useNotification = ({ role }: Props) => {
                 socketRef.current.off("notificationsCleared");
                 socketRef.current.off("error");
                 socketRef.current.disconnect();
+                socketRef.current = null;
             }
         };
     }, [connectSocket]);

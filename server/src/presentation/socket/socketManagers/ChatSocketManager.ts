@@ -71,9 +71,6 @@ export default class ChatSocketManager {
 
     private async joinChatRoom(socket: Socket, chatId: string) {
         const user = socket.data.user as TokenPayload;
-        if (!chatId) {
-            throw new CustomError("Chat ID is required", StatusCode.BadRequest);
-        }
 
         const isAuthorized = await this.getChatUseCase.isAuthorizedInChat(chatId, user.id);
         if (!isAuthorized) {
@@ -82,7 +79,7 @@ export default class ChatSocketManager {
 
         socket.join(chatId);
         logger.info(`User ${user.id} joined chat room ${chatId}`);
-        socket.emit("joinedRoom", { chatId });
+        socket.emit("joinedRoom", chatId);
     }
 
     private async createChat(socket: Socket, receiverId: string) {
