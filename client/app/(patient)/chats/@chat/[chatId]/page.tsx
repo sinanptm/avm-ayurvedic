@@ -8,13 +8,22 @@ import { toast } from "@/components/ui/use-toast"
 const Page = () => {
   const chatId = useParams().chatId as string;
   const [isLoading, setLoading] = useState(true);
-  const { createMessage, error, messages, chat } = useMessages({ role: "patient", chatId });
+  const { createMessage, error, messages, chat, markReceived } = useMessages({ role: "patient", chatId });
 
   useEffect(() => {
-    if (chat && messages) {
+    if (chat && messages.length > 0) {
       setLoading(false);
+      const filteredMessages = messages.filter(message => {
+        return message.receiverId === chat.patientId && !message.isReceived
+      });
+      
+      if (filteredMessages.length > 0) {
+        console.log(filteredMessages);
+        
+        markReceived(chatId, chat.doctorId!);
+      }
     }
-  }, [messages, chat])
+  }, [messages, chat, markReceived, chatId]);
 
   const handleSendMessage = async (newMessage: string) => {
     createMessage(chatId, newMessage, chat?.doctorId!)
@@ -26,7 +35,7 @@ const Page = () => {
       })
     }
 
-  }  
+  }
 
   return (
     <ChatSection

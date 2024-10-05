@@ -32,6 +32,14 @@ const useMessages = ({ role, chatId }: Props) => {
             setMessages(messages);
         });
 
+        socket.on("received", () => {
+            setMessages(prevMessages => prevMessages.map(message => ({
+                ...message,
+                isReceived: true
+            })));
+        });
+        
+
         socket.on("chat", chat => {
             setChat(chat);
         })
@@ -81,6 +89,12 @@ const useMessages = ({ role, chatId }: Props) => {
         }
     }, []);
 
+    const markReceived = useCallback((chatId: string, receiverId: string) => {
+        if (socketRef.current) {
+            socketRef.current.emit("markReceived", { chatId, receiverId });
+        }
+    }, [])
+
     useEffect(() => {
         connectSocket();
         return () => {
@@ -94,13 +108,14 @@ const useMessages = ({ role, chatId }: Props) => {
                 socketRef.current = null;
             }
         }
-    }, [])
+    }, []);
 
     return {
         messages,
         error,
         chat,
         createMessage,
+        markReceived
     }
 }
 
