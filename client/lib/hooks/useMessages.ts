@@ -42,6 +42,7 @@ const useMessages = ({ role, chatId }: Props) => {
 
 
         socket.on("newMessage", (newMessage) => {
+            socket.emit("getChats")
             setMessages((prevMessages) => [...prevMessages, newMessage]);
         });
 

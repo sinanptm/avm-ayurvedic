@@ -26,7 +26,7 @@ export default class CreateChatUseCase {
         } else if (!doctor) {
             throw new CustomError("Invalid doctor id", StatusCode.NotFound);
         }
-        if(!patient.profile|| !patient.name){
+        if (!patient.profile || !patient.name) {
             throw new CustomError("Patient profile or name is missing", StatusCode.BadRequest);
         }
         try {
@@ -38,13 +38,15 @@ export default class CreateChatUseCase {
             if (error.code === 11000) {
                 const chat = await this.chatRepository.findByDoctorAndPatientId(doctorId, patientId);
                 return chat?._id!
-            }            
+            }
             throw error;
         }
     }
     async createMessage(chatId: string, receiverId: string, message: string, senderId: string): Promise<IMessage> {
         this.validatorService.validateRequiredFields({ chatId, receiverId, message, senderId });
         this.validatorService.validateMultipleIds([chatId, receiverId, senderId]);
-        return  await this.messageRepository.create({ chatId, message, receiverId, senderId, isReceived: false });
+        // updating for sorting based on latest message
+        await this.chatRepository.update(chatId, { updatedAt: new Date() });
+        return await this.messageRepository.create({ chatId, message, receiverId, senderId, isReceived: false });
     }
 }

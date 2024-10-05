@@ -49,7 +49,7 @@ export default class GetChatUseCase {
     }
 
 
-    async getMessagesOfChat(chatId: string, receiverId: string): Promise<{ messages: IMessage[]|[], chat: IChat }> {
+    async getMessagesOfChat(chatId: string, receiverId: string): Promise<{ messages: IMessage[] | [], chat: IChat }> {
         this.validatorService.validateIdFormat(chatId);
         const chat = await this.chatRepository.findById(chatId);
         await this.messageRepository.markAsReadByReceiverAndChatId(receiverId, chatId);

@@ -17,14 +17,14 @@ export default class ChatRepository implements IChatRepository {
         await this.model.updateMany({ doctorId }, chat)
     }
     async findByPatientIdAndUpdate(patientId: string, chat: IChat): Promise<void> {
-        await this.model.updateMany({ patientId }, chat )
+        await this.model.updateMany({ patientId }, chat)
     }
 
     async findAllChatsForPatient(patientId: string): Promise<IChat[]> {
-        return await this.model.find({ patientId }).lean(true);
+        return await this.model.find({ patientId }).sort({ updatedAt: -1 }).lean(true);
     }
     async findAllChatsForDoctor(doctorId: string): Promise<IChat[]> {
-        return await this.model.find({ doctorId }).lean(true);
+        return await this.model.find({ doctorId }).sort({ updatedAt: -1 }).lean(true);
     }
 
     async findByDoctorAndPatientId(doctorId: string, patientId: string): Promise<IChat | null> {

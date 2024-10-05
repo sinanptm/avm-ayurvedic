@@ -91,8 +91,6 @@ export default class ChatSocketManager {
         socket.join(chatId.toString());
 
         socket.emit("joinedRoom", chatId.toString())
-        console.log('joined');
-
     }
 
     private async createMessage(socket: Socket, chatId: string, receiverId: string, message: string) {
@@ -100,6 +98,7 @@ export default class ChatSocketManager {
 
         const createdMessage = await this.createChatUseCase.createMessage(chatId, receiverId, message, user.id);
         this.io.to(chatId).emit("newMessage", createdMessage);
+        await this.getChats(socket);
     }
 
     private async getChats(socket: Socket) {
