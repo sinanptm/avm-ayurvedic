@@ -38,7 +38,7 @@ export default class CreateChatUseCase {
             if (error.code === 11000) {
                 const chat = await this.chatRepository.findByDoctorAndPatientId(doctorId, patientId);
                 return chat?._id!
-            }
+            }            
             throw error;
         }
     }

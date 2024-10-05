@@ -1,46 +1,39 @@
 'use client'
-import NewChatModal, { ChatModelUser } from "@/components/models/chat/AddChatModel";
+import { useEffect, useState } from "react";
+import NewChatModal from "@/components/models/chat/AddChatModel";
 import ChatList from "@/components/page-components/chat/ChatList"
-import { toast } from "@/components/ui/use-toast";
-import { useGetPatientsDoctor, useCreateChatDoctor,  useGetDoctorChats } from "@/lib/hooks/chat/useChatDoctor";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import useChats from "@/lib/hooks/useChats";
 
 const Page = () => {
-  const { data } = useGetPatientsDoctor();
-  const { mutate: createChat } = useCreateChatDoctor();
-  const { data: chats, isLoading, refetch } = useGetDoctorChats()
-  const [isNewChatModalOpen, setNewChatModalOpen] = useState(false)
-  const router = useRouter();
-  const patients: ChatModelUser[] = data?.map(({ _id, profile, name }) => ({ _id, name, profilePicture: profile })) || [];
-
-  const handleSelectChat = (id: string) => {
-    refetch();
-    router.push(`/doctor/chats/${id}`);
-  }
+  const [isNewChatModalOpen, setNewChatModalOpen] = useState(false);
+  const [isLoading, setLoading] = useState(true)
+  const { chats, createChat, error, joinChatRoom, patients, getPatients } = useChats({ role: "doctor", messagePath: "/doctor/chats" })
 
   
+  useEffect(() => {
+    if (chats && patients) {
+      setLoading(false)
+    }
+  }, [chats, patients]);
+  
+  const handleJoinChat = (chatId: string) => {
+    joinChatRoom(chatId);
+  }
 
   const handleCloseModal = () => {
-    setNewChatModalOpen(false)
+    setNewChatModalOpen(false);
   }
 
   const handleAddDoctorChat = (patientId: string) => {
-    createChat({ patientId }, {
-      onSuccess: () => {
-        refetch();
-        setNewChatModalOpen(false)
-      },
-      onError: ({ response }) => {
-        toast({
-          title: "Creating new Chat Failed ❌",
-          description: response?.data.message || "Unknown Error Occurred 🚑",
-          variant: "destructive"
-        })
-      }
-    })
+    setNewChatModalOpen(false);
+    createChat(patientId);
   }
-  
+
+  const handleClickNewChat = ()=>{
+    getPatients();
+    setNewChatModalOpen(true);
+  }
+
 
   return (
     <>
@@ -49,14 +42,14 @@ const Page = () => {
         sender="patient"
         skeltonCount={19}
         isLoading={isLoading}
-        onSelectChat={handleSelectChat}
-        onNewChat={() => setNewChatModalOpen(true)}
+        onSelectChat={handleJoinChat}
+        onNewChat={handleClickNewChat}
       />
       {patients && (
         <NewChatModal
           isOpen={isNewChatModalOpen}
           onClose={handleCloseModal}
-          users={patients}
+          users={patients.map(({ _id, profile, name }) => ({ _id, name, profilePicture: profile }))}
           onSelectUser={handleAddDoctorChat}
         />
       )}

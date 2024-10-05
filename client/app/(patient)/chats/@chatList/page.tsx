@@ -9,24 +9,25 @@ const Page = () => {
   const { data } = useGetDoctorsList();
   const [isNewChatModalOpen, setNewChatModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(true)
-  const {chats, createChat, error, joinChatRoom } = useChats({role:"patient",messagePath:"/chats"})
+  const { chats, createChat, error, joinChatRoom } = useChats({ role: "patient", messagePath: "/chats" })
   const doctors: ChatModelUser[] = data?.items.map(({ _id, image, name }) => ({ _id, name, profilePicture: image })) || [];
 
-  useEffect(()=>{
-    if(chats){
+  useEffect(() => {
+    if (chats) {
       setLoading(false)
     }
-  },[chats]);  
+  }, [chats]);
 
   const handleCloseModal = () => {
     setNewChatModalOpen(false)
   }
 
-  const handleJoinChat = (chatId:string)=>{
+  const handleJoinChat = (chatId: string) => {
     joinChatRoom(chatId);
   }
 
   const handleAddDoctorChat = (doctorId: string) => {
+    setNewChatModalOpen(false);
     createChat(doctorId);
   }
 

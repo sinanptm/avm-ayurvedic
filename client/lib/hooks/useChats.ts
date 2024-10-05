@@ -70,10 +70,10 @@ const useChats = ({ role, messagePath }: Props) => {
     }, [role, messagePath, setCredentials, router]);
 
     const joinChatRoom = useCallback((chatId: string) => {
-
+        
         if (socketRef.current) {
-            socketRef.current.emit("joinRoomTest", "test-room-id");
             socketRef.current.emit("joinRoom", chatId.toString());
+            
         }
     }, []);
 

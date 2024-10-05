@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Socket } from "socket.io-client"
-import { IMessage } from "@/types/entities"
+import { IChat, IMessage } from "@/types/entities"
 import { CustomError } from "@/types"
 import connectSocketIO from "../socket.io/connectSocketIO"
 import { useAuth } from "./useAuth"
@@ -14,7 +14,8 @@ type Props = {
 const useMessages = ({ role, chatId }: Props) => {
     const socketRef = useRef<Socket | null>(null);
     const [messages, setMessages] = useState<IMessage[] | []>([]);
-    const [error, setError] = useState<CustomError|null>();
+    const [chat, setChat] = useState<IChat>()
+    const [error, setError] = useState<CustomError | null>();
     const { setCredentials } = useAuth();
 
     const connectSocket = useCallback(() => {
@@ -23,11 +24,27 @@ const useMessages = ({ role, chatId }: Props) => {
         const socket = connectSocketIO({ role, namespace: 'chat' });
         socketRef.current = socket;
 
+        socket.emit("joinRoom", chatId);
+
         socket.emit("getMessages", chatId);
 
         socket.on("messages", messages => {
             setMessages(messages);
         });
+
+        socket.on("chat", chat => {
+            setChat(chat);
+        })
+
+        socket.on("disconnect", () => {
+            socket.emit("joinRoom", chatId);
+        });
+        
+
+        socket.on("newMessage", (newMessage) => {
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+        });
+    
 
         socket.on("connect_error", () => {
             setError({ message: "Connection failed. Reconnecting..." });
@@ -48,13 +65,12 @@ const useMessages = ({ role, chatId }: Props) => {
                 }
             } else {
                 setError({ message: error.message, statusCode: error.statusCode });
+                console.log(error);
+                
             }
         });
 
 
-        socket.on("newMessage", (newMessage: IMessage) => {
-            setMessages(prev => [...prev, newMessage]);
-        });
 
     }, [role, chatId, setCredentials]);
 
@@ -64,10 +80,10 @@ const useMessages = ({ role, chatId }: Props) => {
         }
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         connectSocket();
-        return ()=>{
-            if(socketRef.current){
+        return () => {
+            if (socketRef.current) {
                 socketRef.current.off("newMessage");
                 socketRef.current.off("error");
                 socketRef.current.off("getMessages");
@@ -77,11 +93,12 @@ const useMessages = ({ role, chatId }: Props) => {
                 socketRef.current = null;
             }
         }
-    },[])
+    }, [])
 
     return {
         messages,
         error,
+        chat,
         createMessage,
     }
 }
