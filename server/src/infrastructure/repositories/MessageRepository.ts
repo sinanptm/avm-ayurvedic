@@ -16,13 +16,8 @@ export default class MessageRepository implements IMessageRepository {
     async update(id: string, message: IMessage): Promise<IMessage | null> {
         return await this.model.findByIdAndUpdate(id, message)
     }
-    async findByChatId(chatId: string, limit: number, offset: number): Promise<PaginatedResult<IMessage>> {
-        const totalItems = await this.model.countDocuments({ chatId });
-        const items = await this.model.find({ chatId })
-            .sort({ createdAt: 1 })
-            .skip(limit * offset)
-            .limit(limit);
-        return getPaginatedResult(totalItems, offset, limit, items);
+    async findByChatId(chatId: string): Promise<IMessage[]|[]> {
+        return await this.model.find({ chatId }).sort({ createdAt: 1 })     
     }
     async markAsReadByReceiverAndChatId(receiverId: string, chatId: string): Promise<void> {
         await this.model.updateMany(

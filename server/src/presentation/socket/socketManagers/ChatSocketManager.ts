@@ -113,9 +113,9 @@ export default class ChatSocketManager {
 
     private async getMessages(socket: Socket, chatId: string) {
         const user = socket.data.user as TokenPayload;
-        const response = await this.getChatUseCase.getMessagesOfChat(chatId, user.id);
-        socket.emit("messages", response.data.items);
-        socket.emit("chat", response.chat);
+        const {chat,messages} = await this.getChatUseCase.getMessagesOfChat(chatId, user.id);
+        socket.emit("messages", messages);
+        socket.emit("chat", chat);
         await this.getChats(socket);
     }
 

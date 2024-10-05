@@ -17,7 +17,6 @@ import protectedAdminRoutes from "./admin/AdminRoutes";
 import ErrorHandler from "../middlewares/ErrorHandler";
 import protectedRoutes from "./patient/PatientRoutes";
 import slotRoutes from "./slots/SlotsRoutes";
-import chatRoutes from "./chat/ChatRoutes";
 
 const app = Router();
 const tokenService = new TokenService();
@@ -41,7 +40,6 @@ app.use("/admin/auth", adminAuthentication);
 app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/slots", slotRoutes);
 app.use("/appointments", appointmentRoutes);
-app.use("/chats", chatRoutes);
 app.use("/video", videoSectionRoutes);
 app.use("/prescription", prescriptionRoutes)
 

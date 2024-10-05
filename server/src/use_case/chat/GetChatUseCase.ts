@@ -49,14 +49,13 @@ export default class GetChatUseCase {
     }
 
 
-    async getMessagesOfChat(chatId: string, receiverId: string): Promise<{ data: PaginatedResult<IMessage>, chat: IChat }> {
+    async getMessagesOfChat(chatId: string, receiverId: string): Promise<{ messages: IMessage[]|[], chat: IChat }> {
         this.validatorService.validateIdFormat(chatId);
-        const offset = 0;
         const chat = await this.chatRepository.findById(chatId);
         await this.messageRepository.markAsReadByReceiverAndChatId(receiverId, chatId);
         if (!chat) throw new CustomError("Not found", StatusCode.NotFound);
-        const data = await this.messageRepository.findByChatId(chatId, 1000, offset);
-        return { data, chat }
+        const messages = await this.messageRepository.findByChatId(chatId);
+        return { messages, chat }
     }
 
     private async getChatsWithNotSeenMessages(
