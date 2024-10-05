@@ -4,6 +4,7 @@ import IDoctorRepository from "../../domain/interface/repositories/IDoctorReposi
 import IChatRepository from "../../domain/interface/repositories/IChatRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
+import IMessage from "../../domain/entities/IMessage";
 import { StatusCode } from "../../types";
 
 export default class CreateChatUseCase {
@@ -41,9 +42,9 @@ export default class CreateChatUseCase {
             throw error;
         }
     }
-    async createMessage(chatId: string, receiverId: string, message: string, senderId: string): Promise<void> {
+    async createMessage(chatId: string, receiverId: string, message: string, senderId: string): Promise<IMessage> {
         this.validatorService.validateRequiredFields({ chatId, receiverId, message, senderId });
         this.validatorService.validateMultipleIds([chatId, receiverId, senderId]);
-        await this.messageRepository.create({ chatId, message, receiverId, senderId, isReceived: false });
+        return  await this.messageRepository.create({ chatId, message, receiverId, senderId, isReceived: false });
     }
 }

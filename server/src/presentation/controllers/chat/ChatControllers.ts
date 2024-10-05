@@ -40,7 +40,7 @@ export default class ChatController {
             const chatId = req.params.chatId;
             let limit = +(req.query.limit as string);
             limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
-            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, limit, patientId!);
+            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, patientId!);
             res.status(StatusCode.Success).json({ chat, data });
         } catch (error) {
             next(error)
@@ -53,7 +53,7 @@ export default class ChatController {
             const chatId = req.params.chatId;
             let limit = +(req.query.limit as string);
             limit = isNaN(limit) || limit < 0 ? 10 : Math.min(limit, 100);
-            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, limit, doctor!);
+            const { chat, data } = await this.getChatUseCase.getMessagesOfChat(chatId, doctor!);
             res.status(StatusCode.Success).json({ chat, data });
         } catch (error) {
             next(error)

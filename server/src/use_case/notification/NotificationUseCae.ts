@@ -12,7 +12,7 @@ export default class NotificationUseCase {
         this.validatorService.validateMultipleIds(notificationIds)
         await this.notificationRepository.clearAll(notificationIds)
     }
-    async clearOn(notificationId:string):Promise<void>{
+    async clearOne(notificationId:string):Promise<void>{
         this.validatorService.validateIdFormat(notificationId);
         await this.notificationRepository.clear(notificationId)
     }

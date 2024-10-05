@@ -57,13 +57,13 @@ export default class NotificationSocketManager {
 
     private initializeEvents(socket: Socket) {
         socket.on("getNotifications",
-            async () => this.handleErrors(socket, this.getNotifications(socket))
+            () => this.handleErrors(socket, this.getNotifications(socket))
         );
         socket.on("clearNotification",
-            async (notificationId: string) => this.handleErrors(socket, this.clearOne(socket, notificationId))
+            (notificationId: string) => this.handleErrors(socket, this.clearOne(socket, notificationId))
         );
         socket.on("clearAllNotifications",
-            async (notificationIds: string[]) => this.handleErrors(socket, this.clearAll(socket, notificationIds))
+            (notificationIds: string[]) => this.handleErrors(socket, this.clearAll(socket, notificationIds))
         );
     }
 
@@ -79,7 +79,7 @@ export default class NotificationSocketManager {
     }
 
     private async clearOne(socket: Socket, notificationId: string) {
-        await this.notificationUseCase.clearOn(notificationId);
+        await this.notificationUseCase.clearOne(notificationId);
         socket.emit("notificationCleared", notificationId);
     }
 
