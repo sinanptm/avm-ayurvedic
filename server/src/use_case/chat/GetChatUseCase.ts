@@ -22,9 +22,9 @@ export default class GetChatUseCase {
         const chat = await this.chatRepository.findById(chatId);
         if (!chat) {
             return false;
-        } else if (chat.doctorId === userId) {
+        } else if (chat.doctorId?.toString() === userId) {
             return true;
-        } else if (chat.patientId === userId) {
+        } else if (chat.patientId?.toString() === userId) {
             return true;
         } else {
             return false;

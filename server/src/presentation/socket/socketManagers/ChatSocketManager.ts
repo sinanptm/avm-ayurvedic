@@ -38,7 +38,6 @@ export default class ChatSocketManager {
 
     private initializeChatNamespace() {
         this.io.on("connection", (socket: Socket) => {
-            logger.info(`User connected: ${socket.id}`);
             this.initializeEvents(socket);
         });
     }
@@ -78,7 +77,6 @@ export default class ChatSocketManager {
         }
 
         socket.join(chatId);
-        logger.info(`User ${user.id} joined chat room ${chatId}`);
         socket.emit("joinedRoom", chatId);
     }
 
@@ -88,7 +86,6 @@ export default class ChatSocketManager {
             ? await this.createChatUseCase.createChat(user.id, receiverId)
             : await this.createChatUseCase.createChat(receiverId, user.id);
 
-        logger.info(`Chat created between ${user.id} and ${receiverId}`);
         socket.join(chatId);
         await this.getChats(socket);
     }
@@ -103,11 +100,10 @@ export default class ChatSocketManager {
     }
 
     private async getChats(socket: Socket) {
-        const user = socket.data.user as TokenPayload;
-
+        const user = socket.data.user as TokenPayload;        
         const chats = (user.role === UserRole.Doctor)
-            ? await this.getChatUseCase.getAllChatsWithPatientId(user.id)
-            : await this.getChatUseCase.getAllChatsWithDoctorId(user.id);
+            ? await this.getChatUseCase.getAllChatsWithDoctorId(user.id)
+            : await this.getChatUseCase.getAllChatsWithPatientId(user.id);
 
         socket.emit("chats", chats);
     }

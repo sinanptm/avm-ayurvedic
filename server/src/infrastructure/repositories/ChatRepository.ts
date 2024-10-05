@@ -8,7 +8,7 @@ export default class ChatRepository implements IChatRepository {
         return (await this.model.create(chat))
     }
     async findById(id: string): Promise<IChat | null> {
-        return await this.model.findById(id)
+        return await this.model.findById(id).lean(true);
     }
     async update(id: string, chat: IChat): Promise<IChat | null> {
         return await this.model.findByIdAndUpdate({ _id: id }, chat)

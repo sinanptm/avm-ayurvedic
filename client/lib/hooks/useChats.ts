@@ -21,7 +21,7 @@ const useChats = ({ role, messagePath }: Props) => {
     const router = useRouter();
 
     const connectSocket = useCallback(() => {
-        if (socketRef.current) return;  
+        if (socketRef.current) return;
 
         const socket = connectSocketIO({ role, namespace: "chat" });
         socketRef.current = socket;
@@ -34,6 +34,10 @@ const useChats = ({ role, messagePath }: Props) => {
 
         socket.on("connect_error", () => {
             setError({ message: "Connection failed. Reconnecting..." });
+        });
+
+        socket.on("joinedRoom", (chatId) => {
+            router.push(`${messagePath}/${chatId}`);
         });
 
         socket.on("patients", (patients) => {
@@ -63,14 +67,13 @@ const useChats = ({ role, messagePath }: Props) => {
             socket.emit("getChats");
         });
 
-        socket.on("joinedRoom", (chatId) => {
-            router.push(`${messagePath}/${chatId}`);
-        });
     }, [role, messagePath, setCredentials, router]);
 
     const joinChatRoom = useCallback((chatId: string) => {
+
         if (socketRef.current) {
-            socketRef.current.emit("joinRoom", chatId);
+            socketRef.current.emit("joinRoomTest", "test-room-id");
+            socketRef.current.emit("joinRoom", chatId.toString());
         }
     }, []);
 
