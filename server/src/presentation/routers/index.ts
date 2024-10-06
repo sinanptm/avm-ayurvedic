@@ -16,6 +16,7 @@ import videoSectionRoutes from "./video/VideoSectionRoute";
 import protectedAdminRoutes from "./admin/AdminRoutes";
 import ErrorHandler from "../middlewares/ErrorHandler";
 import protectedRoutes from "./patient/PatientRoutes";
+import chatBotRoutes from "./chatbot/chatBotRoutes";
 import slotRoutes from "./slots/SlotsRoutes";
 
 const app = Router();
@@ -41,7 +42,8 @@ app.use("/admin", authorizeAdmin.exec, protectedAdminRoutes);
 app.use("/slots", slotRoutes);
 app.use("/appointments", appointmentRoutes);
 app.use("/video", videoSectionRoutes);
-app.use("/prescription", prescriptionRoutes)
+app.use("/prescription", prescriptionRoutes);
+app.use("/chatbot",authorizePatient.exec,chatBotRoutes)
 
 app.use(errorHandler.exec.bind(errorHandler));
 
