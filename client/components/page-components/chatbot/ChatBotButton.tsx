@@ -11,10 +11,9 @@ import { useAuth } from '@/lib/hooks/useAuth';
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const path = usePathname();
-    const { patientToken } = useAuth()
+    const { patientToken } = useAuth();
 
     if (
-        !!!patientToken ||
         path.includes("/chats") ||
         path.includes("/register") ||
         path.includes("/signup") ||
@@ -52,7 +51,7 @@ const Chatbot = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <ChatSection isVisible={isOpen} setIsOpen={setIsOpen} />
+            <ChatSection isVisible={isOpen} setIsOpen={setIsOpen} isAuthenticated={!!patientToken} />
         </div>
     )
 }

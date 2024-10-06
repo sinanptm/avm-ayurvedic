@@ -118,7 +118,7 @@ export default function ChatSection({
             <AvatarFallback>{sender.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="text-lg font-semibold text-white">{getSenderData(sender, chat.doctorName!, chat.patientName!)||"Unknown"}</h2>
+            <h2 className="text-lg font-semibold text-white">{getSenderData(sender, chat.doctorName!, chat.patientName!) || "Unknown"}</h2>
             <p className="text-sm text-gray-400">{sender.charAt(0).toUpperCase() + sender.slice(1)}</p>
           </div>
         </div>
