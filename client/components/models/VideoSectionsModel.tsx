@@ -45,11 +45,18 @@ export default function VideoCallModal({
             Upcoming Online Appointments
             <ButtonV2 variant="ghost" size="icon" onClick={closeModal} aria-label="Close">
               <XIcon className="h-6 w-6" />
+              <Image
+                src={'/assets/icons/x.svg'}
+                className="h-6 w-6"
+                width={23}
+                height={23}
+                alt="Close"
+              />
             </ButtonV2>
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription className="sr-only">List of upcoming online appointments</AlertDialogDescription>
-        
+
         {sections.length > 0 ? (
           <ScrollArea className="h-[50vh] pr-4">
             <div className="space-y-4">
@@ -94,7 +101,7 @@ export default function VideoCallModal({
             </p>
           </div>
         )}
-        
+
         <AlertDialogFooter>
           <div className="flex justify-end space-x-2">
             <ButtonV2 variant="gooeyRight" onClick={closeModal}>Close</ButtonV2>

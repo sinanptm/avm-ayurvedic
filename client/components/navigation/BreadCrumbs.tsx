@@ -2,11 +2,9 @@ import Link from "next/link"
 
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Fragment } from "react"
@@ -24,7 +22,7 @@ export function BreadcrumbCollapsed({ items }: BreadcrumbCollapsedProps) {
       <BreadcrumbList>
         {items.map((item, index) => (
           <Fragment key={index}>
-            <BreadcrumbItem>
+             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link href={item.href}>{item.label}</Link>
               </BreadcrumbLink>
