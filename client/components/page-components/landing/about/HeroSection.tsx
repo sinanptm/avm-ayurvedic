@@ -24,7 +24,7 @@ const HeroSection = () => {
         <div className="md:w-1/2 md:pl-6">
           <h2 className="text-2xl font-semibold mb-4">Embracing Holistic Wellness</h2>
           <p className="text-lg">
-            At AVM Ayurveda, we're dedicated to reviving the ancient wisdom of Ayurveda
+            At AVM Ayurveda, we&apos;re dedicated to reviving the ancient wisdom of Ayurveda
             and integrating it with modern healthcare practices. Our goal is to guide you on a
             journey of holistic healing and self-discovery.
           </p>

@@ -3,7 +3,7 @@ import ChatSection from "@/components/page-components/chat/ChatSection"
 import { toast } from "@/components/ui/use-toast"
 import useMessages from "@/lib/hooks/useMessages"
 import { useParams } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 const Page = () => {
   const chatId = useParams().chatId as string;
@@ -21,7 +21,7 @@ const Page = () => {
         markReceived(chatId, chat.doctorId!);
       }
     }
-  }, [messages, chat, chatId])
+  }, [messages, chat, chatId, markReceived])
 
   const handleSendMessage = async (newMessage: string) => {
     createMessage(chatId, newMessage, chat?.patientId!)
