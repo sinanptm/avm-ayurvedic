@@ -1,42 +1,42 @@
 import { AppointmentStatus, AppointmentType, Days, NotificationTypes, PrescriptionStatus, VideoSectionStatus } from "./enum";
 
 export interface IPatient {
-   _id?: string;
-   name?: string;
-   email?: string;
-   password?: string;
-   phone?: string;
-   bloodGroup?: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
-   dob?: Date;
-   isSubscribed?: boolean;
-   isBlocked?: boolean;
-   address?: string;
-   profile?: string;
-   occupation?: string;
-   gender?: "Male" | "Female" | "Other";
+   readonly _id?: string;
+   readonly name?: string;
+   readonly email?: string;
+   readonly password?: string;
+   readonly phone?: string;
+   readonly bloodGroup?: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
+   readonly dob?: Date;
+   readonly isSubscribed?: boolean;
+   readonly isBlocked?: boolean;
+   readonly address?: string;
+   readonly profile?: string;
+   readonly occupation?: string;
+   readonly gender?: "Male" | "Female" | "Other";
 }
 
 export interface IDoctor {
-   _id?: string;
-   name?: string;
-   phone?: string;
-   password?: string;
-   qualifications?: string[];
-   isBlocked?: boolean;
-   image?: string;
-   email?: string;
-   updatedAt?: string;
-   createdAt?: string;
-   isVerified?: boolean;
+   readonly _id?: string;
+   readonly name?: string;
+   readonly phone?: string;
+   readonly password?: string;
+   readonly qualifications?: string[];
+   readonly isBlocked?: boolean;
+   readonly image?: string;
+   readonly email?: string;
+   readonly updatedAt?: string;
+   readonly createdAt?: string;
+   readonly isVerified?: boolean;
 }
 
 export interface ISlot {
-   _id?: string;
-   doctorId?: string;
-   day?: Days;
-   startTime?: string;
-   endTime?: string;
-   status?: "available" | "booked";
+   readonly _id?: string;
+   readonly doctorId?: string;
+   readonly day?: Days;
+   readonly startTime?: string;
+   readonly endTime?: string;
+   readonly status?: "available" | "booked";
 }
 
 export interface IAppointment {
@@ -50,15 +50,15 @@ export interface IAppointment {
    readonly appointmentDate?: string;
    readonly reason?: string;
    readonly notes?: string;
-   status?: AppointmentStatus;
+   readonly status?: AppointmentStatus;
 }
 
 export interface IExtendedAppointment extends IAppointment {
-   patient?: IPatient;
-   slot?: ISlot;
-   doctor?: IDoctor;
-   prescription?: IPrescription;
-   isPrescriptionAdded?: boolean;
+   readonly patient?: IPatient;
+   readonly slot?: ISlot;
+   readonly doctor?: IDoctor;
+   readonly prescription?: IPrescription;
+   readonly isPrescriptionAdded?: boolean;
 }
 
 export interface INotification {
@@ -98,20 +98,20 @@ export interface IMessage {
 }
 
 export interface IVideoSection {
-   _id?: string;
-   appointmentId?: string;
-   doctorName?: string;
-   patientName?: string;
-   doctorProfile?: string;
-   doctorId?: string;
-   patientProfile?: string;
-   patientId?: string;
-   createdAt?: Date;
-   updatedAt?: Date;
-   startTime?: Date | string;
-   endTime?: Date | string;
-   roomId?: string;
-   status?: VideoSectionStatus;
+   readonly _id?: string;
+   readonly appointmentId?: string;
+   readonly doctorName?: string;
+   readonly patientName?: string;
+   readonly doctorProfile?: string;
+   readonly doctorId?: string;
+   readonly patientProfile?: string;
+   readonly patientId?: string;
+   readonly createdAt?: Date;
+   readonly updatedAt?: Date;
+   readonly startTime?: Date | string;
+   readonly endTime?: Date | string;
+   readonly roomId?: string;
+   readonly status?: VideoSectionStatus;
 }
 
 export interface IPrescription {
@@ -132,4 +132,13 @@ export interface IMedication {
    readonly frequency: string;
    readonly duration: string;
    readonly additionalInstructions?: string;
+}
+
+export interface IChatBotMessage {
+   readonly _id?: string;
+   readonly patientId?: string;
+   readonly message?: string;
+   readonly isBotMessage?: boolean;
+   readonly createdAt?: Date;
+   readonly updatedAt?: Date;
 }

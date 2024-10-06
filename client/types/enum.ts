@@ -1,4 +1,3 @@
-
 export enum DoctorsFilter {
     BLOCKED = "blocked",
     NOT_VERIFIED = "not-verified",
@@ -12,7 +11,8 @@ export enum Days {
     Friday = "friday",
     Saturday = "saturday",
     Sunday = "sunday"
-} export enum AppointmentStatus {
+}
+export enum AppointmentStatus {
     PAYMENT_PENDING = "payment-pending",
     PENDING = "pending",
     CONFIRMED = "confirmed",
@@ -43,7 +43,6 @@ export enum VideoSectionStatus {
     IN_PROGRESS = 'in_progress',
     COMPLETED = 'completed',
 }
-
 export enum PrescriptionStatus {
     PENDING = 'pending',
     ISSUED = 'issued',
