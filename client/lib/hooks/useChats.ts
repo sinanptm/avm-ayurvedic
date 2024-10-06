@@ -32,6 +32,10 @@ const useChats = ({ role, messagePath }: Props) => {
             setChats(chats);
         });
 
+        socket.on("connect", () => {
+            socket.emit("getChats");
+        });
+
         socket.on("connect_error", () => {
             setError({ message: "Connection failed. Reconnecting..." });
         });
@@ -70,23 +74,28 @@ const useChats = ({ role, messagePath }: Props) => {
 
     }, [role, messagePath, setCredentials, router]);
 
-    const joinChatRoom = useCallback((chatId: string) => {
-        if (socketRef.current) {
+    const joinChatRoom = (chatId: string) => {
+        if (socketRef.current && socketRef.current.connected) {
             socketRef.current.emit("joinRoom", chatId.toString());
+        } else {
+            connectSocket();  
+            socketRef.current?.once("connect", () => {
+                socketRef.current?.emit("joinRoom", chatId.toString());
+            });
         }
-    }, []);
+    }
 
-    const createChat = useCallback((receiverId: string) => {
+    const createChat = (receiverId: string) => {
         if (socketRef.current) {
             socketRef.current.emit("createChat", receiverId);
         }
-    }, []);
+    }
 
-    const getPatients = useCallback(() => {
+    const getPatients = () => {
         if (socketRef.current) {
             socketRef.current.emit("getPatients");
         }
-    }, []);
+    }
 
     useEffect(() => {
         connectSocket();

@@ -27,6 +27,7 @@ const Page = () => {
     joinChatRoom(chatId);
   }
 
+  
   const handleAddDoctorChat = (doctorId: string) => {
     setNewChatModalOpen(false);
     createChat(doctorId);
