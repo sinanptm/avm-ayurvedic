@@ -2,12 +2,12 @@ import { Router } from 'express';
 import ChaBotMessageRepository from '../../../infrastructure/repositories/ChatBotMessageRepository';
 import ChatBotController from '../../controllers/chatbot/ChatBotController';
 import ChatBotUseCase from '../../../use_case/chatbot/ChatBotUseCase';
-import GptService from '../../../infrastructure/services/GptService';
+import GeminiBotService from '../../../infrastructure/services/GeminiBotService';
 import JoiService from '../../../infrastructure/services/JoiService';
 
 const router = Router();
 
-const chatBotService = new GptService();
+const chatBotService = new GeminiBotService();
 const validatorService = new JoiService();
 
 const chatBotMessageRepository = new ChaBotMessageRepository();

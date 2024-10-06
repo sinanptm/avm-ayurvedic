@@ -14,9 +14,9 @@ export default class ChatBotUseCase {
         this.validatorService.validateRequiredFields({ patientMessage, patientId });
         this.validatorService.validateIdFormat(patientId);
         const botResponse = await this.chatBotService.generateResponse(patientMessage);
-        const message = await this.chatBotMessageRepository.create({ patientId, message: patientMessage, isBotMessage: false });
+        await this.chatBotMessageRepository.create({ patientId, message: patientMessage, isBotMessage: false });
         const botMessage = await this.chatBotMessageRepository.create({ patientId, message: botResponse, isBotMessage: true });
-        return [message, botMessage];
+        return [botMessage];
     }
 
     async getMessages(patientId:string):Promise<IChatBotMessage[]>{
