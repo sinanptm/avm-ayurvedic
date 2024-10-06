@@ -27,8 +27,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
    children,
+   chatbot
 }: Readonly<{
    children: React.ReactNode;
+   chatbot: React.ReactNode;
 }>) {
    return (
       <html lang="en" suppressHydrationWarning>
@@ -39,6 +41,7 @@ export default function RootLayout({
                      <NavBar />
                      <Toaster />
                      {children}
+                     {chatbot}
                      <Analytics debug={false} />
                      <Footer />
                   </AuthProvider>
