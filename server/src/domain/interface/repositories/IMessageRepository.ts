@@ -1,5 +1,4 @@
 import IMessage from "../../entities/IMessage";
-import { PaginatedResult } from "../../../types";
 import IRepository from "./IRepository";
 
 export default interface IMessageRepository extends IRepository<IMessage> {
