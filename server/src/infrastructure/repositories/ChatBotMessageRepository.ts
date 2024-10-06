@@ -13,4 +13,10 @@ export default class ChaBotMessageRepository implements IChatBotMessageRepositor
     async delete(id: string): Promise<void> {
         await this.model.deleteOne({id})
     }
+    findById(id: string): Promise<IChatBotMessage | null> {
+        throw new Error("Method not implemented.");
+    }
+    update(id: string, entity: IChatBotMessage): Promise<IChatBotMessage | null> {
+        throw new Error("Method not implemented.");
+    }
 }
