@@ -83,7 +83,7 @@ const useMessages = ({ role, chatId }: Props) => {
 
 
 
-    }, [role, chatId, setCredentials]);
+    }, [role, chatId, setCredentials, router]);
 
 
     const createMessage = useCallback((chatId: string, message: string, receiverId: string) => {
@@ -115,7 +115,7 @@ const useMessages = ({ role, chatId }: Props) => {
                 socketRef.current = null;
             }
         }
-    }, []);
+    }, [connectSocket]);
 
     return {
         messages,
