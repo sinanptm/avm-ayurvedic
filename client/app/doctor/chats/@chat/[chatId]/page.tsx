@@ -11,12 +11,12 @@ const Page = () => {
   const { createMessage, error, messages, chat, markReceived } = useMessages({ role: "doctor", chatId });
 
   useEffect(() => {
-    if (chat && messages.length > 0) {
+    if (chat && messages) {
       setLoading(false);
       const filteredMessages = messages.filter(message => {
         return message.receiverId === chat.doctorId && !message.isReceived
       });
-      
+
       if (filteredMessages.length > 0) {
         markReceived(chatId, chat.doctorId!);
       }

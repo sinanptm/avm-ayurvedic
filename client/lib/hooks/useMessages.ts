@@ -28,18 +28,17 @@ const useMessages = ({ role, chatId }: Props) => {
         socket.emit("getMessages", chatId);
 
         socket.on("messages", messages => {
-            socket.emit("getChats");
             setMessages(messages);
         });
 
-        socket.on("received", () => {
-            setMessages(prevMessages => prevMessages.map(message => ({
-                ...message,
-                isReceived: true
-            })));
+        socket.on("received", ({ chatId: updatedChat }) => {
+            if (chatId === updatedChat) {
+                setMessages(prevMessages => prevMessages.map(message => ({
+                    ...message,
+                    isReceived: true
+                })));
+            }
         });
-        
-
         socket.on("chat", chat => {
             setChat(chat);
         })
@@ -83,17 +82,19 @@ const useMessages = ({ role, chatId }: Props) => {
 
     }, [role, chatId, setCredentials]);
 
+
     const createMessage = useCallback((chatId: string, message: string, receiverId: string) => {
         if (socketRef.current) {
             socketRef.current.emit("createMessage", { message, chatId, receiverId });
         }
     }, []);
 
-    const markReceived = useCallback((chatId: string, receiverId: string) => {
+    const markReceived = (chatId: string, receiverId: string) => {
         if (socketRef.current) {
             socketRef.current.emit("markReceived", { chatId, receiverId });
         }
-    }, [])
+    };
+
 
     useEffect(() => {
         connectSocket();
@@ -103,7 +104,10 @@ const useMessages = ({ role, chatId }: Props) => {
                 socketRef.current.off("error");
                 socketRef.current.off("getMessages");
                 socketRef.current.off("messages");
-                socketRef.current.off("createMessage")
+                socketRef.current.off("createMessage");
+                socketRef.current.off("markReceived");
+                socketRef.current.off("received");
+                socketRef.current.off("getChats")
                 socketRef.current.disconnect();
                 socketRef.current = null;
             }

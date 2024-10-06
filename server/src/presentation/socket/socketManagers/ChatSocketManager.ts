@@ -56,8 +56,8 @@ export default class ChatSocketManager {
 
         socket.on("markReceived", async ({ chatId, receiverId }) => {
             await this.handleError(socket, async () => {
-                await this.updateReceived(socket, chatId, receiverId)
-            })
+                await this.updateReceived(chatId, receiverId);
+            });
         })
 
         socket.on("getMessages", async (chatId: string) => {
@@ -108,11 +108,9 @@ export default class ChatSocketManager {
         socket.emit("joinedRoom", chatId.toString());
     }
 
-    async updateReceived(socket: Socket, chatId: string, receiverId: string) {
+    async updateReceived(chatId: string, receiverId: string) {
         await this.getChatUseCase.markAsReceived(chatId, receiverId);
-        this.io.to(chatId).emit("received");
-        // await this.getChats(socket);
-        // await this.getMessages(socket,chatId);
+        this.io.to(chatId).emit("received", { chatId })
     }
 
     private async createMessage(socket: Socket, chatId: string, receiverId: string, message: string) {

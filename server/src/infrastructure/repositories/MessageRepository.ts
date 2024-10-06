@@ -1,8 +1,6 @@
 import IMessage from "../../domain/entities/IMessage";
 import IMessageRepository from "../../domain/interface/repositories/IMessageRepository";
-import { PaginatedResult } from "../../types";
 import MessageModel from "../model/Message";
-import { getPaginatedResult } from "./getPaginatedResult";
 import { ObjectId } from 'mongodb'
 
 export default class MessageRepository implements IMessageRepository {
