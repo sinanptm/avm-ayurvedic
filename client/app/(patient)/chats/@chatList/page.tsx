@@ -16,7 +16,7 @@ const Page = () => {
     if (chats) {
       setLoading(false)
     }
-    setDoctors(prev => data?.items.map(({ _id, image, name }) => ({ _id, name, profilePicture: image })) || [])
+    setDoctors(data?.items.map(({ _id, image, name }) => ({ _id, name, profilePicture: image })) || [])
   }, [chats, data]);
 
   const handleCloseModal = () => {

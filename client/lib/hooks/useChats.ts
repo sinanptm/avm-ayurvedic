@@ -58,6 +58,7 @@ const useChats = ({ role, messagePath }: Props) => {
                         : setCredentials("patientToken", refreshedToken);
                     socket.emit("authenticate", { token: refreshedToken });
                     setError(null);
+                    router.refresh();
                 } catch (err) {
                     console.error("Failed to refresh token", err);
                     setError({ message: "Failed to refresh token" });

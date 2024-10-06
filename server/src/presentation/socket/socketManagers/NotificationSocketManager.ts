@@ -1,12 +1,11 @@
 import { Namespace, Server, Socket } from "socket.io";
 import NotificationUseCase from "../../../use_case/notification/NotificationUseCae";
 import ITokenService from "../../../domain/interface/services/ITokenService";
-import CustomError from "../../../domain/entities/CustomError";
-import { TokenPayload, UserRole } from "../../../types";
-import logger from "../../../utils/logger";
+import NotificationSocketEvents from "../../events/NotificationSocketEvents";
 
 export default class NotificationSocketManager {
     private io: Namespace;
+    private notificationSocketEvents: NotificationSocketEvents;
 
     constructor(
         io: Server,
@@ -14,6 +13,7 @@ export default class NotificationSocketManager {
         private tokenService: ITokenService
     ) {
         this.io = io.of("/notification");
+        this.notificationSocketEvents = new NotificationSocketEvents(this.io, notificationUseCase);
         this.setupMiddleware();
         this.initializeNotificationNamespace();
     }
@@ -47,57 +47,11 @@ export default class NotificationSocketManager {
             });
 
             if (socket.data.user) {
-                this.initializeEvents(socket);
+                this.notificationSocketEvents.initializeEvents(socket);
             } else {
                 socket.emit("error", "User is not authenticated");
                 socket.disconnect();
             }
         });
-    }
-
-    private initializeEvents(socket: Socket) {
-        socket.on("getNotifications",
-            () => this.handleErrors(socket, this.getNotifications(socket))
-        );
-        socket.on("clearNotification",
-            (notificationId: string) => this.handleErrors(socket, this.clearOne(socket, notificationId))
-        );
-        socket.on("clearAllNotifications",
-            (notificationIds: string[]) => this.handleErrors(socket, this.clearAll(socket, notificationIds))
-        );
-    }
-
-    private async getNotifications(socket: Socket) {
-        const user = socket.data.user as TokenPayload;
-        let notifications;
-        if (user.role === UserRole.Patient) {
-            notifications = await this.notificationUseCase.getAllPatient(user.id);
-        } else if (user.role === UserRole.Doctor) {
-            notifications = await this.notificationUseCase.getAllDoctor(user.id);
-        }
-        socket.emit("notifications", notifications);
-    }
-
-    private async clearOne(socket: Socket, notificationId: string) {
-        await this.notificationUseCase.clearOne(notificationId);
-        socket.emit("notificationCleared", notificationId);
-    }
-
-    private async clearAll(socket: Socket, notificationIds: string[]) {
-        await this.notificationUseCase.clearAll(notificationIds);
-        socket.emit("notificationsCleared", notificationIds);
-    }
-
-    private async handleErrors(socket: Socket, handler: Promise<void>) {
-        try {
-            await handler;
-        } catch (error) {
-            if (error instanceof CustomError) {
-                socket.emit("error", error.message);
-            } else {
-                socket.emit("error", "An unexpected error occurred");
-                logger.error(error);
-            }
-        }
     }
 }

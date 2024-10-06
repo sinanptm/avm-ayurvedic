@@ -5,6 +5,7 @@ import { CustomError } from "@/types"
 import connectSocketIO from "../socket.io/connectSocketIO"
 import { useAuth } from "./useAuth"
 import refreshToken from "../socket.io/refreshToken"
+import { useRouter } from "next/navigation"
 
 type Props = {
     role: "patient" | "doctor";
@@ -17,6 +18,7 @@ const useMessages = ({ role, chatId }: Props) => {
     const [chat, setChat] = useState<IChat>()
     const [error, setError] = useState<CustomError | null>();
     const { setCredentials } = useAuth();
+    const router = useRouter();
 
     const connectSocket = useCallback(() => {
         if (socketRef.current) return;
@@ -67,6 +69,7 @@ const useMessages = ({ role, chatId }: Props) => {
                         : setCredentials("patientToken", refreshedToken);
                     socket.emit("authenticate", { token: refreshedToken });
                     setError(null);
+                    router.refresh();
                 } catch (err) {
                     console.error("Failed to refresh token", err);
                     setError({ message: "Failed to refresh token" });
