@@ -10,22 +10,22 @@ const values = [
 
 const MissionAndValues = () => {
   return (
-    <Card className="mb-12">
+    <Card className="mb-8">
       <CardHeader>
-        <CardTitle>Our Mission and Values</CardTitle>
+        <CardTitle className="text-lg font-semibold">Our Mission and Values</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-lg mb-6">
+        <p className="text-sm mb-4 text-muted-foreground">
           Our mission is to empower individuals to achieve optimal health and harmony through
           the timeless wisdom of Ayurveda, delivered with compassion and expertise.
         </p>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           {values.map((value, index) => (
             <div key={index} className="flex items-start">
-              <Image src="/assets/icons/check.svg" alt="Check" width={24} height={24} className="mr-2 mt-1" />
+              <Image src="/assets/icons/check.svg" alt="Check" width={16} height={16} className="mr-2 mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold">{value.title}</h4>
-                <p>{value.description}</p>
+                <h4 className="text-sm font-medium">{value.title}</h4>
+                <p className="text-xs text-muted-foreground">{value.description}</p>
               </div>
             </div>
           ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 
 export const CTASection = () => (
    <div className="bg-primary text-primary-foreground rounded-lg p-8 text-center">
@@ -7,8 +7,8 @@ export const CTASection = () => (
       <p className="text-lg mb-6">
          Book a free consultation with one of our Ayurvedic experts and take the first step towards holistic wellness.
       </p>
-      <Button variant="secondary" size="lg">
+      <ButtonV2 variant="gooeyRight" size="lg">
          Book Free Consultation
-      </Button>
+      </ButtonV2>
    </div>
 );

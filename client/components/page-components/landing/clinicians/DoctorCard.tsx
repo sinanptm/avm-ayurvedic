@@ -4,6 +4,7 @@ import { IDoctor } from "@/types/entities";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 
 interface DoctorCardProps {
    doctor: IDoctor;
@@ -60,7 +61,7 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => (
                </div>
             )}
          </div>
-         <Button className="w-full">Book Appointment</Button>
+         <ButtonV2 variant={"shine"} className="w-full">Book Appointment</ButtonV2>
       </CardContent>
    </Card>
 );

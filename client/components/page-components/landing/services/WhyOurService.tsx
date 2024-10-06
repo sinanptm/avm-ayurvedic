@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const WhyOurService = () => {
    return (
-      <Card className="mt-8">
+      <Card className="mt-0">
          <CardHeader>
             <CardTitle className="flex items-center gap-2">
                <Image src={"/assets/icons/stethoscope.svg"} alt="Tick" height={23} width={23} className="h-7 w-7" />

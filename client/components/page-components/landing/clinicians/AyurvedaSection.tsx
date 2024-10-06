@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ButtonV2 } from "@/components/button/ButtonV2";
 
 export const AyurvedaSection = () => (
    <div className="w-full max-w-6xl mx-auto bg-primary/5 rounded-lg p-8 md:p-12 my-20">
@@ -25,9 +25,9 @@ export const AyurvedaSection = () => (
          </p>
       </div>
       <div className="text-center mt-8">
-         <Button variant="outline" size="lg" className="px-8 py-6 text-lg">
+         <ButtonV2 variant="gooeyLeft" size="lg" className="px-8 py-6 text-lg">
             <Link href={"https://en.wikipedia.org/wiki/Ayurveda"}>Learn More About Ayurveda</Link>
-         </Button>
+         </ButtonV2>
       </div>
    </div>
 );
