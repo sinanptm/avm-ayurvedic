@@ -8,4 +8,5 @@ export default interface IPaymentService {
    ): Promise<{ id: string; url: string }>;
    retrievePaymentIntent(paymentIntentId: string): Promise<any>;
    handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string }>;
+   refundPayment(paymentIntentId: string, amount?: number, reason?: string): Promise<any>
 }

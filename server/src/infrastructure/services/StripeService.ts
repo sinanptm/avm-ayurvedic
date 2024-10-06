@@ -68,11 +68,11 @@ class StripePaymentService implements IPaymentService {
             case "payment_intent.succeeded":
                const paymentIntent = event.data.object as Stripe.PaymentIntent;
                res = { event, transactionId: paymentIntent.id };
-               break; 
-   
+               break;
+
             case "payment_intent.payment_failed":
                throw new CustomError("Payment failed", StatusCode.PaymentError);
-            
+
             default:
                break;
          }
@@ -82,7 +82,23 @@ class StripePaymentService implements IPaymentService {
          throw new CustomError("Error processing webhook event", StatusCode.PaymentError);
       }
    }
-   
+
+   async refundPayment(paymentIntentId: string, amount?: number): Promise<Stripe.Refund | any> {
+      try {
+         const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+         const refund = await stripe.refunds.create({
+            charge: paymentIntent.id,
+            amount: amount ? amount * 100 : undefined,
+            reason: "requested_by_customer",
+         });
+         return refund;
+      } catch (error) {
+         logger.error(error);
+         return null
+      }
+   }
+
 }
 
 export default StripePaymentService;
