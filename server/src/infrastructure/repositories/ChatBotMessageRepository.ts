@@ -5,7 +5,7 @@ import ChatbotMessageModel from "../model/ChatBotMessageModel";
 export default class ChaBotMessageRepository implements IChatBotMessageRepository {
     model = ChatbotMessageModel;
     async getMessagesByPatientId(patientId: string): Promise<IChatBotMessage[] | []> {
-        return await this.model.find({ patientId }).lean(true);
+        return await this.model.find({ patientId }).limit(50).lean(true);
     }
     async create(message: IChatBotMessage): Promise<IChatBotMessage> {
         return await this.model.create(message);

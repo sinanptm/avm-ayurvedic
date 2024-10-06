@@ -15,3 +15,7 @@ export const formatDate = (date: Date): string => {
    const year = date.getFullYear();
    return `${day}/${month}/${year}`;
 };
+
+export const getRandomId = () => {
+   return (Math.random() * 121 / 12).toString() + new Date()
+}

@@ -4,16 +4,24 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import ChatBotCardHeader from "./ChatBotCardHeader"
 import { IChatBotMessage } from "@/types/entities"
-
-
+import { useEffect, useRef } from "react"
 
 type Props = {
-  scrollAreaRef: React.RefObject<HTMLDivElement>;
   handleClose: () => void;
-  messages?:IChatBotMessage[];
+  messages?: IChatBotMessage[];
 }
 
-const MessageDisplay = ({ scrollAreaRef, handleClose, messages }: Props) => {
+const MessageDisplay = ({ handleClose, messages }: Props) => {
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: 'auto' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <>
@@ -49,13 +57,14 @@ const MessageDisplay = ({ scrollAreaRef, handleClose, messages }: Props) => {
                   }
                 </div>
                 <i
-                  className={`max-w-[75%] p-4 rounded-2xl shadow-md ${!msg.isBotMessage ? 'bg-green-600 text-white' : 'bg-gray-700 text-white'}`}
+                  className={`max-w-[75%] p-4 rounded-2xl shadow-md ${msg.isBotMessage ? 'bg-green-600 text-white' : 'bg-gray-700 text-white'}`}
                 >
                   <p className="text-sm">{msg.message}</p>
                 </i>
               </div>
             </motion.div>
           ))}
+          <div ref={bottomRef}></div>
         </ScrollArea>
       </CardContent>
     </>

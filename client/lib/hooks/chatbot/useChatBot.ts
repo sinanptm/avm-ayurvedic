@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 
 export const useCreateMessage = () => {
-    return useMutation<IChatBotMessage[], AxiosError<ErrorResponse>, { message: string }>({
+    return useMutation<IChatBotMessage, AxiosError<ErrorResponse>, { message: string }>({
         mutationFn: ({ message }) => createChatMessage(message)
     })
 };

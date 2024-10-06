@@ -22,12 +22,7 @@ export default class GeminiBotService implements IChatBotService {
     }
 
     async generateResponse(userMessage: string): Promise<string> {
-        const prompt = `
-        **User Message:** ${userMessage}
-
-        **Behavior Rules:**
-         ${chatBotConfig.behavior_rules}
-        `;
+        const prompt = `**User Message:** ${userMessage}`;
 
         const result = await this.model.generateContent({
             contents: [
