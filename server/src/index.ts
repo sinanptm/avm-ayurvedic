@@ -1,15 +1,15 @@
-import express from "express";
-import { createServer } from "http";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 import helmet from "helmet";
+import express from "express";
 import logger from "./utils/logger";
+import { createServer } from "http";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import { CLIENT_URL, PORT } from "./config/env";
 import { connectDB } from "./config/connectDB";
 import routes from "./presentation/routers/index";
-import { CLIENT_URL, PORT } from "./config/env";
-import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
 import initializeSocketIO from "./presentation/socket";
+import { webhook } from "./presentation/routers/appointment/AppointmentRoutes";
 
 const port = PORT || 8080;
 
