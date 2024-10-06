@@ -18,13 +18,9 @@ const patientRepository = new PatientRepository();
 const otpRepository = new OtpRepository();
 
 const authPatientUseCase = new AuthPatientUseCase(
-   patientRepository,
-   passwordService,
-   emailService,
-   otpRepository,
-   tokenService,
-   validatorService
+   patientRepository, passwordService, emailService, otpRepository, tokenService, validatorService
 );
+
 const authenticationController = new AuthenticationController(authPatientUseCase);
 
 router.post("/", authenticationController.register.bind(authenticationController));

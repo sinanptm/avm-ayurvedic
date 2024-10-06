@@ -1,5 +1,5 @@
 import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
-import IVideoSectionRepository  from "../../domain/interface/repositories/IVideoSectionRepository";
+import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
@@ -93,15 +93,15 @@ export default class AppointmentUseCase {
    private async createVideoSection(appointment: IAppointment, patient: IPatient, doctor: IDoctor, slotStartTime: string): Promise<void> {
       const appointmentDate = appointment.appointmentDate as string;
       const slotStartTimeFormatted = parse(slotStartTime, 'hh:mm a', new Date(appointmentDate));
-   
+
       const appointmentDurationMinutes = 60;
       const slotEndTime = addMinutes(slotStartTimeFormatted, appointmentDurationMinutes);
-   
+
       const calculatedStartTime = format(slotStartTimeFormatted, "yyyy-MM-dd'T'HH:mm:ssXXX");
       const calculatedEndTime = format(slotEndTime, "yyyy-MM-dd'T'HH:mm:ssXXX");
 
       const randomId = this.uuIdService.generate()
-   
+
       await this.videoSectionRepository.create({
          appointmentId: appointment._id!,
          patientName: patient.name,
@@ -121,7 +121,7 @@ export default class AppointmentUseCase {
 
    async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
       const result = await this.paymentService.handleWebhookEvent(body, signature);
-      const { event, transactionId } = result;
+      const { event, transactionId, type } = result;
 
       if (!event || !event.data || !event.data.object) {
          return;
@@ -132,22 +132,27 @@ export default class AppointmentUseCase {
          return;
       }
 
-      await this.verifyPaymentIntent(paymentIntentMetadata.paymentId, transactionId);
+      await this.verifyPaymentIntent(paymentIntentMetadata.paymentId, transactionId, type);
    }
 
 
-   private async verifyPaymentIntent(id: string, transactionId: string): Promise<IPayment | null> {
+   private async verifyPaymentIntent(id: string, transactionId: string, type: "charge" | "paymentSuccess" | ""): Promise<IPayment | null> {
       const payment = await this.paymentRepository.findById(id);
 
       if (!payment) {
          return null;
       }
 
-      await this.paymentRepository.update({
+      const fields:any = {
          _id: payment._id,
          status: PaymentStatus.COMPLETED,
-         paymentId: transactionId
-      });
+      }
+
+      if(type==="charge"){
+         fields.paymentId = transactionId;         
+      }
+
+      await this.paymentRepository.update(fields);
 
       await this.appointmentRepository.updateAppointmentStatusToConfirmed(payment.appointmentId!);
 

@@ -32,7 +32,7 @@ const notificationRepository = new NotificationRepository();
 const videoSectionRepository = new VideoSectionRepository();
 const patientRepository = new PatientRepository();
 const doctorRepository = new DoctorRepository();
-const prescriptionRepository = new PrescriptionRepository()
+const prescriptionRepository = new PrescriptionRepository();
 
 const createAppointmentUseCase = new CreateAppointmentUseCase(
    appointmentRepository,
@@ -45,13 +45,15 @@ const createAppointmentUseCase = new CreateAppointmentUseCase(
    patientRepository,
    uuIdService
 );
-const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepository, validatorService, paymentRepository, prescriptionRepository);
-const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository, validatorService, notificationRepository, videoSectionRepository);
+const getAppointmentUseCase = new GetAppointmentUseCase(
+   appointmentRepository, validatorService, paymentRepository, prescriptionRepository
+);
+const updateAppointmentUseCase = new UpdateAppointmentUseCase(
+   appointmentRepository, validatorService, notificationRepository, videoSectionRepository, paymentService, paymentRepository
+);
 
 const appointmentController = new AppointmentController(
-   createAppointmentUseCase,
-   getAppointmentUseCase,
-   updateAppointmentUseCase
+   createAppointmentUseCase, getAppointmentUseCase, updateAppointmentUseCase
 );
 const authorizePatient = new PatientAuthMiddleware(tokenService);
 const authorizeDoctor = new DoctorAuthMiddleware(tokenService);

@@ -18,13 +18,7 @@ const doctorRepository = new DoctorRepository();
 const otpRepository = new OtpRepository();
 
 const authUseCase = new AuthenticationUseCase(
-   doctorRepository,
-   passwordService,
-   tokenService,
-   emailService,
-   otpRepository,
-   cloudService,
-   validatorService
+   doctorRepository, passwordService, tokenService, emailService, otpRepository, cloudService, validatorService
 );
 const authDoctorController = new AuthDoctorController(authUseCase);
 

@@ -16,9 +16,12 @@ import JoiService from "../../infrastructure/services/JoiService";
 import JWTService from "../../infrastructure/services/JWTService";
 import GetChatUseCase from "../../use_case/chat/GetChatUseCase";
 import SocketServer from "./SocketServer";
+import StripePaymentService from "../../infrastructure/services/StripeService";
+import PaymentRepository from "../../infrastructure/repositories/PaymentRepository";
 
 const tokenService = new JWTService();
 const validationService = new JoiService();
+const paymentService = new StripePaymentService()
 
 const appointmentRepository = new AppointmentRepository();
 const videoRepository = new VideoSectionRepository();
@@ -27,9 +30,10 @@ const patientRepository = new PatientRepository();
 const messageRepository = new MessageRepository();
 const chatRepository = new ChatRepository();
 const doctorRepository = new DoctorRepository();
+const paymentRepository = new PaymentRepository()
 
 const updateAppointmentUseCase = new UpdateAppointmentUseCase(
-    appointmentRepository, validationService, notificationRepository, videoRepository
+    appointmentRepository, validationService, notificationRepository, videoRepository, paymentService, paymentRepository
 );
 const createChatUseCase = new CreateChatUseCase(
     messageRepository, chatRepository, validationService, patientRepository, doctorRepository

@@ -67,7 +67,7 @@ export default function AppointmentDetailsPage() {
             onSuccess: () => {
                toast({
                   title: "Appointment Cancelled",
-                  description: "Your appointment has been successfully cancelled.",
+                  description: "Your appointment has been successfully cancelled. Refund will be getting to your account in 10 working days 💸.",
                })
                refetch()
                setCancelModelOpen(false)

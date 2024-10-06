@@ -15,8 +15,8 @@ export default class PaymentRepository implements IPaymentRepository {
       return await this.model.findById(id).exec();
    }
 
-   async findByOrderId(orderId: string): Promise<IPayment | null> {
-      return await this.model.findOne({ orderId }).exec();
+   async findByAppointmentId(appointmentId: string): Promise<IPayment | null> {
+      return await this.model.findOne({ appointmentId }).lean(true);
    }
 
    async update(payment: IPayment): Promise<void> {

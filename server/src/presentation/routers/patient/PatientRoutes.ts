@@ -16,7 +16,9 @@ const videoSectionRepository = new VideoSectionRepository();
 const s3StorageService = new S3StorageService();
 const validatorService = new JoiService();
 
-const patientUseCase = new PatientUseCase(patientRepository, s3StorageService, validatorService, chatRepository, videoSectionRepository);
+const patientUseCase = new PatientUseCase(
+    patientRepository, s3StorageService, validatorService, chatRepository, videoSectionRepository
+);
 const patientController = new PatientController(patientUseCase);
 
 router.get("/profile", patientController.getProfile.bind(patientController));

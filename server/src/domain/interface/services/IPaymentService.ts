@@ -7,6 +7,6 @@ export default interface IPaymentService {
       metadata?: Record<string, any>
    ): Promise<{ id: string; url: string }>;
    retrievePaymentIntent(paymentIntentId: string): Promise<any>;
-   handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string }>;
+   handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string,type:"charge"|"paymentSuccess"|"" }>;
    refundPayment(paymentIntentId: string, amount?: number, reason?: string): Promise<any>
 }

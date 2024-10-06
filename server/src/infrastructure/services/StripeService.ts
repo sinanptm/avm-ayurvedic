@@ -60,18 +60,22 @@ class StripePaymentService implements IPaymentService {
       }
    }
 
-   async handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string }> {
+   async handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string, type: "charge" | "paymentSuccess" | "" }> {
       try {
          const event = stripe.webhooks.constructEvent(body, signature, STRIPE_WEBHOOK_SECRET!);
-         let res: { event: any; transactionId: string } = { event: null, transactionId: "" };
+         let res: { event: any; transactionId: string, type: "charge" | "paymentSuccess" | "" } = { event: null, transactionId: "", type: "" };
          switch (event.type) {
             case "payment_intent.succeeded":
                const paymentIntent = event.data.object as Stripe.PaymentIntent;
-               res = { event, transactionId: paymentIntent.id };
+               res = { event, transactionId: paymentIntent.id, type: "paymentSuccess" };
                break;
 
             case "payment_intent.payment_failed":
                throw new CustomError("Payment failed", StatusCode.PaymentError);
+
+            case "charge.succeeded":
+               const charge = event.data.object as Stripe.Charge
+               res = { event, transactionId: charge.id, type: "charge" }
 
             default:
                break;
@@ -83,17 +87,17 @@ class StripePaymentService implements IPaymentService {
       }
    }
 
-   async refundPayment(paymentIntentId: string, amount?: number): Promise<Stripe.Refund | any> {
+   async refundPayment(paymentId: string, amount?: number): Promise<any> {
       try {
-         const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-
-         const refund = await stripe.refunds.create({
-            charge: paymentIntent.id,
+         await stripe.refunds.create({
+            charge: paymentId,
             amount: amount ? amount * 100 : undefined,
             reason: "requested_by_customer",
          });
-         return refund;
-      } catch (error) {
+      } catch (error: any) {
+         if (error.raw.code === 'charge_already_refunded') {
+            return null
+         }
          logger.error(error);
          return null
       }
