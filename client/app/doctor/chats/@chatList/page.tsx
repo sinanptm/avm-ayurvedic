@@ -7,15 +7,17 @@ import useChats from "@/lib/hooks/useChats";
 const Page = () => {
   const [isNewChatModalOpen, setNewChatModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(true)
-  const { chats, createChat, error, joinChatRoom, patients, getPatients } = useChats({ role: "doctor", messagePath: "/doctor/chats" })
+  const {
+    chats, createChat, error, joinChatRoom, patients, getPatients
+  } = useChats({ role: "doctor", messagePath: "/doctor/chats" })
 
-  
+
   useEffect(() => {
     if (chats && patients) {
       setLoading(false)
     }
   }, [chats, patients]);
-  
+
   const handleJoinChat = (chatId: string) => {
     joinChatRoom(chatId);
   }
@@ -29,7 +31,7 @@ const Page = () => {
     createChat(patientId);
   }
 
-  const handleClickNewChat = ()=>{
+  const handleClickNewChat = () => {
     getPatients();
     setNewChatModalOpen(true);
   }

@@ -2,34 +2,39 @@
 
 import { ReactNode, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { useAuth } from '@/lib/hooks/useAuth';
-import ChatLayoutSkeleton from '@/components/skeletons/ChatSkelton';
-import NotAuthenticated from './NotAuthenticated';
+import { useAuth } from '@/lib/hooks/useAuth'
+import ChatLayoutSkeleton from '@/components/skeletons/ChatSkelton'
+import NotAuthenticated from './NotAuthenticated'
 
 export default function ChatLayout({
   chatList,
   chat,
   isPatient
 }: {
-  chatList: ReactNode;
-  chat: ReactNode;
-  isPatient: boolean;
+  chatList: ReactNode
+  chat: ReactNode
+  isPatient: boolean
 }) {
   const pathname = usePathname();
   const [isLoading, setLoading] = useState(true);
-  const isInChatView = pathname.startsWith('/chats/');
+  const [isInChatView, setIsInChatView] = useState(false)
   const { patientToken } = useAuth();
+
+  useEffect(() => {
+    setIsInChatView(pathname.includes('/chats/'))
+  }, [pathname])
 
   useEffect(() => {
     if (isPatient) {
       const timer = setTimeout(() => {
-        setLoading(false);
-      }, 0);
-      return () => clearTimeout(timer);
+        setLoading(false)
+      }, 0)
+      return () => clearTimeout(timer)
     } else {
-      setLoading(false);
+      setLoading(false)
     }
-  }, [isPatient ]);
+  }, [isPatient]);
+
 
   if (isLoading) {
     return <ChatLayoutSkeleton />
@@ -40,7 +45,7 @@ export default function ChatLayout({
   }
 
   return (
-    <div className={`flex h-[calc(100vh-4rem)] ${!isPatient ? 'border border-border border-r m-0' : ''}`}>
+    <div className={`flex flex-col sm:flex-row h-[calc(100vh-4rem)] ${!isPatient ? 'border border-border border-r m-0' : ''}`}>
       <aside
         className={`${isInChatView ? 'hidden sm:block' : 'block'
           } w-full sm:w-64 md:w-80 border-r border-border overflow-hidden flex-shrink-0`}

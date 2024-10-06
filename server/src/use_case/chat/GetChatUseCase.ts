@@ -30,13 +30,13 @@ export default class GetChatUseCase {
             return false;
         }
     }
-
+    
     async getAllChatsWithPatientId(patientId: string): Promise<IChat[] | []> {
         this.validatorService.validateIdFormat(patientId);
         const chats = await this.chatRepository.findAllChatsForPatient(patientId);
         return await this.getChatsWithNotSeenMessages(patientId, chats);
     }
-
+    
     async getAllChatsWithDoctorId(doctorId: string): Promise<IChat[] | []> {
         this.validatorService.validateIdFormat(doctorId);
         const chats = await this.chatRepository.findAllChatsForDoctor(doctorId);
@@ -56,10 +56,11 @@ export default class GetChatUseCase {
         const messages = await this.messageRepository.findByChatId(chatId);
         return { messages, chat }
     }
-    
-    async markAsReceived(chatId:string,receiverId:string):Promise<void>{
+
+    async markReceived(chatId:string,receiverId:string):Promise<void>{
+        this.validatorService.validateMultipleIds([receiverId,chatId])
         await this.messageRepository.markAsReadByReceiverAndChatId(receiverId, chatId);
-    }   
+    }
 
     private async getChatsWithNotSeenMessages(
         receiverId: string,

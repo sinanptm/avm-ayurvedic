@@ -109,7 +109,7 @@ export default class ChatSocketManager {
     }
 
     async updateReceived(chatId: string, receiverId: string) {
-        await this.getChatUseCase.markAsReceived(chatId, receiverId);
+        await this.getChatUseCase.markReceived(chatId, receiverId);
         this.io.to(chatId).emit("received", { chatId })
     }
 
