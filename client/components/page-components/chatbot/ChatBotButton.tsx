@@ -28,7 +28,7 @@ const Chatbot = () => {
         return null;
     }
     return (
-        <div className="fixed bottom-4 right-4 z-50">
+        <div className="fixed sm:bottom-4 bottom-10 right-6 sm sm:right-4 z-50">
             <AnimatePresence>
                 {!isOpen && (
                     <motion.div
@@ -39,7 +39,7 @@ const Chatbot = () => {
                         <ButtonV2
                             onClick={() => setIsOpen(true)}
                             variant={"ringHover"}
-                            className="rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-green-600 shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                            className="rounded-full w-16 h-16 md:w-20 md:h-20 bg-green-600 shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                             aria-label="Open chat"
                         >
                             <Image
@@ -47,7 +47,7 @@ const Chatbot = () => {
                                 width={23}
                                 height={23}
                                 alt='Robot'
-                                className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 fill-white"
+                                className="h-6 w-6 md:h-8 md:w-8 fill-white"
                             />
                         </ButtonV2>
                     </motion.div>

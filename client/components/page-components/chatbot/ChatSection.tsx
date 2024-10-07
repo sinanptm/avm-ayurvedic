@@ -75,15 +75,14 @@ const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
                     transition={{ type: "spring", stiffness: 260, damping: 20, bounce: 0.50 }}
-                    className="fixed inset-2 sm:inset-auto sm:right-6 sm:bottom-6 sm:w-[400px] md:w-[450px] lg:w-[500px] max-h-[calc(100vh-2rem)] z-50"
+                    className="fixed inset-x-0 bottom-0 sm:inset-auto sm:right-6 sm:bottom-6 sm:w-[400px] md:w-[450px] lg:w-[500px] h-[80vh] sm:h-[600px] max-h-[800px] z-50"
                 >
                     {isAuthenticated ? (
-                        <Card className="h-full sm:h-[600px] max-h-[800px] flex flex-col shadow-2xl border-primary/10 bg-dark-200 rounded-2xl overflow-hidden">
+                        <Card className="h-full flex flex-col shadow-2xl border-primary/10 bg-dark-200 rounded-t-2xl sm:rounded-2xl overflow-hidden">
                             <MessageDisplay
                                 isLoading={isLoading}
                                 messages={messages}
                                 handleClose={handleClose}
-                                isMessagePending={isPending}
                                 isTyping={isTyping}
                             />
                             <ChatBotController

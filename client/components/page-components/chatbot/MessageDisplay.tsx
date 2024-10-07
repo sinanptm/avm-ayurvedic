@@ -11,11 +11,10 @@ type Props = {
   handleClose: () => void;
   messages: IChatBotMessage[];
   isLoading: boolean;
-  isMessagePending: boolean;
   isTyping: boolean;
 }
 
-const MessageDisplay = ({ handleClose, messages, isLoading, isMessagePending, isTyping }: Props) => {
+const MessageDisplay = ({ handleClose, messages, isLoading, isTyping }: Props) => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const [expandedMessages, setExpandedMessages] = useState<Set<string>>(new Set());
@@ -52,26 +51,26 @@ const MessageDisplay = ({ handleClose, messages, isLoading, isMessagePending, is
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className={`flex mb-6 ${!msg.isBotMessage ? 'justify-end' : 'justify-start'}`}
+        className={`flex mb-2 sm:mb-4 ${!msg.isBotMessage ? 'justify-end' : 'justify-start'}`}
       >
-        <div className={`flex items-end space-x-3 ${!msg.isBotMessage ? 'flex-row-reverse space-x-reverse' : ''}`}>
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${!msg.isBotMessage ? 'bg-green-600' : 'bg-gray-600'}`}>
+        <div className={`flex items-end space-x-2 sm:space-x-3 ${!msg.isBotMessage ? 'flex-row-reverse space-x-reverse' : ''}`}>
+          <div className={`w-6 h-6 sm:w-8 sm:h-8 flex rounded-full items-center justify-center ${!msg.isBotMessage ? 'bg-green-600' : 'bg-gray-600'}`}>
             <Image
               src={!msg.isBotMessage ? '/assets/icons/circle-user.svg' : '/assets/icons/utils/robot.svg'}
-              width={23}
-              height={23}
+              width={16}
+              height={16}
               alt={!msg.isBotMessage ? 'User' : 'Robot'}
-              className="h-5 w-5 text-white"
+              className="h-3 w-3 sm:h-4 sm:w-4"
             />
           </div>
-          <div className={`max-w-[75%] p-4 rounded-2xl shadow-md ${msg.isBotMessage ? 'bg-green-600 text-white' : 'bg-gray-700 text-white'}`}>
-            <ReactMarkdown className="text-sm">
+          <div className={`max-w-[80%] text-xs sm:text-sm p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-md ${msg.isBotMessage ? 'bg-green-600' : 'bg-gray-700'}`}>
+            <ReactMarkdown className="text-xs sm:text-sm">
               {isLongMessage && !isExpanded ? `${messageContent.slice(0, 150)}...` : messageContent}
             </ReactMarkdown>
             {isLongMessage && (
               <button
                 onClick={() => toggleMessageExpansion(messageId)}
-                className="text-xs mt-2 text-blue-300 hover:text-blue-100 transition-colors"
+                className="text-xs mt-1 sm:mt-2 text-blue-300 hover:text-blue-100 transition-colors"
               >
                 {isExpanded ? 'Read less' : 'Read more'}
               </button>
@@ -86,10 +85,10 @@ const MessageDisplay = ({ handleClose, messages, isLoading, isMessagePending, is
     <>
       <CardContent className="flex-grow p-0">
         <ChatBotCardHeader handleClose={handleClose} />
-        <ScrollArea className="h-[calc(100vh-16rem)] sm:h-[460px] w-full p-6" ref={scrollAreaRef}>
+        <ScrollArea className="flex-grow h-[calc(80vh-8rem)] sm:h-[460px]  w-full p-3 sm:p-4" ref={scrollAreaRef}>
           {isLoading ? (
             <div className="flex justify-center items-center h-full">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500"></div>
+              <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-t-2 border-b-2 border-green-500"></div>
             </div>
           ) : (
             <>
@@ -101,9 +100,9 @@ const MessageDisplay = ({ handleClose, messages, isLoading, isMessagePending, is
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
-                    className="flex justify-end mb-6"
+                    className="flex justify-end mb-4"
                   >
-                    <div className="bg-gray-700 p-3 rounded-full">
+                    <div className="bg-gray-700 p-2 sm:p-3 rounded-full">
                       <div className="typing-indicator">
                         <span></span>
                         <span></span>
