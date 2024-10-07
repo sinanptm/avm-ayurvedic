@@ -7,8 +7,8 @@ import { AxiosError } from "axios";
 export const useGetPatientGenderStatics = () => {
     return useQuery<{ statistics: PatientGenderStatics }, AxiosError<ErrorResponse>>({
         queryKey: ["patient-gender"],
-        queryFn: getPatientGenderStatics,
-        staleTime: 2 * 60 * 1000, 
+        queryFn: () => getPatientGenderStatics(),
+        staleTime: 2 * 60 * 1000,
         refetchOnWindowFocus: true,
     });
 }
@@ -16,8 +16,8 @@ export const useGetPatientGenderStatics = () => {
 export const useGetUsersStatics = () => {
     return useQuery<{ statistics: UserStatistics[] }, AxiosError<ErrorResponse>>({
         queryKey: ["users-months"],
-        queryFn: getUsersStatisticsByMonth,
-        staleTime: 2 * 60 * 1000, 
+        queryFn: () => getUsersStatisticsByMonth(),
+        staleTime: 2 * 60 * 1000,
         refetchOnWindowFocus: true,
     });
 }
@@ -25,8 +25,8 @@ export const useGetUsersStatics = () => {
 export const useGetAppointmentsStatisticsByStatus = () => {
     return useQuery<{ statistics: AppointmentsByStatusStatistics[] }, AxiosError<ErrorResponse>>({
         queryKey: ["appointment-status"],
-        queryFn: getAppointmentsStatisticsByStatus,
-        staleTime: 2 * 60 * 1000, 
+        queryFn: () => getAppointmentsStatisticsByStatus(),
+        staleTime: 2 * 60 * 1000,
         refetchOnWindowFocus: true,
     });
 }
@@ -34,8 +34,8 @@ export const useGetAppointmentsStatisticsByStatus = () => {
 export const useGetAppointmentsByMonth = () => {
     return useQuery<{ statistics: AppointmentsPerMonthStatics[] }, AxiosError<ErrorResponse>>({
         queryKey: ["appointment-month"],
-        queryFn: getAppointmentsByMonth,
-        staleTime: 2 * 60 * 1000, 
+        queryFn: () => getAppointmentsByMonth(),
+        staleTime: 2 * 60 * 1000,
         refetchOnWindowFocus: true,
     });
 }

@@ -1,7 +1,7 @@
 "use client"
 
-import { } from "recharts"
-import { } from "@/components/ui/chart"
+// import { } from "recharts"
+// import { } from "@/components/ui/chart"
 import { useGetPatientGenderStatics } from "@/lib/hooks/admin/useDashboard"
 
 const GenderChart = () => {
@@ -11,9 +11,9 @@ const GenderChart = () => {
   if (!data || isLoading) return <div>Loading...</div>;
 
   const chartData = [
-    { gender: "male", patients: data.statics.male },
-    { gender: "female", patients: data.statics.female },
-    { gender: "others", patients: data.statics.others },
+    { gender: "male", patients: data.statistics.male },
+    { gender: "female", patients: data.statistics.female },
+    { gender: "others", patients: data.statistics.others },
   ];
 
   return (
