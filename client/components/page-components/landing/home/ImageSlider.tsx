@@ -2,9 +2,10 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { ImagesSlider } from "@/components/ui/images-slider";
-import { SliderImages } from "@/constants";
+import { SliderImages, SliderTexts } from "@/constants";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { ButtonV2 } from "@/components/button/ButtonV2";
+import { FlipWords } from "@/components/ui/flip-words";
 
 const ImageSlider = () => {
    const { patientToken } = useAuth();
@@ -24,9 +25,9 @@ const ImageSlider = () => {
             }}
             className="z-50 flex flex-col justify-center items-center"
          >
-            <motion.p className="font-bold text-lg md:text-6xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
-               Virtual Specialty Care for Everyone.
-            </motion.p>
+            <p className="font-bold text-lg md:text-6xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
+               <FlipWords words={SliderTexts} duration={5*1000} />
+            </p>
             <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-center justify-center">
                {!patientToken && (
                   <ButtonV2

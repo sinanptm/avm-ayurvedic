@@ -117,6 +117,18 @@ export const SliderImages: string[] = [
    "/assets/images/slider-6.jpg",
 ];
 
+export const SliderTexts = [
+   "Virtual Specialty Care for Everyone.",
+   "Ayurveda Meets Modern Healthcare Solutions.",
+   "Your Health is Our Priority.",
+   "Discover the Healing Power of Ayurveda.",
+   "Book Appointments for Your Wellness Journey.",
+   "Tradition and Innovation for Holistic Health.",
+   "Personalized Ayurvedic Treatments Just for You.",
+   "Experience Ayurveda and Allopathy Together.",
+   "Quality Healthcare Beyond All Boundaries."
+];
+
 export const DoctorDegrees = [
    "MBBS (Medicine and Surgery)",
    "MD (Medicine)",
@@ -218,12 +230,12 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
       link: "/new-appointment",
    },
    {
-      heading: "Natural Medicines",
+      heading: "Ayurvedic Assistant",
       key: 2,
-      image: "/assets/3D/products.jpg",
-      text: "100% Quality",
-      linkText: "Shop Now",
-      link: "/products",
+      image: "/assets/3D/chat-bot.webp",
+      text: "Fast responses",
+      linkText: "Chat Now",
+      link: "/",
    },
    {
       heading: "Customer Support",
@@ -231,9 +243,27 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
       image: "/assets/3D/customer-support.jpg",
       text: "24/7 Customer Service",
       linkText: "Get Support",
-      link: "/contact",
+      link: "/chat",
    },
 ];
+
+export const Treatments = [
+   {
+     title: 'Abhyanga Massage',
+     description: 'A full-body massage with warm herbal oils to promote relaxation and detoxification.',
+     image: '/assets/services/abhyanga.jpg',
+   },
+   {
+     title: 'Shirodhara',
+     description: 'A gentle stream of warm oil poured over the forehead to calm the mind and nervous system.',
+     image: '/assets/services/shirodhara.webp',
+   },
+   {
+     title: 'Panchakarma',
+     description: 'A comprehensive detoxification and rejuvenation program to restore balance to the body.',
+     image: '/assets/services/panchakarma.jpg',
+   },
+ ]
 
 export const Banners = {
    patient_signin: "/assets/images/onboarding-img.png",
