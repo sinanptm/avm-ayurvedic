@@ -3,7 +3,7 @@ import { CardHeader } from "@/components/ui/card"
 import Image from "next/image"
 
 
-const ChatBotCardHeader = ({handleClose}:{handleClose: () => void}) => {
+const ChatBotCardHeader = ({ handleClose }: { handleClose: () => void }) => {
     return (
         <CardHeader className="flex flex-row items-center justify-between space-y-0 py-4 px-6 bg-green-900 text-white">
             <div className="flex items-center space-x-3">

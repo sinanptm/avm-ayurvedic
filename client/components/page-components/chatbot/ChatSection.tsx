@@ -94,7 +94,7 @@ const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
                             />
                         </Card>
                     ) : (
-                        <NotAuthenticated />
+                        <NotAuthenticated onClose={handleClose} />
                     )}
                 </motion.div>
             )}
