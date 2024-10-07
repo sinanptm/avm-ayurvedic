@@ -5,7 +5,7 @@ const WhyChooseUs = () => {
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+        <CardTitle className="text-xl font-semibold flex items-center gap-2">
           <Image src="/assets/icons/stethoscope.svg" alt="Stethoscope" width={20} height={20} />
           Why Choose Ayurveda Health Center?
         </CardTitle>
@@ -20,7 +20,7 @@ const WhyChooseUs = () => {
             "Holistic Wellness Programs",
             "Ongoing Support and Education",
           ].map((benefit, index) => (
-            <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+            <li key={index} className="flex items-center gap-2 text-base text-muted-foreground">
               <Image src="/assets/icons/check.svg" alt="Check" width={16} height={16} className="flex-shrink-0" />
               {benefit}
             </li>

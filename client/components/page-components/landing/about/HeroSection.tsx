@@ -23,8 +23,8 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="md:w-1/2 p-6 flex flex-col justify-center">
-            <h2 className="text-xl font-semibold mb-2">Embracing Holistic Wellness</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-2xl font-semibold mb-2">Embracing Holistic Wellness</h2>
+            <p className="text-base text-muted-foreground">
               At Avm Ayurveda, we&apos;re dedicated to reviving the ancient wisdom of Ayurveda
               and integrating it with modern healthcare practices. Our goal is to guide you on a
               journey of holistic healing and self-discovery.

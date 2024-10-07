@@ -1,12 +1,11 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
 import Image from "next/image";
 
 const LocationMap = () => {
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+        <CardTitle className="text-xl font-semibold flex items-center gap-2">
           <Image
             src={'/assets/icons/map.svg'}
             height={23}
@@ -32,7 +31,7 @@ const LocationMap = () => {
             </div>
             <div className="bg-primary/5 p-4 rounded-lg">
               <h3 className="font-medium mb-2">How to reach us:</h3>
-              <ul className="text-sm space-y-1 text-muted-foreground">
+              <ul className="text-base space-y-1 text-muted-foreground">
                 <li>• 15 minutes drive from Calicut International Airport</li>
                 <li>• 30 minutes from Kozhikode Railway Station</li>
                 <li>• Bus stop: Chelannur Bus Stand (2 min walk)</li>
@@ -43,7 +42,7 @@ const LocationMap = () => {
             <div className="bg-primary/5 p-4 rounded-lg">
               <h3 className="font-medium mb-2">Contact Information:</h3>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-sm">
+                <li className="flex items-center gap-2 text-base">
                   <Image
                     src={'/assets/icons/map.svg'}
                     height={23}
@@ -53,7 +52,7 @@ const LocationMap = () => {
                   />
                   <span>Chelannur, Kozhikode, Kerala 673616</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm">
+                <li className="flex items-center gap-2 text-base">
                   <Image
                     src={'/assets/icons/phone.svg'}
                     height={23}
@@ -63,7 +62,7 @@ const LocationMap = () => {
                   />
                   <span>04952262655</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm">
+                <li className="flex items-center gap-2 text-base">
                   <Image
                     src={'/assets/icons/email.svg'}
                     height={23}
@@ -77,7 +76,7 @@ const LocationMap = () => {
             </div>
             <div className="bg-primary/5 p-4 rounded-lg">
               <h3 className="font-medium mb-2">Nearby Landmarks:</h3>
-              <ul className="text-sm space-y-1 text-muted-foreground">
+              <ul className="text-base space-y-1 text-muted-foreground">
                 <li>• Chelannur Shiva Temple (0.5 km)</li>
                 <li>• Peruvayal Bhagavathi Temple (2 km)</li>
                 <li>• Kunnamangalam Town (5 km)</li>
