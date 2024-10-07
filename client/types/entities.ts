@@ -9,11 +9,11 @@ export interface IPatient {
    readonly bloodGroup?: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
    readonly dob?: Date;
    readonly isSubscribed?: boolean;
-   readonly isBlocked?: boolean;
    readonly address?: string;
    readonly profile?: string;
    readonly occupation?: string;
    readonly gender?: "Male" | "Female" | "Other";
+   isBlocked?: boolean;
 }
 
 export interface IDoctor {
@@ -26,7 +26,7 @@ export interface IDoctor {
    readonly email?: string;
    readonly updatedAt?: string;
    readonly createdAt?: string;
-   readonly isVerified?: boolean;
+   isVerified?: boolean;
    isBlocked?: boolean;
 }
 
