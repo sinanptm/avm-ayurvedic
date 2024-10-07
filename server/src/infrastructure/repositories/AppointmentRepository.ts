@@ -25,6 +25,42 @@ export default class AppointmentRepository implements IAppointmentRepository {
       return await this.model.find({ _id: { $in: ids } });
    }
 
+   async getCountsByStatus(status: AppointmentStatus): Promise<number> {
+      const result = await this.model.aggregate([
+          {
+              $match: {
+                  status: status
+              }
+          },
+          {
+              $group: {
+                  _id: null,
+                  count: { $sum: 1 }
+              }
+          }
+      ]);
+  
+      return result.length > 0 ? result[0].count : 0;
+  }
+  
+  async getCountByRange(startTime: Date, endTime: Date): Promise<number> {
+      const result = await this.model.aggregate([
+          {
+              $match: {
+                  appointmentDate: { $gte: startTime, $lte: endTime }
+              }
+          },
+          {
+              $group: {
+                  _id: null,
+                  count: { $sum: 1 }
+              }
+          }
+      ]);
+      return result.length > 0 ? result[0].count : 0;
+  }
+  
+
    async findManyAsExtendedByPatientId(
       patientId: string,
       limit: number,

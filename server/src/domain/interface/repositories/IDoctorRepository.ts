@@ -6,4 +6,5 @@ export default interface IDoctorRepository extends IRepository<IDoctor> {
    findByEmail(email: string): Promise<IDoctor | null>;
    findByEmailWithCredentials(email: string): Promise<IDoctor | null>;
    findMany(offset: number, limit: number, isVerified: boolean, isBlocked: boolean): Promise<PaginatedResult<IDoctor>>;
+   getCountInTimeRange(startTime: Date, endTime: Date): Promise<number>;
 }

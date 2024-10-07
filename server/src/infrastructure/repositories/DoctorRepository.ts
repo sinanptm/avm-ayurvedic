@@ -36,4 +36,21 @@ export default class DoctorRepository implements IDoctorRepository {
 
       return getPaginatedResult(totalItems, offset, limit, items);
    }
+   async getCountInTimeRange(startTime: Date, endTime: Date): Promise<number> {
+      const result = await this.model.aggregate([
+         {
+            $match: {
+               createdAt: { $gte: startTime, $lte: endTime }
+            }
+         },
+         {
+            $group: {
+               _id: null, 
+               count: { $sum: 1 }
+            }
+         }
+      ]);
+
+      return result.length > 0 ? result[0].count : 0;
+   };
 }

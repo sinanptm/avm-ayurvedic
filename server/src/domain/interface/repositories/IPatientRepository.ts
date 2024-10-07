@@ -9,4 +9,5 @@ export default interface IPatientRepository extends IRepository<IPatient> {
    findMany(offset: number, limit: number): Promise<PaginatedResult<IPatient>>;
    findAll(): Promise<IPatient[] | []>;
    findPatientGenders():Promise<PatientGenderStatics>;
+   getCountInTimeRange(startTime: Date, endTime: Date): Promise<number>;
 }

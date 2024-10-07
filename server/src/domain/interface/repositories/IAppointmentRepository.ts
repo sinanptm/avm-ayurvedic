@@ -23,5 +23,7 @@ export default interface IAppointmentRepository extends IRepository<IAppointment
    ): Promise<PaginatedResult<IAppointment>>;
    findManyByIds(ids: string[]): Promise<IAppointment[] | null>;
    findPatientsByDoctorId(doctorId: string, limit: number, offset: number): Promise<PaginatedResult<IPatient>>;
-   findManyAsExtendedByPatientId(patientId: string, limit: number, offset: number): Promise<PaginatedResult<IExtendedAppointment>>
+   findManyAsExtendedByPatientId(patientId: string, limit: number, offset: number): Promise<PaginatedResult<IExtendedAppointment>>;
+   getCountByRange(startTime:Date,endTime:Date):Promise<number>;
+   getCountsByStatus(status:AppointmentStatus):Promise<number>;
 }

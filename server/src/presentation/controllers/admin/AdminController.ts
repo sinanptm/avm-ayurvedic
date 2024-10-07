@@ -9,8 +9,34 @@ export default class AdminController {
 
     async getGenderStatics(req: Request, res: Response, next: NextFunction) {
         try {
-            const statics = await this.dashboardUseCase.getPatientGenderStatics()
-            res.status(StatusCode.Success).json({ statics });
+            const statistics = await this.dashboardUseCase.getPatientGenderStatics();
+            res.status(StatusCode.Success).json({ statistics });
+        } catch (error) {
+            next(error)
+        }
+    }
+    async getUsersStatics(req: Request, res: Response, next: NextFunction) {
+        try {
+            const statistics = await this.dashboardUseCase.getUsersStatics();
+            res.status(StatusCode.Success).json({ statistics });
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getAppointmentsStatisticsByStatus(req: Request, res: Response, next: NextFunction) {
+        try {
+            const statistics = await this.dashboardUseCase.getAppointmentsStatisticsByStatus()
+            res.status(StatusCode.Success).json({ statistics })
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getAppointmentsByMonth(req: Request, res: Response, next: NextFunction) {
+        try {
+            const statistics = await this.dashboardUseCase.getAppointmentsPerMonthStatics();
+            res.status(StatusCode.Success).json({ statistics })
         } catch (error) {
             next(error)
         }
