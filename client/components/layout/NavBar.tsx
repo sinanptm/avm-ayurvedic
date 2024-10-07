@@ -148,7 +148,7 @@ export const NavBar = () => {
               <span className="sr-only">Toggle user menu</span>
             </ButtonV2>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="mt-3">
+          <DropdownMenuContent align="end" className="mt-3 bg-dark-200">
             {isAuthorized ? (
               <>
                 <DropdownMenuLabel className="cursor-pointer">
@@ -164,7 +164,7 @@ export const NavBar = () => {
               </>
             ) : (
               <>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => route.push("/signin")}>
+                <DropdownMenuItem className="cursor-pointer bg-dark-200" onClick={() => route.push("/signin")}>
                   <Link href={"/signin"}>Sign In</Link>
                 </DropdownMenuItem>
               </>

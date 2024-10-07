@@ -49,6 +49,30 @@ export default function AppointmentDetailsPage() {
     )
   }, [appointmentId, updateStatus, refetch]);
 
+  const handleMarkComplete = useCallback(() => {
+    if (!appointmentId) return
+    updateStatus(
+      { appointmentId, status: AppointmentStatus.COMPLETED },
+      {
+        onSuccess: () => {
+          toast({
+            title: "Appointment Marked As Completed",
+            description: "The appointment has been been completed.",
+            variant: "success",
+          })
+          refetch()
+        },
+        onError: (error) => {
+          toast({
+            title: "Failed to Mark Completed",
+            description: error?.response?.data?.message || "An error occurred. Please try again.",
+            variant: "destructive",
+          })
+        },
+      }
+    )
+  }, [appointmentId, updateStatus, refetch])
+
   const handleCancelAppointment = useCallback(async () => {
     if (!appointmentId) return
     updateStatus(
@@ -75,6 +99,7 @@ export default function AppointmentDetailsPage() {
   }, [appointmentId, updateStatus, refetch]);
 
   const handlePrescriptionClick = useCallback(() => setPrescriptionModelOpen(true), []);
+  let nowDate = new Date()
 
   if (isLoading) {
     return (
@@ -109,10 +134,16 @@ export default function AppointmentDetailsPage() {
               </ButtonV2>
             </>
           ) : (
-            !appointment.prescription && (
+            !appointment.prescription ? (
               <ButtonV2 variant="gooeyLeft" color={'teal' as ButtonColorVariant} onClick={handlePrescriptionClick}>
                 Prescription
               </ButtonV2>
+            ) : (
+              new Date(appointment.appointmentDate!) <= nowDate && appointment.status === AppointmentStatus.CONFIRMED && (
+                <ButtonV2 variant="gooeyLeft" color={'success' as ButtonColorVariant} onClick={handleMarkComplete}>
+                  Mark As Completed
+                </ButtonV2>
+              )
             )
           )}
           {appointment.status === AppointmentStatus.CONFIRMED && (
