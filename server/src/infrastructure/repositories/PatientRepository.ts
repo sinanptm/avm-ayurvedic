@@ -2,7 +2,7 @@ import CustomError from "../../domain/entities/CustomError";
 import IPatient  from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import { PaginatedResult, StatusCode } from "../../types";
-import { PatientGenderStatics } from "../../types/statics";
+import { PatientGenderStatics } from "../../types/statistics";
 import PatientModel from "../model/PatientModel";
 import { getPaginatedResult } from "./getPaginatedResult";
 

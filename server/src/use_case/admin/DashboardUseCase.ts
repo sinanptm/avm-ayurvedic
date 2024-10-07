@@ -1,7 +1,7 @@
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import { Months, PatientGenderStatics, UserStatistics, AppointmentsPerMonthStatics, AppointmentsByStatusStatistics } from "../../types/statics";
+import { Months, PatientGenderStatics, UserStatistics, AppointmentsPerMonthStatics, AppointmentsByStatusStatistics } from "../../types/statistics";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import { endOfMonth, startOfMonth } from "../../utils/date-formatter";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
