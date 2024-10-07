@@ -14,6 +14,7 @@ import { ButtonV2 } from "@/components/button/ButtonV2";
 import { format } from 'date-fns'
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 
 const columns = [
@@ -52,7 +53,7 @@ export default function AppointmentTable({ page }: Props) {
          });
          router.replace(`/doctor/appointments?page=1&status=${AppointmentStatus.PENDING}`);
       }
-   }, [notAcceptedAppointments,router]);
+   }, [notAcceptedAppointments, router]);
 
 
    const appointments = useMemo(() => data?.items || [], [data?.items]);
@@ -138,12 +139,18 @@ export default function AppointmentTable({ page }: Props) {
                                     {format(new Date(appointment.appointmentDate!), "PPPP")}
                                  </TableCell>
                                  <TableCell>{appointment.appointmentType}</TableCell>
-                                 <TableCell>{appointment.reason}</TableCell>
+                                 <TableCell>
+                                    <ScrollArea
+                                       className={`max-h-16 overflow-y-auto ${appointment.reason?.length! > 30 ? "h-16" : ""}`}
+                                    >
+                                       {appointment.reason}
+                                    </ScrollArea>
+                                 </TableCell>
                                  <TableCell>
                                     <GetStatusBadge status={appointment.status!} />
                                  </TableCell>
                                  <TableCell>
-                                    <Badge variant={`${appointment.isPrescriptionAdded?"success":"warning"}`}>
+                                    <Badge variant={`${appointment.isPrescriptionAdded ? "success" : "warning"}`}>
                                        {appointment.isPrescriptionAdded ? "Added" : "Not Added"}
                                     </Badge>
                                  </TableCell>
