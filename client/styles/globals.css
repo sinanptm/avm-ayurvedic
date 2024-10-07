@@ -59,7 +59,6 @@
  .typing-indicator span:nth-child(3) {
    animation-delay: .4s;
  }
-
  
 .no-visible-scrollbar {
    scrollbar-width: none;

@@ -12,11 +12,6 @@ export const AdminSideBarLinks: NavLinkType[] = [
       href: "/admin/patients",
       icon: "/assets/icons/wheelchair.svg",
    },
-   {
-      label: "Products",
-      href: "/admin/products",
-      icon: "/assets/icons/store.svg",
-   },
 ];
 
 export const DoctorsSidebarLinks: NavLinkType[] = [

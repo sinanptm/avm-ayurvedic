@@ -28,7 +28,7 @@ const OtpVerificationPage = () => {
                      variant: "success",
                   });
                   setMultipleCredentials({ adminToken: accessToken, otpMailAdmin: "" });
-                  router.push("/admin");
+                  router.push("/admin/dashboard");
                },
                onError: (error) => {
                   toast({

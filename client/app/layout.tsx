@@ -9,6 +9,7 @@ import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import { cn } from "@/lib/utils";
 import "../styles/globals.css";
+import "../styles/chart.css";
 
 const inter = Plus_Jakarta_Sans({
    subsets: ["latin"],
