@@ -18,7 +18,7 @@ const Layout = ({ children, auth }: Props) => {
    const path = usePathname();
    useEffect(() => {
       if (adminToken && path.includes("/otp-verification")) {
-         router.replace("/doctor");
+         router.replace("/admin/dashboard");
       }
    }, [adminToken, path, router]);
    useEffect(() => {

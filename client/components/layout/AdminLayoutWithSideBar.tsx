@@ -207,9 +207,7 @@ const AdminLayoutWithSideBar = ({
                            <span className="sr-only">Toggle user menu</span>
                         </Button>
                      </DropdownMenuTrigger>
-                     <DropdownMenuContent align="end" className="cursor-pointer">
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
+                     <DropdownMenuContent align="end" className="cursor-pointer mt-2 bg-dark-200">
                         <DropdownMenuItem onClick={() => setLogoutOpen(!isLogoutOpen)}>Logout</DropdownMenuItem>
                      </DropdownMenuContent>
                   </DropdownMenu>
