@@ -18,6 +18,8 @@ export const useGetAppointmentsPatient = (offset: number, limit: number, status?
    return useQuery<PaginatedResult<IAppointment>, AxiosError<ErrorResponse>>({
       queryKey: ["appointments", status, offset, limit],
       queryFn: () => getAppointmentsPatient(offset, limit, status),
+      staleTime: 2 * 60 * 1000,
+      refetchOnWindowFocus: true,
    });
 };
 

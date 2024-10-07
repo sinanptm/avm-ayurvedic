@@ -5,7 +5,7 @@ import {
    getAppointmentDetailsDoctor,
    updateAppointmentStatusDoctor,
 } from "@/lib/api/appointment";
-import  {
+import {
    ErrorResponse,
    MessageResponse,
    PaginatedResult,
@@ -24,6 +24,8 @@ export const useGetDoctorsList = () => {
       queryFn: () => getDoctorsList(),
       queryKey: ["doctors"],
       retry: false,
+      staleTime: 2 * 60 * 1000,
+      refetchOnWindowFocus: true,
    });
 };
 
@@ -44,6 +46,8 @@ export const useGetAppointmentsDoctor = (offset: number, limit: number, status?:
    return useQuery<PaginatedResult<IExtendedAppointment>, AxiosError<ErrorResponse>>({
       queryKey: ["appointments", status, offset, limit],
       queryFn: () => getAppointmentsDoctor(offset, limit, status),
+      staleTime: 2 * 60 * 1000,
+      refetchOnWindowFocus: true,
    });
 };
 

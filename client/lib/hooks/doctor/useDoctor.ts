@@ -7,13 +7,17 @@ import { AxiosError } from "axios"
 export const useGetPatientsDoctor = (offset: number, limit: number) => {
     return useQuery<PaginatedResult<IPatient>, AxiosError<ErrorResponse>>({
         queryKey: ["doctor-patients", offset, limit],
-        queryFn: () => getPatientsOfDoctor(limit, offset)
+        queryFn: () => getPatientsOfDoctor(limit, offset),
+        staleTime: 2 * 60 * 1000,
+        refetchOnWindowFocus: true,
     });
 };
 
 export const useGetMedicalHistory = (patientId: string, offset: number, limit: number) => {
     return useQuery<PaginatedResult<IExtendedAppointment>, AxiosError<ErrorResponse>>({
         queryKey: ["medical-history", offset, limit, patientId],
-        queryFn: () => getPatientMedicalHistory(patientId, limit, offset)
+        queryFn: () => getPatientMedicalHistory(patientId, limit, offset),
+        staleTime: 2 * 60 * 1000,
+        refetchOnWindowFocus: true,
     });
 }
