@@ -1,14 +1,13 @@
 'use client'
 
-import { useState, useEffect, useRef, memo } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { Card } from "@/components/ui/card"
 import { motion, AnimatePresence } from "framer-motion"
 import ChatBotController from './ChatBotController'
 import MessageDisplay from './MessageDisplay'
 import NotAuthenticated from './NotAuthenticated'
 import { IChatBotMessage } from '@/types/entities'
-import { useCreateMessage } from '@/lib/hooks/chatbot/useChatBot'
-import { useGetMessage } from '@/lib/hooks/chatbot/useChatBot'
+import { useCreateMessage, useGetMessage } from '@/lib/hooks/chatbot/useChatBot'
 import { toast } from '@/components/ui/use-toast'
 import { getRandomId } from '@/lib/utils'
 
@@ -19,10 +18,11 @@ type Props = {
 }
 
 const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
-    const { data } = useGetMessage();
+    const { data, isLoading } = useGetMessage();
     const [messages, setMessages] = useState<IChatBotMessage[]>([]);
     const [inputMessage, setInputMessage] = useState('');
     const { mutate: createMessage, isPending } = useCreateMessage();
+    const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
         if (data && data?.length > 0) {
@@ -32,25 +32,35 @@ const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
 
     const handleClose = () => {
         setIsOpen(false);
-    };    
+    };
 
     const sendMessage = () => {
         if (inputMessage.trim()) {
-            const id = getRandomId() 
-            const tempMessage: IChatBotMessage = { isBotMessage: false, message: inputMessage, _id:id, patientId:id };
+            const id = getRandomId()
+            const tempMessage: IChatBotMessage = { 
+                isBotMessage: false, 
+                message: inputMessage, 
+                _id: id, 
+                patientId: id
+            };
             setMessages(prev => [...prev, tempMessage]);
+            setInputMessage("");
+            setIsTyping(true);
+
             createMessage({ message: inputMessage },
                 {
-                    onSuccess: (newMessages) => {
-                        setInputMessage("");
-                        setMessages(prev => [...prev, newMessages]);
+                    onSuccess: (newMessage) => {
+                        setIsTyping(false);
+                        setMessages(prev => [...prev, newMessage]);
                     },
                     onError: (error) => {
+                        setIsTyping(false);
                         toast({
                             title: "Error Occurred while sending message",
                             variant: "destructive",
                             description: error.response?.data.message || "Unknown error Occurred"
                         });
+                        setInputMessage(tempMessage.message!);
                     }
                 }
             );
@@ -69,7 +79,13 @@ const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
                 >
                     {isAuthenticated ? (
                         <Card className="h-full sm:h-[600px] max-h-[800px] flex flex-col shadow-2xl border-primary/10 bg-dark-200 rounded-2xl overflow-hidden">
-                            <MessageDisplay messages={messages} handleClose={handleClose} />
+                            <MessageDisplay
+                                isLoading={isLoading}
+                                messages={messages}
+                                handleClose={handleClose}
+                                isMessagePending={isPending}
+                                isTyping={isTyping}
+                            />
                             <ChatBotController
                                 inputMessage={inputMessage}
                                 setInputMessage={setInputMessage}

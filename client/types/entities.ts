@@ -22,12 +22,12 @@ export interface IDoctor {
    readonly phone?: string;
    readonly password?: string;
    readonly qualifications?: string[];
-   readonly isBlocked?: boolean;
    readonly image?: string;
    readonly email?: string;
    readonly updatedAt?: string;
    readonly createdAt?: string;
    readonly isVerified?: boolean;
+   isBlocked?: boolean;
 }
 
 export interface ISlot {

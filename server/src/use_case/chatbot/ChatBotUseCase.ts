@@ -21,6 +21,12 @@ export default class ChatBotUseCase {
 
     async getMessages(patientId:string):Promise<IChatBotMessage[]>{
         this.validatorService.validateIdFormat(patientId);
-        return await this.chatBotMessageRepository.getMessagesByPatientId(patientId);
+        let limit = 40
+        const messages = await this.chatBotMessageRepository.getMessagesByPatientId(patientId, limit);
+        if(messages.length>limit){
+            const ids = messages.map(message=>message._id!);
+            await this.chatBotMessageRepository.deleteNotInId(ids);
+        }
+        return messages
     }
 }

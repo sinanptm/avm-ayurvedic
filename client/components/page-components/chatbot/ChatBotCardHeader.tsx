@@ -14,7 +14,7 @@ const ChatBotCardHeader = ({handleClose}:{handleClose: () => void}) => {
                     alt='Robot'
                     className="h-7 w-6 text-white"
                 />
-                <h2 className="text-xl font-semibold">AVM Ayurvedic Assistant</h2>
+                <h2 className="text-xl font-semibold">Ayurvedic Assistant</h2>
             </div>
             <ButtonV2
                 onClick={handleClose}

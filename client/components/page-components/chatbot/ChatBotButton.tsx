@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from "framer-motion"
-import ChatSection from './ChatSection'
 import { ButtonV2 } from '@/components/button/ButtonV2';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/hooks/useAuth';
+import dynamic from 'next/dynamic';
+
+const ChatSection = dynamic(() => import('./ChatSection'), { ssr: false })
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);

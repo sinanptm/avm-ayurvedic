@@ -27,18 +27,22 @@ const ChatBotController = ({ inputMessage, setInputMessage, sendMessage, isSendi
                     onChange={(e) => setInputMessage(e.target.value)}
                     className="flex-grow bg-dark-100 text-white placeholder-gray-400 border-gray-600 focus:border-green-500 focus:ring-green-500 text-sm py-3 rounded-full"
                     aria-label="Type your message"
-                    onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage();
+                        }
+                    }}
                 />
                 <ButtonV2
                     type="submit"
                     variant={"ringHover"}
                     size="icon"
-                    className="rounded-full bg-green-600 hover:bg-green-700"
+                    className="rounded-full bg-green-600 hover:bg-green-700 transition-colors duration-200"
                     aria-label="Send message"
-                    disabled={isSending}
-                    onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                    disabled={isSending || inputMessage.trim() === ''}
                 >
-                    <Send className="h-5 w-5" />
+                    <Send className={`h-5 w-5 ${isSending ? 'animate-pulse' : ''}`} />
                 </ButtonV2>
             </form>
         </CardFooter>

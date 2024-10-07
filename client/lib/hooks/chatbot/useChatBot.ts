@@ -13,6 +13,7 @@ export const useCreateMessage = () => {
 export const useGetMessage = ()=>{
     return useQuery<IChatBotMessage[], AxiosError<ErrorResponse>>({
         queryKey:['chat-bot'],
-        queryFn:()=>getChatHistory()
+        queryFn:()=>getChatHistory(),
+        retry:1
     });
 };
