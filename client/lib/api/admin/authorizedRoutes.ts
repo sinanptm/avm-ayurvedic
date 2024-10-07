@@ -2,7 +2,7 @@ import apiUrls from "@/config/apiConfig";
 import { IDoctor } from "@/types/entities";
 import axios from "axios";
 
-const axiosInstance = axios.create({
+const adminAxiosInstance = axios.create({
    baseURL: `${apiUrls.ADMIN}`,
    headers: {
       "Content-Type": "application/json",
@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
    withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use(
+adminAxiosInstance.interceptors.request.use(
    (config) => {
       const token = JSON.parse(localStorage.getItem("auth") || "{}");
       if (token.adminToken) {
@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(
    }
 );
 
-axiosInstance.interceptors.response.use(
+adminAxiosInstance.interceptors.response.use(
    (response) => {
       return response;
    },
@@ -51,7 +51,7 @@ axiosInstance.interceptors.response.use(
 
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-            return axiosInstance(originalRequest);
+            return adminAxiosInstance(originalRequest);
          } catch (refreshError: any) {
             if (refreshError.response.status === 401) {
                const tokens = JSON.parse(localStorage.getItem("auth") || "{}");
@@ -69,21 +69,24 @@ axiosInstance.interceptors.response.use(
 );
 
 export const getPatients = async (offset: number, limit: number) => {
-   const response = await axiosInstance.get(`/patient?limit=${limit}&offset=${offset}`);
+   const response = await adminAxiosInstance.get(`/patient?limit=${limit}&offset=${offset}`);
    return response.data;
 };
 
 export const blockPatient = async (id: string, isBlocked: boolean) => {
-   const response = await axiosInstance.put("/patient", { id, isBlocked });
+   const response = await adminAxiosInstance.put("/patient", { id, isBlocked });
    return response.data;
 };
 
 export const getDoctors = async (offset: number, limit: number, type: "verified" | "not-verified" | "blocked") => {
-   const response = await axiosInstance.get(`/doctor?offset=${offset}&limit=${limit}&type=${type}`);
+   const response = await adminAxiosInstance.get(`/doctor?offset=${offset}&limit=${limit}&type=${type}`);
    return response.data;
 };
 
 export const updateDoctor = async (doctor: IDoctor) => {
-   const response = await axiosInstance.put("/doctor", doctor);
+   const response = await adminAxiosInstance.put("/doctor", doctor);
    return response.data;
 };
+
+
+export default adminAxiosInstance;
