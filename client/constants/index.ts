@@ -44,7 +44,7 @@ export const DoctorsSidebarLinks: NavLinkType[] = [
       label: "Video",
       href: "/doctor/video-sections",
       icon: "/assets/icons/utils/video.svg",
-   }
+   },
 ];
 
 export const NavLinks: NavLinkType[] = [
@@ -109,13 +109,12 @@ export const OurServices = [
 
 export const SliderImages: string[] = [
    "/assets/images/onboarding-img.png",
-   "https://images.unsplash.com/photo-1485433592409-9018e83a1f0d?q=80&w=1814&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://images.unsplash.com/photo-1483982258113-b72862e6cff6?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://images.unsplash.com/photo-1482189349482-3defd547e0e9?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://images.unsplash.com/photo-1519110756001-72f90e894646?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?q=80&w=1178&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://plus.unsplash.com/premium_photo-1674499074438-8f611a3569f6?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://media.istockphoto.com/id/962679166/photo/kalaripayattu-martial-art-in-kerala-india.jpg?s=1024x1024&w=is&k=20&c=RIMZdul-lTSn1azRm5sY7SgrSNrdMRCXX7QkxoBN4MA="
+   "/assets/images/slider-1.avif",
+   "/assets/images/slider-2.avif",
+   "/assets/images/slider-3.avif",
+   "/assets/images/slider-4.avif",
+   "/assets/images/slider-5.avif",
+   "/assets/images/slider-6.jpg",
 ];
 
 export const DoctorDegrees = [
@@ -147,15 +146,14 @@ export const DoctorDegrees = [
    "MSc (Master of Science in Medicine)",
    "PhD (Doctor of Philosophy in Medicine)",
    "DM (Doctor of Medicine)",
-   "MD-PhD (Dual Degree in Medicine and Research)"
- ];
- 
+   "MD-PhD (Dual Degree in Medicine and Research)",
+];
 
 export const DummyDoctors = [
    {
       _id: "66e18ca5f2448c308b75a861",
       email: "muhammeds@gmail.com",
-      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e18ca5f2448c308b75a861-1726057637911",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/doctor/66f43f33e89ff3aa8da6e673-1727282995040",
       isBlocked: false,
       name: "Dr Muhammed",
       phone: "+918082327749",
@@ -169,7 +167,7 @@ export const DummyDoctors = [
    {
       _id: "66e1cace6d9f4811ad6f6767",
       email: "drshafeeq@gmail.com",
-      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1cace6d9f4811ad6f6767-1726073550611",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/doctor/66f43f33e89ff3aa8da6e673-1727282995040",
       isBlocked: false,
       name: "Dr Ganesh",
       phone: "+918909049",
@@ -183,7 +181,7 @@ export const DummyDoctors = [
    {
       _id: "66e1d4144dd4bfd500a9481f",
       email: "Jasmin9@gmail.com",
-      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e1d4144dd4bfd500a9481f-1726075924461",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/doctor/66f43f33e89ff3aa8da6e673-1727282995040",
       isBlocked: false,
       name: "Jasmin",
       phone: "+918089507749",
@@ -197,7 +195,7 @@ export const DummyDoctors = [
    {
       _id: "66e28058798c79efcba79690",
       email: "drJasmin@gmail.com",
-      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/66e28058798c79efcba79690-1726120024184",
+      image: "https://avm-ayurvedic.s3.eu-north-1.amazonaws.com/profile-images/doctor/66f43f33e89ff3aa8da6e673-1727282995040",
       isBlocked: false,
       name: "Dr Jasmin",
       phone: "+918239109212",

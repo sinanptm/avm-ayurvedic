@@ -53,7 +53,9 @@ const Chatbot = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <ChatSection isVisible={isOpen} setIsOpen={setIsOpen} isAuthenticated={!!patientToken} />
+            {isOpen &&
+                <ChatSection isVisible={isOpen} setIsOpen={setIsOpen} isAuthenticated={!!patientToken} />
+            }
         </div>
     )
 }
