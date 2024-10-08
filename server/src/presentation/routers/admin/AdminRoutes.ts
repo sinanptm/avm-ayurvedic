@@ -1,35 +1,9 @@
 import { Router } from "express";
-import AppointmentRepository from "../../../infrastructure/repositories/AppointmentRepository";
-import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
-import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
-import AdminPatientController from "../../controllers/admin/AdminPatientController";
-import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
-import AdminDoctorController from "../../controllers/admin/AdminDoctorController";
-import SlotRepository from "../../../infrastructure/repositories/SlotRepository";
-import AdminPatientUseCase from "../../../use_case/admin/AdminPatientUseCase";
-import AdminDashBoardUseCase from "../../../use_case/admin/DashboardUseCase";
-import AdminDoctorUseCase from "../../../use_case/admin/AdminDoctorUseCase";
-import AdminController from "../../controllers/admin/AdminController";
-import JoiService from "../../../infrastructure/services/JoiService";
+import createControllers from "../../../di/controllers";
 
 const router = Router();
 
-const appointmentRepository = new AppointmentRepository();
-const patientRepository = new PatientRepository();
-const doctorRepository = new DoctorRepository();
-const slotRepository = new SlotRepository();
-
-const validatorService = new JoiService();
-const emailService = new NodeMailerService();
-const adminPatientUseCase = new AdminPatientUseCase(patientRepository, validatorService);
-const adminPatientController = new AdminPatientController(adminPatientUseCase);
-
-const adminDoctorUseCase = new AdminDoctorUseCase(doctorRepository, emailService, validatorService);
-const adminDashBoardUseCase = new AdminDashBoardUseCase(patientRepository, appointmentRepository, doctorRepository, slotRepository);
-
-const adminDoctorController = new AdminDoctorController(adminDoctorUseCase);
-const adminController = new AdminController(adminDashBoardUseCase);
-
+const { adminController, adminPatientController, adminDoctorController } = createControllers;
 
 router.get('/patient-gender', adminController.getGenderStatistics.bind(adminController));
 router.get('/users-months', adminController.getUsersStatistics.bind(adminController));
