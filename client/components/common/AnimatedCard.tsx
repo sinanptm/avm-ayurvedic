@@ -54,4 +54,4 @@ const AnimatedCard = ({
    );
 };
 
-export default memeo(AnimatedCard);
+export default memo(AnimatedCard);
