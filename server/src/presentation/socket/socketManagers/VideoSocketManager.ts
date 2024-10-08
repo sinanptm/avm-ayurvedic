@@ -1,7 +1,7 @@
 import { Server, Socket, Namespace } from "socket.io";
 import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
 import ITokenService from "../../../domain/interface/services/ITokenService";
-import VideoSocketEvents from "../../events/VideoSocketEvents";
+import VideoSocketEvents from "../events/VideoSocketEvents";
 import logger from "../../../utils/logger";
 
 export default class VideoSocketManager {

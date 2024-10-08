@@ -1,6 +1,6 @@
 import { Socket, Namespace } from "socket.io";
-import UpdateAppointmentUseCase from "../../use_case/appointment/UpdateAppointmentUseCase";
-import logger from "../../utils/logger";
+import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
+import logger from "../../../utils/logger";
 
 export default class VideoSocketEvents {
     constructor(

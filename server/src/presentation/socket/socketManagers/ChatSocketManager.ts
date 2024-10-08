@@ -3,7 +3,7 @@ import ITokenService from "../../../domain/interface/services/ITokenService";
 import CreateChatUseCase from "../../../use_case/chat/CreateChatUseCase";
 import GetChatUseCase from "../../../use_case/chat/GetChatUseCase";
 import CustomError from "../../../domain/entities/CustomError";
-import ChatSocketEvents from "../../events/ChatSocketEvents";
+import ChatSocketEvents from "../events/ChatSocketEvents";
 import { StatusCode } from "../../../types";
 
 export default class ChatSocketManager {

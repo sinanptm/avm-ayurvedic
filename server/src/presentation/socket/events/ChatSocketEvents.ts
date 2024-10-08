@@ -1,8 +1,8 @@
 import { Socket, Namespace } from "socket.io";
-import CreateChatUseCase from "../../use_case/chat/CreateChatUseCase";
-import { TokenPayload, UserRole, StatusCode } from "../../types";
-import GetChatUseCase from "../../use_case/chat/GetChatUseCase";
-import CustomError from "../../domain/entities/CustomError";
+import CreateChatUseCase from "../../../use_case/chat/CreateChatUseCase";
+import { TokenPayload, UserRole, StatusCode } from "../../../types";
+import GetChatUseCase from "../../../use_case/chat/GetChatUseCase";
+import CustomError from "../../../domain/entities/CustomError";
 
 export default class ChatSocketEvents {
     constructor(

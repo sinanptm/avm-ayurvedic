@@ -1,8 +1,8 @@
 import { Socket, Namespace } from "socket.io";
-import NotificationUseCase from "../../use_case/notification/NotificationUseCase";
-import CustomError from "../../domain/entities/CustomError";
-import { TokenPayload, UserRole } from "../../types";
-import logger from "../../utils/logger";
+import NotificationUseCase from "../../../use_case/notification/NotificationUseCase";
+import CustomError from "../../../domain/entities/CustomError";
+import { TokenPayload, UserRole } from "../../../types";
+import logger from "../../../utils/logger";
 
 export default class NotificationSocketEvents {
     constructor(
