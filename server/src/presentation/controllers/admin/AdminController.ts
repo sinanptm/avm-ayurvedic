@@ -7,17 +7,17 @@ export default class AdminController {
         private dashboardUseCase: DashboardUseCase
     ) { }
 
-    async getGenderStatics(req: Request, res: Response, next: NextFunction) {
+    async getGenderStatistics(req: Request, res: Response, next: NextFunction) {
         try {
-            const statistics = await this.dashboardUseCase.getPatientGenderStatics();
+            const statistics = await this.dashboardUseCase.getPatientGenderStatistics();
             res.status(StatusCode.Success).json({ statistics });
         } catch (error) {
             next(error)
         }
     }
-    async getUsersStatics(req: Request, res: Response, next: NextFunction) {
+    async getUsersStatistics(req: Request, res: Response, next: NextFunction) {
         try {
-            const statistics = await this.dashboardUseCase.getUsersStatics();
+            const statistics = await this.dashboardUseCase.getUsersStatistics();
             res.status(StatusCode.Success).json({ statistics });
         } catch (error) {
             next(error)
@@ -26,17 +26,26 @@ export default class AdminController {
 
     async getAppointmentsStatisticsByStatus(req: Request, res: Response, next: NextFunction) {
         try {
-            const statistics = await this.dashboardUseCase.getAppointmentsStatisticsByStatus()
-            res.status(StatusCode.Success).json({ statistics })
+            const statistics = await this.dashboardUseCase.getAppointmentsStatisticsByStatus();
+            res.status(StatusCode.Success).json({ statistics });
         } catch (error) {
             next(error);
         }
     }
 
-    async getAppointmentsByMonth(req: Request, res: Response, next: NextFunction) {
+    async getAppointmentsPerMonthStatistics(req: Request, res: Response, next: NextFunction) {
         try {
-            const statistics = await this.dashboardUseCase.getAppointmentsPerMonthStatics();
-            res.status(StatusCode.Success).json({ statistics })
+            const statistics = await this.dashboardUseCase.getAppointmentsPerMonthStatistics();
+            res.status(StatusCode.Success).json({ statistics });
+        } catch (error) {
+            next(error)
+        }
+    }
+    
+    async getSlotUsageStatistics(req: Request, res: Response, next: NextFunction){
+        try {
+            const statistics = await this.dashboardUseCase.getSlotsStatistics()
+            res.status(StatusCode.Success).json({ statistics });
         } catch (error) {
             next(error)
         }

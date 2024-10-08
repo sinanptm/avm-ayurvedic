@@ -15,7 +15,7 @@ export enum Months {
     December = "December",
 }
 
-export type PatientGenderStatics = {
+export type PatientGenderStatistics = {
     male: number;
     female: number;
     others: number;
@@ -27,7 +27,7 @@ export type UserStatistics = {
     patients: number;
 };
 
-export type AppointmentsPerMonthStatics = {
+export type AppointmentsPerMonthStatistics = {
     month:Months;
     count:number;
 }
@@ -35,4 +35,9 @@ export type AppointmentsPerMonthStatics = {
 export type AppointmentsByStatusStatistics = {
     status:AppointmentStatus;
     count:number
+}
+
+export type SlotStatistics = {
+    time:string;
+    count:number;
 }

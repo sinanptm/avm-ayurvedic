@@ -1,23 +1,24 @@
+import { Months, PatientGenderStatistics, UserStatistics, AppointmentsByStatusStatistics, SlotStatistics, AppointmentsPerMonthStatistics } from "../../types/statistics";
 import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import { Months, PatientGenderStatics, UserStatistics, AppointmentsPerMonthStatics, AppointmentsByStatusStatistics } from "../../types/statistics";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { endOfMonth, startOfMonth } from "../../utils/date-formatter";
+import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
+import { endOfMonth, startOfMonth } from "../../utils/date-formatter";
 
 export default class DashboardUseCase {
     constructor(
-        private validatorService: IValidatorService,
         private patientRepository: IPatientRepository,
         private appointmentRepository: IAppointmentRepository,
-        private doctorRepository: IDoctorRepository
+        private doctorRepository: IDoctorRepository,
+        private slotRepository: ISlotRepository
     ) { }
 
-    async getPatientGenderStatics(): Promise<PatientGenderStatics> {
+    async getPatientGenderStatistics(): Promise<PatientGenderStatistics> {
         return await this.patientRepository.findPatientGenders();
     }
-    async getUsersStatics(): Promise<UserStatistics[]> {
+
+    async getUsersStatistics(): Promise<UserStatistics[]> {
         const year = new Date().getFullYear();
         const statistics: UserStatistics[] = [];
 
@@ -37,9 +38,13 @@ export default class DashboardUseCase {
         return statistics;
     }
 
-    async getAppointmentsPerMonthStatics(): Promise<AppointmentsPerMonthStatics[]> {
+    async getSlotsStatistics(): Promise<SlotStatistics[]> {
+        return await this.slotRepository.getSlotUsageCount();
+    }
+
+    async getAppointmentsPerMonthStatistics(): Promise<AppointmentsPerMonthStatistics[]> {
         const year = new Date().getFullYear();
-        const statistics: AppointmentsPerMonthStatics[] = [];
+        const statistics: AppointmentsPerMonthStatistics[] = [];
 
         for (const month of Object.values(Months)) {
             const startTime = startOfMonth(new Date(year, Object.keys(Months).indexOf(month), 1));

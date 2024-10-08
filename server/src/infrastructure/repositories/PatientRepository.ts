@@ -2,7 +2,7 @@ import CustomError from "../../domain/entities/CustomError";
 import IPatient  from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import { PaginatedResult, StatusCode } from "../../types";
-import { PatientGenderStatics } from "../../types/statistics";
+import { PatientGenderStatistics } from "../../types/statistics";
 import PatientModel from "../model/PatientModel";
 import { getPaginatedResult } from "./getPaginatedResult";
 
@@ -66,7 +66,7 @@ export default class PatientRepository implements IPatientRepository {
    async findByEmailWithCredentials(email: string): Promise<IPatient | null> {
       return await this.model.findOne({ email });
    }
-   async findPatientGenders(): Promise<PatientGenderStatics> {
+   async findPatientGenders(): Promise<PatientGenderStatistics> {
       const counts = await this.model.aggregate([
         {
           $group: {
@@ -75,7 +75,7 @@ export default class PatientRepository implements IPatientRepository {
           },
         },
       ]);
-      const initialCounts: PatientGenderStatics = {
+      const initialCounts: PatientGenderStatistics = {
         male: 0,
         female: 0,
         others: 0,

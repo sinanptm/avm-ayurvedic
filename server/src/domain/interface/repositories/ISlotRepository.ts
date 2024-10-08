@@ -1,3 +1,4 @@
+import { SlotStatistics } from "../../../types/statistics";
 import ISlot, { Days, SlotStatus } from "../../entities/ISlot";
 import IRepository from "./IRepository";
 
@@ -10,4 +11,5 @@ export default interface ISlotRepository extends IRepository<ISlot> {
    findById(slotId: string): Promise<ISlot | null>;
    findManyByDaysAndTimes(doctorId: string, days: Days[], startTimes: string[]): Promise<ISlot[] | null>;
    findManyNotInSlotIds(doctorId: string, day: Days, excludedSlotIds: string[]): Promise<ISlot[] | null>;
+   getSlotUsageCount(): Promise<SlotStatistics[]>;
 }

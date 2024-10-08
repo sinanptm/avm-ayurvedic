@@ -2,7 +2,7 @@ import { withTempBaseUrl } from "@/lib/utils/withTempBaseUrl";
 import apiUrls from "@/config/apiConfig";
 import adminAxiosInstance from "./authorizedRoutes";
 
-export const getPatientGenderStatics = async () => {
+export const getPatientGenderStatistics = async () => {
     const response = await withTempBaseUrl(adminAxiosInstance, apiUrls.ADMIN, {
         method: "GET",
         url: "/patient-gender",
@@ -33,3 +33,11 @@ export const getAppointmentsByMonth = async () => {
     });
     return response.data;
 };
+
+export const getSlotStatistics = async()=>{
+    const response = await withTempBaseUrl(adminAxiosInstance, apiUrls.ADMIN,{
+        method:"GET",
+        url:"/slot-usage"
+    });
+    return response.data;
+}

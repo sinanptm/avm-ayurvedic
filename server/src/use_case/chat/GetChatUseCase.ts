@@ -3,10 +3,10 @@ import IPatientRepository from "../../domain/interface/repositories/IPatientRepo
 import IChatRepository from "../../domain/interface/repositories/IChatRepository";
 import IValidatorService from "../../domain/interface/services/IValidatorService";
 import CustomError from "../../domain/entities/CustomError";
-import { PaginatedResult, StatusCode } from "../../types";
 import IMessage from "../../domain/entities/IMessage";
 import IPatient from "../../domain/entities/IPatient";
 import IChat from "../../domain/entities/IChat";
+import { StatusCode } from "../../types";
 
 export default class GetChatUseCase {
     constructor(

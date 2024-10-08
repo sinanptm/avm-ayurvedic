@@ -10,11 +10,6 @@ const GenderChart = () => {
   if (error) return <div>Error loading gender statistics</div>;
   if (!data || isLoading) return <div>Loading...</div>;
 
-  const chartData = [
-    { gender: "male", patients: data.statistics.male },
-    { gender: "female", patients: data.statistics.female },
-    { gender: "others", patients: data.statistics.others },
-  ];
 
   return (
     <div>GenderChart</div>
