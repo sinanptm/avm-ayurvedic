@@ -7,7 +7,7 @@ import MessageRepository from "../../infrastructure/repositories/MessageReposito
 import PatientRepository from "../../infrastructure/repositories/PatientRepository";
 import NotificationSocketManager from "./socketManagers/NotificationSocketManager";
 import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
-import NotificationUseCase from "../../use_case/notification/NotificationUseCae";
+import NotificationUseCase from "../../use_case/notification/NotificationUseCase";
 import ChatRepository from "../../infrastructure/repositories/ChatRepository";
 import CreateChatUseCase from "../../use_case/chat/CreateChatUseCase";
 import VideoSocketManager from "./socketManagers/VideoSocketManager";
