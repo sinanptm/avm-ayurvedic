@@ -22,6 +22,7 @@ const SlotUsageChart = () => {
     return timeA.getTime() - timeB.getTime();
   });
 
+
   return (
     <>
       <CardHeader>

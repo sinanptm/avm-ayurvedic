@@ -19,12 +19,8 @@ const AppointmentsPerMonthChart = () => {
     count: stat.count
   }));
 
-  console.log(data.statistics.map(el=>el.count));
-  
-
   chartData.sort((a, b) => Object.values(Months).indexOf(a.month as Months) - Object.values(Months).indexOf(b.month as Months));
 
-  
   return (
     <>
       <CardHeader>
@@ -34,7 +30,7 @@ const AppointmentsPerMonthChart = () => {
         config={{
           appointments: {
             label: "Appointments",
-            color: "hsl(var(--chart-1))",
+            color: "hsl(var(--chart-5))",
           },
         }}
         className="h-[300px] sm:h-[400px]"
