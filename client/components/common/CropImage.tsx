@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, memo, SetStateAction } from "react";
 import Cropper from "react-easy-crop";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
@@ -98,4 +98,4 @@ const CropImage = ({
    );
 };
 
-export default CropImage;
+export default memo(CropImage);

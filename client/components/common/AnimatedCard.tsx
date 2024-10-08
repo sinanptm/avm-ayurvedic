@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import {memo} from "react";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { AnimatedCardProps } from "@/types";
 import Link from "next/link";
@@ -54,4 +54,4 @@ const AnimatedCard = ({
    );
 };
 
-export default AnimatedCard;
+export default memeo(AnimatedCard);

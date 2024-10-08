@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import "react-phone-number-input/style.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -154,4 +154,4 @@ const CustomFormField: React.FC<CustomProps> = (props) => {
    );
 };
 
-export default CustomFormField;
+export default memo(CustomFormField);

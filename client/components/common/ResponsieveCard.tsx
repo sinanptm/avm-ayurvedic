@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 
 const ResponsiveCard = () => {
    return (
@@ -29,4 +29,4 @@ const ResponsiveCard = () => {
    );
 };
 
-export default ResponsiveCard;
+export default memo(ResponsiveCard);
