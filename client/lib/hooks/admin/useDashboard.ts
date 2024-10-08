@@ -1,6 +1,6 @@
 import { getPatientGenderStatistics, getUsersStatisticsByMonth, getAppointmentsStatisticsByStatus, getAppointmentsByMonth, getSlotStatistics } from "@/lib/api/admin/dashboardRoutes";
 import { ErrorResponse } from "@/types";
-import { AppointmentsPerMonthStatistics, AppointmentsByStatusStatistics, PatientGenderStatistics, UserStatistics } from "@/types/statistics";
+import { AppointmentsPerMonthStatistics, AppointmentsByStatusStatistics, PatientGenderStatistics, UserStatistics, SlotStatistics } from "@/types/statistics";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -41,7 +41,7 @@ export const useGetAppointmentsByMonth = () => {
 }
 
 export const useGetSlotStatistics = ()=>{
-    return useQuery({
+    return useQuery<{ statistics: SlotStatistics[] }, AxiosError<ErrorResponse>>({
         queryKey:["slot-usage"],
         queryFn: () => getSlotStatistics(),
         staleTime: 2 * 60 * 1000,

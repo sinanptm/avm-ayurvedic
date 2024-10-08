@@ -6,6 +6,9 @@ export function middleware(request: NextRequest) {
   if (pathname === '/admin') {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url));
   }
+  // if(pathname==='/doctor'){
+  //   return NextResponse.redirect(new URL("/doctor/slots"));
+  // }
   return NextResponse.next();
 }
 

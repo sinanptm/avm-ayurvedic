@@ -291,7 +291,7 @@ export default class AppointmentRepository implements IAppointmentRepository {
       const dateWithoutTime = appointmentDate.split("T")[0];
       return await this.model.find({
          doctorId,
-         appointmentDate: { $regex: new RegExp(`^${dateWithoutTime}`) },
+         appointmentDate: { $gte: dateWithoutTime },
       });
    }
    async findByDateAndSlot(appointmentDate: string, slotId: string): Promise<IAppointment | null> {
