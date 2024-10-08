@@ -6,7 +6,6 @@ import { app } from "@/config/firebaseConfig";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useOAuthSigninPatient } from "@/lib/hooks/patient/usePatientAuth";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { Link } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

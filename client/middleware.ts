@@ -1,17 +1,20 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextRequest } from 'next/server';
+import patientMiddleware from './middleware/patientMiddleware';
+import adminMiddleware from './middleware/adminMiddleware';
+import doctorMiddleware from './middleware/doctorMiddleware';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (pathname === '/admin') {
-    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-  }
-  if (pathname === '/doctor') {
-    return NextResponse.redirect(new URL("/doctor/slots", request.url));
-  }
+
+  let response = patientMiddleware(request, pathname);
+  if (response) return response;
+
+  response = adminMiddleware(request, pathname);
+  if (response) return response;
+
+  response = doctorMiddleware(request, pathname);
+  if (response) return response;
+
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: ['/admin/:path*', "/doctor/:path"],
-};

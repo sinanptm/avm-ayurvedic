@@ -20,7 +20,6 @@ const OtpVerificationPage = () => {
    const { toast } = useToast();
    const router = useRouter();
    const [isLoading, setLoading] = useState(true);
-   const { patientToken } = useAuth();
 
    useEffect(() => {
       const timer = setTimeout(() => {
@@ -32,7 +31,7 @@ const OtpVerificationPage = () => {
    if (isLoading) {
       return <AuthSkelton />;
    }
-   if (otpMail && !patientToken) {
+   if (otpMail) {
       const handleResend = async () => {
          setSending(true);
          resendOtp(
