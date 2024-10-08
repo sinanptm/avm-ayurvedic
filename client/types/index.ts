@@ -75,3 +75,11 @@ export interface CustomError {
    message: string,
    statusCode?: number
 }
+
+export type AdminDashBoardProps = {
+   readonly patientGender: ReactNode
+   readonly appointmentStatus: ReactNode
+   readonly users: ReactNode
+   readonly appointments: ReactNode
+   readonly slotUsage: ReactNode
+}

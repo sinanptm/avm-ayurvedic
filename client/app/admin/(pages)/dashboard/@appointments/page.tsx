@@ -24,65 +24,66 @@ const AppointmentsPerMonthChart = () => {
   return (
     <>
       <CardHeader>
-        <CardTitle>Appointments Per Month</CardTitle>
+        <CardTitle className="text-lg sm:text-xl">Appointments Per Month</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ChartContainer
-          config={{
-            appointments: {
-              label: "Appointments",
-              color: "hsl(var(--chart-5))",
-            },
-          }}
-          className="h-[400px] sm:h-[500px]"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 30 }}>
-              <defs>
-                <linearGradient id="colorAppointments" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--color-appointments)" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="var(--color-appointments)" stopOpacity={0.1}/>
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="month"
-                tickFormatter={(value) => value.substring(0, 3)}
-                interval={0}
-                angle={-45}
-                textAnchor="end"
-                height={60}
-              />
-              <YAxis
-                width={50}
-                tickFormatter={(value) => value.toLocaleString()}
-              />
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent
-                    formatter={(value: ValueType) => {
-                      if (typeof value === 'number') {
-                        return [value.toLocaleString(), " Appointments"];
-                      }
-                      return [String(value), " Appointments"];
-                    }}
-                  />
-                }
-              />
-              <Legend verticalAlign="top" height={36} />
-              <Area
-                type="monotone"
-                dataKey="count"
-                name="Appointments"
-                stroke="var(--color-appointments)"
-                fillOpacity={1}
-                fill="url(#colorAppointments)"
-                strokeWidth={3}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-      </CardContent>
+      <ChartContainer
+        config={{
+          appointments: {
+            label: "Appointments",
+            color: "hsl(var(--chart-5))",
+          },
+        }}
+        className="h-full w-full"
+      >
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+            <defs>
+              <linearGradient id="colorAppointments" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="var(--color-appointments)" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="var(--color-appointments)" stopOpacity={0.1}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="month"
+              tickFormatter={(value) => value.substring(0, 3)}
+              interval={0}
+              angle={-45}
+              textAnchor="end"
+              height={60}
+              tick={{ fontSize: 10 }}
+            />
+            <YAxis
+              width={50}
+              
+              tickFormatter={(value) => value.toLocaleString()}
+              tick={{ fontSize: 10 }}
+            />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  formatter={(value: ValueType) => {
+                    if (typeof value === 'number') {
+                      return [value.toLocaleString(), " Appointments"];
+                    }
+                    return [String(value), " Appointments"];
+                  }}
+                />
+              }
+            />
+            <Legend wrapperStyle={{ fontSize: '10px' }} />
+            <Area
+              type="monotone"
+              dataKey="count"
+              name="Appointments"
+              stroke="var(--color-appointments)"
+              fillOpacity={1}
+              fill="url(#colorAppointments)"
+              strokeWidth={2}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </ChartContainer>
     </>
   )
 }

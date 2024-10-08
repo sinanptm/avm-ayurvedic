@@ -42,7 +42,7 @@ const SlotUsageChart = () => {
   return (
     <>
       <CardHeader>
-        <CardTitle>Slot Usage Statistics</CardTitle>
+        <CardTitle className="text-lg sm:text-xl">Slot Usage Statistics</CardTitle>
       </CardHeader>
       <ChartContainer
         config={{
@@ -51,10 +51,10 @@ const SlotUsageChart = () => {
             color: "hsl(var(--chart-1))",
           },
         }}
-        className="h-[400px] sm:h-[500px]"
+        className="h-full w-full"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={sortedData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+          <BarChart data={sortedData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="time"
@@ -62,10 +62,10 @@ const SlotUsageChart = () => {
               interval={0}
               angle={-45}
               textAnchor="end"
-              height={100}
+              height={60}
               tick={{ fontSize: 10 }}
             />
-            <YAxis width={30} />
+            <YAxis width={30} tick={{ fontSize: 10 }} />
             <ChartTooltip content={
               <ChartTooltipContent
                 formatter={(value: ValueType) => {

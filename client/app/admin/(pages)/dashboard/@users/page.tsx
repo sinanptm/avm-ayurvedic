@@ -24,7 +24,7 @@ const UsersChart = () => {
   return (
     <>
       <CardHeader>
-        <CardTitle>User Growth</CardTitle>
+        <CardTitle className="text-lg sm:text-xl">User Growth</CardTitle>
       </CardHeader>
       <ChartContainer
         config={{
@@ -37,19 +37,21 @@ const UsersChart = () => {
             color: "hsl(var(--chart-2))",
           },
         }}
-        className="h-[200px]"
+        className="h-full w-full"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+          <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis 
               dataKey="month" 
               tickFormatter={(value) => value.substring(0, 3)}
               interval={'preserveStartEnd'}
+              tick={{ fontSize: 10 }}
+              height={40}
             />
-            <YAxis width={30} />
+            <YAxis width={30} tick={{ fontSize: 10 }} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Legend />
+            <Legend wrapperStyle={{ fontSize: '10px' }} />
             <Bar dataKey="doctors" stackId="a" fill="var(--color-doctors)" name="Doctors" />
             <Bar dataKey="patients" stackId="a" fill="var(--color-patients)" name="Patients" />
           </BarChart>
