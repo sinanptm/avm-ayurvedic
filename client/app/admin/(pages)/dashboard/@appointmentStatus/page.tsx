@@ -53,11 +53,12 @@ const AppointmentStatusChart = () => {
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  formatter={(value: string | number, name: string) => {
-                    if (typeof value === 'number') {
-                      return [`${value}`, name]
+                  formatter={(value, name) => {
+                    if (Array.isArray(value)) {
+                      return [`${value.join(', ')}`, name]; 
+                    } else {
+                      return [`${value} `, name]; 
                     }
-                    return [value, name]
                   }}
                 />
               }

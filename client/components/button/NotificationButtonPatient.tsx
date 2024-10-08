@@ -3,7 +3,7 @@
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ButtonV2 } from "@/components/button/ButtonV2";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { INotification } from "@/types/entities";
 import dynamic from "next/dynamic";
 import useNotification from "@/lib/hooks/useNotification";
@@ -59,4 +59,4 @@ const NotificationButtonPatient = () => {
   );
 };
 
-export default NotificationButtonPatient;
+export default memo(NotificationButtonPatient);

@@ -8,15 +8,11 @@ import { useGetSectionsInOneDayPatient } from '@/lib/hooks/video/usePatient';
 import VideoSectionsModel from '@/components/models/VideoSectionsModel'
 
 const VideoSectionButtonPatient = () => {
-    const { data: upcomingSections, isLoading } = useGetSectionsInOneDayPatient();
+    const { data: upcomingSections } = useGetSectionsInOneDayPatient();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleClick = () => {
         setIsModalOpen(true);
     }
-    
-    if (isLoading) return null
-
-
     return (
         <>
             <ButtonV2 variant="ghost" size="icon" className="relative" onClick={handleClick}>

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, memo, useState } from "react";
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ButtonV2 } from "@/components/button/ButtonV2";
@@ -66,4 +66,4 @@ const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
 
 NotificationButtonDoctor.displayName = "NotificationButtonDoctor";
 
-export default NotificationButtonDoctor;
+export default memo(NotificationButtonDoctor);

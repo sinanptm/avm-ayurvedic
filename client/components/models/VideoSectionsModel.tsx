@@ -44,7 +44,6 @@ export default function VideoCallModal({
           <AlertDialogTitle className="flex items-center justify-between text-2xl font-semibold">
             Upcoming Online Appointments
             <ButtonV2 variant="ghost" size="icon" onClick={closeModal} aria-label="Close">
-              <XIcon className="h-6 w-6" />
               <Image
                 src={'/assets/icons/x.svg'}
                 className="h-6 w-6"

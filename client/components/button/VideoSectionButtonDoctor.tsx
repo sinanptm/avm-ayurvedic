@@ -8,13 +8,11 @@ import VideoSectionsModel from '@/components/models/VideoSectionsModel';
 import { useGetSectionsInOneDayDoctor } from '@/lib/hooks/video/useDoctor';
 
 const VideoSectionButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
-    const { data: upcomingSections, isLoading } = useGetSectionsInOneDayDoctor();
+    const { data: upcomingSections } = useGetSectionsInOneDayDoctor();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleClick = () => {
         setIsModalOpen(true);
     };
-
-    if (isLoading) return null;    
 
     return (
         <>
@@ -39,7 +37,7 @@ const VideoSectionButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
             <VideoSectionsModel
                 open={isModalOpen}
                 setOpen={setIsModalOpen}
-                sections={upcomingSections!}
+                sections={upcomingSections && upcomingSections.length > 0 ? upcomingSections : []}
                 link="/doctor/video-call"
                 user="doctor"
             />

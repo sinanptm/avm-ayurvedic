@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
@@ -22,4 +22,4 @@ const SubmitButton = ({ isLoading, className, children, variant }: SubmitButtonP
    );
 };
 
-export default SubmitButton;
+export default memo(SubmitButton);
