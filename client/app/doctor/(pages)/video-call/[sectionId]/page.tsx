@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams } from 'next/navigation';
-import JoinPage from '../../../../components/page-components/video/JoinSectionDoctor';
+import JoinPage from '@/components/page-components/video/JoinSectionDoctor';
 import VideoChat from '@/components/page-components/video/VideoChat';
 import { useGetSectionByIdDoctor } from '@/lib/hooks/video/useDoctor';
 import { useVideoCall } from '@/lib/hooks/useVideoCall';

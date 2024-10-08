@@ -3,13 +3,14 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts"
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { useGetPatientGenderStatics } from "@/lib/hooks/admin/useDashboard"
+import { useGetPatientGenderStatics } from "@/lib/hooks/admin/useDashboard";
+import Loading from './loading'
 
 const GenderChart = () => {
   const { data, error, isLoading } = useGetPatientGenderStatics();
 
-  if (error) return <div>Error loading gender statistics</div>;
-  if (!data || isLoading) return <div>Loading...</div>;
+  if (error) throw new Error(error.response?.data.message||"Unknown error Occurred")
+  if (!data || isLoading) return <Loading />
 
   const chartData = [
     { name: 'Male', value: data.statistics.male },

@@ -11,7 +11,7 @@ import Loading from './loading'
 const AppointmentsPerMonthChart = () => {
   const { data, isLoading, error } = useGetAppointmentsByMonth();
 
-  if (error) return <div>Error loading appointment statistics</div>;
+  if (error) throw new Error(error.response?.data.message || "Unknown error Occurred")
   if (!data || isLoading) return <Loading />;
 
   const chartData = data.statistics.map(stat => ({

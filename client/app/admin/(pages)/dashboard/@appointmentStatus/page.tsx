@@ -1,21 +1,27 @@
 'use client'
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from "recharts"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Cell } from "recharts"
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { useGetAppointmentsStatisticsByStatus } from "@/lib/hooks/admin/useDashboard"
 import { AppointmentStatus } from "@/types/enum"
+import Loading from './loading'
+
+export type AppointmentsByStatusStatistics = {
+  status: AppointmentStatus
+  count: number
+}
 
 const AppointmentStatusChart = () => {
-  const { data, isLoading, error } = useGetAppointmentsStatisticsByStatus();
+  const { data, isLoading, error } = useGetAppointmentsStatisticsByStatus()
 
-  if (error) return <div>Error loading appointment statistics</div>;
-  if (!data || isLoading) return <div>Loading...</div>;
+  if (error) throw new Error(error.response?.data.message || "Unknown error occurred")
+  if (!data || isLoading) return <Loading />
 
   const chartData = data.statistics.map(stat => ({
     status: stat.status.charAt(0).toUpperCase() + stat.status.slice(1).replace('-', ' '),
     count: stat.count
-  }));
+  }))
 
   const COLORS = {
     [AppointmentStatus.PAYMENT_PENDING]: "hsl(var(--chart-1))",
@@ -23,7 +29,7 @@ const AppointmentStatusChart = () => {
     [AppointmentStatus.CONFIRMED]: "hsl(var(--chart-3))",
     [AppointmentStatus.CANCELLED]: "hsl(var(--chart-4))",
     [AppointmentStatus.COMPLETED]: "hsl(var(--chart-5))"
-  };
+  }
 
   return (
     <>
@@ -42,11 +48,29 @@ const AppointmentStatusChart = () => {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="status" tick={false} />
+            <XAxis dataKey="status" angle={-45} textAnchor="end" height={60} />
             <YAxis width={30} />
-            <ChartTooltip content={<ChartTooltipContent />} />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  formatter={(value: string | number, name: string) => {
+                    if (typeof value === 'number') {
+                      return [`${value}`, name]
+                    }
+                    return [value, name]
+                  }}
+                />
+              }
+            />
             <Legend />
-            <Bar dataKey="count" fill={COLORS[AppointmentStatus.CONFIRMED]} />
+            <Bar dataKey="count" name="Appointments">
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[entry.status.toLowerCase().replace(' ', '-') as AppointmentStatus]}
+                />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </ChartContainer>

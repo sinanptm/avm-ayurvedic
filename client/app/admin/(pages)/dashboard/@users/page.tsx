@@ -4,13 +4,14 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { useGetUsersStatics } from "@/lib/hooks/admin/useDashboard"
-import { Months } from "@/types/statistics"
+import { Months } from "@/types/statistics";
+import Loading from './loading'
 
 const UsersChart = () => {
   const { data, error, isLoading  } = useGetUsersStatics();
 
-  if (error) return <div>Error loading user statistics</div>;
-  if (!data || isLoading) return <div>Loading...</div>;
+  if (error) throw new Error(error.response?.data.message||"Unknown error Occurred")
+  if (!data || isLoading) return <Loading />
 
   const chartData = data.statistics.map(stat => ({
     month: stat.month,

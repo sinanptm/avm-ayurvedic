@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { useGetSlotStatistics } from "@/lib/hooks/admin/useDashboard"
+import Loading from './loading'
 
 export type SlotStatistics = {
   time: string;
@@ -13,8 +14,8 @@ export type SlotStatistics = {
 const SlotUsageChart = () => {
   const { data, error, isLoading } = useGetSlotStatistics();
 
-  if (error) return <div>Error loading slot usage statistics</div>;
-  if (!data || isLoading) return <div>Loading...</div>;
+  if (error) throw new Error(error.response?.data.message||"Unknown error Occurred")
+  if (!data || isLoading) return <Loading />
   
   const sortedData = [...data.statistics].sort((a, b) => {
     const timeA = new Date(`2000-01-01 ${a.time}`);

@@ -1,20 +1,37 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
-import patientMiddleware from './middleware/patientMiddleware';
-import adminMiddleware from './middleware/adminMiddleware';
-import doctorMiddleware from './middleware/doctorMiddleware';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  let response = patientMiddleware(request, pathname);
-  if (response) return response;
+  if (pathname === '/doctor') {
+    return NextResponse.redirect(new URL('/doctor/slots', request.url));
+  }
+  if (pathname === '/admin') {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+  }
 
-  response = adminMiddleware(request, pathname);
-  if (response) return response;
+  const patientToken = request.cookies.get("patientToken")?.value;
 
-  response = doctorMiddleware(request, pathname);
-  if (response) return response;
+  if (patientToken) {
+    if (
+      pathname === '/signin' ||
+      pathname === '/signup' ||
+      pathname === '/signin/opt-verification' ||
+      pathname === '/signin/reset-password'
+    ) {
+      return NextResponse.rewrite(new URL('/404', request.url));
+    }
+  } else {
+    if (
+      pathname === '/profile' ||
+      pathname === '/appointments' ||
+      pathname === '/register'
+    ) {
+      return NextResponse.rewrite(new URL('/404', request.url));
+    }
+  }
+
 
   return NextResponse.next();
 }
