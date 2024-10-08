@@ -1,5 +1,5 @@
 import { Router } from "express";
-import createControllers from "../../../di/controllers";
+import createControllers from "../../di/controllers";
 
 const router = Router();
 const { patientController } = createControllers;

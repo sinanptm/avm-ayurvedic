@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { authorizeDoctor, authorizePatient } from "../../../di/middlewares";
-import createControllers from "../../../di/controllers";
+import { authorizeDoctor, authorizePatient } from "../../di/middlewares";
+import createControllers from "../../di/controllers";
 
 
 const router = Router();

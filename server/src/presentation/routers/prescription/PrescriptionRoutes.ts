@@ -1,6 +1,6 @@
 import express from 'express';
-import createControllers from "../../../di/controllers";
-import { authorizeDoctor } from '../../../di/middlewares';
+import createControllers from "../../di/controllers";
+import { authorizeDoctor } from '../../di/middlewares';
 
 const router = express.Router();
 const { prescriptionController } = createControllers;

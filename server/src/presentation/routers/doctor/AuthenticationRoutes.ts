@@ -1,5 +1,5 @@
 import express from "express";
-import createControllers from "../../../di/controllers";
+import createControllers from "../../di/controllers";
 
 const router = express.Router();
 const { authDoctorController } = createControllers;

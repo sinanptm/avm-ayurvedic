@@ -3,8 +3,8 @@ import NotificationSocketManager from "./socketManagers/NotificationSocketManage
 import VideoSocketManager from "./socketManagers/VideoSocketManager";
 import ChatSocketManager from "./socketManagers/ChatSocketManager";
 import SocketServer from "./SocketServer";
-import createUseCase from "../../di/useCases";
-import { jwtService } from "../../di/services";
+import createUseCase from "../di/useCases";
+import { jwtService } from "../di/services";
 
 const { updateAppointmentUseCase, getChatUseCase, createChatUseCase, notificationUseCase } = createUseCase;
 

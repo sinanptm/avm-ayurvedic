@@ -1,0 +1,25 @@
+import ChatBotMessageRepository from "../../infrastructure/repositories/ChatBotMessageRepository";
+import NotificationRepository from "../../infrastructure/repositories/NotificationRepository";
+import VideoSectionRepository from "../../infrastructure/repositories/VideoSectionRepository";
+import PrescriptionRepository from "../../infrastructure/repositories/PrescriptionRepository";
+import AppointmentRepository from "../../infrastructure/repositories/AppointmentRepository";
+import PatientRepository from "../../infrastructure/repositories/PatientRepository";
+import PaymentRepository from "../../infrastructure/repositories/PaymentRepository";
+import MessageRepository from "../../infrastructure/repositories/MessageRepository";
+import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
+import SlotRepository from "../../infrastructure/repositories/SlotRepository";
+import ChatRepository from "../../infrastructure/repositories/ChatRepository";
+import OtpRepository from "../../infrastructure/repositories/OtpRepository";
+
+export const chatBotMessageRepository = new ChatBotMessageRepository();
+export const notificationRepository = new NotificationRepository();
+export const videoSectionRepository = new VideoSectionRepository();
+export const prescriptionRepository = new PrescriptionRepository();
+export const appointmentRepository = new AppointmentRepository();
+export const patientRepository = new PatientRepository();
+export const paymentRepository = new PaymentRepository();
+export const messageRepository = new MessageRepository();
+export const doctorRepository = new DoctorRepository();
+export const slotRepository = new SlotRepository();
+export const chatRepository = new ChatRepository();
+export const otpRepository = new OtpRepository();

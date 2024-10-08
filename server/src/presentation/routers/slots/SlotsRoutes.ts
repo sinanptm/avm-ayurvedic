@@ -1,6 +1,6 @@
 import express from "express";
-import { authorizeDoctor } from "../../../di/middlewares";
-import createControllers from "../../../di/controllers";
+import { authorizeDoctor } from "../../di/middlewares";
+import createControllers from "../../di/controllers";
 
 
 const router = express.Router();

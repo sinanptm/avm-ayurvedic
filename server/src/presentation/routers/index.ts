@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authorizeAdmin, authorizeDoctor, authorizePatient, errorHandler } from "../../di/middlewares";
+import { authorizeAdmin, authorizeDoctor, authorizePatient, errorHandler } from "../di/middlewares";
 import patientAuthentication from "./patient/AuthenticationRoutes";
 import prescriptionRoutes from "./prescription/PrescriptionRoutes";
 import doctorAuthentication from "./doctor/AuthenticationRoutes";
@@ -9,7 +9,7 @@ import doctorProtectedRoutes from "./doctor/AuthorizedRoutes";
 import videoSectionRoutes from "./video/VideoSectionRoute";
 import protectedAdminRoutes from "./admin/AdminRoutes";
 import protectedRoutes from "./patient/PatientRoutes";
-import createControllers from "../../di/controllers";
+import createControllers from "../di/controllers";
 import chatBotRoutes from "./chatbot/chatBotRoutes";
 import slotRoutes from "./slots/SlotsRoutes";
 
