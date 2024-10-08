@@ -6,12 +6,12 @@ export function middleware(request: NextRequest) {
   if (pathname === '/admin') {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url));
   }
-  // if(pathname==='/doctor'){
-  //   return NextResponse.redirect(new URL("/doctor/slots"));
-  // }
+  if (pathname === '/doctor') {
+    return NextResponse.redirect(new URL("/doctor/slots", request.url));
+  }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', "/doctor/:path"],
 };
