@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import AuthenticationUseCase from "../../../use_case/admin/AuthenticationUseCase";
 import { Cookie, StatusCode } from "../../../types";
 
-export default class AuthenticationController {
+export default class AuthAdminController {
    constructor(
       private authUseCase: AuthenticationUseCase
    ) { }
