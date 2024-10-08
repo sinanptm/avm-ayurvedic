@@ -2,13 +2,13 @@ import { Router } from "express";
 import AppointmentRepository from "../../../infrastructure/repositories/AppointmentRepository";
 import PatientRepository from "../../../infrastructure/repositories/PatientRepository";
 import DoctorRepository from "../../../infrastructure/repositories/DoctorRepository";
+import AdminPatientController from "../../controllers/admin/AdminPatientController";
 import NodeMailerService from "../../../infrastructure/services/NodeMailerService";
+import AdminDoctorController from "../../controllers/admin/AdminDoctorController";
 import SlotRepository from "../../../infrastructure/repositories/SlotRepository";
-import AdminPatientController from "../../controllers/admin/PatientController";
-import AdminDoctorController from "../../controllers/admin/DoctorController";
+import AdminPatientUseCase from "../../../use_case/admin/AdminPatientUseCase";
 import AdminDashBoardUseCase from "../../../use_case/admin/DashboardUseCase";
-import AdminPatientUseCase from "../../../use_case/admin/PatientUseCase";
-import AdminDoctorUseCase from "../../../use_case/admin/DoctorUseCase";
+import AdminDoctorUseCase from "../../../use_case/admin/AdminDoctorUseCase";
 import AdminController from "../../controllers/admin/AdminController";
 import JoiService from "../../../infrastructure/services/JoiService";
 

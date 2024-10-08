@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import AdminPatientUseCase from "../../../use_case/admin/PatientUseCase";
+import AdminPatientUseCase from "../../../use_case/admin/AdminPatientUseCase";
 import { StatusCode } from "../../../types";
 
 export default class AdminPatientController {
