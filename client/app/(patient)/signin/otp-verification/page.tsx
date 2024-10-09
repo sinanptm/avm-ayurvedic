@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Banners } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
-import OtpVerificationSection from "@/components/forms/patient/OtpForms";
+import OtpVerificationSection from "@/components/common/OtpForms";
 import AuthSkelton from "@/components/skeletons/AuthPage";
 import { useAuth } from "@/lib/hooks/useAuth";
 

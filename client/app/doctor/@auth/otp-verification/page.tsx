@@ -1,5 +1,5 @@
 "use client";
-import OtpForm from "@/components/forms/patient/OtpForms";
+import OtpForm from "@/components/common/OtpForms";
 import { toast } from "@/components/ui/use-toast";
 import { Banners } from "@/constants";
 import { useResendOtpDoctor, useValidateOtpDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
