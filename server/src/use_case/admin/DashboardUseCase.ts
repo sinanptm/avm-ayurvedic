@@ -19,48 +19,62 @@ export default class DashboardUseCase {
     }
 
     async getUsersStatistics(): Promise<UserStatistics[]> {
-        const year = new Date().getFullYear();
-        const statistics: UserStatistics[] = [];
-
-        for (const month of Object.values(Months)) {
-            const startTime = startOfMonth(new Date(year, Object.keys(Months).indexOf(month), 1));
-            const endTime = endOfMonth(startTime);
-
-            const patients = await this.patientRepository.getCountInTimeRange(startTime, endTime);
-            const doctors = await this.doctorRepository.getCountInTimeRange(startTime, endTime);
-
-            statistics.push({
-                month,
-                doctors,
-                patients,
-            });
+        const currentYear = new Date().getFullYear();
+        const startYear = currentYear - 2;  
+        const endYear = currentYear + 5;    
+        const statisticsMap: Map<string, UserStatistics> = new Map();
+    
+        for (let year = startYear; year <= endYear; year++) {
+            for (const month of Object.values(Months)) {
+                const startTime = startOfMonth(new Date(year, Object.keys(Months).indexOf(month), 1));
+                const endTime = endOfMonth(startTime);
+    
+                const patients = await this.patientRepository.getCountInTimeRange(startTime, endTime);
+                const doctors = await this.doctorRepository.getCountInTimeRange(startTime, endTime);
+    
+                if (!statisticsMap.has(month)) {
+                    statisticsMap.set(month, { month, doctors: 0, patients: 0 });
+                }
+    
+                const currentStats = statisticsMap.get(month)!;
+                currentStats.doctors += doctors;
+                currentStats.patients += patients;
+            }
         }
-        return statistics;
+    
+        return Array.from(statisticsMap.values());
     }
+    
+    async getAppointmentsPerMonthStatistics(): Promise<AppointmentsPerMonthStatistics[]> {
+        const currentYear = new Date().getFullYear();
+        const startYear = currentYear - 2;  
+        const endYear = currentYear + 5;    
+        const statisticsMap: Map<string, AppointmentsPerMonthStatistics> = new Map();
+    
+        for (let year = startYear; year <= endYear; year++) {
+            for (const month of Object.values(Months)) {
+                const startTime = startOfMonth(new Date(year, Object.keys(Months).indexOf(month), 1));
+                const endTime = endOfMonth(startTime);
+    
+                const count = await this.appointmentRepository.getCountByRange(startTime, endTime);
+    
+                if (!statisticsMap.has(month)) {
+                    statisticsMap.set(month, { month, count: 0 });
+                }
+    
+                const currentStats = statisticsMap.get(month)!;
+                currentStats.count += count;
+            }
+        }
+    
+        return Array.from(statisticsMap.values());
+    }
+    
 
     async getSlotsStatistics(): Promise<SlotStatistics[]> {
         return await this.slotRepository.getSlotUsageCount();
     }
-
-    async getAppointmentsPerMonthStatistics(): Promise<AppointmentsPerMonthStatistics[]> {
-        const year = new Date().getFullYear();
-        const statistics: AppointmentsPerMonthStatistics[] = [];
-
-        for (const month of Object.values(Months)) {
-            const startTime = startOfMonth(new Date(year, Object.keys(Months).indexOf(month), 1));
-            const endTime = endOfMonth(startTime);
-
-            const count = await this.appointmentRepository.getCountByRange(startTime, endTime);
-
-            statistics.push({
-                month,
-                count
-            })
-        };
-
-        return statistics;
-    }
-
+    
     async getAppointmentsStatisticsByStatus(): Promise<AppointmentsByStatusStatistics[]> {
         const statistics: AppointmentsByStatusStatistics[] = [];
         for (let status of Object.values(AppointmentStatus)) {
