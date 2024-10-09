@@ -15,6 +15,10 @@ import { useRouter } from "next/navigation";
 import { useSignInPatient } from "@/lib/hooks/patient/usePatientAuth";
 import { useAuth } from "@/lib/hooks/useAuth";
 import ForgetPasswordModel from "@/components/models/patient/ForgetPasswordModel";
+import { PopoverContent, PopoverTrigger, Popover } from "@/components/ui/popover";
+import { ButtonV2 } from "@/components/button/ButtonV2";
+import Image from "next/image";
+
 
 const LoginForm = () => {
    const [error, setError] = useState("");
@@ -23,6 +27,8 @@ const LoginForm = () => {
    const { mutate: signIn, isPending } = useSignInPatient();
    const { setCredentials } = useAuth();
    const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
+   const dummyPassword = "Mw@276si";
+   const dummyEmail = "demouser@gmail.com";
 
    const form = useForm<z.infer<typeof signinFormSchema>>({
       resolver: zodResolver(signinFormSchema),
@@ -31,7 +37,7 @@ const LoginForm = () => {
          password: "",
       },
    });
-
+   
    const onSubmit = async ({ email, password }: z.infer<typeof signinFormSchema>) => {
       signIn(
          { email, password },
@@ -56,6 +62,11 @@ const LoginForm = () => {
          }
       );
    };
+   
+      const setDummyData = () => {
+         form.setValue("email", dummyEmail);
+         form.setValue("password", dummyPassword);
+      };
 
    return (
       <Form {...form}>
@@ -95,7 +106,31 @@ const LoginForm = () => {
                Forget Password?
             </p>
 
-            <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
+            <div className="flex justify-between items-center space-x-1">
+               <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
+               <Popover>
+                  <PopoverTrigger asChild>
+                     <ButtonV2 type="button" variant="shine" size="icon">
+                        <Image
+                           src={'/assets/icons/guarantees/confidential.svg'}
+                           width={10}
+                           height={10}
+                           alt="Dummy user"
+                        />
+                     </ButtonV2>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80 bg-black">
+                     <div className="space-y-2">
+                        <h3 className="font-semibold">Tester Credentials:</h3>
+                        <p className="text-sm">Email: {dummyEmail}</p>
+                        <p className="text-sm">Password: {dummyPassword}</p>
+                        <ButtonV2 type="button" variant="secondary" size="sm" onClick={setDummyData}>
+                           Fill Credentials
+                        </ButtonV2>
+                     </div>
+                  </PopoverContent>
+               </Popover>
+            </div>
          </form>
          <ForgetPasswordModel isOpen={isForgetPasswordOpen} setIsOpen={setIsForgetPasswordOpen} />
       </Form>

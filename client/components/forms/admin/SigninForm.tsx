@@ -57,39 +57,39 @@ const AdminSigninForm = () => {
    };
 
    return (
-      <Form { ...form }>
-         <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6 flex-1">
+      <Form {...form}>
+         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
             <section className="mb-12 space-y-4">
                <h1 className="header">Admin Signin</h1>
                <p className="text-dark-700">Please signin to go to dashboard</p>
             </section>
 
             <CustomFormField
-               fieldType={ FormFieldType.INPUT }
-               control={ form.control }
+               fieldType={FormFieldType.INPUT}
+               control={form.control}
                name="email"
                label="Email address  *"
                placeholder="johndoe@gmail.com"
-               iconSrc={ "/assets/icons/email.svg" }
+               iconSrc={"/assets/icons/email.svg"}
             />
 
             <CustomFormField
-               control={ form.control }
-               fieldType={ FormFieldType.PASSWORD }
+               control={form.control}
+               fieldType={FormFieldType.PASSWORD}
                name="password"
                label="Password *"
                placeholder="Enter your password"
             />
 
             <div className="flex justify-between items-center space-x-1">
-               <SubmitButton isLoading={ isPending }>Sign In</SubmitButton>
+               <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
                <Popover>
                   <PopoverTrigger asChild>
                      <ButtonV2 type="button" variant="shine" size="icon">
                         <Image
-                           src={ '/assets/icons/guarantees/confidential.svg' }
-                           width={ 10 }
-                           height={ 10 }
+                           src={'/assets/icons/guarantees/confidential.svg'}
+                           width={10}
+                           height={10}
                            alt="Dummy user"
                         />
                      </ButtonV2>
@@ -97,9 +97,9 @@ const AdminSigninForm = () => {
                   <PopoverContent className="w-80 bg-black">
                      <div className="space-y-2">
                         <h3 className="font-semibold">Tester Credentials:</h3>
-                        <p className="text-sm">Email: { dummyEmail }</p>
-                        <p className="text-sm">Password: { dummyPassword }</p>
-                        <ButtonV2 type="button" variant="secondary" size="sm" onClick={ fillDummyCredentials }>
+                        <p className="text-sm">Email: {dummyEmail}</p>
+                        <p className="text-sm">Password: {dummyPassword}</p>
+                        <ButtonV2 type="button" variant="secondary" size="sm" onClick={fillDummyCredentials}>
                            Fill Credentials
                         </ButtonV2>
                      </div>
