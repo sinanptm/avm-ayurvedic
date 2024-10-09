@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function AppointmentsPerMonthChartLoading() {
   return (
-    <Card className="w-full col-span-1 md:col-span-2 lg:col-span-3">
+    <Card className="w-full col-span-1 md:col-span-2 lg:col-span-3 border-none">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">
           <Skeleton className="h-6 w-3/4" />

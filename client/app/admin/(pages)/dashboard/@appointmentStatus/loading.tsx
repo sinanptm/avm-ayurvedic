@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function AppointmentStatusChartLoading() {
   return (
-    <Card className="w-full">
+    <Card className="w-full border-none">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">
           <Skeleton className="h-6 w-3/4" />

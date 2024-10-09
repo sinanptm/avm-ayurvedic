@@ -26,35 +26,33 @@ const DashboardLayout = ({
     users,
     slotUsage
 }: AdminDashBoardProps) => {
-
    return (
-    // TODO: user, gender , slot , align issue
         <div className="flex min-h-screen w-full bg-background">
             <div className="flex-1 flex flex-col overflow-hidden">
-                <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 space-y-4 remove-scrollbar">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 space-y-6 remove-scrollbar">
                     <Card className="w-full">
                         <CardContent className="p-4 h-[300px] sm:h-[400px] md:h-[500px]">
                             {appointments}
                         </CardContent>
                     </Card>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <Card>
-                            <CardContent className="p-4 h-[250px] sm:h-[300px]">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <Card className="h-[300px] sm:h-[350px]">
+                            <CardContent className="p-4 h-full">
                                 {patientGender}
                             </CardContent>
                         </Card>
-                        <Card>
-                            <CardContent className="p-4 h-[250px] sm:h-[300px]">
+                        <Card className="h-[300px] sm:h-[350px]">
+                            <CardContent className="p-4 h-full">
                                 {appointmentStatus}
                             </CardContent>
                         </Card>
-                        <Card>
-                            <CardContent className="p-4 h-[250px] sm:h-[300px]">
+                        <Card className="h-[300px] sm:h-[350px]">
+                            <CardContent className="p-4 h-full">
                                 {users}
                             </CardContent>
                         </Card>
                     </div>
-                    <Card>
+                    <Card className="w-full">
                         <CardContent className="p-4 h-[300px] sm:h-[400px] md:h-[500px]">
                             {slotUsage}
                         </CardContent>

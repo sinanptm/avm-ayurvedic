@@ -46,7 +46,7 @@ const AppointmentStatusChart = () => {
         className="h-full w-full"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+          <BarChart data={chartData} margin={{top: 20, right: 20, left: 0, bottom: 80 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="status" angle={-45} textAnchor="end" height={60} tick={{ fontSize: 10 }} />
             <YAxis width={30} tick={{ fontSize: 10 }} />

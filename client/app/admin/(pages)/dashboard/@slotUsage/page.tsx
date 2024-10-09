@@ -1,7 +1,7 @@
 'use client'
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
-import { CardHeader, CardTitle } from "@/components/ui/card"
+import { CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { useGetSlotStatistics } from "@/lib/hooks/admin/useDashboard"
 import Loading from './loading'
@@ -42,7 +42,7 @@ const SlotUsageChart = () => {
   return (
     <>
       <CardHeader>
-        <CardTitle className="text-lg sm:text-xl">Slot Usage Statistics</CardTitle>
+        <CardTitle className="text-lg sm:text-xl md:text-2xl">Slot Usage Statistics</CardTitle>
       </CardHeader>
       <ChartContainer
         config={{
@@ -51,10 +51,10 @@ const SlotUsageChart = () => {
             color: "hsl(var(--chart-1))",
           },
         }}
-        className="h-full w-full"
+        className="h-[calc(100%-4rem)] w-full"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={sortedData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+          <BarChart data={sortedData} margin={{ top: 10, right: 10, left: 0, bottom: 40 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="time"
@@ -65,14 +65,18 @@ const SlotUsageChart = () => {
               height={60}
               tick={{ fontSize: 10 }}
             />
-            <YAxis width={30} tick={{ fontSize: 10 }} />
+            <YAxis 
+              width={40} 
+              tick={{ fontSize: 10 }} 
+              tickFormatter={(value) => value.toLocaleString()}
+            />
             <ChartTooltip content={
               <ChartTooltipContent
                 formatter={(value: ValueType) => {
                   if (typeof value === 'number') {
-                    return [value.toLocaleString(), " Appointments"];
+                    return [value.toLocaleString(), "Appointments"];
                   }
-                  return [String(value), " Appointments"];
+                  return [String(value), "Appointments"];
                 }}
               />
             } />
