@@ -15,6 +15,9 @@ import { useAuth } from "@/lib/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ForgotPasswordModalDoctor from "./ForgetPasswordForm";
+import { PopoverContent, PopoverTrigger, Popover } from "@/components/ui/popover";
+import { ButtonV2 } from "@/components/button/ButtonV2";
+import Image from "next/image";
 
 const AdminSigninForm = () => {
    const form = useForm<z.infer<typeof signinFormSchema>>({
@@ -28,6 +31,8 @@ const AdminSigninForm = () => {
    const { setCredentials } = useAuth();
    const router = useRouter();
    const [isForgetPasswordModelOpen, setForgetPasswordModelOpen] = useState(false);
+   const dummyEmail = "demodoctor@gmail.com";
+   const dummyPassword = "Mw@276si";
 
    const onSubmit = async (values: z.infer<typeof signinFormSchema>) => {
       signin(values, {
@@ -60,6 +65,10 @@ const AdminSigninForm = () => {
             }
          },
       });
+   };
+   const setDummyData = () => {
+      form.setValue("email", dummyEmail);
+      form.setValue("password", dummyPassword);
    };
 
    return (
@@ -102,7 +111,31 @@ const AdminSigninForm = () => {
 
                <FormMessage className="shad-error" />
 
+               <div className="flex justify-between items-center space-x-1">
                <SubmitButton isLoading={isPending}>Sign In</SubmitButton>
+               <Popover>
+                  <PopoverTrigger asChild>
+                     <ButtonV2 type="button" variant="shine" size="icon">
+                        <Image
+                           src={'/assets/icons/guarantees/confidential.svg'}
+                           width={10}
+                           height={10}
+                           alt="Dummy user"
+                        />
+                     </ButtonV2>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80 bg-black">
+                     <div className="space-y-2">
+                        <h3 className="font-semibold">Tester Credentials:</h3>
+                        <p className="text-sm">Email: {dummyEmail}</p>
+                        <p className="text-sm">Password: {dummyPassword}</p>
+                        <ButtonV2 type="button" variant="secondary" size="sm" onClick={setDummyData}>
+                           Fill Credentials
+                        </ButtonV2>
+                     </div>
+                  </PopoverContent>
+               </Popover>
+            </div>
             </form>
          </Form>
          <ForgotPasswordModalDoctor isOpen={isForgetPasswordModelOpen} setIsOpen={setForgetPasswordModelOpen} />
