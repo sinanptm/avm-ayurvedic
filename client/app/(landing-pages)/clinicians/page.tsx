@@ -4,7 +4,6 @@ import TestimonialsSection from "@/components/page-components/landing/clinicians
 import FAQSection from "@/components/page-components/landing/clinicians/FAQSection";
 import CTASection from "@/components/page-components/landing/clinicians/CTASection";
 import DoctorsList from "@/components/page-components/landing/clinicians/DoctorsList";
-import { DummyDoctors } from "@/constants";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,11 +14,13 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
-   // const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-   // const response = await fetch(`${apiUrl}/doctors`, {
-   //   next: { revalidate: 60,
-   // });
-   // const data = await response.json();
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+   const response = await fetch(`${apiUrl}/doctors`, {
+      next: { revalidate: 60 }
+   });
+
+   const data = await response.json();
+
 
    return (
       <section className="py-12 bg-gradient-to-b from-primary/10 to-background">
@@ -29,7 +30,7 @@ const Page = async () => {
                Discover our team of skilled Ayurvedic doctors dedicated to your holistic well-being. We combine ancient
                wisdom with modern care for personalized healing.
             </p>
-            <DoctorsList initialData={DummyDoctors!} />
+            <DoctorsList initialData={data.items} />
             <AyurvedaSection />
             <TestimonialsSection />
             <FAQSection />
