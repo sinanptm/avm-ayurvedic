@@ -11,9 +11,8 @@ import dynamic from 'next/dynamic';
 const ChatSection = dynamic(() => import('./ChatSection'), { ssr: false })
 
 const Chatbot = () => {
-    const [isOpen, setIsOpen] = useState(false);
     const path = usePathname();
-    const { patientToken } = useAuth();
+    const { patientToken, isChatBotOpen, setChatBotOpen } = useAuth();
 
     if (
         path.includes("/chats") ||
@@ -30,14 +29,14 @@ const Chatbot = () => {
     return (
         <div className="fixed sm:bottom-4 bottom-10 right-6 sm sm:right-4 z-50">
             <AnimatePresence>
-                {!isOpen && (
+                {!isChatBotOpen && (
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
                     >
                         <ButtonV2
-                            onClick={() => setIsOpen(true)}
+                            onClick={() => setChatBotOpen(true)}
                             variant={"ringHover"}
                             className="rounded-full w-16 h-16 md:w-20 md:h-20 bg-green-600 shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                             aria-label="Open chat"
@@ -53,8 +52,8 @@ const Chatbot = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            {isOpen &&
-                <ChatSection isVisible={isOpen} setIsOpen={setIsOpen} isAuthenticated={!!patientToken} />
+            {isChatBotOpen &&
+                <ChatSection isVisible={isChatBotOpen} setIsOpen={setChatBotOpen} isAuthenticated={!!patientToken} />
             }
         </div>
     )

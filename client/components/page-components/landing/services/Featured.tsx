@@ -1,120 +1,101 @@
 'use client';
 
-import { ButtonV2 } from "@/components/button/ButtonV2";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import useRedirect from "@/lib/hooks/useRedirect";
 import Image from "next/image";
-import Link from "next/link";
 import { memo } from "react";
+import { motion } from "framer-motion";
+
+const services = [
+   {
+     title: "Hospital Services",
+     description: "Our hospital services provide comprehensive care for various medical needs. From routine check-ups to emergency care, our facilities are equipped with state-of-the-art technology and staffed by experienced professionals.",
+     image: "/assets/images/hospital.png",
+   },
+   {
+     title: "Ambulance Services",
+     description: "Our ambulance services ensure quick and efficient transportation to medical facilities. Equipped with advanced life support systems and staffed by skilled paramedics, we provide reliable emergency medical transport.",
+     image: "/assets/images/ambulance.png",
+   },
+   {
+     title: "Chat with Doctor",
+     description: "Our chat services allow you to connect with experienced doctors from the comfort of your home. Get personalized medical advice, answers to your questions, and ongoing support through our secure chat platform.",
+     image: "/assets/images/chat.png",
+   },
+   {
+     title: "Video Call Section",
+     description: "Experience seamless virtual consultations with our doctors through video calls. Schedule appointments, discuss your health concerns, and receive expert guidance in real-time.",
+     image: "/assets/images/video.png",
+   },
+ ];
 
 const Featured = () => {
-   const redirect = useRedirect();
-   return (
-      <div className="py-7 bg-gradient-to-b from-background to-primary/5">
-         <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-primary">
-            Our Featured Services
-         </h2>
-         <div className="grid gap-12">
-            <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-               <CardContent className="p-0">
-                  <div className="flex flex-col md:flex-row">
-                     <div className="md:w-1/2 relative h-64 md:h-auto">
-                        <Image
-                           src="/assets/services/treatment-2.webp"
-                           alt="Advanced Ayurvedic Diagnostic Imaging"
-                           fill
-                           sizes="(max-width: 768px) 100vw, 50vw"
-                           className="object-cover"
-                           priority
-                        />
-                     </div>
-                     <div className="md:w-1/2 p-8">
-                        <h3 className="text-2xl font-semibold mb-4">Advanced Ayurvedic Diagnostic Imaging</h3>
-                        <p className="mb-6 text-muted-foreground">
-                           Our state-of-the-art imaging center provides comprehensive diagnostic services using the latest
-                           technology, integrated with Ayurvedic principles. From MRI and CT scans to ultrasound and
-                           X-rays, we offer accurate and timely results to support your holistic healthcare needs.
-                        </p>
-                        <ButtonV2 variant="gooeyRight" onClick={() => redirect()} className="cursor-pointer">
-                           Book Now
-                        </ButtonV2>
-                     </div>
-                  </div>
-               </CardContent>
-            </Card>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
-            <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-               <CardContent className="p-0">
-                  <div className="flex flex-col md:flex-row-reverse">
-                     <div className="md:w-1/2 relative h-64 md:h-auto">
-                        <Image
-                           src="/assets/3D/online-consulting.jpg"
-                           alt="Video Call Service"
-                           layout="fill"
-                           objectFit="cover"
-                        />
-                     </div>
-                     <div className="md:w-1/2 p-8">
-                        <h3 className="text-2xl font-semibold mb-4">Efficient Video Call Service</h3>
-                        <p className="mb-6 text-muted-foreground">
-                           Connect with our Ayurvedic experts from the comfort of your home. Our video call services
-                           provide you with personalized consultations, follow-ups, and treatment plans tailored to your
-                           needs.
-                        </p>
-                        <ButtonV2 variant={"shine"} onClick={() => redirect()} className="cursor-pointer">
-                           Book Now
-                        </ButtonV2>
-                     </div>
-                  </div>
-               </CardContent>
-            </Card>
-         </div>
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100
+      }
+    }
+  };
 
-         <h2 className="text-4xl font-bold text-center mt-20 mb-12 bg-clip-text">
-            Our Ayurvedic Products
-         </h2>
-         <div className="grid gap-8 md:grid-cols-2">
-            <div>
-               <Card className="h-full flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <CardHeader>
-                     <CardTitle className="text-2xl">Herbal Medicines</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex flex-col justify-between flex-grow">
-                     <p className="mb-6 text-muted-foreground">
-                        Our range of herbal medicines is formulated using traditional Ayurvedic principles and high-quality
-                        natural ingredients. These products are designed to promote health and well-being, offering natural
-                        remedies for various conditions.
-                     </p>
-                     <Link href={"https://en.wikipedia.org/wiki/Herbal_medicine"}>
-                        <ButtonV2 variant={"gooeyLeft"} className="cursor-pointer w-full md:w-auto">
-                           Explore Products
-                        </ButtonV2>
-                     </Link>
-                  </CardContent>
-               </Card>
-            </div>
-
-            <div>
-               <Card className="h-full flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <CardHeader>
-                     <CardTitle className="text-2xl">Ayurvedic Supplements</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex flex-col justify-between flex-grow">
-                     <p className="mb-6 text-muted-foreground">
-                        Our Ayurvedic supplements provide a natural way to support your body&apos;s health and vitality.
-                        They are crafted to enhance your overall wellness, boost immunity, and provide essential nutrients.
-                     </p>
-                     <Link href={"https://ayurwiki.org/Ayurwiki/Main_Page"}>
-                        <ButtonV2 variant={"gooeyRight"} className="cursor-pointer w-full md:w-auto">
-                           Explore Supplements
-                        </ButtonV2>
-                     </Link>
-                  </CardContent>
-               </Card>
-            </div>
-         </div>
+  return (
+    <div className="py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2 
+          className="text-3xl font-extrabold text-center mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Our Services
+        </motion.h2>
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {services.map((service, index) => (
+            <motion.div 
+              key={index} 
+              className="bg-dark-200 overflow-hidden shadow rounded-lg"
+              variants={itemVariants}
+            >
+              <div className="p-6">
+                <motion.div 
+                  className="flex justify-center mb-4"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    width={100}
+                    height={100}
+                    className="object-contain"
+                  />
+                </motion.div>
+                <h3 className="text-lg font-medium text-center mb-2">{service.title}</h3>
+                <p className="text-sm text-gray-400 text-center">{service.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-   );
+    </div>
+  );
 };
 
 export default memo(Featured);

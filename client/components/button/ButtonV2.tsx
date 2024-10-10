@@ -41,6 +41,8 @@ const buttonVariants = cva(
    }
 );
 
+export const linkHover2 = "relative text-zinc-100 after:absolute after:bg-zinc-100 after:bottom-2 after:h-[1px] after:w-2/3 after:origin-bottom-left after:scale-x-100 hover:after:origin-bottom-right hover:after:scale-x-0 after:transition-transform after:ease-in-out after:duration-300"
+
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
 export type ButtonColorVariant =

@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from "react";
 
 interface AuthState {
    patientToken: string;
@@ -16,6 +16,8 @@ interface AuthContextProps extends AuthState {
    setCredentials: (tokenType: keyof AuthState, token: string) => void;
    logout: (tokenType: keyof AuthState) => void;
    setMultipleCredentials: (newState: Partial<AuthState>) => void;
+   isChatBotOpen: boolean;
+   setChatBotOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const persistedAuthState: AuthState =
@@ -34,8 +36,9 @@ const initialState: AuthState = {
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: ReactNode; }) => {
    const [authState, setAuthState] = useState<AuthState>(initialState);
+   const [isChatBotOpen, setChatBotOpen] = useState(false);
 
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -78,7 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    };
 
    return (
-      <AuthContext.Provider value={{ ...authState, setCredentials, logout, setMultipleCredentials }}>
+      <AuthContext.Provider value={{ ...authState, setCredentials, logout, setMultipleCredentials, isChatBotOpen, setChatBotOpen }}>
          {children}
       </AuthContext.Provider>
    );

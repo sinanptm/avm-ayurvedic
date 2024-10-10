@@ -2,11 +2,12 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Package2, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 const Footer = () => {
    const path = usePathname();
+   const { setChatBotOpen } = useAuth();
 
    if (
       path.includes("signup") ||
@@ -48,10 +49,26 @@ const Footer = () => {
                <div>
                   <h3 className="text-lg font-semibold mb-4">Services</h3>
                   <ul className="space-y-2">
-                     <li><Link href="/new-appointment" className="hover:text-white transition-colors">Book Appointment</Link></li>
-                     <li><Link href="/new-appointment" className="hover:text-white transition-colors">Video Consultation</Link></li>
-                     <li><Link href="/services" className="hover:text-white transition-colors">Ayurvedic Treatments</Link></li>
-                     <li><Link href="/services" className="hover:text-white transition-colors">Herbal Products</Link></li>
+                     <li>
+                        <Link href="/new-appointment" className="hover:text-white transition-colors">
+                           Book Appointment
+                        </Link>
+                     </li>
+                     <li>
+                        <Link href="/new-appointment" className="hover:text-white transition-colors" >
+                           Video Consultation
+                        </Link>
+                     </li>
+                     <li onClick={() => setChatBotOpen(true)}>
+                        <Link href="#" className="hover:text-white transition-colors">
+                           Ayurvedic Assistant
+                        </Link>
+                     </li>
+                     <li>
+                        <Link href="/chat" className="hover:text-white transition-colors">
+                           Custom Service
+                        </Link>
+                     </li>
                   </ul>
                </div>
                <div>

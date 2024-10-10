@@ -7,6 +7,7 @@ import  FAQSection  from "@/components/page-components/landing/clinicians/FAQSec
 import LifestyleTips from "@/components/page-components/landing/home/LifeStyleTips";
 import AyurvedicHerbs from "@/components/page-components/landing/home/Herbs";
 import { memo } from "react";
+import OurGoals from "@/components/page-components/landing/home/OurGoals";
 
 export const metadata: Metadata = {
    keywords: [
@@ -36,6 +37,7 @@ const HomePage = () => {
          <AboutAyurveda />
          <WhyUs />
          <FeaturedTreatments />
+         <OurGoals />
          <LifestyleTips />
          <FAQSection />
          <AyurvedicHerbs />
