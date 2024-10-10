@@ -31,7 +31,7 @@ export const NavBar = () => {
   const { patientToken, setCredentials, logout } = useAuth();
   const [isLogoutModelOpen, setLogoutModelOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const isAuthorized = !!patientToken
+  const isAuthorized = !!patientToken;
 
   if (path.includes("signup") || path.includes("admin") || path.includes("signin") || path.includes("doctor")) {
     return null;
@@ -81,7 +81,14 @@ export const NavBar = () => {
     <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-dark-300 bg-opacity-55 px-4 md:px-6 z-50">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base" prefetch={false}>
-          <Package2 className="h-6 w-6" onClick={handleLinkHome} />
+          <Image
+            width={23}
+            height={23}
+            onClick={handleLinkHome}
+            src={'/assets/icons/logo-icon.svg'}
+            alt="AVM"
+            className="h-6 w-6"
+          />
           <span className="sr-only">Acme Inc</span>
         </Link>
         {NavLinks.map((link) => (
@@ -134,7 +141,7 @@ export const NavBar = () => {
       </Sheet>
       <div className="flex items-center gap-4">
         <VideoSectionButtonPatient />
-        <NotificationButtonPatient /> 
+        <NotificationButtonPatient />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <ButtonV2 variant="ghost" size="icon" className="rounded-full">
