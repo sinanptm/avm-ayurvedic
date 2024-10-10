@@ -15,6 +15,7 @@ export default class AdminPatientUseCase {
    }
 
    async blockUnblock(id: string, isBlocked: boolean, adminEmail: string) {
+      console.log(adminEmail);
       if (adminEmail === 'admin@gmail.com') {
          throw new CustomError("😊This action is Not Allowed to Demo Admin ❌", StatusCode.BadRequest);
       }

@@ -78,32 +78,38 @@ export default function DoctorsPage({ page, type }: Props) {
             >
                <div className="flex items-center justify-between">
                   <TabsList>
-                     <TabsTrigger value={DoctorsFilter.VERIFIED}>
-                        <ButtonV2
-                           variant={'outline'}
-                           color={"success" as ButtonColorVariant}
-                           className={`${tabType === DoctorsFilter.VERIFIED && "bg-opacity-45 border-white border-solid hover:bg-opacity-45"}`}
-                        >
-                           Verified
-                        </ButtonV2>
+                     <TabsTrigger value={DoctorsFilter.VERIFIED} asChild>
+                        <div>
+                           <ButtonV2
+                              variant="outline"
+                              color="success"
+                              className={`${tabType === DoctorsFilter.VERIFIED ? "bg-opacity-45 border-white border-solid hover:bg-opacity-45" : ""}`}
+                           >
+                              Verified
+                           </ButtonV2>
+                        </div>
                      </TabsTrigger>
-                     <TabsTrigger value={DoctorsFilter.BLOCKED} >
-                        <ButtonV2
-                           variant={'outline'}
-                           color={"warning" as ButtonColorVariant}
-                           className={`${tabType === DoctorsFilter.BLOCKED && "bg-opacity-45 border-white border-solid hover:bg-opacity-45"}`}
-                        >
-                           Blocked
-                        </ButtonV2>
+                     <TabsTrigger value={DoctorsFilter.BLOCKED} asChild>
+                        <div>
+                           <ButtonV2
+                              variant="outline"
+                              color="warning"
+                              className={`${tabType === DoctorsFilter.BLOCKED ? "bg-opacity-45 border-white border-solid hover:bg-opacity-45" : ""}`}
+                           >
+                              Blocked
+                           </ButtonV2>
+                        </div>
                      </TabsTrigger>
-                     <TabsTrigger value={DoctorsFilter.NOT_VERIFIED} >
-                        <ButtonV2
-                           variant={'outline'}
-                           color={"danger" as ButtonColorVariant}
-                           className={`${tabType === DoctorsFilter.NOT_VERIFIED && "bg-opacity-45 border-white border-solid hover:bg-opacity-45"}`}
-                        >
-                           Not Verified
-                        </ButtonV2>
+                     <TabsTrigger value={DoctorsFilter.NOT_VERIFIED} asChild>
+                        <div>
+                           <ButtonV2
+                              variant="outline"
+                              color="danger"
+                              className={`${tabType === DoctorsFilter.NOT_VERIFIED ? "bg-opacity-45 border-white border-solid hover:bg-opacity-45" : ""}`}
+                           >
+                              Not Verified
+                           </ButtonV2>
+                        </div>
                      </TabsTrigger>
                   </TabsList>
                </div>

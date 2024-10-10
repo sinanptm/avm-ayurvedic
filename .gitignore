@@ -46,3 +46,4 @@ Thumbs.db
 *.key
 *.crt
 *.csr
+*.pem
