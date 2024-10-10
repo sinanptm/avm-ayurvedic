@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import AdminPatientUseCase from "../../../use_case/admin/AdminPatientUseCase";
-import { StatusCode } from "../../../types";
+import { CustomRequest, StatusCode } from "../../../types";
 
 export default class AdminPatientController {
    constructor(
@@ -19,7 +19,7 @@ export default class AdminPatientController {
       }
    }
 
-   async updatePatient(req: Request, res: Response, next: NextFunction) {
+   async updatePatient(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const { id, isBlocked } = req.body;
 
@@ -27,7 +27,7 @@ export default class AdminPatientController {
             return res.status(StatusCode.BadRequest).json({ message: "_id Is Required" });
          }
 
-         await this.adminPatientUseCase.blockUnblock(id, isBlocked);
+         await this.adminPatientUseCase.blockUnblock(id, isBlocked, req.admin?.email!);
 
          res.status(StatusCode.Success).json({
             message: `Patient ${isBlocked ? "Unblocked" : "Blocked"} Successfully`,

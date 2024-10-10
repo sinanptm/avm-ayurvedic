@@ -44,10 +44,10 @@ const AdminDoctorProfileModal = ({ open, setOpen, doctor, refetch }: Props) => {
                });
                doctor.isBlocked = !doctor.isBlocked;
             },
-            onError: (error: Error) => {
+            onError: (error) => {
                toast({
                   title: "Error updating doctor status",
-                  description: error.message || "Unknown Error Occurred",
+                  description: error.response?.data.message || "Unknown Error Occurred",
                   variant: "destructive",
                });
             },

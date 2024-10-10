@@ -43,7 +43,11 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
                patient.isBlocked = !patient.isBlocked;
             },
             onError: (error) => {
-               console.log(error.response?.data || error.message);
+               toast({
+                  title: "Error in Updating Patient Status",
+                  description: error.response?.data.message || "Unknown Error Occurred",
+                  variant:"destructive"
+               });
             },
          }
       );
@@ -72,7 +76,7 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
                <div className="flex items-center space-x-6">
                   <Avatar className="h-28 w-28 rounded-full object-cover">
                      <AvatarImage src={patient.profile || "/assets/icons/circle-user.svg"} alt={patient.name} />
-                     <AvatarFallback>{(patient.name!||"P").charAt(0)}</AvatarFallback>
+                     <AvatarFallback>{(patient.name! || "P").charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div>
                      <h3 className="text-2xl font-semibold">{patient.name}</h3>

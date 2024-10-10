@@ -27,7 +27,10 @@ export default class AdminDoctorUseCase {
       return data;
    }
 
-   async update(doctor: IDoctor): Promise<void> {
+   async update(doctor: IDoctor, adminEmail:string): Promise<void> {
+      if(adminEmail==='admin@gmail.com'){
+         throw new CustomError("😊This action is Not Allowed to Demo Admin ❌", StatusCode.BadRequest)
+      }
       const updatedDoctor = await this.doctorRepository.update(doctor._id!, doctor!);
       if (!updatedDoctor) throw new CustomError("Not Found", StatusCode.NotFound);
       if (updatedDoctor?.isVerified! && doctor.isVerified) {
