@@ -20,17 +20,17 @@ const NotificationButtonPatient = () => {
 
   const handleNotificationClick = useCallback(() => {
     setIsNotificationModalOpen(true);
-  },[]);
+  }, []);
 
   const handleClearSingleNotification = useCallback((notificationId: string) => {
     clearNotification(notificationId);
-  },[ clearAllNotifications]);
+  }, [clearNotification]);
 
   const handleClearAllNotifications = useCallback(() => {
     if (!notifications || notifications.length === 0) return;
     const notificationsIds = notifications.map(el => el._id!);
     clearAllNotifications(notificationsIds);
-  },[notifications, clearAllNotifications]);
+  }, [notifications, clearAllNotifications]);
 
   return (
     <>
