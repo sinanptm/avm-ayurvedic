@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import { memo } from "react";
 
 const AboutAyurveda = () => {
    return (
@@ -31,4 +31,4 @@ const AboutAyurveda = () => {
    );
 };
 
-export default AboutAyurveda;
+export default memo(AboutAyurveda);

@@ -3,7 +3,7 @@
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ButtonV2 } from "@/components/button/ButtonV2";
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { INotification } from "@/types/entities";
 import dynamic from "next/dynamic";
 import useNotification from "@/lib/hooks/useNotification";
@@ -18,19 +18,19 @@ const NotificationButtonPatient = () => {
 
   const notificationCount = notifications.length;
 
-  const handleNotificationClick = () => {
+  const handleNotificationClick = useCallback(() => {
     setIsNotificationModalOpen(true);
-  };
+  },[isNotificationModalOpen]);
 
-  const handleClearSingleNotification = (notificationId: string) => {
+  const handleClearSingleNotification = useCallback((notificationId: string) => {
     clearNotification(notificationId);
-  };
+  },[notifications]);
 
-  const handleClearAllNotifications = () => {
+  const handleClearAllNotifications = useCallback(() => {
     if (!notifications || notifications.length === 0) return;
     const notificationsIds = notifications.map(el => el._id!);
     clearAllNotifications(notificationsIds);
-  };
+  },[notifications]);
 
   return (
     <>

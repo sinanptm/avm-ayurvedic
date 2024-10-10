@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { motion, AnimatePresence } from "framer-motion"
 import { ButtonV2 } from '@/components/button/ButtonV2';
 import Image from 'next/image';
@@ -60,4 +60,4 @@ const Chatbot = () => {
     )
 }
 
-export default Chatbot
+export default memo(Chatbot)

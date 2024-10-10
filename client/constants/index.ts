@@ -381,3 +381,28 @@ export const DiseaseOptions: string[] = [
    "Zika Virus",
    "Meningitis",
 ];
+
+
+export const Herbs = [
+   {
+     name: 'Ashwagandha',
+     description: 'Known for its stress-reducing and energy-boosting properties.',
+     image: '/assets/services/ashwagandha.jpg',
+   },
+   {
+     name: 'Turmeric',
+     description: 'A powerful anti-inflammatory and antioxidant herb.',
+     image: '/assets/services/turmeric.avif',
+   },
+   {
+     name: 'Brahmi',
+     description: 'Supports cognitive function and mental clarity.',
+     image: '/assets/services/brahmi.jpg',
+   },
+   {
+     name: 'Triphala',
+     description: 'A blend of three fruits that aids digestion and detoxification.',
+     image: '/assets/services/triphala.webp',
+   },
+ ]
+ 

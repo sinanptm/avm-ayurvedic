@@ -2,16 +2,13 @@
 
 import { ButtonV2 } from "@/components/button/ButtonV2";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import useRedirect from "@/lib/hooks/useRedirect";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { memo } from "react";
 
 const Featured = () => {
-   const router = useRouter();
-   const redirect = (path: string = '/new-appointment') => {
-      router.push(path)
-   }
-
+   const redirect = useRedirect();
    return (
       <div className="py-7 bg-gradient-to-b from-background to-primary/5">
          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-primary">
@@ -120,4 +117,4 @@ const Featured = () => {
    );
 };
 
-export default Featured;
+export default memo(Featured);

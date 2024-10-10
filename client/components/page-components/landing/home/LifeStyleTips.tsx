@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Clock, Coffee, Moon, Sun } from 'lucide-react'
 
@@ -25,7 +25,7 @@ const tips = [
   },
 ]
 
-export default function LifestyleTips() {
+const LifestyleTips = ()=> {
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-bold text-center mb-8">Ayurvedic Lifestyle Tips</h2>
@@ -47,3 +47,5 @@ export default function LifestyleTips() {
     </section>
   )
 }
+
+export default memo(LifestyleTips);

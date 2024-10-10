@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { memo } from "react";
 
 const LocationMap = () => {
   return (
@@ -89,4 +90,4 @@ const LocationMap = () => {
   );
 };
 
-export default LocationMap;
+export default memo(LocationMap);

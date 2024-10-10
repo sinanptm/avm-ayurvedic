@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { GuaranteeListHonePage } from "@/constants";
+import { memo } from "react";
 
 const WhyUs = () => {
    return (
@@ -18,4 +19,4 @@ const WhyUs = () => {
    );
 };
 
-export default WhyUs;
+export default memo(WhyUs);

@@ -153,7 +153,7 @@ const SignUpForm = () => {
                                     "You have successfully registered and your profile image has been uploaded.",
                                  variant: "success",
                               });
-                              router.push("/doctor");
+                              router.back();
                            },
                            onError: (uploadError) => {
                               setError(uploadError.message || "Failed to upload profile image");

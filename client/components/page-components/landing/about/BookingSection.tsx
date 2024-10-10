@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ButtonV2 } from "@/components/button/ButtonV2";
 import { useRouter } from "next/navigation";
+import { memo } from "react";
 
 const BookingSection = () => {
   const router = useRouter();
@@ -18,4 +19,4 @@ const BookingSection = () => {
   );
 };
 
-export default BookingSection;
+export default memo(BookingSection);

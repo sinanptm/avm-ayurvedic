@@ -1,9 +1,9 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-export const FlipWords = ({
+const FlipWords = ({
   words,
   duration = 3000,
   className,
@@ -62,7 +62,6 @@ export const FlipWords = ({
         )}
         key={currentWord}
       >
-        {/* edit suggested by Sajal: https://x.com/DewanganSajal */}
         {currentWord.split(" ").map((word, wordIndex) => (
           <motion.span
             key={word + wordIndex}
@@ -95,3 +94,5 @@ export const FlipWords = ({
     </AnimatePresence>
   );
 };
+
+export default memo(FlipWords)

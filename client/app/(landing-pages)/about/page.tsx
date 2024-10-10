@@ -5,6 +5,7 @@ import LocationMap from "@/components/page-components/landing/about/LocationMap"
 import MissionAndValues from "@/components/page-components/landing/about/MissionAndValues";
 import OurStory from "@/components/page-components/landing/about/OurStory";
 import WhyChooseUs from "@/components/page-components/landing/about/WhyChooseUs";
+import { memo } from "react";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -13,12 +14,11 @@ export const metadata: Metadata = {
   keywords: ["Ayurveda", "Holistic Health", "About Us", "Our Team", "Our Mission", "Ayurvedic Center"],
 };
 
-export default function AboutPage() {
+const  AboutPage= () => {
   return (
     <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         <h1 className="mb-8 text-4xl font-bold text-center">About AVM Ayurveda</h1>
-        
         <HeroSection />
         <OurStory />
         <MissionAndValues />
@@ -29,3 +29,5 @@ export default function AboutPage() {
     </div>
   );
 }
+
+export default memo(AboutPage)

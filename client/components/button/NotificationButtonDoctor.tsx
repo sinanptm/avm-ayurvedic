@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useState } from "react";
+import React, { forwardRef, memo, useCallback, useState } from "react";
 import { Bell } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ButtonV2 } from "@/components/button/ButtonV2";
@@ -13,20 +13,20 @@ const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
 
   const notificationCount = notifications.length;
 
-  const handleNotificationClick = () => {
+  const handleNotificationClick = useCallback(() => {
     setIsNotificationModalOpen(true);
-  };
+  }, [isNotificationModalOpen]);
 
-  const handleClearSingleNotification = (notificationId: string) => {
+  const handleClearSingleNotification = useCallback((notificationId: string) => {
     clearNotification(notificationId);
-  };
+  }, [notifications]);
 
-  const handleClearAllNotifications = () => {
+  const handleClearAllNotifications = useCallback(() => {
     if (!notifications || notifications.length === 0) return;
 
     const notificationIds = notifications.map((notification) => notification._id!);
     clearAllNotifications(notificationIds);
-  };
+  },[notifications]);
 
   return (
     <>

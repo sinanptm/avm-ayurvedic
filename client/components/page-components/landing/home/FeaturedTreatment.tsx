@@ -1,10 +1,10 @@
-import React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-import { Treatments } from '@/constants'
+import React, { memo } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { Treatments } from '@/constants';
 
-export default function FeaturedTreatments() {
+const FeaturedTreatments = () => {
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-bold text-center mb-8">Our Featured Treatments</h2>
@@ -30,5 +30,6 @@ export default function FeaturedTreatments() {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};
+export default memo(FeaturedTreatments);

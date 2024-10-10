@@ -2,7 +2,7 @@ import { IDoctor, IPatient, IPrescription } from '@/types/entities';
 import { ButtonV2 } from './ButtonV2';
 import { pdf } from '@react-pdf/renderer';
 import PrescriptionPDF from '../page-components/patient/appointments/PrescriptionPdf';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 type Props = {
     prescription: IPrescription;
@@ -10,8 +10,8 @@ type Props = {
     patient: IPatient;
 };
 
-const  DownloadPrescriptionButton = ({ prescription, doctor, patient }: Props) => {   
-    const handleDownload = async () => {
+const DownloadPrescriptionButton = ({ prescription, doctor, patient }: Props) => {
+    const handleDownload = useCallback(async () => {
         try {
             const blob = await pdf(
                 <PrescriptionPDF
@@ -29,14 +29,14 @@ const  DownloadPrescriptionButton = ({ prescription, doctor, patient }: Props) =
         } catch (error) {
             console.error('Error generating PDF:', error);
         }
-    };
+    }, []);
 
     return (
         <ButtonV2 variant="shine" onClick={handleDownload}>
             Download Prescription
         </ButtonV2>
     );
-}
+};
 
 
 export default memo(DownloadPrescriptionButton);

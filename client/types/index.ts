@@ -8,7 +8,7 @@ export type NavLinkType = {
    icon?: string;
 };
 
-export type AnimatedCardProps = {
+export type AnimatedCardProps = Readonly<{
    image: string;
    heading: string;
    text?: string;
@@ -18,27 +18,27 @@ export type AnimatedCardProps = {
    className?: string;
    imageClassName?: string;
    children?: ReactNode;
-};
+}>;
 
 export interface ErrorResponse {
    message?: string;
    stack?: string;
 }
 
-export interface MessageResponse {
+export type MessageResponse = Readonly<{
    message: string;
-}
+}>;
 
-export interface PaginatedResult<T> {
+export type PaginatedResult<T> = Readonly<{
    items: T[];
    totalItems: number;
    currentPage: number;
    totalPages: number;
    hasNextPage: boolean;
    hasPreviousPage: boolean;
-}
+}>;
 
-export interface CustomProps {
+export type CustomProps = Readonly<{
    control: Control<any>;
    name: string;
    label?: string;
@@ -56,7 +56,7 @@ export interface CustomProps {
    Icon?: FC<{ className?: string; }>;
    doctor?: string;
    showDateText?: string;
-}
+}>;
 
 export interface VideoChatProps {
    localStream: MediaStream | null;
@@ -73,13 +73,13 @@ export interface VideoChatProps {
 
 export interface CustomError {
    message: string,
-   statusCode?: number
+   statusCode?: number;
 }
 
-export type AdminDashBoardProps = {
-   readonly patientGender: ReactNode
-   readonly appointmentStatus: ReactNode
-   readonly users: ReactNode
-   readonly appointments: ReactNode
-   readonly slotUsage: ReactNode
-}
+export type AdminDashBoardProps = Readonly<{
+   patientGender: ReactNode;
+   appointmentStatus: ReactNode;
+   users: ReactNode;
+   appointments: ReactNode;
+   slotUsage: ReactNode;
+}>;

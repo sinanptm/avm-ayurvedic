@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import AnimatedCard from "@/components/common/AnimatedCard";
 import { FeaturesCardsHomePage } from "@/constants";
 
@@ -24,4 +24,4 @@ const FeaturesList = () => {
    );
 };
 
-export default FeaturesList;
+export default memo(FeaturesList);

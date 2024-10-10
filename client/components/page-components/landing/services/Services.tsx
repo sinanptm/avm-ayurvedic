@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { AppointmentTypes } from "@/constants";
+import { memo } from "react";
 
-export default function Services() {
+const Services = () => {
    return (
       <div className="py-8">
          <div className="grid gap-8 md:grid-cols-2">
@@ -34,3 +35,5 @@ export default function Services() {
       </div>
    );
 }
+
+export default memo(Services)

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { memo } from "react";
 
 const WhyChooseUs = () => {
   return (
@@ -31,4 +32,4 @@ const WhyChooseUs = () => {
   );
 };
 
-export default WhyChooseUs;
+export default memo(WhyChooseUs);

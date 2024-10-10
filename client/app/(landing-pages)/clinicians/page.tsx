@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { AyurvedaSection } from "@/components/page-components/landing/clinicians/AyurvedaSection";
 import { TestimonialsSection } from "@/components/page-components/landing/clinicians/TestimonialsSection";
 import { FAQSection } from "@/components/page-components/landing/clinicians/FAQSection";
@@ -39,4 +39,4 @@ const Page = async () => {
    );
 };
 
-export default Page;
+export default memo(Page);

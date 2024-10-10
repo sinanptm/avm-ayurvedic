@@ -2,6 +2,7 @@ import { ButtonV2 } from "@/components/button/ButtonV2";
 import { Input } from "@/components/ui/input";
 import { CardFooter } from "@/components/ui/card";
 import { Send } from "lucide-react";
+import { memo } from "react";
 
 type ChatBotControllerProps = {
     inputMessage: string;
@@ -49,4 +50,4 @@ const ChatBotController = ({ inputMessage, setInputMessage, sendMessage, isSendi
     );
 };
 
-export default ChatBotController;
+export default memo(ChatBotController);

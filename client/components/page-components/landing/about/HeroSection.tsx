@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { SliderImages } from "@/constants";
+import { memo } from "react";
 
 const HeroSection = () => {
   const randomIndex = Math.floor(Math.random() * SliderImages.length);
@@ -36,4 +37,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default memo(HeroSection);

@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { memo } from "react";
 
 const values = [
   { title: "Holistic Approach", description: "We treat the whole person, not just symptoms." },
@@ -35,4 +36,4 @@ const MissionAndValues = () => {
   );
 };
 
-export default MissionAndValues;
+export default memo(MissionAndValues);

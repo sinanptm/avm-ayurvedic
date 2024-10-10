@@ -1,6 +1,7 @@
 import { ButtonV2 } from "@/components/button/ButtonV2"
 import { CardHeader } from "@/components/ui/card"
 import Image from "next/image"
+import { memo } from "react";
 
 const ChatBotCardHeader = ({ handleClose }: { handleClose: () => void }) => {
     return (
@@ -34,4 +35,4 @@ const ChatBotCardHeader = ({ handleClose }: { handleClose: () => void }) => {
     )
 }
 
-export default ChatBotCardHeader
+export default memo(ChatBotCardHeader);

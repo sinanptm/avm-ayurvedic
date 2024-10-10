@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { LogIn } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { memo } from "react";
 
 interface NotAuthenticatedProps {
   onClose: () => void;
@@ -46,4 +47,4 @@ const NotAuthenticated: React.FC<NotAuthenticatedProps> = ({ onClose }) => {
     )
 }
 
-export default NotAuthenticated
+export default memo(NotAuthenticated)

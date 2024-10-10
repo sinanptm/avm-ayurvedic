@@ -1,17 +1,12 @@
 import AboutAyurveda from "@/components/page-components/landing/home/AboutAyurveda";
 import ImageSlider from "@/components/page-components/landing/home/ImageSlider";
 import WhyUs from "@/components/page-components/landing/home/WhyUs";
-import dynamic from "next/dynamic";
-import { Spinner } from "@/components/skeletons/spinner";
 import { Metadata } from "next";
 import FeaturedTreatments from "@/components/page-components/landing/home/FeaturedTreatment";
 import { FAQSection } from "@/components/page-components/landing/clinicians/FAQSection";
 import LifestyleTips from "@/components/page-components/landing/home/LifeStyleTips";
 import AyurvedicHerbs from "@/components/page-components/landing/home/Herbs";
-
-const FeaturesList = dynamic(() => import("@/components/page-components/landing/home/FeatureList"), {
-   loading: () => <Spinner className="w-10 h-10 justify-center items-center" size="md" />,
-});
+import { memo } from "react";
 
 export const metadata: Metadata = {
    keywords: [
@@ -44,9 +39,8 @@ const HomePage = () => {
          <LifestyleTips />
          <FAQSection />
          <AyurvedicHerbs />
-         <FeaturesList />
       </section>
    );
 };
 
-export default HomePage;
+export default memo(HomePage);

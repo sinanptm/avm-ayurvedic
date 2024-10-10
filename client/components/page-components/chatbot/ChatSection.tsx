@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import { useState, useEffect, memo } from 'react'
-import { Card } from "@/components/ui/card"
-import { motion, AnimatePresence } from "framer-motion"
-import ChatBotController from './ChatBotController'
-import MessageDisplay from './MessageDisplay'
-import NotAuthenticated from './NotAuthenticated'
-import { IChatBotMessage } from '@/types/entities'
-import { useCreateMessage, useGetMessage } from '@/lib/hooks/chatbot/useChatBot'
-import { toast } from '@/components/ui/use-toast'
-import { getRandomId } from '@/lib/utils'
+import { useState, useEffect, memo, useCallback } from 'react';
+import { Card } from "@/components/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
+import ChatBotController from './ChatBotController';
+import MessageDisplay from './MessageDisplay';
+import NotAuthenticated from './NotAuthenticated';
+import { IChatBotMessage } from '@/types/entities';
+import { useCreateMessage, useGetMessage } from '@/lib/hooks/chatbot/useChatBot';
+import { toast } from '@/components/ui/use-toast';
+import { getRandomId } from '@/lib/utils';
 
 type Props = {
     isVisible: boolean;
     setIsOpen: (value: boolean) => void;
     isAuthenticated: boolean;
-}
+};
 
 const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
     const { data, isLoading } = useGetMessage();
@@ -30,17 +30,17 @@ const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
         }
     }, [data]);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setIsOpen(false);
-    };
+    }, [setIsOpen]);
 
-    const sendMessage = () => {
+    const sendMessage = useCallback(() => {
         if (inputMessage.trim()) {
-            const id = getRandomId()
-            const tempMessage: IChatBotMessage = { 
-                isBotMessage: false, 
-                message: inputMessage, 
-                _id: id, 
+            const id = getRandomId();
+            const tempMessage: IChatBotMessage = {
+                isBotMessage: false,
+                message: inputMessage,
+                _id: id,
                 patientId: id
             };
             setMessages(prev => [...prev, tempMessage]);
@@ -65,7 +65,7 @@ const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
                 }
             );
         }
-    };
+    }, [inputMessage, setInputMessage, setIsTyping, getRandomId]);
 
     return (
         <AnimatePresence onExitComplete={() => setIsOpen(false)}>

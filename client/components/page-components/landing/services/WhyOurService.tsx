@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OurServices } from "@/constants";
 import Image from "next/image";
+import { memo } from "react";
 
 const WhyOurService = () => {
    return (
@@ -25,4 +26,4 @@ const WhyOurService = () => {
    );
 };
 
-export default WhyOurService;
+export default memo(WhyOurService);

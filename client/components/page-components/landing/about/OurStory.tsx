@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { memo } from "react";
 
 const OurStory = () => {
   return (
@@ -27,4 +28,4 @@ const OurStory = () => {
   );
 };
 
-export default OurStory;
+export default memo(OurStory);
