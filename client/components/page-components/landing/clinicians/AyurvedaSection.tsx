@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import Link from "next/link";
 import { ButtonV2 } from "@/components/button/ButtonV2";
 
-const AyurvedaSection = memo(() => (
+const AyurvedaSection = () => (
    <div className="w-full max-w-6xl mx-auto bg-primary/5 rounded-lg p-8 md:p-12 my-20">
       <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">The Healing Power of Ayurveda</h2>
       <div className="space-y-6 text-base md:text-lg">
@@ -30,6 +30,6 @@ const AyurvedaSection = memo(() => (
          </ButtonV2>
       </div>
    </div>
-));
+);
 
-export default AyurvedaSection;
+export default memo(AyurvedaSection);

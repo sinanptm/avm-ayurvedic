@@ -24,7 +24,7 @@ const NotificationButtonPatient = () => {
 
   const handleClearSingleNotification = useCallback((notificationId: string) => {
     clearNotification(notificationId);
-  },[notifications, clearAllNotifications]);
+  },[ clearAllNotifications]);
 
   const handleClearAllNotifications = useCallback(() => {
     if (!notifications || notifications.length === 0) return;

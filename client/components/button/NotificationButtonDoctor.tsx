@@ -19,7 +19,7 @@ const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
 
   const handleClearSingleNotification = useCallback((notificationId: string) => {
     clearNotification(notificationId);
-  }, [notifications, clearNotification]);
+  }, [ clearNotification]);
 
   const handleClearAllNotifications = useCallback(() => {
     if (!notifications || notifications.length === 0) return;
