@@ -43,49 +43,49 @@ export default function NotificationModal({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent className="max-w-3xl bg-dark-200">
-        <AlertDialogHeader>
-          <AlertDialogTitle className="flex items-center justify-between text-2xl font-semibold">
+      <AlertDialogContent className="max-w-[95vw] sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl bg-dark-200 p-4 sm:p-6">
+        <AlertDialogHeader className="space-y-2 sm:space-y-4">
+          <AlertDialogTitle className="flex items-center justify-between text-lg sm:text-xl font-semibold">
             Notifications
-            <ButtonV2 variant="ghost" size="icon" onClick={closeModal} aria-label="Close">
-              <XIcon className="h-6 w-6" />
+            <ButtonV2 variant="ghost" size="sm" onClick={closeModal} aria-label="Close">
+              <XIcon className="h-4 w-4 sm:h-5 sm:w-5" />
             </ButtonV2>
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription className="sr-only">Your notifications</AlertDialogDescription>
         
         {isUnauthorized ? (
-          <div className="flex flex-col items-center justify-center space-y-2 py-6 my-1">
+          <div className="flex flex-col items-center justify-center space-y-2 py-4 sm:py-6">
             <Image
               src="/assets/icons/cancelled.svg"
-              width={64}
-              height={64}
+              width={48}
+              height={48}
               alt="Unauthorized"
               className="opacity-50"
             />
-            <p className="text-center text-muted-foreground text-sm">
+            <p className="text-center text-muted-foreground text-xs sm:text-sm">
               You are not authorized to view these notifications.
             </p>
           </div>
         ) : notifications.length > 0 ? (
-          <ScrollArea className="h-[50vh] pr-4">
-            <div className="space-y-4">
+          <ScrollArea className="h-[40vh] sm:h-[50vh] pr-2 sm:pr-4">
+            <div className="space-y-2 sm:space-y-4">
               {notifications.map((notification) => {
                 const { icon, title } = getNotificationDetails(notification.type!)
                 return (
                   <Link key={notification.appointmentId} href={`${link}/${notification.appointmentId}`} onClick={closeModal}>
-                    <Card>
-                      <CardContent className="flex items-center justify-between p-4">
-                        <div className="flex items-center space-x-4">
-                          <Image src={icon} width={24} height={24} alt={title} className="h-6 w-6" />
+                    <Card className="hover:bg-dark-100 transition-colors duration-200">
+                      <CardContent className="flex items-center justify-between p-2 sm:p-4">
+                        <div className="flex items-center space-x-2 sm:space-x-4">
+                          <Image src={icon} width={20} height={20} alt={title} className="h-5 w-5 sm:h-6 sm:w-6" />
                           <div>
-                            <h3 className="font-semibold">{title}</h3>
-                            <p className="text-sm text-muted-foreground">{notification.message}</p>
+                            <h3 className="font-semibold text-sm sm:text-base">{title}</h3>
+                            <p className="text-xs sm:text-sm text-muted-foreground">{notification.message}</p>
                           </div>
                         </div>
                         <ButtonV2
-                          variant="expandIcon"
-                          size="icon"
+                          variant="ghost"
+                          size="sm"
                           onClick={(e) => {
                             e.stopPropagation()
                             e.preventDefault()
@@ -93,10 +93,10 @@ export default function NotificationModal({
                           }}
                           iconPlacement="left"
                           Icon={Trash2Icon}
-                          className="text-muted-foreground hover:text-primary w-20"
+                          className="text-muted-foreground hover:text-primary"
                           aria-label="Clear notification"
                         >
-                          Clear
+                          <span className="sr-only sm:not-sr-only">Clear</span>
                         </ButtonV2>
                       </CardContent>
                     </Card>
@@ -106,15 +106,15 @@ export default function NotificationModal({
             </div>
           </ScrollArea>
         ) : (
-          <div className="flex flex-col items-center justify-center space-y-2 py-6">
+          <div className="flex flex-col items-center justify-center space-y-2 py-4 sm:py-6">
             <Image
               src="/assets/icons/emoji/😑.svg"
-              width={64}
-              height={64}
+              width={48}
+              height={48}
               alt="No Notifications"
               className="opacity-50"
             />
-            <p className="text-center text-muted-foreground text-sm">
+            <p className="text-center text-muted-foreground text-xs sm:text-sm">
               You&apos;re all caught up! No new notifications.
             </p>
           </div>
@@ -125,14 +125,15 @@ export default function NotificationModal({
             {notifications.length > 1 && (
               <ButtonV2
                 variant="gooeyLeft"
+                size="sm"
                 onClick={handleClearAllNotifications}
-                className="text-muted-foreground hover:text-primary"
+                className="text-muted-foreground hover:text-primary text-xs sm:text-sm"
                 aria-label="Clear all notifications"
               >
                 Clear All
               </ButtonV2>
             )}
-            <ButtonV2 variant="gooeyRight" onClick={closeModal}>Close</ButtonV2>
+            <ButtonV2 variant="gooeyRight" size="sm" onClick={closeModal} className="text-xs sm:text-sm">Close</ButtonV2>
           </div>
         </AlertDialogFooter>
       </AlertDialogContent>
