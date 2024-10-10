@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import { IDoctor } from "@/types/entities";
-import { DoctorCard } from "@/components/page-components/landing/clinicians/DoctorCard";
+import DoctorCard from "@/components/page-components/landing/clinicians/DoctorCard";
 import Pagination from "@/components/navigation/Pagination";
 
 interface DoctorsListProps {
    initialData: IDoctor[];
 }
 
-export default function DoctorsList({ initialData }: DoctorsListProps) {
+const DoctorsList = ({ initialData }: DoctorsListProps)=> {
    const [currentPage, setCurrentPage] = useState(1);
    const pageSize = 2;
 
@@ -51,3 +51,5 @@ export default function DoctorsList({ initialData }: DoctorsListProps) {
       </div>
    );
 }
+
+export default memo(DoctorsList);

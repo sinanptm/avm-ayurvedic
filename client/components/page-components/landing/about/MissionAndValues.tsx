@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 const values = [
   { title: "Holistic Approach", description: "We treat the whole person, not just symptoms." },
@@ -10,6 +10,20 @@ const values = [
 ];
 
 const MissionAndValues = () => {
+  const cards = useMemo(
+    () =>
+      values.map((value, index) => (
+        <div key={index} className="flex items-start">
+          <Image src="/assets/icons/check.svg" alt="Check" width={16} height={16} className="mr-2 mt-1 flex-shrink-0" />
+          <div>
+            <h4 className="text-base font-medium">{value.title}</h4>
+            <p className="text-sm text-muted-foreground">{value.description}</p>
+          </div>
+        </div>
+      )),
+    []
+  );
+
   return (
     <Card className="mb-8">
       <CardHeader>
@@ -21,15 +35,7 @@ const MissionAndValues = () => {
           the timeless wisdom of Ayurveda, delivered with compassion and expertise.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
-          {values.map((value, index) => (
-            <div key={index} className="flex items-start">
-              <Image src="/assets/icons/check.svg" alt="Check" width={16} height={16} className="mr-2 mt-1 flex-shrink-0" />
-              <div>
-                <h4 className="text-base font-medium">{value.title}</h4>
-                <p className="text-sm text-muted-foreground">{value.description}</p>
-              </div>
-            </div>
-          ))}
+          {cards}
         </div>
       </CardContent>
     </Card>

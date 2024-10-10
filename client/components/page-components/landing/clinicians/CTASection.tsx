@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { ButtonV2 } from "@/components/button/ButtonV2";
 
-export const CTASection = () => (
+const CTASection = () => (
    <div className="bg-primary text-primary-foreground rounded-lg p-8 text-center">
       <h2 className="text-3xl font-bold mb-4">Start Your Ayurvedic Journey Today</h2>
       <p className="text-lg mb-6">
@@ -12,3 +12,5 @@ export const CTASection = () => (
       </ButtonV2>
    </div>
 );
+
+export default memo(CTASection)

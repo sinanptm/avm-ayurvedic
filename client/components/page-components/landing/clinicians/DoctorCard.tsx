@@ -1,16 +1,15 @@
-import React from "react";
+import React, { memo } from "react";
 import Image from "next/image";
 import { IDoctor } from "@/types/entities";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ButtonV2 } from "@/components/button/ButtonV2";
 
 interface DoctorCardProps {
    doctor: IDoctor;
 }
 
-export const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => (
+const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => (
    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <div className="relative w-full pt-[75%] overflow-hidden">
          <Image
@@ -65,3 +64,5 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => (
       </CardContent>
    </Card>
 );
+
+export default memo(DoctorCard)
