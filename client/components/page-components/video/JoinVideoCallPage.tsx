@@ -80,7 +80,7 @@ const  JoinVideoCallPage = ({ handleStart, section }: { handleStart: () => void,
                 <div className="flex items-center justify-center space-x-2 mb-4 text-yellow-500">
                   <AlertTriangleIcon className="w-5 h-5" />
                   <span className="text-sm font-semibold">
-                    You're joining {timeRemaining} before the scheduled time
+                    You&apos;re joining {timeRemaining} before the scheduled time
                   </span>
                 </div>
               )}
