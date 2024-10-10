@@ -126,11 +126,16 @@ export default class AppointmentUseCase {
       if (!event || !event.data || !event.data.object) {
          return;
       }
+      console.log(result.type);
+      
       const paymentIntentMetadata = event.data.object.metadata as { paymentId: string };
 
       if (!paymentIntentMetadata || !paymentIntentMetadata.paymentId) {
          return;
       }
+
+      console.log(paymentIntentMetadata.paymentId);
+      
 
       await this.verifyPaymentIntent(paymentIntentMetadata.paymentId, transactionId, type);
    }

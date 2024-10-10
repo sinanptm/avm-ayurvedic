@@ -5,18 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Package2, PanelLeft, Search } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
    DropdownMenu,
    DropdownMenuContent,
    DropdownMenuItem,
-   DropdownMenuLabel,
    DropdownMenuTrigger,
-   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { NavLinkType } from "@/types";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLogoutAdmin } from "@/lib/hooks/admin/useAdminAuth";
@@ -64,11 +61,16 @@ const AdminLayoutWithSideBar = ({
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
                <nav className="flex flex-1 flex-col items-center gap-4 px-2 py-5">
                   <Link
-                     href="/admin"
+                     href="/"
                      className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
                   >
-                     <Package2 className="h-6 w-6 transition-all group-hover:scale-110" />
-                     <span className="sr-only">AVM</span>
+                     <Image
+                        width={23}
+                        height={23}
+                        src={'/assets/icons/logo-icon.svg'}
+                        alt="AVM"
+                        className="h-6 w-6"
+                     />
                   </Link>
                   {sideBarLinks.map((item) => (
                      <Tooltip key={item.href}>
@@ -161,7 +163,13 @@ const AdminLayoutWithSideBar = ({
                            href="/"
                            className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                         >
-                           <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
+                           <Image
+                              width={23}
+                              height={23}
+                              src={'/assets/icons/logo-icon.svg'}
+                              alt="AVM"
+                              className="h-6 w-6"
+                           />
                            <span className="sr-only">AVM Ayurvedic</span>
                         </Link>
                         {sideBarLinks.map((item) => (
@@ -189,10 +197,7 @@ const AdminLayoutWithSideBar = ({
                </Sheet>
                <div className="flex flex-1 items-center gap-4 admin-nav:hidden">
                   <form className="ml-auto flex-1 sm:flex-initial">
-                     <div className="relative">
-                        <Search className="absolute left-2.5 top-2 h-4 w-4 text-muted-foreground" />
-                        <Input type="search" placeholder="Search..." className="pl-8 h-8 text-sm sm:w-[300px]" />
-                     </div>
+                     <div className="relative" />
                   </form>
                   <DropdownMenu>
                      <DropdownMenuTrigger asChild>

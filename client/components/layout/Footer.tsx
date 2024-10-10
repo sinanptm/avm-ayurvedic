@@ -16,7 +16,8 @@ const Footer = () => {
       path.includes("doctor") ||
       path.includes("chats") ||
       path.includes("video-section") ||
-      path.includes("/new-appointment")
+      path.includes("new-appointment") ||
+      path.includes("register")
    ) {
       return null;
    }

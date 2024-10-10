@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Package2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
