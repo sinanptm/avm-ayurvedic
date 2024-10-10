@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { memo } from "react";
-import { ImagesSlider } from "@/components/ui/images-slider";
+import ImagesSlider from "@/components/ui/images-slider";
 import { SliderImages, SliderTexts } from "@/constants";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { ButtonV2 } from "@/components/button/ButtonV2";
@@ -24,7 +24,7 @@ const ImageSlider = () => {
                y: 0,
             }}
             transition={{
-               duration: 0.6,
+               duration: 0.3,
             }}
             className="z-50 flex flex-col justify-center items-center"
          >
