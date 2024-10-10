@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const Page = async () => {
    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-   const response = await fetch(`${apiUrl}/doctors`, {
+   const response = await fetch(`${apiUrl && apiUrl.trim() ? apiUrl : "https://api.avm-ayurvedic.online/api"}/doctors`, {
       next: { revalidate: 60 }
    });
 
