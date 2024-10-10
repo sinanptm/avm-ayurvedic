@@ -65,7 +65,7 @@ const ChatSection = ({ isVisible, setIsOpen, isAuthenticated }: Props) => {
                 }
             );
         }
-    }, [inputMessage, setInputMessage, setIsTyping, getRandomId]);
+    }, [inputMessage, setInputMessage, setIsTyping, createMessage]);
 
     return (
         <AnimatePresence onExitComplete={() => setIsOpen(false)}>

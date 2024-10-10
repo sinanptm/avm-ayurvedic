@@ -31,3 +31,5 @@ export const AyurvedaSection = memo(() => (
       </div>
    </div>
 ));
+
+AyurvedaSection.displayName = "AyurvedaSection";

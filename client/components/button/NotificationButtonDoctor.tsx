@@ -15,18 +15,18 @@ const NotificationButtonDoctor = forwardRef<HTMLButtonElement>((props, ref) => {
 
   const handleNotificationClick = useCallback(() => {
     setIsNotificationModalOpen(true);
-  }, [isNotificationModalOpen]);
+  }, []);
 
   const handleClearSingleNotification = useCallback((notificationId: string) => {
     clearNotification(notificationId);
-  }, [notifications]);
+  }, [notifications, clearNotification]);
 
   const handleClearAllNotifications = useCallback(() => {
     if (!notifications || notifications.length === 0) return;
 
     const notificationIds = notifications.map((notification) => notification._id!);
     clearAllNotifications(notificationIds);
-  },[notifications]);
+  }, [notifications,clearAllNotifications]);
 
   return (
     <>

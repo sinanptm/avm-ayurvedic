@@ -29,7 +29,7 @@ const DownloadPrescriptionButton = ({ prescription, doctor, patient }: Props) =>
         } catch (error) {
             console.error('Error generating PDF:', error);
         }
-    }, []);
+    }, [prescription, doctor, patient]);
 
     return (
         <ButtonV2 variant="shine" onClick={handleDownload}>
