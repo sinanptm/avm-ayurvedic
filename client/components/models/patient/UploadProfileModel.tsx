@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Form, FormLabel } from "../../ui/form";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -16,6 +16,8 @@ import CropImage from "@/components/common/CropImage";
 import useCrop from "@/lib/hooks/useCrop";
 import axios from "axios";
 import { getUpdateProfileUrl, updateProfileImage } from "@/lib/api/patient/authorizedRoutes";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+
 
 type Props = {
    open: boolean;
@@ -167,6 +169,9 @@ const UploadProfileModel = ({ open, setOpen, refetch }: Props) => {
                   </div>
                </form>
             </Form>
+            <VisuallyHidden>
+               <AlertDialogDescription />
+            </VisuallyHidden>
          </AlertDialogContent>
       </AlertDialog>
    );
