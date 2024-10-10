@@ -1,17 +1,18 @@
 'use client'
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, memo } from "react"
 import { Card } from "@/components/ui/card"
-import { VideoIcon, InfoIcon, ClockIcon } from "lucide-react"
+import { VideoIcon, InfoIcon, ClockIcon, AlertTriangleIcon } from "lucide-react"
 import { ButtonV2 } from "@/components/button/ButtonV2"
 import { IVideoSection } from "@/types/entities"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { format } from "date-fns"
 
-export default function VideoCallPage({ handleStart, section }: { handleStart: () => void, section: IVideoSection }) {
+const  JoinVideoCallPage = ({ handleStart, section }: { handleStart: () => void, section: IVideoSection }) => {
   const [canStartMeeting, setCanStartMeeting] = useState(true)
   const [timeRemaining, setTimeRemaining] = useState<string | null>(null)
+  const [isEarly, setIsEarly] = useState(false)
 
   useEffect(() => {
     const now = new Date()
@@ -21,6 +22,7 @@ export default function VideoCallPage({ handleStart, section }: { handleStart: (
         const timeDiff = meetingTime.getTime() - now.getTime()
         const minutesDiff = Math.floor(timeDiff / (1000 * 60))
         setCanStartMeeting(minutesDiff <= 10 && minutesDiff >= 0)
+        setIsEarly(minutesDiff > 10)
         
         if (minutesDiff > 10) {
           const hours = Math.floor(minutesDiff / 60)
@@ -54,19 +56,34 @@ export default function VideoCallPage({ handleStart, section }: { handleStart: (
             <VideoIcon className="w-10 h-10 text-blue-500" />
           </div>
           <h1 className="text-3xl font-bold mb-6 text-center">{section?.patientName}&apos;s Video Section</h1>
-          {canStartMeeting ? (
+          {canStartMeeting || isEarly ? (
             <>
               <ButtonV2
                 onClick={handleStart}
                 variant="gooeyLeft"
                 size="lg"
-                className="w-full mb-4 bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
+                className={`w-full mb-4 ${
+                  isEarly 
+                    ? "bg-yellow-500 hover:bg-yellow-600" 
+                    : "bg-blue-500 hover:bg-blue-600"
+                } transition-colors duration-300`}
               >
-                Start Meeting
+                {isEarly ? "Join Anyway" : "Start Meeting"}
               </ButtonV2>
               <p className="text-center text-sm text-gray-400 mb-6">
-                Click to begin your video consultation with the patient.
+                {isEarly 
+                  ? "The meeting hasn't started yet, but you can join the room early."
+                  : "Click to begin your video consultation with the patient."
+                }
               </p>
+              {isEarly && (
+                <div className="flex items-center justify-center space-x-2 mb-4 text-yellow-500">
+                  <AlertTriangleIcon className="w-5 h-5" />
+                  <span className="text-sm font-semibold">
+                    You're joining {timeRemaining} before the scheduled time
+                  </span>
+                </div>
+              )}
             </>
           ) : (
             <>
@@ -110,3 +127,5 @@ export default function VideoCallPage({ handleStart, section }: { handleStart: (
     </div>
   )
 }
+
+export default memo(JoinVideoCallPage);

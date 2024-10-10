@@ -33,15 +33,13 @@ const VideoSectionButtonPatient = () => {
                 )}
                 <span className="sr-only">View Upcoming Video Calls</span>
             </ButtonV2>
-            {upcomingSections && (
                 <VideoSectionsModel
                     open={isModalOpen}
                     setOpen={setIsModalOpen}
-                    sections={upcomingSections!}
+                    sections={upcomingSections && upcomingSections.length > 0 ? upcomingSections : []}
                     link="/video-section"
                     user='patient'
                 />
-            )}
         </>
     )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams } from 'next/navigation';
-import JoinPage from '../../../../components/page-components/video/JoinSectionPatient';
+import JoinPage from '@/components/page-components/video/JoinVideoCallPage';
 import VideoChat from '@/components/page-components/video/VideoChat';
 import { useGetSectionByIdPatient } from '@/lib/hooks/video/usePatient';
 import { useVideoCall } from '@/lib/hooks/useVideoCall';
@@ -26,7 +26,7 @@ export default function PatientVideoCallPage() {
   if (isLoading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
 
   if (!hasJoined) {
-    return <JoinPage onJoin={handleJoin} section={section!} />;
+    return <JoinPage  handleStart={handleJoin} section={section!} />;
   }
 
   return (

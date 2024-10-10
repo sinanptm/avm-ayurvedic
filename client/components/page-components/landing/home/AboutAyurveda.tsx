@@ -1,14 +1,13 @@
 "use client"
 
 import Image from "next/image";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 
 const AboutAyurveda = () => {
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     if (isInView) {
@@ -56,13 +55,7 @@ const AboutAyurveda = () => {
           alt="Ayurvedic Doctor"
           fill
           className="object-contain"
-          onLoad={() => setImageLoaded(true)}
         />
-        {!imageLoaded && (
-          <div className="absolute inset-0 flex items-center justify-cente">
-            <p className="text-gray-500">Loading image...</p>
-          </div>
-        )}
       </motion.div>
     </div>
   );
