@@ -16,7 +16,7 @@ const Footer = () => {
       path.includes("doctor") ||
       path.includes("chats") ||
       path.includes("video-section") ||
-      path.includes("/new-appointment") 
+      path.includes("/new-appointment")
    ) {
       return null;
    }
@@ -75,37 +75,37 @@ const Footer = () => {
                <div>
                   <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
                   <div className="flex space-x-4">
-                     <a href="#" className="hover:text-white transition-colors">
-                        <Image
-                           src={'/assets/icons/social/facebook.svg'}
-                           alt="Facebook"
-                           height={23}
-                           width={23}
-                           className=""
-                        />
-                     </a>
-                     <a href="#" className="hover:text-white transition-colors">
-                        <Image
-                           src={'/assets/icons/social/twitter.svg'}
-                           alt="Facebook"
-                           height={23}
-                           width={23}
-                           className=""
-                        />
-                     </a>
-                     <a href="#" className="hover:text-white transition-colors">
-                        <Image
-                           src={'/assets/icons/social/instagram.svg'}
-                           alt="Facebook"
-                           height={23}
-                           width={23}
-                           className=""
-                        />
-                     </a>
-                     <a href="#" className="hover:text-white transition-colors">
+                     <a href="https://www.linkedin.com/in/muhammed-sinan-1950b3290/" className="hover:text-white transition-colors">
                         <Image
                            src={'/assets/icons/social/linkedin.svg'}
-                           alt="Facebook"
+                           alt="linkedin"
+                           height={23}
+                           width={23}
+                           className=""
+                        />
+                     </a>
+                     <a href="https://github.com/sinanptm/" className="hover:text-white transition-colors">
+                        <Image
+                           src={'/assets/icons/social/github.svg'}
+                           alt="Github"
+                           height={23}
+                           width={23}
+                           className=""
+                        />
+                     </a>
+                     <a href="https://wa.me/8089507749" className="hover:text-white transition-colors">
+                        <Image
+                           src={'/assets/icons/social/whatsapp.svg'}
+                           alt="WhatsApp"
+                           height={23}
+                           width={23}
+                           className=""
+                        />
+                     </a>
+                     <a href="https://www.instagram.com/si_an_z/" className="hover:text-white transition-colors">
+                        <Image
+                           src={'/assets/icons/social/instagram.svg'}
+                           alt="instagram"
                            height={23}
                            width={23}
                            className=""
