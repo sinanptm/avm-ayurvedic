@@ -17,7 +17,7 @@ const connectSocketIO = ({ role, namespace }: Props) => {
 
     const token = role === 'doctor' ? auth.doctorToken : auth.patientToken;
 
-    const socket = io(`${apiUrls.BASE_URL}/${namespace}`, {
+    const socket = io(`https://api.avm-ayurvedic.online/${namespace}`, {
         auth: {
             token: token,
         },
