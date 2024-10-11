@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Package2, PanelLeft } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +26,7 @@ import LogoutModel from "../models/LogoutModel";
 import { useLogoutDoctor } from "@/lib/hooks/doctor/useDoctorAuth";
 import NotificationButtonDoctor from "../button/NotificationButtonDoctor";
 import VideoSectionButtonDoctor from "../button/VideoSectionButtonDoctor";
+import useRedirect from "@/lib/hooks/useRedirect";
 
 const AdminLayoutWithSideBar = ({
   children,
@@ -39,11 +40,11 @@ const AdminLayoutWithSideBar = ({
   const [isLogoutOpen, setLogoutOpen] = useState(false);
   const { mutate: logout } = useLogoutDoctor();
   const { setCredentials } = useAuth();
-  const router = useRouter();
+  const redirect = useRedirect();
 
-  const isVideoCall = pathname.includes("/video-call/")
+  const isVideoCall = pathname.includes("/video-call/");
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout(
       {},
       {
@@ -53,7 +54,7 @@ const AdminLayoutWithSideBar = ({
             variant: "success",
           });
           setCredentials("doctorToken", "");
-          router.push("/doctor");
+          redirect("/doctor");
         },
         onError: (error) => {
           toast({
@@ -64,7 +65,40 @@ const AdminLayoutWithSideBar = ({
         },
       }
     );
-  };
+  }, [logout, setCredentials, redirect]);
+
+  const toggleLogoutModal = useCallback(() => {
+    setLogoutOpen((prev) => !prev);
+  }, []);
+
+  const renderSidebarLink = useCallback((item: NavLinkType) => (
+    <Tooltip key={item.href}>
+      <TooltipTrigger asChild>
+        <Link
+          href={item.href}
+          className={cn(
+            "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
+            pathname === item.href && "bg-accent text-accent-foreground"
+          )}
+        >
+          <Image
+            src={item.icon!}
+            width={21}
+            height={21}
+            alt={item.label}
+            className="h-6 w-6 transition-all group-hover:scale-125"
+          />
+          <span className="sr-only">{item.label}</span>
+        </Link>
+      </TooltipTrigger>
+      <TooltipContent
+        side="right"
+        className="bg-green-700 bg-opacity-55 border-white cursor-pointer hover:border-green-600 transition-colors duration-200"
+      >
+        {item.label}
+      </TooltipContent>
+    </Tooltip>
+  ), [pathname]);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -75,42 +109,21 @@ const AdminLayoutWithSideBar = ({
               href="/doctor"
               className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
             >
-              <Package2 className="h-6 w-6 transition-all group-hover:scale-110" />
+              <Image
+                width={23}
+                height={23}
+                src={'/assets/icons/logo-icon.svg'}
+                alt="AVM"
+                className="h-6 w-6"
+              />
               <span className="sr-only">AVM</span>
             </Link>
-            {sideBarLinks.map((item) => (
-              <Tooltip key={item.href}>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
-                      pathname === item.href && "bg-accent text-accent-foreground"
-                    )}
-                  >
-                    <Image
-                      src={item.icon!}
-                      width={21}
-                      height={21}
-                      alt={item.label}
-                      className="h-6 w-6 transition-all group-hover:scale-125"
-                    />
-                    <span className="sr-only">{item.label}</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent
-                  side="right"
-                  className=" bg-green-700 bg-opacity-55 border-white cursor-pointer hover:border-green-600 transition-colors duration-200"
-                >
-                  {item.label}
-                </TooltipContent>
-              </Tooltip>
-            ))}
+            {sideBarLinks.map(renderSidebarLink)}
           </nav>
           <div className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
             <Tooltip>
               <TooltipTrigger asChild>
-              <VideoSectionButtonDoctor />
+                <VideoSectionButtonDoctor />
               </TooltipTrigger>
               <TooltipContent
                 side="right"
@@ -147,7 +160,7 @@ const AdminLayoutWithSideBar = ({
                 </TooltipTrigger>
                 <TooltipContent
                   side="right"
-                  className=" bg-green-700 bg-opacity-55 border-white cursor-pointer"
+                  className="bg-green-700 bg-opacity-55 border-white cursor-pointer"
                 >
                   Settings
                 </TooltipContent>
@@ -156,10 +169,10 @@ const AdminLayoutWithSideBar = ({
                 <DropdownMenuItem>
                   <button
                     className="flex items-center w-full text-left"
-                    onClick={() => setLogoutOpen(!isLogoutOpen)}
+                    onClick={toggleLogoutModal}
                   >
                     <Image
-                      src={"/assets/icons/logout.svg"}
+                      src="/assets/icons/logout.svg"
                       className="mr-2 h-4 w-4"
                       alt="Logout"
                       width={23}
@@ -173,7 +186,7 @@ const AdminLayoutWithSideBar = ({
           </div>
         </aside>
       </TooltipProvider>
-      <div className={`flex flex-col sm:gap-4 sm:py-4 sm:pl-14 ${isVideoCall&&"gap-0 m-0 p-0 "} `}>
+      <div className={`flex flex-col sm:gap-4 sm:py-4 sm:pl-14 ${isVideoCall ? "gap-0 m-0 p-0" : ""}`}>
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -188,10 +201,16 @@ const AdminLayoutWithSideBar = ({
             <SheetContent side="left" className="w-64 p-0" aria-label="Navigation menu">
               <nav className="grid gap-6 p-6 text-lg font-medium">
                 <Link
-                  href="/"
+                  href="/doctor"
                   className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                 >
-                  <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
+                  <Image
+                    width={23}
+                    height={23}
+                    src={'/assets/icons/logo-icon.svg'}
+                    alt="AVM"
+                    className="h-6 w-6"
+                  />
                   <span className="sr-only">AVM Ayurvedic</span>
                 </Link>
                 {sideBarLinks.map((item) => (
@@ -241,7 +260,7 @@ const AdminLayoutWithSideBar = ({
               <DropdownMenuContent align="end" className="cursor-pointer">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => setLogoutOpen(!isLogoutOpen)}>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={toggleLogoutModal}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
