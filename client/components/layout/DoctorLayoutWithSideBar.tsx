@@ -106,7 +106,7 @@ const AdminLayoutWithSideBar = ({
         <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
           <nav className="flex flex-1 flex-col items-center gap-4 px-2 py-5">
             <Link
-              href="/doctor"
+              href="/"
               className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
             >
               <Image
@@ -149,7 +149,7 @@ const AdminLayoutWithSideBar = ({
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
                       <Image
-                        src="/assets/images/admin.png"
+                        src="/assets/icons/circle-user.svg"
                         alt="settings"
                         width={21}
                         height={21}
@@ -201,7 +201,7 @@ const AdminLayoutWithSideBar = ({
             <SheetContent side="left" className="w-64 p-0" aria-label="Navigation menu">
               <nav className="grid gap-6 p-6 text-lg font-medium">
                 <Link
-                  href="/doctor"
+                  href="/"
                   className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                 >
                   <Image
@@ -248,7 +248,7 @@ const AdminLayoutWithSideBar = ({
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Image
-                    src="/assets/images/admin.png"
+                    src="/assets/icons/circle-user.svg"
                     width={30}
                     height={30}
                     className="rounded-full"
@@ -257,9 +257,9 @@ const AdminLayoutWithSideBar = ({
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="cursor-pointer">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
+              <DropdownMenuContent align="end" className="cursor-pointer mt-2">
+                {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator /> */}
                 <DropdownMenuItem onClick={toggleLogoutModal}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

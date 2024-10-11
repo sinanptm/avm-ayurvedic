@@ -108,7 +108,7 @@ const AdminLayoutWithSideBar = ({
                            <DropdownMenuTrigger asChild>
                               <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
                                  <Image
-                                    src="/assets/images/admin.png"
+                                    src="/assets/icons/circle-user.svg"
                                     alt="settings"
                                     width={21}
                                     height={21}
@@ -203,7 +203,7 @@ const AdminLayoutWithSideBar = ({
                      <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="rounded-full">
                            <Image
-                              src="/assets/images/admin.png"
+                              src="/assets/icons/circle-user.svg"
                               width={30}
                               height={30}
                               className="rounded-full"
