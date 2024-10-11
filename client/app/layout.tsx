@@ -7,7 +7,6 @@ import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "@/components/ui/toaster";
 import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
-import apiUrls from "@/config/apiConfig";
 import { cn } from "@/lib/utils";
 import "../styles/globals.css";
 import "../styles/chart.css";
@@ -19,7 +18,7 @@ const inter = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(apiUrls.BASE_URL),
+  metadataBase: new URL('https://avm-ayurvedic.online'),
   title: {
     template: '%s | AVM Ayurvedic',
     default: 'AVM Ayurvedic - Holistic Ayurveda Health Care & Wellness',
