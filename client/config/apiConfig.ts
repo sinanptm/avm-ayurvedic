@@ -4,7 +4,7 @@ const apiUrls = {
     NOTIFICATION: `${baseUrl}/notifications`,
     PRESCRIPTION: `${baseUrl}/prescription`,
     APPOINTMENT: `${baseUrl}/appointments`,
-    BASE_URL: baseUrl?.split("/api")[0],
+    BASE_URL: process.env.NEXT_PUBLIC_BASE_API_URL!,
     PATIENT: `${baseUrl}/patient`,
     CHATBOT: `${baseUrl}/chatbot`,
     DOCTOR: `${baseUrl}/doctor`,
