@@ -3,20 +3,21 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { format } from "date-fns"
-import { FileText, Video, User, Calendar, PlusCircle } from "lucide-react"
+import { FileText, Video, User, Calendar, PlusCircle, InfoIcon } from "lucide-react"
 import { useGetAppointmentsPatient } from "@/lib/hooks/appointment/useAppointmentPatient"
 import Pagination from "@/components/navigation/Pagination"
 import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ButtonV2 } from "@/components/button/ButtonV2"
-import useRedirect from "@/lib/hooks/useRedirect";
+import useRedirect from "@/lib/hooks/useRedirect"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function AppointmentsPageSection({ searchParams }: { searchParams: { page: number } }) {
   const page = +searchParams.page || 1
   const [currentPage, setCurrentPage] = useState(page)
   const { data, isLoading } = useGetAppointmentsPatient(page-1, 4)
-  const router = useRouter();
+  const router = useRouter()
   const redirect = useRedirect()
 
   const handlePageChange = (pageIndex: number) => {
@@ -26,8 +27,8 @@ export default function AppointmentsPageSection({ searchParams }: { searchParams
   }
   
   useEffect(() => {
-    setCurrentPage(page);
-  }, [page]);
+    setCurrentPage(page)
+  }, [page])
   
   const handleViewDetails = (appointmentId: string) => {
     router.push(`/appointments/${appointmentId}`)
@@ -37,11 +38,20 @@ export default function AppointmentsPageSection({ searchParams }: { searchParams
     <div className="container mx-auto py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4 sm:gap-0">
         <h1 className="text-3xl sm:text-4xl font-bold text-primary">My Appointments</h1>
-        <ButtonV2 onClick={()=>redirect()} variant="shine" className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
+        <ButtonV2 onClick={() => redirect()} variant="shine" className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
           <PlusCircle className="h-5 w-5" />
           New Appointment
         </ButtonV2>
       </div>
+
+      <Alert className="mb-6">
+        <InfoIcon className="h-4 w-4" />
+        <AlertTitle>Important Note</AlertTitle>
+        <AlertDescription>
+          Your appointments may not be approved by the doctor yet. Please check the status of each appointment for the most up-to-date information.
+        </AlertDescription>
+      </Alert>
+
       {isLoading ? (
         <div className="space-y-4">
           {[...Array(4)].map((_, index) => (
@@ -64,8 +74,8 @@ export default function AppointmentsPageSection({ searchParams }: { searchParams
           <div className="flex flex-col items-center gap-4">
             <Calendar className="h-16 w-16 text-primary" />
             <h2 className="text-xl sm:text-2xl font-semibold">No Appointments Yet</h2>
-            <p className="text-sm sm:text-base text-muted-foreground mb-4">You haven't scheduled any appointments. Why not book one now?</p>
-            <ButtonV2 onClick={()=>redirect()} variant="default" className="flex items-center gap-2 w-full sm:w-auto justify-center">
+            <p className="text-sm sm:text-base text-muted-foreground mb-4">You haven&apos;t scheduled any appointments. Why not book one now?</p>
+            <ButtonV2 onClick={() => redirect()} variant="default" className="flex items-center gap-2 w-full sm:w-auto justify-center">
               <PlusCircle className="h-5 w-5" />
               Schedule Your First Appointment
             </ButtonV2>
