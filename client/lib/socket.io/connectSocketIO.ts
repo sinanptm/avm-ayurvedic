@@ -3,8 +3,8 @@ import { io, Socket } from 'socket.io-client';
 
 type Props = {
     role: 'patient' | 'doctor',
-    namespace: string
-}
+    namespace: string;
+};
 
 let existingSocket: Socket | null = null;
 
@@ -14,18 +14,20 @@ const connectSocketIO = ({ role, namespace }: Props) => {
     }
 
     let auth = JSON.parse(localStorage.getItem('auth') || '{}');
-    
-    const token = role === 'doctor' ? auth.doctorToken : auth.patientToken
+
+    const token = role === 'doctor' ? auth.doctorToken : auth.patientToken;
 
     const socket = io(`${apiUrls.BASE_URL}/${namespace}`, {
         auth: {
             token: token,
         },
-        transports: ['websocket'], 
     });
 
+    socket.on("connect_error", (err) => {
+        console.error(`connect_error due to ${err.message}`);
+    });
     existingSocket = socket;
     return socket;
-}
+};
 
 export default connectSocketIO;

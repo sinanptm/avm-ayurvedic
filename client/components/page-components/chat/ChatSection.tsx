@@ -80,7 +80,12 @@ export default function ChatSection({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [])
+  }, []);
+
+  const handleBackClick = ()=>{
+    router.back()
+    router.refresh();
+  }
 
   if (isLoading) {
     return (
@@ -106,7 +111,7 @@ export default function ChatSection({
     <div className="flex flex-col h-full bg-black">
       <header className="p-4 border-b border-gray-800 flex-shrink-0 bg-black">
         <div className="flex items-center space-x-4">
-          <ButtonV2 variant="ghost" size="icon" onClick={() => router.back()} className="sm:hidden">
+          <ButtonV2 variant="ghost" size="icon" onClick={handleBackClick} className="sm:hidden">
             <ArrowLeft className="h-6 w-6 text-white" />
             <span className="sr-only">Back to chat list</span>
           </ButtonV2>

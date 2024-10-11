@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import NewChatModal from "@/components/models/chat/AddChatModel";
 import ChatList from "@/components/page-components/chat/ChatList"
 import useChats from "@/lib/hooks/useChats";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [isNewChatModalOpen, setNewChatModalOpen] = useState(false);
@@ -10,7 +11,7 @@ const Page = () => {
   const {
     chats, createChat, error, joinChatRoom, patients, getPatients
   } = useChats({ role: "doctor", messagePath: "/doctor/chats" })
-
+  const router = useRouter()
 
   useEffect(() => {
     if (chats && patients) {
@@ -20,6 +21,9 @@ const Page = () => {
 
   const handleJoinChat = (chatId: string) => {
     joinChatRoom(chatId);
+    setTimeout(() => {
+      router.refresh();
+    }, 0)
   }
 
   const handleCloseModal = () => {
