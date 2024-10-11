@@ -50,11 +50,11 @@ export const NavBar = () => {
     setLogoutModelOpen(true);
   };
 
-  useEffect(()=>{
-    if(!path.includes('/admin')&&!path.includes("/doctor")){
+  useEffect(() => {
+    if (!path.includes('/admin') && !path.includes("/doctor")) {
       setCurrentRole("patient");
     }
-  },[path, setCurrentRole]);
+  }, [path, setCurrentRole]);
 
   const handleLogoutConfirm = useCallback(() => {
     try {
@@ -81,7 +81,7 @@ export const NavBar = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [logoutFunc, redirect, setCredentials, logout ]);
+  }, [logoutFunc, redirect, setCredentials, logout]);
 
   const handleLinkHome = useCallback(() => {
     setIsSheetOpen(false);
@@ -92,7 +92,7 @@ export const NavBar = () => {
     setIsSheetOpen(false);
   }, [redirect]);
 
-  const handleRoleChange = (role:string) => {
+  const handleRoleChange = (role: string) => {
     setCurrentRole(role);
     toast({
       title: "Role Changed",
@@ -203,12 +203,28 @@ export const NavBar = () => {
                 </DropdownMenuItem>
               </>
             ) : (
-              <DropdownMenuItem className="cursor-pointer" onClick={() => redirect("/signin")}>
-                Sign In
-              </DropdownMenuItem>
+              <>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    Role: {currentRole}
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuRadioGroup value={currentRole} onValueChange={handleRoleChange}>
+                      <DropdownMenuRadioItem value="patient">Patient</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="doctor">Doctor</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="admin">Admin</DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer" onClick={() => redirect("/signin")}>
+                  Sign In
+                </DropdownMenuItem>
+              </>
             )}
           </DropdownMenuContent>
         </DropdownMenu>
+
         <LogoutModel
           open={isLogoutModelOpen}
           setOpen={setLogoutModelOpen}
