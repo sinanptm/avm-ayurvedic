@@ -17,6 +17,78 @@ const inter = Plus_Jakarta_Sans({
    variable: "--font-sans",
 });
 
+export const metadata: Metadata = {
+  metadataBase: new URL('https://avm-ayurvedic.online'),
+  title: {
+    template: '%s | AVM Ayurvedic',
+    default: 'AVM Ayurvedic - Holistic Ayurveda Health Care & Wellness',
+  },
+  description: 'Experience authentic Ayurvedic treatments at AVM Ayurvedic Hospital. Book online appointments, access video consultations, and embrace holistic healing for a balanced life.',
+  openGraph: {
+    title: 'AVM Ayurvedic - Holistic Ayurveda Health & Wellness',
+    description: 'Discover personalized Ayurvedic care with AVM Ayurvedic. Book consultations and experience the benefits of natural healing.',
+    type: 'website',
+    url: '/',
+    siteName: 'AVM Ayurvedic',
+    locale: 'en_US',
+    images: [
+      {
+        url: '/og-image.webp',
+        width: 1200,
+        height: 630,
+        alt: 'AVM Ayurvedic - Holistic Ayurveda Health Care',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AVM Ayurvedic - Holistic Health & Wellness',
+    description: 'Book Ayurvedic treatments & consultations online. Embrace natural healing and wellness through authentic Ayurveda.',
+    images: ['/og-image.webp'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  keywords: [
+    'AVM Ayurvedic',
+    'Ayurvedic hospital',
+    'Ayurvedic treatments',
+    'holistic healing',
+    'online Ayurveda consultation',
+    'natural medicine',
+    'herbal remedies',
+    'wellness center',
+    'Ayurvedic doctors online',
+    'Ayurvedic health care',
+    'mental wellness',
+    'immune support',
+    'Ayurvedic lifestyle',
+    'natural therapies',
+    'online appointments',
+    'virtual consultations',
+    'herbal medicine',
+    'AI Ayurvedic assistant',
+    'wellness tips',
+    'video consultations',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+  category: 'health',
+}
+
 export default function RootLayout({
    children,
    chatbot
@@ -43,46 +115,3 @@ export default function RootLayout({
       </html>
    );
 }
-
-export const metadata: Metadata = {
-   title: {
-      template: "%s | AVM Ayurvedic",
-      default: "AVM Ayurvedic - Holistic Ayurveda Health Care",
-   },
-   description: "Experience natural healing with AVM Ayurvedic Hospital. Book appointments, video call consultations, and explore the benefits of authentic Ayurvedic treatments.",
-   keywords: [
-      "AVM Ayurvedic",
-      "Ayurveda hospital",
-      "Ayurvedic treatments",
-      "natural healing",
-      "Ayurveda appointments",
-      "Ayurveda video consultations",
-      "herbal medicine",
-      "holistic healthcare",
-      "Ayurvedic ai assistant",
-      "Ayurveda", 
-      "Holistic Health", 
-      "Natural Healing", 
-      "Ayurvedic Center", 
-      "Ayurvedic Doctors", 
-      "Herbal Medicine", 
-      "Online Consultation", 
-      "Video Consultation", 
-      "Wellness", 
-      "Natural Remedies", 
-      "Ayurvedic Treatments", 
-      "Health Tips",
-      "Ayurvedic assistant",
-      "Real time chat"
-   ],
-   openGraph: {
-      title: "AVM Ayurvedic - Holistic Ayurveda Health Care",
-      description: "Join us for holistic Ayurveda treatments and consultations, bringing you closer to natural wellness and healing.",
-      type: "website",
-      // url: "https://www.avmayurvedic.com",
-   },
-   robots: {
-      index: true,
-      follow: true,
-   },
-};

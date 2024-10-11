@@ -81,7 +81,7 @@ export const NavBar = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [logoutFunc, redirect, setCredentials, toast, logout]);
+  }, [logoutFunc, redirect, setCredentials, toast, logout, toast]);
 
   const handleLinkHome = useCallback(() => {
     setIsSheetOpen(false);
