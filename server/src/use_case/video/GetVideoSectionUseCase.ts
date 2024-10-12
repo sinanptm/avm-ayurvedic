@@ -13,12 +13,12 @@ export default class GetVideoSectionUseCase {
     ) { }
 
     async getSectionById(id: string): Promise<IVideoSection | null> {
-        this.validatorService.validateIdFormat(id)
+        this.validatorService.validateIdFormat(id);
         return await this.videoSectionRepository.findById(id);
     }
 
     async getSectionsByDoctorId(doctorId: string): Promise<IVideoSection[] | []> {
-        const limit = 10
+        const limit = 10;
         const startTime = new Date();
         const sections = await this.videoSectionRepository.findAllSectionsByDoctorId(doctorId, startTime as unknown as string, VideoSectionStatus.PENDING, limit);
         return sections ? sections : [];
@@ -33,9 +33,9 @@ export default class GetVideoSectionUseCase {
             afterOneDay.toISOString(),
             doctorId
         );
-        const ids = sections?.map(section => section.appointmentId!.toString());
-        if (ids) {
-            const appointments = await this.appointmentRepository.findManyByIds(ids as string[]);
+        const ids = sections?.map(section => section.appointmentId!.toString()!);
+        if (ids && ids?.length > 0) {
+            const appointments = await this.appointmentRepository.findManyByIds(ids);
             const filteredSections = this.filterSectionsByAppointmentStatus(sections!, appointments!);
             return filteredSections ?? [];
         }
