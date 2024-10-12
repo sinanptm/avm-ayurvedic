@@ -105,6 +105,19 @@ const AppointmentForm = () => {
                   })
                   return
                }
+               if(message==='Profile is missing'){
+                  toast({
+                     title: "Appointment Creation Failed ❌",
+                     description: "Please upload your personal information and try again",
+                     variant: "destructive",
+                     action: (
+                        <ButtonV2 variant={"shine"}  >
+                           <Link href={"/register"}>register</Link>
+                        </ButtonV2>
+                     ),
+                  })
+                  return
+               }
                toast({
                   title: "Appointment Creation Failed ❌",
                   description: message,

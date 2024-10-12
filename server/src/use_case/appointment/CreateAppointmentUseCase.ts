@@ -34,7 +34,7 @@ export default class AppointmentUseCase {
       this.bookingAmount = 300;
    }
 
-   async exec(appointmentData: IAppointment, patientId: string): Promise<{ sessionId: string; checkoutUrl: string }> {
+   async exec(appointmentData: IAppointment, patientId: string): Promise<{ sessionId: string; checkoutUrl: string; }> {
       this.validateAppointmentData(appointmentData, patientId);
 
       const patient = await this.patientRepository.findById(patientId);
@@ -44,6 +44,10 @@ export default class AppointmentUseCase {
 
       const slot = await this.slotRepository.findById(appointmentData.slotId!);
       if (!slot) throw new CustomError("Slot Not Found", StatusCode.NotFound);
+
+      if (patient.address || patient.bloodGroup) {
+         throw new CustomError("Profile is missing", StatusCode.BadRequest);
+      }
 
       if (slot.status === "booked") {
          const bookedAppointment = await this.appointmentRepository.findByDateAndSlot(
@@ -85,7 +89,7 @@ export default class AppointmentUseCase {
          appointmentId: appointment._id,
       });
 
-      await this.createVideoSection(appointment, patient!, doctor!, slot.startTime!)
+      await this.createVideoSection(appointment, patient!, doctor!, slot.startTime!);
 
       return { sessionId: checkoutSession.id, checkoutUrl: checkoutSession.url! };
    }
@@ -100,7 +104,7 @@ export default class AppointmentUseCase {
       const calculatedStartTime = format(slotStartTimeFormatted, "yyyy-MM-dd'T'HH:mm:ssXXX");
       const calculatedEndTime = format(slotEndTime, "yyyy-MM-dd'T'HH:mm:ssXXX");
 
-      const randomId = this.uuIdService.generate()
+      const randomId = this.uuIdService.generate();
 
       await this.videoSectionRepository.create({
          appointmentId: appointment._id!,
@@ -126,12 +130,12 @@ export default class AppointmentUseCase {
       if (!event || !event.data || !event.data.object) {
          return;
       }
-      
-      const paymentIntentMetadata = event.data.object.metadata as { paymentId: string };
+
+      const paymentIntentMetadata = event.data.object.metadata as { paymentId: string; };
 
       if (!paymentIntentMetadata || !paymentIntentMetadata.paymentId) {
          return;
-      }      
+      }
 
       await this.verifyPaymentIntent(paymentIntentMetadata.paymentId, transactionId, type);
    }
@@ -144,13 +148,13 @@ export default class AppointmentUseCase {
          return null;
       }
 
-      const fields:any = {
+      const fields: any = {
          _id: payment._id,
          status: PaymentStatus.COMPLETED,
-      }
+      };
 
-      if(type==="charge"){
-         fields.paymentId = transactionId;         
+      if (type === "charge") {
+         fields.paymentId = transactionId;
       }
 
       await this.paymentRepository.update(fields);
