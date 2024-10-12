@@ -68,4 +68,67 @@ npm install
 # 6️⃣ Return to the root directory and start the development server
 cd ..
 npm run dev
+```
 
+```
+# 7️⃣ Setup Server Environment Variables
+
+Ensure that you create a `.env` file in both the **server** and **client** directories with the following content:
+
+### Server-side `.env`:
+```bash
+# MongoDB connection URL
+MONGODB_URL=mongodb://localhost:27017/AVM
+
+# Server settings
+PORT=8000
+NODE_ENV=dev
+CLIENT_URL=http://localhost:3000
+
+# Nodemailer settings for email
+SENDER_EMAIL=test@example.com
+NODEMAILER_PASSKEY=test-nodemailer-passkey
+
+# JWT token secrets
+ACCESS_TOKEN_SECRET=test-access-token-secret
+REFRESH_TOKEN_SECRET=test-refresh-token-secret
+
+# AWS S3 storage configuration
+AWS_REGION=eu-north-1
+AWS_ACCESS_KEY_ID=test-aws-access-key-id
+AWS_SECRET_ACCESS_KEY=test-aws-secret-access-key
+S3_BUCKET_NAME=test-avm-ayurvedic-bucket
+
+# Stripe payment gateway keys
+STRIPE_PUBLISHABLE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
+STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
+STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXX
+
+# Google Gemini AI API key
+GEMINI_API_KEY=test-gemini-api-key
+```
+
+```bash
+# 7️⃣ Setup Client Environment Variables
+NEXT_PUBLIC_ENV=development
+
+# API URL for backend server
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_BASE_API_URL=http://localhost:8000
+
+# Firebase configuration for authentication
+NEXT_PUBLIC_FIREBASE_API_KEY=test-firebase-api-key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=test-firebase-auth-domain
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=test-firebase-messaging-sender-id
+NEXT_PUBLIC_FIREBASE_APP_ID=test-firebase-app-id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=test-firebase-measurement-id
+
+# Stripe publishable key for client
+NEXT_PUBLIC_STRIPE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
+
+# Metered TURN server for WebRTC
+NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
+NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
+
+
+```
