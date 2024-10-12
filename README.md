@@ -2,7 +2,7 @@
 
 # 🌿 AVM Ayurvedic
 
-<img src="https://avm-ayurvedic.online/logo.png" alt="AVM Ayurvedic Logo" width="150" height="150"/>
+<img src="https://www.avm-ayurvedic.online/favicon.ico" alt="AVM Ayurvedic Logo" width="150" height="150"/>
 
 ### Holistic Ayurveda Health Care & Wellness
 
