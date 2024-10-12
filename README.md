@@ -37,11 +37,17 @@ Welcome to **AVM Ayurvedic** – Your holistic health destination for Ayurvedic 
 - 📹 **Video Consultations**: Enjoy personalized virtual consultations.
 - 🏥 **Holistic Health Care**: Access to holistic treatments designed for mental, physical, and spiritual well-being.
 - 💳 **Payment Integration**: Stripe payment gateway for secure transactions.
+- 💬 **Real-time Communication**: Real-time features using Socket.io for chats and notifications.
+- 🔔 **Real-time Notifications**: Receive instant notifications for appointment reminders, updates, and more using web sockets.
+- 📧 **Email Notifications**: Automatic email notifications for booking confirmations, reminders, and wellness tips using Nodemailer.
+- 🤖 **AI Ayurvedic Assistant**: Get wellness tips from our intelligent assistant powered by Google AI.
 - 🧘 **Wellness Tips**: Learn about Ayurvedic lifestyle and practices to support your health.
-- 🌿 **AI Ayurvedic Assistant**: Get wellness tips from our intelligent assistant powered by Google AI.
-- 🔄 **Real-time Communication**: Real-time features using Socket.io for chats and notifications.
+- 📊 **Admin Dashboard**: A comprehensive admin dashboard with statistics for monitoring user activities, bookings, and revenues.
+- 🕒 **Slot Management**: Doctors can manage appointment slots, availability, and schedules efficiently.
+- 🛡️ **Error Logging**: Comprehensive error logging and monitoring using Winston for server-side errors and diagnostics.
+- 🖼️ **File Uploads**: Secure file uploads and management with AWS S3 pre-signed URLs.
+- 🧱 **Clean Architecture**: The project is built following clean architecture principles, ensuring modularity, scalability, and maintainability.
 
----
 
 ## 🛠️ Installation
 
@@ -109,7 +115,7 @@ GEMINI_API_KEY=test-gemini-api-key
 ```
 
 ```bash
-# 7️⃣ Setup Client Environment Variables
+# 8️⃣ Setup Client Environment Variables
 NEXT_PUBLIC_ENV=development
 
 # API URL for backend server
@@ -130,5 +136,11 @@ NEXT_PUBLIC_STRIPE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
 NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 
+
+```
+
+```bash
+# 9️⃣ Start the development server
+npm run dev
 
 ```
