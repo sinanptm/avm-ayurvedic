@@ -88,8 +88,10 @@ To deliver natural, holistic health care by leveraging cutting-edge technology, 
 - 🔒 **Secure Transactions**: Implemented with Stripe payment gateway
 - 🚀 **Real-time Communication**: Powered by Socket.io for instant updates
 - 📊 **Comprehensive Logging**: Using Winston for robust error tracking and diagnostics
+- 🧱 **Reusable Components**: Follows a modular architecture to enhance maintainability, scalability, and code reusability
 
 ---
+
 
 <div align="center">
 
