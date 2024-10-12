@@ -42,8 +42,16 @@ To deliver natural, holistic health care by leveraging cutting-edge technology, 
 ![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)
+![WebRTC](https://img.shields.io/badge/WebRTC-333333?style=flat&logo=webrtc&logoColor=white)
+![Simple Peer](https://img.shields.io/badge/Simple_Peer-4A154B?style=flat&logo=webrtc&logoColor=white)
 ![Radix UI](https://img.shields.io/badge/Radix_UI-%231A1A1A.svg?style=flat&logo=radix-ui&logoColor=white)
 ![Socket.io-client](https://img.shields.io/badge/Socket.io--client-black?style=flat&logo=socket.io&logoColor=white)
+![React Query](https://img.shields.io/badge/React_Query-FF4154?style=flat&logo=react-query&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-008CDD?style=flat&logo=stripe&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-3E67B1?style=flat&logo=zod&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?style=flat&logo=reacthookform&logoColor=white)
 
 </details>
 
@@ -57,6 +65,22 @@ To deliver natural, holistic health care by leveraging cutting-edge technology, 
 ![Stripe](https://img.shields.io/badge/Stripe-%236464FF.svg?style=flat&logo=stripe&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=flat&logo=JSON%20web%20tokens)
 ![NGINX](https://img.shields.io/badge/NGINX-%23009639.svg?style=flat&logo=nginx&logoColor=white)
+![Socket.io](https://img.shields.io/badge/Socket.io-black?style=flat&logo=socket.io&badgeColor=010101)
+![Google AI](https://img.shields.io/badge/Google_AI-4285F4?style=flat&logo=google&logoColor=white)
+![Joi](https://img.shields.io/badge/Joi-0080FF?style=flat&logo=joi&logoColor=white)
+![Winston](https://img.shields.io/badge/Winston-231F20?style=flat&logo=winston&logoColor=white)
+
+</details>
+
+<details>
+<summary>🛠 DevOps & Tools</summary>
+
+![Git](https://img.shields.io/badge/Git-%23F05033.svg?style=flat&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?style=flat&logo=github&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=flat&logo=vercel&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=black)
+![npm](https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white)
 
 </details>
 
@@ -88,12 +112,14 @@ To deliver natural, holistic health care by leveraging cutting-edge technology, 
 - 🔒 **Secure Transactions**: Implemented with Stripe payment gateway
 - 🚀 **Real-time Communication**: Powered by Socket.io for instant updates
 - 📊 **Comprehensive Logging**: Using Winston for robust error tracking and diagnostics
+- 🧱 **Reusable Components**: Follows a modular architecture to enhance maintainability, scalability, and code reusability
 
 ---
 
+
 <div align="center">
 
-**[Explore Our Services](https://avm-ayurvedic.online) | [Book a Consultation](https://avm-ayurvedic.online/book) | [Learn About Ayurveda](https://avm-ayurvedic.online/blog)**
+**[Explore Our Services](https://avm-ayurvedic.online) | [Book a Consultation](https://avm-ayurvedic.online/new-appointment) | [Learn About Ayurveda](https://avm-ayurvedic.online/services)**
 
 </div>
 
