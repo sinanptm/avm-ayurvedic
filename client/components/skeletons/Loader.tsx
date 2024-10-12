@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { memo } from "react";
 
 const Loading = () => (
   <div className="flex items-center justify-center h-screen">
@@ -13,4 +14,4 @@ const Loading = () => (
   </div>
 )
 
-export default Loading
+export default memo(Loading);

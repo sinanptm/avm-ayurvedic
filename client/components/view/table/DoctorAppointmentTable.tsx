@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback, memo } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -11,20 +11,10 @@ import Pagination from "@/components/navigation/Pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import GetStatusBadge from "@/components/page-components/doctor/appointment/GetStatusBadge";
 import { ButtonV2 } from "@/components/button/ButtonV2";
-import { format } from 'date-fns'
+import { format } from "date-fns";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-
-const columns = [
-   { name: "Date", width: "w-1/5" },
-   { name: "Type", width: "w-1/5" },
-   { name: "Reason", width: "w-1/5" },
-   { name: "Status", width: "w-1/5" },
-   { name: "Prescription", width: "w-1/5" },
-   { name: "Actions", width: "w-1/5 text-right pr-10" },
-];
 
 type Props = {
    page: number;
@@ -34,47 +24,57 @@ export default function AppointmentTable({ page }: Props) {
    const [currentPage, setCurrentPage] = useState(page);
    const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "all">("all");
    const limit = 7;
+   const router = useRouter();
+
    const { data, isLoading, error, refetch } = useGetAppointmentsDoctor(
       currentPage - 1,
       limit,
       statusFilter === "all" ? undefined : statusFilter
    );
-   const router = useRouter();
+
    const { data: response } = useGetAppointmentsDoctor(0, 100, AppointmentStatus.PENDING);
-   const notAcceptedAppointments = response?.items.length;
+   const notAcceptedAppointments = response?.items?.length ?? 0;
+
+   const columns = useMemo(() => [
+      { name: "Date", width: "w-1/5" },
+      { name: "Type", width: "w-1/5" },
+      { name: "Reason", width: "w-1/5" },
+      { name: "Status", width: "w-1/5" },
+      { name: "Prescription", width: "w-1/5" },
+      { name: "Actions", width: "w-1/5 text-right pr-10" },
+   ], []);
 
    useEffect(() => {
-      if (notAcceptedAppointments! > 0) {
+      if (notAcceptedAppointments > 0) {
          setStatusFilter(AppointmentStatus.PENDING);
          toast({
             title: "Pending Appointments 🚨",
-            description: "You have " + notAcceptedAppointments + " appointments pending for confirmation.",
+            description: `You have ${notAcceptedAppointments} appointments pending for confirmation.`,
             variant: "destructive",
          });
          router.replace(`/doctor/appointments?page=1&status=${AppointmentStatus.PENDING}`);
       }
    }, [notAcceptedAppointments, router]);
 
-
    const appointments = useMemo(() => data?.items || [], [data?.items]);
 
-   const handlePageChange = (pageIndex: number) => {
-      if (pageIndex > data?.totalPages! || pageIndex < 1) return null;
+   const handlePageChange = useCallback((pageIndex: number) => {
+      if (pageIndex > data?.totalPages! || pageIndex < 1) return;
       setCurrentPage(pageIndex);
       router.replace(`/doctor/appointments?page=${pageIndex}&status=${statusFilter}`);
       refetch();
-   };
+   }, [data?.totalPages, statusFilter, refetch, router]);
 
-   const handleViewDetails = (appointmentId: string) => {
-      router.push(`/doctor/appointments/${appointmentId}`)
-   };
+   const handleViewDetails = useCallback((appointmentId: string) => {
+      router.push(`/doctor/appointments/${appointmentId}`);
+   }, [router]);
 
-   const handleStatusChange = (status: AppointmentStatus | "all") => {
+   const handleStatusChange = useCallback((status: AppointmentStatus | "all") => {
       setStatusFilter(status);
       setCurrentPage(1);
       router.replace(`/doctor/appointments?page=1&status=${status}`);
       refetch();
-   };
+   }, [refetch, router]);
 
    if (error) {
       return (
@@ -132,7 +132,7 @@ export default function AppointmentTable({ page }: Props) {
                         </TableRow>
                      </TableHeader>
                      <TableBody>
-                        {appointments.length >= 1 ? (
+                        {appointments.length ? (
                            appointments.map((appointment) => (
                               <TableRow key={appointment._id}>
                                  <TableCell>
@@ -150,7 +150,7 @@ export default function AppointmentTable({ page }: Props) {
                                     <GetStatusBadge status={appointment.status!} />
                                  </TableCell>
                                  <TableCell>
-                                    <Badge variant={`${appointment.isPrescriptionAdded ? "success" : "warning"}`}>
+                                    <Badge variant={appointment.isPrescriptionAdded ? "success" : "warning"}>
                                        {appointment.isPrescriptionAdded ? "Added" : "Not Added"}
                                     </Badge>
                                  </TableCell>
@@ -168,7 +168,7 @@ export default function AppointmentTable({ page }: Props) {
                            ))
                         ) : (
                            <TableRow>
-                              <TableCell colSpan={5} className="text-center">
+                              <TableCell colSpan={6} className="text-center">
                                  No appointments found.
                               </TableCell>
                            </TableRow>

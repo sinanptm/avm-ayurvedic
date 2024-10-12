@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Control } from "react-hook-form";
 import { FormFieldType } from "./enum";
+import { ColumnConfig } from "@/components/skeletons/TableSkelton";
 
 export type NavLinkType = {
    label: string;
@@ -83,3 +84,10 @@ export type AdminDashBoardProps = Readonly<{
    appointments: ReactNode;
    slotUsage: ReactNode;
 }>;
+export interface TableSkeletonProps {
+   columns: ColumnConfig[];
+   rows?: number;
+   showHeader?: boolean;
+   headerTitle?: string;
+   headerDescription?: string;
+}

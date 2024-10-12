@@ -1,6 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { memo } from "react";
 
-export default function AuthSkelton() {
+const AuthSkelton = () => {
    return (
       <div className="flex min-h-screen bg-gray-900 bg-opacity-25 text-white">
          <div className="flex-1 p-8 sm:p-12 md:p-16 lg:p-24 mt-10">
@@ -27,4 +28,6 @@ export default function AuthSkelton() {
          </div>
       </div>
    );
-}
+};
+
+export default memo(AuthSkelton);

@@ -1,6 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton"
+import { memo } from "react";
 
-export default function ChatLayoutSkeleton() {
+const ChatLayoutSkeleton= () => {
   return (
     <div className="flex h-[calc(100vh-4rem)]">
       <aside className="hidden sm:block w-64 md:w-80 border-r border-border overflow-hidden flex-shrink-0">
@@ -56,3 +57,5 @@ export default function ChatLayoutSkeleton() {
     </div>
   )
 }
+
+export default memo(ChatLayoutSkeleton);

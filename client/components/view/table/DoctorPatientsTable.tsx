@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Pagination from "@/components/navigation/Pagination";
-import { IPatient } from "@/types/entities";
 import { useRouter } from "next/navigation";
 import TableSkeleton from "@/components/skeletons/TableSkelton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,30 +18,31 @@ export default function DoctorPatientsTable({ page }: Props) {
    const [currentPage, setCurrentPage] = useState(page);
    const router = useRouter();
    const limit = 7;
-   const { data, isLoading, refetch } = useGetPatientsDoctor(currentPage-1,limit);
-   const columns = [
+
+   const { data, isLoading, refetch } = useGetPatientsDoctor(currentPage - 1, limit);
+
+   const { items: patients = [], totalPages, hasNextPage, hasPreviousPage } = data || {};
+
+   const columns = useMemo(() => [
       { name: "Image", width: "w-[80px]" },
       { name: "Name", width: "" },
       { name: "Email", width: "" },
       { name: "Phone", width: "" },
       { name: "Blood Group", width: "" },
       { name: "Actions", width: "text-right pr-10" },
-   ];
-   
-   const patients = data?.items!;
+   ], []);
 
-   const handlePageChange = (pageIndex: number) => {
-      if (pageIndex > data?.totalPages! || pageIndex < 1) return null;
+   const handlePageChange = useCallback((pageIndex: number) => {
+      if (pageIndex > totalPages! || pageIndex < 1) return;
       setCurrentPage(pageIndex);
       router.push(`/doctor/patients?page=${pageIndex}`);
       refetch();
-   };
+   }, [totalPages, refetch, router]);
 
-   const handleViewProfile = (patientId:string) => {
-      router.push(`/doctor/patients/${patientId}`)
-   };
+   const handleViewProfile = useCallback((patientId: string) => {
+      router.push(`/doctor/patients/${patientId}`);
+   }, [router]);
 
-   
    return (
       <main className="flex-1 space-y-1 p-x-4 md:p-x-8">
          <div className="flex min-h-screen w-full flex-col">
@@ -73,7 +73,7 @@ export default function DoctorPatientsTable({ page }: Props) {
                               </TableRow>
                            </TableHeader>
                            <TableBody>
-                              {patients.length >= 1 ? (
+                              {patients.length > 0 ? (
                                  patients.map((patient) => (
                                     <TableRow key={patient._id}>
                                        <TableCell>
@@ -83,9 +83,9 @@ export default function DoctorPatientsTable({ page }: Props) {
                                                 : "border-4 border-primary"
                                                 }`}
                                           >
-                                             <Avatar className="w-full h-full" >
+                                             <Avatar className="w-full h-full">
                                                 <AvatarImage src={patient.profile || "/assets/icons/circle-user.svg"} alt={patient.name} />
-                                                <AvatarFallback>{(patient.name!||"P").charAt(0)}</AvatarFallback>
+                                                <AvatarFallback>{(patient.name || "P").charAt(0)}</AvatarFallback>
                                              </Avatar>
                                           </div>
                                        </TableCell>
@@ -94,7 +94,12 @@ export default function DoctorPatientsTable({ page }: Props) {
                                        <TableCell>{patient.phone}</TableCell>
                                        <TableCell>{patient.bloodGroup}</TableCell>
                                        <TableCell className="text-right">
-                                          <ButtonV2 variant="linkHover2" color={"link" as ButtonColorVariant} size="sm" onClick={() => handleViewProfile(patient._id!)}>
+                                          <ButtonV2
+                                             variant="linkHover2"
+                                             color={"link" as ButtonColorVariant}
+                                             size="sm"
+                                             onClick={() => handleViewProfile(patient._id!)}
+                                          >
                                              Medical History
                                           </ButtonV2>
                                        </TableCell>
@@ -111,14 +116,16 @@ export default function DoctorPatientsTable({ page }: Props) {
                         </Table>
                      </CardContent>
                   </Card>
-                  <Pagination
-                     currentPage={currentPage}
-                     handlePageChange={handlePageChange}
-                     totalPages={data?.totalPages!}
-                     className="mt-11"
-                     hasNextPage={data?.hasNextPage!}
-                     hasPrevPage={data?.hasPreviousPage!}
-                  />
+                  {totalPages! > 1 && (
+                     <Pagination
+                        currentPage={currentPage}
+                        handlePageChange={handlePageChange}
+                        totalPages={totalPages!}
+                        className="mt-11"
+                        hasNextPage={hasNextPage!}
+                        hasPrevPage={hasPreviousPage!}
+                     />
+                  )}
                </>
             )}
          </div>

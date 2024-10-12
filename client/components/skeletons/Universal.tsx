@@ -1,6 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { memo } from "react";
 
-export default function UniversalSkelton() {
+const UniversalSkelton = ()=> {
    return (
       <div className="w-full min-h-screen p-6 space-y-8">
          <div className="space-y-4">
@@ -51,3 +52,5 @@ export default function UniversalSkelton() {
       </div>
    );
 }
+
+export default memo(UniversalSkelton)

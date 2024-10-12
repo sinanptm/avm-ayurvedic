@@ -32,7 +32,7 @@ export default function Page({ searchParams }: { searchParams: { page: number } 
     return (
         <div className="container mx-auto py-8">
             <h1 className="text-3xl font-bold mb-6 text-primary">Medical History</h1>
-            {data?.items.map((item, index) => (
+            {data?.items&&data?.items.length>0?data?.items.map((item, index) => (
                 <Card key={item._id} className="mb-6 bg-card text-card-foreground">
                     <CardHeader>
                         <div className="flex items-center justify-between">
@@ -95,7 +95,13 @@ export default function Page({ searchParams }: { searchParams: { page: number } 
                         )}
                     </CardContent>
                 </Card>
-            ))}
+            )):(
+                <Card  className="mb-6 bg-card text-card-foreground">
+                     <CardHeader>
+                        Patient has no medical history yet
+                    </CardHeader>
+                </Card>
+            )}
             <Pagination
                 currentPage={currentPage}
                 handlePageChange={handlePageChange}

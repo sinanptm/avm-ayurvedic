@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, memo, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -16,21 +16,12 @@ import { IDoctor } from "@/types/entities";
 import { DoctorsFilter } from "@/types/enum";
 import { ButtonColorVariant, ButtonV2 } from "@/components/button/ButtonV2";
 
-const columns = [
-   { name: "Image", width: "w-[80px]" },
-   { name: "Name", width: "w-1/6" },
-   { name: "Email", width: "w-1/4" },
-   { name: "Status", width: "w-1/6" },
-   { name: "Blocked", width: "w-1/12" },
-   { name: "Actions", width: "w-1/6 text-right pr-10" },
-];
-
 type Props = {
    page: number;
    type: DoctorsFilter;
 };
 
-export default function DoctorsPage({ page, type }: Props) {
+const DoctorsTable = ({ page, type }: Props) => {
    const [currentPage, setCurrentPage] = useState(page);
    const [selectedDoctor, setSelectedDoctor] = useState<IDoctor | null>(null);
    const [isModelOpen, setModelOpen] = useState(false);
@@ -38,6 +29,14 @@ export default function DoctorsPage({ page, type }: Props) {
    const router = useRouter();
    const limit = 7;
    const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage - 1, limit, type);
+   const columns = useMemo(() => [
+      { name: "Image", width: "w-[80px]" },
+      { name: "Name", width: "w-1/6" },
+      { name: "Email", width: "w-1/4" },
+      { name: "Status", width: "w-1/6" },
+      { name: "Blocked", width: "w-1/12" },
+      { name: "Actions", width: "w-1/6 text-right pr-10" },
+   ], []);
 
    const doctors = useMemo(() => data?.items || [], [data]);
 
@@ -45,6 +44,12 @@ export default function DoctorsPage({ page, type }: Props) {
       setSelectedDoctor(doctor);
       setModelOpen(true);
    };
+
+   useEffect(() => {
+      if (Object.values(DoctorsFilter).includes(type)) {
+         setTabType(type);
+      }
+   }, [type]);
 
    const handlePageChange = (pageIndex: number) => {
       if (pageIndex > data?.totalPages! || pageIndex < 1) return null;
@@ -56,7 +61,7 @@ export default function DoctorsPage({ page, type }: Props) {
    const handleTabChange = (value: DoctorsFilter) => {
       setTabType(value);
       setCurrentPage(1);
-      router.push(`/admin/doctors?page=${currentPage}&type=${value}`);
+      router.push(`/admin/doctors?page=1&type=${value}`);
       refetch();
    };
 
@@ -71,11 +76,7 @@ export default function DoctorsPage({ page, type }: Props) {
    return (
       <main className="flex-1 space-y-4 p-4 md:p-6">
          <div className="flex min-h-screen w-full flex-col bg-background">
-            <Tabs
-               value={tabType}
-               onValueChange={(value) => handleTabChange(value as DoctorsFilter)}
-               className="space-y-4"
-            >
+            <Tabs value={tabType} onValueChange={(value) => handleTabChange(value as DoctorsFilter)} className="space-y-4">
                <div className="flex items-center justify-between">
                   <TabsList>
                      <TabsTrigger value={DoctorsFilter.VERIFIED} asChild>
@@ -117,9 +118,7 @@ export default function DoctorsPage({ page, type }: Props) {
                   <Card>
                      <CardHeader>
                         <CardTitle>All Doctors</CardTitle>
-                        <CardDescription>
-                           A list of all doctors including their status, specialty, qualifications, and more.
-                        </CardDescription>
+                        <CardDescription>A list of all doctors including their status, specialty, qualifications, and more.</CardDescription>
                      </CardHeader>
                      <CardContent>
                         {isLoading ? (
@@ -216,4 +215,7 @@ export default function DoctorsPage({ page, type }: Props) {
          )}
       </main>
    );
-}
+};
+
+
+export default memo(DoctorsTable);

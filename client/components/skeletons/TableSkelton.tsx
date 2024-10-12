@@ -1,27 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { memo } from "react";
+import { TableSkeletonProps } from "@/types";
 
-interface ColumnConfig {
+export interface ColumnConfig {
    name: string;
    width?: string;
 }
 
-interface TableSkeletonProps {
-   columns: ColumnConfig[];
-   rows?: number;
-   showHeader?: boolean;
-   headerTitle?: string;
-   headerDescription?: string;
-}
-
-export default function TableSkeleton({
+const TableSkeleton = ({
    columns,
    rows = 5,
    showHeader = true,
    headerTitle = "",
    headerDescription = "",
-}: TableSkeletonProps) {
+}: TableSkeletonProps) => {
    return (
       <Card className="w-full bg-background">
          {showHeader && (
@@ -58,4 +52,6 @@ export default function TableSkeleton({
          </CardContent>
       </Card>
    );
-}
+};
+
+export default memo(TableSkeleton);
