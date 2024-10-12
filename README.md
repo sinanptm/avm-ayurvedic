@@ -120,7 +120,8 @@ npm run dev
 ```
 
 ```
-# 7️⃣ Setup Server Environment Variables
+
+# 7️⃣ 🔧 Setup Environment Variables
 
 Ensure that you create a `.env` file in both the **server** and **client** directories with the following content:
 
