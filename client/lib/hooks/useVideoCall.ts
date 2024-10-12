@@ -67,7 +67,7 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
         initiator: true,
         stream,
         trickle: false,
-        config: config,  // Pass the WebRTC configuration explicitly
+        // config: config, 
       });
 
       peerRef.current = peer;
