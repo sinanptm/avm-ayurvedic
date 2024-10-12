@@ -29,14 +29,14 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
         toast({
           title: 'Patient has left the room',
           variant: 'destructive',
-          description: 'Patient has left the room. you can end the call now or wait for the patient to join again'
+          description: 'Patient has left the room. You can end the call now or wait for the patient to join again',
         });
       }
       else{
         toast({
           title: 'Doctor has left the room',
           variant: 'destructive',
-          description: 'Doctor has left the room. you can end the call now or wait for the doctor to join again',
+          description: 'Doctor has left the room. You can end the call now or wait for the doctor to join again',
         });
       }
     });
@@ -64,28 +64,26 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
       setLocalStream(stream);
 
       const peer = new Peer({
-        initiator: true,  
+        initiator: true,
         stream,
-        trickle: false, 
-        // config
+        trickle: false,
+        config: config,  // Pass the WebRTC configuration explicitly
       });
 
       peerRef.current = peer;
-      
 
       peer.on('signal', (signal) => {
         socketRef.current?.emit('signal', signal, section.roomId ?? "random");
       });
 
       peer.on('error', (err) => {
-        if(err.message.includes("User-Initiated Abort")){
-          console.log('user left the room')
-        }
-        else{
-          console.error('Peer connection error:', err)
+        if (err.message.includes("User-Initiated Abort")) {
+          console.log('User left the room');
+        } else {
+          console.error('Peer connection error:', err);
         }
       });
-      
+
       peer.on('stream', (remoteStream: MediaStream) => {
         setRemoteStream((prevStream) => {
           const updatedStream = new MediaStream(prevStream);
@@ -93,7 +91,6 @@ export const useVideoCall = (section: any, role: 'patient' | 'doctor') => {
           return updatedStream;
         });
       });
-
 
       socketRef.current?.emit('join-room', section.roomId ?? "random");
       setHasJoined(true);

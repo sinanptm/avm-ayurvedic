@@ -110,6 +110,10 @@ export default class AppointmentRepository implements IAppointmentRepository {
             $project: {
                "patient.password": 0,
                "patient.token": 0,
+               "patient.createAt":0,
+               "patient.updatedAt":0,
+               "doctor.createAt":0,
+               "doctor.updatedAt":0,
                "doctor.password": 0,
                "doctor.token": 0
             }
@@ -230,6 +234,10 @@ export default class AppointmentRepository implements IAppointmentRepository {
                   "patient.token": 0,
                   "doctor.password": 0,
                   "doctor.token": 0,
+                  "patient.createAt":0,
+                  "patient.updatedAt":0,
+                  "doctor.createAt":0,
+                  "doctor.updatedAt":0,
                },
             },
          ])

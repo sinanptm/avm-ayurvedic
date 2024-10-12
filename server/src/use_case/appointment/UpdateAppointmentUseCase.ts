@@ -7,6 +7,7 @@ import IPaymentService from "../../domain/interface/services/IPaymentService";
 import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
 import { NotificationTypes } from "../../domain/entities/INotification";
 import { AppointmentStatus } from "../../domain/entities/IAppointment";
+import { format } from "../../utils/date-formatter";
 
 export default class UpdateAppointmentUseCase {
    constructor(
@@ -24,7 +25,7 @@ export default class UpdateAppointmentUseCase {
       this.validatorService.validateIdFormat(appointmentId);
       this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
       const appointment = await this.appointmentRepository.update(appointmentId, { status });
-      
+
       if (status === AppointmentStatus.CANCELLED && appointment) {
          await this.handleCancellation(appointmentId, appointment);
       }
@@ -44,7 +45,7 @@ export default class UpdateAppointmentUseCase {
       this.validatorService.validateRequiredFields({ appointmentId, status, notes });
       this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
       const appointment = await this.appointmentRepository.update(appointmentId, { status, notes });
-      
+
       if (status === AppointmentStatus.CANCELLED && appointment) {
          await this.handleCancellation(appointmentId, appointment, true);
       }
@@ -79,13 +80,12 @@ export default class UpdateAppointmentUseCase {
    async updateCompleteSection(roomId: string, doctorId: string) {
       const room = await this.videoSectionRepository.findByRoomId(roomId);
       if (!room) {
-         throw new Error("Invalid Room Id")
+         throw new Error("Invalid Room Id");
       }
       const appointment = await this.appointmentRepository.findById(room.appointmentId!);
-      if (doctorId !== appointment?.doctorId?.toString()) {
-         throw new Error("Unauthorized doctor");
+      if (new Date() >= new Date(room.startTime!)) {
+         await this.appointmentRepository.update(appointment?._id!, { status: AppointmentStatus.COMPLETED });
+         await this.videoSectionRepository.update(room._id!, { status: VideoSectionStatus.COMPLETED });
       }
-      await this.appointmentRepository.update(appointment?._id!, { status: AppointmentStatus.COMPLETED });
-      await this.videoSectionRepository.update(room._id!, { status: VideoSectionStatus.COMPLETED });
    }
 }

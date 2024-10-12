@@ -8,7 +8,7 @@ export default class UnauthenticatedControllers {
 
    async getDoctors(req: Request, res: Response, next: NextFunction) {
       try {
-         res.status(StatusCode.Success).json(await this.unauthenticatedUseCase.getDoctors(0, 100));
+         res.status(StatusCode.Success).json(await this.unauthenticatedUseCase.getDoctors());
       } catch (error) {
          next(error);
       }
