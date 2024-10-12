@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/lib/providers/ThemeProvider";
 import { AuthProvider } from "@/lib/providers/auth-provider";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import QueryProvider from "@/lib/providers/query-provider";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react"
@@ -36,6 +37,7 @@ export default function RootLayout({
                      {children}
                      {chatbot}
                      <Analytics debug={false} />
+                     <SpeedInsights debug={false} />
                      <Footer />
                   </AuthProvider>
                </ThemeProvider>
