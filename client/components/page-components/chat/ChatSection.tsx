@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { ArrowLeft, Send, AlertCircle, Smile } from "lucide-react"
 import { IChat, IMessage } from "@/types/entities"
 import { useRouter } from "next/navigation"
-import  Spinner from "@/components/skeletons/Spinners";
+import  Spinner from "@/components/skeletons/Spinner";
 import { getSenderData } from "./getUserData"
 import dynamic from 'next/dynamic'
 import { EmojiClickData, Theme } from 'emoji-picker-react'
