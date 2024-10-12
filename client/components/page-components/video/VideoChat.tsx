@@ -109,7 +109,7 @@ export default function VideoChat({
                   className="rounded-full w-8 h-8 sm:w-10 sm:h-10"
                 >
                   <Image
-                    src={isVideoOff ? '/assets/icons/video/video-off.svg' : '/assets/icons/video/video.svg'}
+                    src={isVideoOff ? '/assets/icons/video/video-off.svg' : '/assets/icons/utils/video.svg'}
                     alt={isVideoOff ? "Video Off" : "Video On"}
                     width={20}
                     height={20}
