@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input"
 import { ArrowLeft, Send, AlertCircle, Smile } from "lucide-react"
 import { IChat, IMessage } from "@/types/entities"
 import { useRouter } from "next/navigation"
-import { Spinner } from "@/components/skeletons/Spinner"
-import { getReceiverData, getSenderData } from "./getUserData"
+import  Spinner from "@/components/skeletons/Spinners";
+import { getSenderData } from "./getUserData"
 import dynamic from 'next/dynamic'
 import { EmojiClickData, Theme } from 'emoji-picker-react'
 import { ButtonV2 } from "@/components/button/ButtonV2"

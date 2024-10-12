@@ -1,7 +1,7 @@
 import Featured from "@/components/page-components/landing/services/Featured";
 import Services from "@/components/page-components/landing/services/Services";
 import WhyOurService from "@/components/page-components/landing/services/WhyOurService";
-import { Spinner } from "@/components/skeletons/Spinner";
+import  Spinner from "@/components/skeletons/Spinners";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { memo } from "react";
