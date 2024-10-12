@@ -35,6 +35,7 @@
 ![Socket.io-client](https://img.shields.io/badge/Socket.io--client-black?style=flat&logo=socket.io&logoColor=white)
 ![OAuth](https://img.shields.io/badge/OAuth-3C78A9?style=flat&logo=oauth&logoColor=white)  
 ![Google](https://img.shields.io/badge/Google-4285F4?style=flat&logo=google&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E3?style=flat&logo=axios&logoColor=white)
 ![React Query](https://img.shields.io/badge/React_Query-FF4154?style=flat&logo=react-query&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-008CDD?style=flat&logo=stripe&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
