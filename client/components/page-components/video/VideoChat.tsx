@@ -1,8 +1,8 @@
-import { useRef, useEffect, useState } from 'react';
-import { Mic, MicOff, Video, VideoOff, PhoneOff } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from 'next/image';
+import { useRef, useEffect } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { VideoChatProps } from '@/types';
 
 export default function VideoChat({
@@ -22,21 +22,15 @@ export default function VideoChat({
 
   useEffect(() => {
     if (localVideoRef.current && localStream) {
-      if (localVideoRef.current !== null) {
-        localVideoRef.current.srcObject = localStream;
-      }
+      localVideoRef.current.srcObject = localStream;
     }
   }, [localStream, isVideoOff]);
-
 
   useEffect(() => {
     if (remoteVideoRef.current && remoteStream) {
       remoteVideoRef.current.srcObject = remoteStream;
     }
   }, [remoteStream]);
-
-
-  
 
   return (
     <div className="relative w-full max-w-3xl mx-auto aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-lg">
@@ -79,7 +73,6 @@ export default function VideoChat({
         )}
       </div>
 
-
       {/* Control Buttons */}
       <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
         <div className="flex justify-center space-x-2 sm:space-x-4">
@@ -92,7 +85,12 @@ export default function VideoChat({
                   size="icon"
                   className="rounded-full w-8 h-8 sm:w-10 sm:h-10"
                 >
-                  {isMuted ? <MicOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Mic className="h-4 w-4 sm:h-5 sm:w-5" />}
+                  <Image
+                    src={isMuted ? '/assets/icons/video/mic-off.svg' : '/assets/icons/video/mic.svg'}
+                    alt={isMuted ? "Mic Off" : "Mic On"}
+                    width={20}
+                    height={20}
+                  />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -110,7 +108,12 @@ export default function VideoChat({
                   size="icon"
                   className="rounded-full w-8 h-8 sm:w-10 sm:h-10"
                 >
-                  {isVideoOff ? <VideoOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Video className="h-4 w-4 sm:h-5 sm:w-5" />}
+                  <Image
+                    src={isVideoOff ? '/assets/icons/video/video-off.svg' : '/assets/icons/video/video.svg'}
+                    alt={isVideoOff ? "Video Off" : "Video On"}
+                    width={20}
+                    height={20}
+                  />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -128,7 +131,12 @@ export default function VideoChat({
                   size="icon"
                   className="rounded-full w-8 h-8 sm:w-10 sm:h-10"
                 >
-                  <PhoneOff className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Image
+                    src="/assets/icons/video/phone-off.svg"
+                    alt="End Call"
+                    width={20}
+                    height={20}
+                  />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
