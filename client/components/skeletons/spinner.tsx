@@ -26,7 +26,7 @@ const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(({
 
   const dimensions = useMemo(
     () => parseInt(sizeMap[size].split(' ')[0].replace('h-', '')) * 4,
-    [size]
+    [size, sizeMap]
   );
 
   return (

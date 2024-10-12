@@ -15,6 +15,8 @@ const ChatListSkeletonItem = memo(() => (
   </div>
 ));
 
+ChatListSkeletonItem.displayName = "ChatListSkeletonItem";
+
 const ChatListSkeleton = ({ itemCount = 5 }: ChatListSkeletonProps) => {
   return (
     <div className="space-y-3">
@@ -24,4 +26,5 @@ const ChatListSkeleton = ({ itemCount = 5 }: ChatListSkeletonProps) => {
     </div>
   );
 };
+
 export default memo(ChatListSkeleton);
