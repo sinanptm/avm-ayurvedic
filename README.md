@@ -2,12 +2,42 @@
 
 # 🌿 AVM Ayurvedic
 
+<img src="https://avm-ayurvedic.online/logo.png" alt="AVM Ayurvedic Logo" width="150" height="150"/>
+
 ### Holistic Ayurveda Health Care & Wellness
 
-[![Website](https://img.shields.io/badge/🌐_Website-Visit_Our_Site-brightgreen?style=for-the-badge&logoColor=white)](https://avm-ayurvedic.online)
-[![Vercel](https://img.shields.io/badge/▲_Deployed_on-Vercel-black?style=for-the-badge&logo=vercel)](https://avm-ayurvedic.online)
+*Bridging ancient wisdom with modern technology*
 
-*Your journey to holistic health begins here*
+[![Website](https://img.shields.io/badge/🌐_Website-Visit_Our_Site-brightgreen?style=for-the-badge&logoColor=white)](https://avm-ayurvedic.online)
+[![Frontend](https://img.shields.io/badge/▲_Frontend-Deployed_on_Vercel-black?style=for-the-badge&logo=vercel)](https://avm-ayurvedic.online)
+[![Backend](https://img.shields.io/badge/🚀_Backend-Hosted_on_AWS-orange?style=for-the-badge&logo=amazon-aws)](https://api.avm-ayurvedic.online)
+
+---
+
+<p align="center">
+  <strong>🌟 Your journey to holistic health begins here 🌟</strong>
+</p>
+
+<p align="center">
+  <em>Experience the perfect blend of ancient Ayurvedic wisdom and cutting-edge digital healthcare</em>
+</p>
+
+---
+
+| 🌡️ Online Consultations | 🧘‍♀️ Personalized Care | 🤖 AI-Powered Insights |
+|:-----------------------:|:----------------------:|:----------------------:|
+| Connect with expert Ayurvedic practitioners from the comfort of your home | Receive tailored treatment plans based on your unique constitution | Leverage advanced AI for personalized wellness recommendations |
+
+---
+
+<p align="center">
+  <a href="https://avm-ayurvedic.online/book-appointment" target="_blank">
+    <img src="https://img.shields.io/badge/Book_Your_Consultation-00A86B?style=for-the-badge&logo=bookstack&logoColor=white" alt="Book Consultation" />
+  </a>
+  <a href="https://avm-ayurvedic.online/learn" target="_blank">
+    <img src="https://img.shields.io/badge/Explore_Ayurveda-FFA500?style=for-the-badge&logo=book-open&logoColor=white" alt="Learn More" />
+  </a>
+</p>
 
 </div>
 
