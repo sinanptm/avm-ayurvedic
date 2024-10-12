@@ -24,15 +24,13 @@
 
 ## 💻 Tech Stack
 
-<details open>
+<details>
 <summary>🎨 Frontend</summary>
 
 ![Next JS](https://img.shields.io/badge/Next.js-black?style=flat&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)
-![WebRTC](https://img.shields.io/badge/WebRTC-333333?style=flat&logo=webrtc&logoColor=white)
-![Simple Peer](https://img.shields.io/badge/Simple_Peer-4A154B?style=flat&logo=webrtc&logoColor=white)
 ![Radix UI](https://img.shields.io/badge/Radix_UI-%231A1A1A.svg?style=flat&logo=radix-ui&logoColor=white)
 ![Socket.io-client](https://img.shields.io/badge/Socket.io--client-black?style=flat&logo=socket.io&logoColor=white)
 ![React Query](https://img.shields.io/badge/React_Query-FF4154?style=flat&logo=react-query&logoColor=white)
@@ -44,7 +42,7 @@
 
 </details>
 
-<details open>
+<details>
 <summary>⚙️ Backend</summary>
 
 ![Node.js](https://img.shields.io/badge/Node.js-6DA55F?style=flat&logo=node.js&logoColor=white)
@@ -61,8 +59,19 @@
 
 </details>
 
----
+<details>
+<summary>🛠 DevOps & Tools</summary>
 
+![Git](https://img.shields.io/badge/Git-%23F05033.svg?style=flat&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?style=flat&logo=github&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=flat&logo=vercel&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=black)
+![npm](https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white)
+
+</details>
+
+---
 ## 🏗️ Architecture Highlights
 
 - 🧱 **Clean Architecture**: Modular, scalable, and maintainable
