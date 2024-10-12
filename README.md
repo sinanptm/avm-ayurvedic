@@ -33,7 +33,8 @@
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)
 ![Radix UI](https://img.shields.io/badge/Radix_UI-%231A1A1A.svg?style=flat&logo=radix-ui&logoColor=white)
 ![Socket.io-client](https://img.shields.io/badge/Socket.io--client-black?style=flat&logo=socket.io&logoColor=white)
-![OAuth](https://img.shields.io/badge/OAuth-3C78A9?style=flat&logo=oauth&logoColor=white)
+![OAuth](https://img.shields.io/badge/OAuth-3C78A9?style=flat&logo=oauth&logoColor=white)  
+![Google](https://img.shields.io/badge/Google-4285F4?style=flat&logo=google&logoColor=white)
 ![React Query](https://img.shields.io/badge/React_Query-FF4154?style=flat&logo=react-query&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-008CDD?style=flat&logo=stripe&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
@@ -85,7 +86,7 @@
 
 <div align="center">
 
-**[Explore Services](https://avm-ayurvedic.online) | [Book Consultation](https://avm-ayurvedic.online/new-appointment) | [Learn About Ayurveda](https://avm-ayurvedic.online/services)**
+**[Explore Services](https://avm-ayurvedic.online) | [Book Consultation](https://avm-ayurvedic.online/new-appointment) | [More About Our Services](https://avm-ayurvedic.online/services)**
 
 </div>
 
