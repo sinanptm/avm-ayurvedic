@@ -4,7 +4,6 @@ Welcome to **AVM Ayurvedic** – Your holistic health destination for Ayurvedic 
 
 [![Website](https://img.shields.io/badge/Website-Visit%20Our%20Site-brightgreen?style=flat&logo=web&logoColor=white)](https://avm-ayurvedic.online) 
 [![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-blue?style=flat&logo=vercel)](https://avm-ayurvedic.online) 
-![GitHub top language](https://img.shields.io/github/languages/top/sinanptm/hospital-management?color=yellow&style=flat)
 
 ---
 
@@ -46,9 +45,27 @@ Welcome to **AVM Ayurvedic** – Your holistic health destination for Ayurvedic 
 
 ## 🛠️ Installation
 
-### Backend Setup (Node.js + AWS + MongoDB)
+To set up **AVM Ayurvedic** locally, follow these steps:
 
-1. **Clone the backend repo**:
-   ```bash
-   git clone https://github.com/sinanptm/hospital-management.git
-   cd hospital-management/server
+```bash
+# 1️⃣ Clone the repository
+git clone https://github.com/sinanptm/avm-ayurvedic
+
+# 2️⃣ Navigate to the project directory
+cd avm-ayurvedic
+
+# 3️⃣ Install dependencies
+npm install
+
+# 4️⃣ Install server-side dependencies
+cd server
+npm install
+
+# 5️⃣ Install client-side dependencies
+cd ../client
+npm install
+
+# 6️⃣ Return to the root directory and start the development server
+cd ..
+npm run dev
+
