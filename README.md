@@ -1,52 +1,101 @@
-# 🌿 AVM Ayurvedic - Holistic Ayurveda Health Care & Wellness
+<div align="center">
 
-Welcome to **AVM Ayurvedic** – Your holistic health destination for Ayurvedic treatments and wellness. We offer online appointment booking, video consultations, and personalized care rooted in authentic Ayurveda. 🌱
+# 🌿 AVM Ayurvedic
 
-[![Website](https://img.shields.io/badge/Website-Visit%20Our%20Site-brightgreen?style=flat&logo=web&logoColor=white)](https://avm-ayurvedic.online) 
-[![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-blue?style=flat&logo=vercel)](https://avm-ayurvedic.online) 
+### Holistic Ayurveda Health Care & Wellness
+
+[![Website](https://img.shields.io/badge/🌐_Website-Visit_Our_Site-brightgreen?style=for-the-badge&logoColor=white)](https://avm-ayurvedic.online)
+[![Vercel](https://img.shields.io/badge/▲_Deployed_on-Vercel-black?style=for-the-badge&logo=vercel)](https://avm-ayurvedic.online)
+
+*Your journey to holistic health begins here*
+
+</div>
 
 ---
 
-## 📜 Project Overview
+## 🚀 Project Overview
 
-**AVM Ayurvedic** provides users access to the ancient wisdom of Ayurveda through a modern and user-friendly web application. Our mission is to deliver natural, holistic health care by leveraging technology to offer video consultations and wellness tips that fit into the everyday lives of our users.
+Welcome to **AVM Ayurvedic** – Where ancient wisdom meets modern technology. We're revolutionizing access to Ayurvedic healthcare through a seamless digital experience.
 
-### Highlights:
+<details>
+<summary>🌟 Our Mission</summary>
 
-- **Frontend**: Built using Next.js (React framework) and TailwindCSS.
-- **Backend**: Node.js, Express, and MongoDB hosted on AWS with NGINX.
-- **Real-time**: Real-time communication through Socket.io.
-- **Payment**: Stripe integration for secure payments.
-- **AI-powered**: Integration with Google Generative AI for personalized tips.
+To deliver natural, holistic health care by leveraging cutting-edge technology, making Ayurvedic wisdom accessible to all through video consultations and personalized wellness tips.
+
+</details>
+
+### 🎯 Key Offerings
+
+- 📅 Online Appointment Booking
+- 📹 Video Consultations
+- 🧘 Personalized Ayurvedic Care
+- 🤖 AI-Powered Wellness Tips
 
 ---
 
 ## 💻 Tech Stack
 
-### Frontend:
-![Next JS](https://img.shields.io/badge/Next.js-black?style=flat&logo=next.js) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white) ![Radix UI](https://img.shields.io/badge/radix%20ui-%231A1A1A.svg?style=flat&logo=radix-ui&logoColor=white) ![Socket.io](https://img.shields.io/badge/Socket.io-black?style=flat&logo=socket.io&badgeColor=white)
+<details>
+<summary>🎨 Frontend</summary>
 
-### Backend:
-![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=flat&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=flat&logo=express&logoColor=%2361DAFB) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=flat&logo=mongodb&logoColor=white) ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=flat&logo=amazon-aws&logoColor=white) ![Stripe](https://img.shields.io/badge/stripe-%236464FF.svg?style=flat&logo=stripe&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-black?style=flat&logo=JSON%20web%20tokens) ![NGINX](https://img.shields.io/badge/nginx-%23009639.svg?style=flat&logo=nginx&logoColor=white)
+![Next JS](https://img.shields.io/badge/Next.js-black?style=flat&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)
+![Radix UI](https://img.shields.io/badge/Radix_UI-%231A1A1A.svg?style=flat&logo=radix-ui&logoColor=white)
+![Socket.io-client](https://img.shields.io/badge/Socket.io--client-black?style=flat&logo=socket.io&logoColor=white)
+
+</details>
+
+<details>
+<summary>⚙️ Backend</summary>
+
+![Node.js](https://img.shields.io/badge/Node.js-6DA55F?style=flat&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?style=flat&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=flat&logo=mongodb&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=flat&logo=amazon-aws&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-%236464FF.svg?style=flat&logo=stripe&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=flat&logo=JSON%20web%20tokens)
+![NGINX](https://img.shields.io/badge/NGINX-%23009639.svg?style=flat&logo=nginx&logoColor=white)
+
+</details>
 
 ---
 
-## 🚀 Features
+## 🌟 Features
 
-- 📅 **Online Appointments**: Book appointments with our Ayurvedic doctors online.
-- 📹 **Video Consultations**: Enjoy personalized virtual consultations.
-- 🏥 **Holistic Health Care**: Access to holistic treatments designed for mental, physical, and spiritual well-being.
-- 💳 **Payment Integration**: Stripe payment gateway for secure transactions.
-- 💬 **Real-time Communication**: Real-time features using Socket.io for chats and notifications.
-- 🔔 **Real-time Notifications**: Receive instant notifications for appointment reminders, updates, and more using web sockets.
-- 📧 **Email Notifications**: Automatic email notifications for booking confirmations, reminders, and wellness tips using Nodemailer.
-- 🤖 **AI Ayurvedic Assistant**: Get wellness tips from our intelligent assistant powered by Google AI.
-- 🧘 **Wellness Tips**: Learn about Ayurvedic lifestyle and practices to support your health.
-- 📊 **Admin Dashboard**: A comprehensive admin dashboard with statistics for monitoring user activities, bookings, and revenues.
-- 🕒 **Slot Management**: Doctors can manage appointment slots, availability, and schedules efficiently.
-- 🛡️ **Error Logging**: Comprehensive error logging and monitoring using Winston for server-side errors and diagnostics.
-- 🖼️ **File Uploads**: Secure file uploads and management with AWS S3 pre-signed URLs.
-- 🧱 **Clean Architecture**: The project is built following clean architecture principles, ensuring modularity, scalability, and maintainability.
+<table>
+  <tr>
+    <td align="center"><b>🔐 Secure Authentication</b></td>
+    <td align="center"><b>💳 Stripe Payments</b></td>
+    <td align="center"><b>📊 Admin Dashboard</b></td>
+  </tr>
+  <tr>
+    <td align="center"><b>🤖 AI Wellness Assistant</b></td>
+    <td align="center"><b>📹 Video Consultations</b></td>
+    <td align="center"><b>🔔 Real-time Notifications</b></td>
+  </tr>
+  <tr>
+    <td align="center"><b>📅 Appointment Booking</b></td>
+    <td align="center"><b>📧 Email Notifications</b></td>
+    <td align="center"><b>🖼️ Secure File Uploads</b></td>
+  </tr>
+</table>
+
+### 🏗️ Architecture Highlights
+
+- 🧱 **Clean Architecture**: Ensuring modularity, scalability, and maintainability
+- 🔒 **Secure Transactions**: Implemented with Stripe payment gateway
+- 🚀 **Real-time Communication**: Powered by Socket.io for instant updates
+- 📊 **Comprehensive Logging**: Using Winston for robust error tracking and diagnostics
+
+---
+
+<div align="center">
+
+**[Explore Our Services](https://avm-ayurvedic.online) | [Book a Consultation](https://avm-ayurvedic.online/book) | [Learn About Ayurveda](https://avm-ayurvedic.online/blog)**
+
+</div>
 
 
 ## 🛠️ Installation
