@@ -4,14 +4,6 @@ const nextPublicMeteredTurnCredential = process.env.NEXT_PUBLIC_METERED_TURN_CRE
 const webRTCStuntServerConfig = {
     iceServers: [
         {
-            urls: [
-                'stun:stun.l.google.com:19302',
-                'stun:stun1.l.google.com:19302',
-                'stun:stun2.l.google.com:19302',
-                'stun:stun3.l.google.com:19302',
-            ],
-        },
-        {
             urls: "stun:stun.relay.metered.ca:80",
         },
         {

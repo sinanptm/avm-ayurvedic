@@ -9,7 +9,7 @@ export default class VideoSocketEvents {
     ) { }
 
     public initializeEvents(socket: Socket) {
-        socket.on("join-room", async (roomId: string) => {
+        socket.on("join-room", async (roomId: string) => {            
             if (roomId) {
                 if (socket.data.user.role === 'doctor') {
                     await this.updateAppointmentUseCase.updateCompleteSection(roomId, socket.data.user.id!);

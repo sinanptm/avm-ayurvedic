@@ -19,10 +19,11 @@ import { formatDate } from "@/lib/utils";
 import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { AppointmentType } from "@/types/enum";
-import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { BreadcrumbCollapsed } from "@/components/navigation/BreadCrumbs";
+import { ButtonV2 } from "@/components/button/ButtonV2";
+import Link from "next/link";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
 
@@ -89,14 +90,26 @@ const AppointmentForm = () => {
                await stripe?.redirectToCheckout({ sessionId });
             },
             onError(error) {
-               const message =
-                  error?.response?.status === 403
-                     ? "This action is only allowed for verified users."
-                     : error.response?.data.message || "Appointment creation failed. Please try again.";
+               const status = error?.response?.status;
+               const message = error.response?.data.message || "Appointment creation failed. Please try again.";
+               if (status === 403 || status === 401) {
+                  toast({
+                     title: "Appointment Creation Failed ❌",
+                     description: 'This action is only allowed for verified users. 😊',
+                     variant: "destructive",
+                     action: (
+                        <ButtonV2 variant={"shine"}>
+                           <Link href={"/signin"}>signin</Link>
+                        </ButtonV2>
+                     ),
+                  })
+                  return
+               }
                toast({
                   title: "Appointment Creation Failed ❌",
                   description: message,
                   variant: "destructive",
+
                });
             },
          }
@@ -192,19 +205,18 @@ const AppointmentForm = () => {
                               ) : slots && slots.length > 0 ? (
                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
                                     {slots.map((slot) => (
-                                       <Button
+                                       <ButtonV2
                                           type="button"
                                           key={slot._id}
-                                          variant="ghost"
+                                          variant="gooeyRight"
                                           onClick={() => form.setValue("slotId", slot._id!, { shouldValidate: true })}
-                                          className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${
-                                             field.value === slot._id
+                                          className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${field.value === slot._id
                                                 ? "bg-primary text-primary-foreground border-primary shadow-md scale-105"
-                                                : "bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 hover:text-gray-100"
-                                          }`}
+                                                : "bg-gray-700 text-gray-200 border-gray-600"
+                                             }`}
                                        >
                                           {slot.startTime} - {slot.endTime}
-                                       </Button>
+                                       </ButtonV2>
                                     ))}
                                  </div>
                               ) : (

@@ -32,8 +32,7 @@ export default class DoctorRepository implements IDoctorRepository {
          .find({ isVerified, isBlocked })
          .skip(limit * offset)
          .limit(limit)
-         .select("-password -token");
-
+         .select(["-password","-token","-createdAt","-updatedAt"]);
       return getPaginatedResult(totalItems, offset, limit, items);
    }
    async getCountInTimeRange(startTime: Date, endTime: Date): Promise<number> {

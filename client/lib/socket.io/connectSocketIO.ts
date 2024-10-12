@@ -9,9 +9,9 @@ type Props = {
 let existingSocket: Socket | null = null;
 
 const connectSocketIO = ({ role, namespace }: Props) => {
-    if (existingSocket && existingSocket.connected) {
-        return existingSocket;
-    }
+    // if (existingSocket && existingSocket.connected) {
+    //     return existingSocket;
+    // }
 
     let auth = JSON.parse(localStorage.getItem('auth') || '{}');
 

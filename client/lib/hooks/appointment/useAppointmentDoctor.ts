@@ -23,9 +23,7 @@ export const useGetDoctorsList = () => {
    return useQuery<PaginatedResult<IDoctor>, AxiosError<ErrorResponse>>({
       queryFn: () => getDoctorsList(),
       queryKey: ["doctors"],
-      retry: false,
-      staleTime: 2 * 60 * 1000,
-      refetchOnWindowFocus: true,
+      staleTime: 30000,
    });
 };
 

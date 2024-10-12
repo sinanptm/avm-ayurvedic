@@ -47,9 +47,7 @@ export const useGetSlotsByDayDoctor = (day: Days) => {
    return useQuery<ISlot[], AxiosError<ErrorResponse>>({
       queryFn: () => getSlotsByDayDoctor(day),
       queryKey: ["slotsByDay", day],
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      refetchInterval: 1000 * 30,
+      staleTime:30000
    });
 };
 
@@ -67,7 +65,6 @@ export const useGetSlotsOfDoctor = (doctorId: string, date: string) => {
       queryFn: () => getSlotsOfDoctor(doctorId, date),
       queryKey: ["doctorSlots", doctorId, date],
       retry: 1,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      refetchInterval: 30000 * 2,
    });
 };

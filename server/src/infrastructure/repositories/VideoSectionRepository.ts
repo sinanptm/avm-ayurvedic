@@ -59,7 +59,6 @@ export default class VideoSectionRepository implements IVideoSectionRepository {
         return await this.model.find({
             startTime: { $gte: startTime, $lte: endTime },
             patientId,
-            status: VideoSectionStatus.PENDING
         });
     }
 

@@ -8,7 +8,9 @@ export const useGetSectionsInOneDayPatient = () => {
     return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
         queryKey: ["section-day-patient"],
         queryFn: () => getSectionsInOneDayPatient(),
-        retry:3
+        retry:1,
+        refetchInterval:10000,
+        staleTime:50000
     });
 };
 
