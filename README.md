@@ -2,70 +2,29 @@
 
 # 🌿 AVM Ayurvedic
 
-<img src="https://www.avm-ayurvedic.online/favicon.ico" alt="AVM Ayurvedic Logo" width="150" height="150"/>
+<img src="https://www.avm-ayurvedic.online/favicon.ico" alt="AVM Ayurvedic Logo" width="100" height="100"/>
 
-### Holistic Ayurveda Health Care & Wellness
-
-*Bridging ancient wisdom with modern technology*
+*Bridging ancient Ayurvedic wisdom with modern technology*
 
 [![Website](https://img.shields.io/badge/🌐_Website-Visit_Our_Site-brightgreen?style=for-the-badge&logoColor=white)](https://avm-ayurvedic.online)
-[![Frontend](https://img.shields.io/badge/▲_Frontend-Deployed_on_Vercel-black?style=for-the-badge&logo=vercel)](https://avm-ayurvedic.online)
-[![Backend](https://img.shields.io/badge/🚀_Backend-Hosted_on_AWS-orange?style=for-the-badge&logo=amazon-aws)](https://api.avm-ayurvedic.online)
-
----
-
-<p align="center">
-  <strong>🌟 Your journey to holistic health begins here 🌟</strong>
-</p>
-
-<p align="center">
-  <em>Experience the perfect blend of ancient Ayurvedic wisdom and cutting-edge digital healthcare</em>
-</p>
-
----
-
-| 🌡️ Online Consultations | 🧘‍♀️ Personalized Care | 🤖 AI-Powered Insights |
-|:-----------------------:|:----------------------:|:----------------------:|
-| Connect with expert Ayurvedic practitioners from the comfort of your home | Receive tailored treatment plans based on your unique constitution | Leverage advanced AI for personalized wellness recommendations |
-
----
-
-<p align="center">
-  <a href="https://avm-ayurvedic.online/book-appointment" target="_blank">
-    <img src="https://img.shields.io/badge/Book_Your_Consultation-00A86B?style=for-the-badge&logo=bookstack&logoColor=white" alt="Book Consultation" />
-  </a>
-  <a href="https://avm-ayurvedic.online/learn" target="_blank">
-    <img src="https://img.shields.io/badge/Explore_Ayurveda-FFA500?style=for-the-badge&logo=book-open&logoColor=white" alt="Learn More" />
-  </a>
-</p>
+[![Frontend](https://img.shields.io/badge/▲_Frontend-Vercel-black?style=for-the-badge&logo=vercel)](https://avm-ayurvedic.online)
+[![Backend](https://img.shields.io/badge/🚀_Backend-AWS-orange?style=for-the-badge&logo=amazon-aws)](https://api.avm-ayurvedic.online)
 
 </div>
 
 ---
 
-## 🚀 Project Overview
+## 🚀 Key Features
 
-Welcome to **AVM Ayurvedic** – Where ancient wisdom meets modern technology. We're revolutionizing access to Ayurvedic healthcare through a seamless digital experience.
-
-<details>
-<summary>🌟 Our Mission</summary>
-
-To deliver natural, holistic health care by leveraging cutting-edge technology, making Ayurvedic wisdom accessible to all through video consultations and personalized wellness tips.
-
-</details>
-
-### 🎯 Key Offerings
-
-- 📅 Online Appointment Booking
-- 📹 Video Consultations
-- 🧘 Personalized Ayurvedic Care
-- 🤖 AI-Powered Wellness Tips
+📹 Video Consultations | 🤖 AI-Powered Wellness | 📅 Smart Booking | 💳 Secure Payments
+:---: | :---: | :---: | :---:
+📊 Admin Dashboard | 🔔 Real-time Notifications | 🔐 Robust Authentication | 🖼️ Secure File Uploads
 
 ---
 
 ## 💻 Tech Stack
 
-<details>
+<details open>
 <summary>🎨 Frontend</summary>
 
 ![Next JS](https://img.shields.io/badge/Next.js-black?style=flat&logo=next.js)
@@ -85,7 +44,7 @@ To deliver natural, holistic health care by leveraging cutting-edge technology, 
 
 </details>
 
-<details>
+<details open>
 <summary>⚙️ Backend</summary>
 
 ![Node.js](https://img.shields.io/badge/Node.js-6DA55F?style=flat&logo=node.js&logoColor=white)
@@ -102,54 +61,21 @@ To deliver natural, holistic health care by leveraging cutting-edge technology, 
 
 </details>
 
-<details>
-<summary>🛠 DevOps & Tools</summary>
-
-![Git](https://img.shields.io/badge/Git-%23F05033.svg?style=flat&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?style=flat&logo=github&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=flat&logo=vercel&logoColor=white)
-![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white)
-![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=black)
-![npm](https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white)
-
-</details>
-
 ---
 
-## 🌟 Features
+## 🏗️ Architecture Highlights
 
-<table>
-  <tr>
-    <td align="center"><b>🔐 Secure Authentication</b></td>
-    <td align="center"><b>💳 Stripe Payments</b></td>
-    <td align="center"><b>📊 Admin Dashboard</b></td>
-  </tr>
-  <tr>
-    <td align="center"><b>🤖 AI Wellness Assistant</b></td>
-    <td align="center"><b>📹 Video Consultations</b></td>
-    <td align="center"><b>🔔 Real-time Notifications</b></td>
-  </tr>
-  <tr>
-    <td align="center"><b>📅 Appointment Booking</b></td>
-    <td align="center"><b>📧 Email Notifications</b></td>
-    <td align="center"><b>🖼️ Secure File Uploads</b></td>
-  </tr>
-</table>
-
-### 🏗️ Architecture Highlights
-
-- 🧱 **Clean Architecture**: Ensuring modularity, scalability, and maintainability
-- 🔒 **Secure Transactions**: Implemented with Stripe payment gateway
-- 🚀 **Real-time Communication**: Powered by Socket.io for instant updates
-- 📊 **Comprehensive Logging**: Using Winston for robust error tracking and diagnostics
-- 🧱 **Reusable Components**: Follows a modular architecture to enhance maintainability, scalability, and code reusability
+- 🧱 **Clean Architecture**: Modular, scalable, and maintainable
+- 🔒 **Secure Transactions**: Stripe payment gateway integration
+- 🚀 **Real-time Communication**: Powered by Socket.io
+- 📊 **Comprehensive Logging**: Winston for robust error tracking
+- 🧩 **Reusable Components**: Enhancing code reusability and consistency
 
 ---
-
 
 <div align="center">
 
-**[Explore Our Services](https://avm-ayurvedic.online) | [Book a Consultation](https://avm-ayurvedic.online/new-appointment) | [Learn About Ayurveda](https://avm-ayurvedic.online/services)**
+**[Explore Services](https://avm-ayurvedic.online) | [Book Consultation](https://avm-ayurvedic.online/new-appointment) | [Learn About Ayurveda](https://avm-ayurvedic.online/services)**
 
 </div>
 
