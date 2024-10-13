@@ -47,7 +47,6 @@ import {
    uuidService,
 } from "./services";
 
-
 const createUseCases = () => ({
    authAdminUseCase: new AuthenticationUseCase(
       doctorRepository,
@@ -57,12 +56,7 @@ const createUseCases = () => ({
       otpRepository,
       joiService
    ),
-   dashboardUseCase: new DashboardUseCase(
-      patientRepository,
-      appointmentRepository,
-      doctorRepository,
-      slotRepository
-   ),
+   dashboardUseCase: new DashboardUseCase(patientRepository, appointmentRepository, doctorRepository, slotRepository),
    adminPatientUseCase: new AdminPatientUseCase(patientRepository, joiService),
    adminDoctorUseCase: new AdminDoctorUseCase(doctorRepository, nodeMailerService, joiService),
    createAppointmentUseCase: new CreateAppointmentUseCase(
@@ -125,18 +119,9 @@ const createUseCases = () => ({
       chatRepository,
       videoSectionRepository
    ),
-   createPrescriptionUseCase: new CreatePrescriptionUseCase(
-      joiService,
-      prescriptionRepository,
-      appointmentRepository
-   ),
+   createPrescriptionUseCase: new CreatePrescriptionUseCase(joiService, prescriptionRepository, appointmentRepository),
    createSlotUseCase: new CreateSlotUseCase(slotRepository, joiService),
-   deleteSlotUseCase: new DeleteSlotUseCase(
-      slotRepository,
-      appointmentRepository,
-      joiService,
-      notificationRepository
-   ),
+   deleteSlotUseCase: new DeleteSlotUseCase(slotRepository, appointmentRepository, joiService, notificationRepository),
    getSlotUseCase: new GetSlotUseCase(slotRepository, appointmentRepository, joiService),
    updateSlotUseCase: new UpdateSlotUseCase(slotRepository, joiService),
    getVideoSectionUseCase: new GetVideoSectionUseCase(videoSectionRepository, joiService, appointmentRepository),

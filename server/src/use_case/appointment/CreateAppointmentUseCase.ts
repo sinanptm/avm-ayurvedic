@@ -34,7 +34,7 @@ export default class AppointmentUseCase {
       this.bookingAmount = 300;
    }
 
-   async exec(appointmentData: IAppointment, patientId: string): Promise<{ sessionId: string; checkoutUrl: string; }> {
+   async exec(appointmentData: IAppointment, patientId: string): Promise<{ sessionId: string; checkoutUrl: string }> {
       this.validateAppointmentData(appointmentData, patientId);
 
       const patient = await this.patientRepository.findById(patientId);
@@ -94,9 +94,14 @@ export default class AppointmentUseCase {
       return { sessionId: checkoutSession.id, checkoutUrl: checkoutSession.url! };
    }
 
-   private async createVideoSection(appointment: IAppointment, patient: IPatient, doctor: IDoctor, slotStartTime: string): Promise<void> {
+   private async createVideoSection(
+      appointment: IAppointment,
+      patient: IPatient,
+      doctor: IDoctor,
+      slotStartTime: string
+   ): Promise<void> {
       const appointmentDate = appointment.appointmentDate as string;
-      const slotStartTimeFormatted = parse(slotStartTime, 'hh:mm a', new Date(appointmentDate));
+      const slotStartTimeFormatted = parse(slotStartTime, "hh:mm a", new Date(appointmentDate));
 
       const appointmentDurationMinutes = 60;
       const slotEndTime = addMinutes(slotStartTimeFormatted, appointmentDurationMinutes);
@@ -119,9 +124,9 @@ export default class AppointmentUseCase {
          status: VideoSectionStatus.PENDING,
          patientId: patient._id!,
          doctorId: doctor._id!,
-         roomId: randomId
+         roomId: randomId,
       });
-   };
+   }
 
    async handleStripeWebhook(body: Buffer, signature: string): Promise<void> {
       const result = await this.paymentService.handleWebhookEvent(body, signature);
@@ -131,7 +136,7 @@ export default class AppointmentUseCase {
          return;
       }
 
-      const paymentIntentMetadata = event.data.object.metadata as { paymentId: string; };
+      const paymentIntentMetadata = event.data.object.metadata as { paymentId: string };
 
       if (!paymentIntentMetadata || !paymentIntentMetadata.paymentId) {
          return;
@@ -140,8 +145,11 @@ export default class AppointmentUseCase {
       await this.verifyPaymentIntent(paymentIntentMetadata.paymentId, transactionId, type);
    }
 
-
-   private async verifyPaymentIntent(id: string, transactionId: string, type: "charge" | "paymentSuccess" | ""): Promise<IPayment | null> {
+   private async verifyPaymentIntent(
+      id: string,
+      transactionId: string,
+      type: "charge" | "paymentSuccess" | ""
+   ): Promise<IPayment | null> {
       const payment = await this.paymentRepository.findById(id);
 
       if (!payment) {

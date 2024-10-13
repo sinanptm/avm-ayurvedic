@@ -19,7 +19,6 @@ import { PopoverContent, PopoverTrigger, Popover } from "@/components/ui/popover
 import { ButtonV2 } from "@/components/button/ButtonV2";
 import Image from "next/image";
 
-
 const LoginForm = () => {
    const [error, setError] = useState("");
    const { toast } = useToast();
@@ -37,7 +36,7 @@ const LoginForm = () => {
          password: "",
       },
    });
-   
+
    const onSubmit = async ({ email, password }: z.infer<typeof signinFormSchema>) => {
       signIn(
          { email, password },
@@ -62,11 +61,11 @@ const LoginForm = () => {
          }
       );
    };
-   
-      const setDummyData = () => {
-         form.setValue("email", dummyEmail);
-         form.setValue("password", dummyPassword);
-      };
+
+   const setDummyData = () => {
+      form.setValue("email", dummyEmail);
+      form.setValue("password", dummyPassword);
+   };
 
    return (
       <Form {...form}>
@@ -112,7 +111,7 @@ const LoginForm = () => {
                   <PopoverTrigger asChild>
                      <ButtonV2 type="button" variant="shine" size="icon">
                         <Image
-                           src={'/assets/icons/guarantees/confidential.svg'}
+                           src={"/assets/icons/guarantees/confidential.svg"}
                            width={10}
                            height={10}
                            alt="Dummy user"

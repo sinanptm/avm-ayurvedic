@@ -47,7 +47,7 @@ export const useGetSlotsByDayDoctor = (day: Days) => {
    return useQuery<ISlot[], AxiosError<ErrorResponse>>({
       queryFn: () => getSlotsByDayDoctor(day),
       queryKey: ["slotsByDay", day],
-      staleTime:30000
+      staleTime: 30000,
    });
 };
 

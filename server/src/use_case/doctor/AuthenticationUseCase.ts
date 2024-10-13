@@ -19,7 +19,7 @@ export default class AuthenticationUseCase {
       private otpRepository: IOtpRepository,
       private cloudService: ICloudStorageService,
       private validatorService: IValidatorService
-   ) { }
+   ) {}
 
    async signin(email: string, password: string): Promise<void> {
       this.validatorService.validateEmailFormat(email);
@@ -33,7 +33,7 @@ export default class AuthenticationUseCase {
       if (!doctor.isVerified) throw new CustomError("Not Verified", StatusCode.Unauthorized);
 
       let otp;
-      if (email === 'demodoctor@gmail.com') {
+      if (email === "demodoctor@gmail.com") {
          otp = 777777;
       } else {
          otp = +this.generateOTP(6);
@@ -52,7 +52,7 @@ export default class AuthenticationUseCase {
       await this.otpRepository.create(otp, email);
    }
 
-   async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string; }> {
+   async validateOtp(email: string, otp: number): Promise<{ accessToken: string; refreshToken: string }> {
       this.validatorService.validateEmailFormat(email);
       const isOtp = await this.otpRepository.findOne(otp, email);
       if (!isOtp) throw new CustomError("Invalid Credentials", StatusCode.Unauthorized);
@@ -133,7 +133,7 @@ export default class AuthenticationUseCase {
       return createdDoctor._id!;
    }
 
-   async getPreSignedUrl(id: string): Promise<{ url: string; key: string; }> {
+   async getPreSignedUrl(id: string): Promise<{ url: string; key: string }> {
       this.validatorService.validateIdFormat(id);
       const doctor = await this.doctorRepository.findById(id);
       if (!doctor) throw new CustomError("Not Found", StatusCode.NotFound);
@@ -156,7 +156,7 @@ export default class AuthenticationUseCase {
       await this.doctorRepository.update(doctor._id!, doctor!);
    }
 
-   async refresh(token: string): Promise<{ accessToken: string; }> {
+   async refresh(token: string): Promise<{ accessToken: string }> {
       const { id } = this.tokenService.verifyRefreshToken(token);
       const doctor = await this.doctorRepository.findById(id);
       if (!doctor) throw new CustomError("Unauthorized", StatusCode.Unauthorized);

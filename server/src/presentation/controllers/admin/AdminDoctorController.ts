@@ -4,9 +4,7 @@ import { DoctorsFilter, StatusCode, CustomRequest } from "../../../types";
 import IDoctor from "../../../domain/entities/IDoctor";
 
 export default class AdminDoctorController {
-   constructor(
-      private adminDoctorUseCase: AdminDoctorUseCase
-   ) { }
+   constructor(private adminDoctorUseCase: AdminDoctorUseCase) {}
 
    async getDoctors(req: Request, res: Response, next: NextFunction) {
       try {
@@ -30,7 +28,7 @@ export default class AdminDoctorController {
    async updateDoctor(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const doctor: IDoctor = req.body;
-         const adminEmail = req.admin?.email
+         const adminEmail = req.admin?.email;
          if (!doctor) return res.status(StatusCode.BadRequest).json({ message: "Doctor Details is Required" });
          if (!doctor._id) return res.status(StatusCode.BadRequest).json({ message: "Id is Required" });
          await this.adminDoctorUseCase.update(doctor, adminEmail!);

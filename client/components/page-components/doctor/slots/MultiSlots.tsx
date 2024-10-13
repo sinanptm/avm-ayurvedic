@@ -47,11 +47,11 @@ const SlotManager = () => {
                      variant: "success",
                   });
                   setTimeout(() => {
-                     Object.values(Days).forEach(el => {
+                     Object.values(Days).forEach((el) => {
                         query.invalidateQueries({
-                           queryKey: ["slotsByDay",el],
+                           queryKey: ["slotsByDay", el],
                         });
-                     })
+                     });
                   });
                },
                onError: (error) => {
@@ -81,11 +81,11 @@ const SlotManager = () => {
                   });
                   setDeleteModelOpen(false);
                   setTimeout(() => {
-                     Object.values(Days).forEach(el => {
+                     Object.values(Days).forEach((el) => {
                         query.invalidateQueries({
-                           queryKey: ["slotsByDay",el],
+                           queryKey: ["slotsByDay", el],
                         });
-                     })
+                     });
                   });
                },
                onError: (error) => {

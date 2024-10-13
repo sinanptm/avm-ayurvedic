@@ -1,2 +1,2 @@
-import ChatBot from './page';
+import ChatBot from "./page";
 export default ChatBot;

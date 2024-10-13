@@ -1,7 +1,7 @@
 import { ReactNode, FC } from "react";
 import { Metadata } from "next";
 import Layout from "@/components/layout/AdminLayout";
-import { metadata as rootMeta } from '@/app/layout';
+import { metadata as rootMeta } from "@/app/layout";
 
 interface AdminLayoutWrapperProps {
    children: ReactNode;
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
    title: {
       template: "%s | Admin",
       default: "Admin Dashboard - Manage Hospital Operations | AVM Ayurvedic",
-   }
+   },
 };
 
 const AdminLayoutWrapper: FC<AdminLayoutWrapperProps> = ({ children, signin }) => {

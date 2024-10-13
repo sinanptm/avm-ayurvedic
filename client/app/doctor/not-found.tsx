@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import useRedirect from "@/lib/hooks/useRedirect";
 
 export default function NotFound() {
-   const redirect = useRedirect()
+   const redirect = useRedirect();
 
    return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b ">

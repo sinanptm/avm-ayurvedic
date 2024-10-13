@@ -3,9 +3,7 @@ import AuthenticationUseCase from "../../../use_case/admin/AuthenticationUseCase
 import { Cookie, StatusCode } from "../../../types";
 
 export default class AuthAdminController {
-   constructor(
-      private authUseCase: AuthenticationUseCase
-   ) { }
+   constructor(private authUseCase: AuthenticationUseCase) {}
 
    async login(req: Request, res: Response, next: NextFunction) {
       try {

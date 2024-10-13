@@ -1,3 +1,3 @@
-import ChatList from './page';
-const Default = () => <ChatList />
-export default Default
+import ChatList from "./page";
+const Default = () => <ChatList />;
+export default Default;

@@ -33,6 +33,6 @@ export interface IExtendedAppointment extends IAppointment {
    patient?: IPatient;
    slot?: ISlot;
    doctor?: IDoctor;
-   prescription?:IPrescription;
-   isPrescriptionAdded?:boolean;
+   prescription?: IPrescription;
+   isPrescriptionAdded?: boolean;
 }

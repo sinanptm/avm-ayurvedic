@@ -14,7 +14,7 @@ export default class DeleteSlotUseCase {
       private appointmentRepository: IAppointmentRepository,
       private validatorService: IValidatorService,
       private notificationRepository: INotificationRepository
-   ) { }
+   ) {}
 
    async deleteManyByDay(doctorId: string, slots: ISlot[], day: Days): Promise<void> {
       this.validateSlotStartTimes(slots);
@@ -88,5 +88,4 @@ export default class DeleteSlotUseCase {
          this.validatorService.validateLength(slot.startTime, 7, 11);
       });
    }
-
 }

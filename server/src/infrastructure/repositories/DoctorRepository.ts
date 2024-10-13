@@ -16,7 +16,7 @@ export default class DoctorRepository implements IDoctorRepository {
       return await this.model.findOne({ email });
    }
    async create(doctor: IDoctor): Promise<IDoctor> {
-      return (await this.model.create(doctor));
+      return await this.model.create(doctor);
    }
    async update(id: string, doctor: IDoctor): Promise<IDoctor | null> {
       return await this.model.findByIdAndUpdate(id, doctor, { new: true });
@@ -32,24 +32,24 @@ export default class DoctorRepository implements IDoctorRepository {
          .find({ isVerified, isBlocked })
          .skip(limit * offset)
          .limit(limit)
-         .select(["-password","-token","-createdAt","-updatedAt"]);
+         .select(["-password", "-token", "-createdAt", "-updatedAt"]);
       return getPaginatedResult(totalItems, offset, limit, items);
    }
    async getCountInTimeRange(startTime: Date, endTime: Date): Promise<number> {
       const result = await this.model.aggregate([
          {
             $match: {
-               createdAt: { $gte: startTime, $lte: endTime }
-            }
+               createdAt: { $gte: startTime, $lte: endTime },
+            },
          },
          {
             $group: {
-               _id: null, 
-               count: { $sum: 1 }
-            }
-         }
+               _id: null,
+               count: { $sum: 1 },
+            },
+         },
       ]);
 
       return result.length > 0 ? result[0].count : 0;
-   };
+   }
 }

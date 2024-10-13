@@ -34,14 +34,18 @@ const {
    patientUseCases,
    unauthenticatedUseCases,
    updateAppointmentUseCase,
-   updateSlotUseCase
+   updateSlotUseCase,
 } = createUseCase;
 
 const createControllers = () => ({
    adminController: new AdminController(dashboardUseCase),
    adminDoctorController: new AdminDoctorController(adminDoctorUseCase),
    adminPatientController: new AdminPatientController(adminPatientUseCase),
-   appointmentController: new AppointmentController(createAppointmentUseCase, getAppointmentUseCase, updateAppointmentUseCase),
+   appointmentController: new AppointmentController(
+      createAppointmentUseCase,
+      getAppointmentUseCase,
+      updateAppointmentUseCase
+   ),
    chatBotController: new ChatBotController(chatBotUseCase),
    doctorController: new DoctorController(getPatientUseCase),
    patientController: new PatientController(patientUseCases),

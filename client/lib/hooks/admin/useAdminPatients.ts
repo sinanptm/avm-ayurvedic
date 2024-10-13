@@ -11,6 +11,7 @@ export const useGetPatientsAdmin = (offset: number, limit: number) => {
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
+      staleTime: 50000,
    });
 };
 

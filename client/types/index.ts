@@ -54,7 +54,7 @@ export type CustomProps = Readonly<{
    fieldType: FormFieldType;
    isLimited?: boolean;
    availableTimes?: string[];
-   Icon?: FC<{ className?: string; }>;
+   Icon?: FC<{ className?: string }>;
    doctor?: string;
    showDateText?: string;
 }>;
@@ -73,7 +73,7 @@ export interface VideoChatProps {
 }
 
 export interface CustomError {
-   message: string,
+   message: string;
    statusCode?: number;
 }
 

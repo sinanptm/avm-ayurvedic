@@ -13,10 +13,8 @@ import createControllers from "../di/controllers";
 import chatBotRoutes from "./chatbot/chatBotRoutes";
 import slotRoutes from "./slots/SlotsRoutes";
 
-
 const app = Router();
 const { unauthenticatedController } = createControllers;
-
 
 app.get("/doctors", unauthenticatedController.getDoctors.bind(unauthenticatedController));
 app.use("/doctor/auth", doctorAuthentication);

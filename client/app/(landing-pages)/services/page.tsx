@@ -1,7 +1,7 @@
 import Featured from "@/components/page-components/landing/services/Featured";
 import Services from "@/components/page-components/landing/services/Services";
 import WhyOurService from "@/components/page-components/landing/services/WhyOurService";
-import  Spinner from "@/components/skeletons/Spinner";
+import Spinner from "@/components/skeletons/Spinner";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { memo } from "react";
@@ -9,7 +9,6 @@ import { memo } from "react";
 const FeaturesList = dynamic(() => import("@/components/page-components/landing/services/FeatureList"), {
    loading: () => <Spinner className="w-10 h-10 justify-center items-center" size="md" />,
 });
-
 
 export const metadata: Metadata = {
    title: "Services",

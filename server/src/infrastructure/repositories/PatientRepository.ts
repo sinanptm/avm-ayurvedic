@@ -1,5 +1,5 @@
 import CustomError from "../../domain/entities/CustomError";
-import IPatient  from "../../domain/entities/IPatient";
+import IPatient from "../../domain/entities/IPatient";
 import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
 import { PaginatedResult, StatusCode } from "../../types";
 import { PatientGenderStatistics } from "../../types/statistics";
@@ -11,7 +11,8 @@ export default class PatientRepository implements IPatientRepository {
 
    async findMany(offset: number, limit: number): Promise<PaginatedResult<IPatient>> {
       const totalItems = await this.model.countDocuments();
-      const items = await this.model.find()
+      const items = await this.model
+         .find()
          .skip(limit * offset)
          .limit(limit)
          .select(["-token", "-password"])
@@ -23,19 +24,19 @@ export default class PatientRepository implements IPatientRepository {
       const result = await this.model.aggregate([
          {
             $match: {
-               createdAt: { $gte: startTime, $lte: endTime }
-            }
+               createdAt: { $gte: startTime, $lte: endTime },
+            },
          },
          {
             $group: {
-               _id: null, 
-               count: { $sum: 1 }
-            }
-         }
+               _id: null,
+               count: { $sum: 1 },
+            },
+         },
       ]);
 
       return result.length > 0 ? result[0].count : 0;
-   };
+   }
 
    async create(patient: IPatient): Promise<IPatient> {
       try {
@@ -68,29 +69,28 @@ export default class PatientRepository implements IPatientRepository {
    }
    async findPatientGenders(): Promise<PatientGenderStatistics> {
       const counts = await this.model.aggregate([
-        {
-          $group: {
-            _id: "$gender",
-            count: { $sum: 1 },
-          },
-        },
+         {
+            $group: {
+               _id: "$gender",
+               count: { $sum: 1 },
+            },
+         },
       ]);
       const initialCounts: PatientGenderStatistics = {
-        male: 0,
-        female: 0,
-        others: 0,
+         male: 0,
+         female: 0,
+         others: 0,
       };
-    
+
       counts.forEach((item) => {
-        if (item._id === "Male") {
-          initialCounts.male = item.count;
-        } else if (item._id === "Female") {
-          initialCounts.female = item.count;
-        } else {
-          initialCounts.others = item.count;
-        }
+         if (item._id === "Male") {
+            initialCounts.male = item.count;
+         } else if (item._id === "Female") {
+            initialCounts.female = item.count;
+         } else {
+            initialCounts.others = item.count;
+         }
       });
       return initialCounts;
-    }
-   
+   }
 }

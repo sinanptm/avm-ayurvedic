@@ -21,25 +21,25 @@ export default class SlotRepository implements ISlotRepository {
                from: "appointments",
                localField: "_id",
                foreignField: "slotId",
-               as: "appointments"
-            }
+               as: "appointments",
+            },
          },
          {
             $group: {
                _id: "$startTime",
-               count: { $sum: { $size: "$appointments" } }
-            }
+               count: { $sum: { $size: "$appointments" } },
+            },
          },
          {
             $project: {
                time: "$_id",
                count: 1,
-               _id: 0
-            }
-         }
+               _id: 0,
+            },
+         },
       ]);
    }
-   
+
    async deleteManyByDayAndTime(doctorId: string, day: Days, startTimes: string[]): Promise<void> {
       await this.model.deleteMany({ doctorId, day, startTime: { $in: startTimes } });
    }

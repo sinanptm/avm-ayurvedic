@@ -15,7 +15,7 @@ export default class PatientUseCase {
       private validatorService: IValidatorService,
       private chatRepository: IChatRepository,
       private videoSectionRepository: IVideoSectionRepository
-   ) { }
+   ) {}
 
    async getUserProfile(id: string): Promise<IPatient> {
       this.validatorService.validateIdFormat(id);
@@ -60,10 +60,7 @@ export default class PatientUseCase {
       if (patient.isBlocked) throw new CustomError("Patient account is blocked", StatusCode.Forbidden);
 
       if (patient.profile) {
-         await this.cloudStorageService.deleteFile(
-            S3_BUCKET_NAME!,
-            patient.profile.split("amazonaws.com/").pop()!
-         );
+         await this.cloudStorageService.deleteFile(S3_BUCKET_NAME!, patient.profile.split("amazonaws.com/").pop()!);
       }
 
       const imageUrl = `https://${S3_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${key}`;

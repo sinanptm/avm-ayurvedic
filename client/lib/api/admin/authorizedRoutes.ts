@@ -88,5 +88,4 @@ export const updateDoctor = async (doctor: IDoctor) => {
    return response.data;
 };
 
-
 export default adminAxiosInstance;

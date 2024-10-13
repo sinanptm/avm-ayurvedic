@@ -1,33 +1,37 @@
-'use client'
+"use client";
 
-import { useState } from "react"
-import { useParams, notFound } from "next/navigation"
-import { format } from "date-fns"
-import Image from "next/image"
-import { AlertCircle, Calendar, Clock, FileText, Pill } from "lucide-react"
-import { useGetAppointmentDetailsPatient, useUpdateAppointmentStatusAndNotesPatient } from "@/lib/hooks/appointment/useAppointmentPatient"
-import { useAuth } from "@/lib/hooks/useAuth"
-import { AppointmentStatus } from "@/types/enum"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import ConfirmCancelAppointmentModelPatient from "@/components/models/appointment/ConfirmCancelAppointmentPatient"
-import { ButtonV2 } from "@/components/button/ButtonV2"
-import dynamic from "next/dynamic"
+import { useState } from "react";
+import { useParams, notFound } from "next/navigation";
+import { format } from "date-fns";
+import Image from "next/image";
+import { AlertCircle, Calendar, Clock, FileText, Pill } from "lucide-react";
+import {
+   useGetAppointmentDetailsPatient,
+   useUpdateAppointmentStatusAndNotesPatient,
+} from "@/lib/hooks/appointment/useAppointmentPatient";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { AppointmentStatus } from "@/types/enum";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import ConfirmCancelAppointmentModelPatient from "@/components/models/appointment/ConfirmCancelAppointmentPatient";
+import { ButtonV2 } from "@/components/button/ButtonV2";
+import dynamic from "next/dynamic";
 
-const DownloadPrescriptionButton = dynamic(() => import("@/components/button/DownloadPrescriptionButton"), { ssr: false });
+const DownloadPrescriptionButton = dynamic(() => import("@/components/button/DownloadPrescriptionButton"), {
+   ssr: false,
+});
 
 export default function AppointmentDetailsPage() {
-   const id = useParams().id as string
-   const [isEditingNote, setIsEditingNote] = useState(false)
-   const [isCancelModelOpen, setCancelModelOpen] = useState(false)
-   const { data: appointment, refetch } = useGetAppointmentDetailsPatient(id)
-   const { mutate: update } = useUpdateAppointmentStatusAndNotesPatient()
-   const [newNote, setNewNote] = useState("")
-   const { patientToken } = useAuth()
-
+   const id = useParams().id as string;
+   const [isEditingNote, setIsEditingNote] = useState(false);
+   const [isCancelModelOpen, setCancelModelOpen] = useState(false);
+   const { data: appointment, refetch } = useGetAppointmentDetailsPatient(id);
+   const { mutate: update } = useUpdateAppointmentStatusAndNotesPatient();
+   const [newNote, setNewNote] = useState("");
+   const { patientToken } = useAuth();
 
    const handleUpdateNote = async () => {
       if (newNote.trim()) {
@@ -38,27 +42,27 @@ export default function AppointmentDetailsPage() {
                   toast({
                      title: "Note Updated",
                      description: "Your note has been successfully updated.",
-                  })
-                  setIsEditingNote(false)
-                  refetch()
+                  });
+                  setIsEditingNote(false);
+                  refetch();
                },
                onError: () => {
                   toast({
                      title: "Error",
                      description: "Failed to update the note. Please try again.",
                      variant: "destructive",
-                  })
+                  });
                },
             }
-         )
+         );
       } else {
          toast({
             title: "Invalid Input",
             description: "Note cannot be empty. Please enter some text.",
             variant: "destructive",
-         })
+         });
       }
-   }
+   };
 
    const handleCancelAppointment = async () => {
       update(
@@ -67,42 +71,43 @@ export default function AppointmentDetailsPage() {
             onSuccess: () => {
                toast({
                   title: "Appointment Cancelled",
-                  description: "Your appointment has been successfully cancelled. Refund will be getting to your account in 10 working days 💸.",
-               })
-               refetch()
-               setCancelModelOpen(false)
+                  description:
+                     "Your appointment has been successfully cancelled. Refund will be getting to your account in 10 working days 💸.",
+               });
+               refetch();
+               setCancelModelOpen(false);
             },
             onError: () => {
                toast({
                   title: "Error",
                   description: "Failed to cancel the appointment. Please try again.",
                   variant: "destructive",
-               })
+               });
             },
          }
-      )
-   }
+      );
+   };
 
    const isCancellable = () => {
-      if (!appointment?.slot?.startTime || !appointment?.appointmentDate) return false
+      if (!appointment?.slot?.startTime || !appointment?.appointmentDate) return false;
 
-      const appointmentDate = new Date(appointment.appointmentDate)
-      const [hours, minutes] = appointment.slot.startTime.split(":")
-      const isPM = appointment.slot.startTime.includes("PM")
+      const appointmentDate = new Date(appointment.appointmentDate);
+      const [hours, minutes] = appointment.slot.startTime.split(":");
+      const isPM = appointment.slot.startTime.includes("PM");
 
-      appointmentDate.setHours(isPM ? parseInt(hours) + 12 : parseInt(hours), parseInt(minutes.split(" ")[0]))
+      appointmentDate.setHours(isPM ? parseInt(hours) + 12 : parseInt(hours), parseInt(minutes.split(" ")[0]));
 
-      const currentTime = new Date()
-      const threeHoursBefore = new Date(appointmentDate.getTime() - 3 * 60 * 60 * 1000)
-      return currentTime < threeHoursBefore
-   }
+      const currentTime = new Date();
+      const threeHoursBefore = new Date(appointmentDate.getTime() - 3 * 60 * 60 * 1000);
+      return currentTime < threeHoursBefore;
+   };
 
    if (!patientToken) {
-      notFound()
+      notFound();
    }
 
    if (!appointment) {
-      return <div className="text-center mt-8">Loading appointment details...</div>
+      return <div className="text-center mt-8">Loading appointment details...</div>;
    }
 
    return (
@@ -121,18 +126,32 @@ export default function AppointmentDetailsPage() {
                <CardContent className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                      <div className="flex items-center space-x-2">
-                        <Image src={'/assets/icons/calendar.svg'} alt="Calendar" width={24} height={24} className="text-muted-foreground" />
+                        <Image
+                           src={"/assets/icons/calendar.svg"}
+                           alt="Calendar"
+                           width={24}
+                           height={24}
+                           className="text-muted-foreground"
+                        />
                         <span className="text-sm">{format(new Date(appointment.appointmentDate!), "PPPP")}</span>
                      </div>
                      <div className="flex items-center space-x-2">
                         <Clock className="w-6 h-6 text-muted-foreground" />
-                        <span className="text-sm">{appointment.slot?.startTime} - {appointment.slot?.endTime}</span>
+                        <span className="text-sm">
+                           {appointment.slot?.startTime} - {appointment.slot?.endTime}
+                        </span>
                      </div>
                      <div className="flex items-center space-x-2">
                         {appointment.appointmentType === "video-consulting" ? (
-                           <Image src={'/assets/icons/utils/video.svg'} alt="Video" width={24} height={24} className="text-muted-foreground" />
+                           <Image
+                              src={"/assets/icons/utils/video.svg"}
+                              alt="Video"
+                              width={24}
+                              height={24}
+                              className="text-muted-foreground"
+                           />
                         ) : (
-                           <Image src={'/assets/icons/circle-user.svg'} alt="In-person" width={24} height={24} />
+                           <Image src={"/assets/icons/circle-user.svg"} alt="In-person" width={24} height={24} />
                         )}
                         <span className="text-sm capitalize">{appointment.appointmentType}</span>
                      </div>
@@ -140,7 +159,13 @@ export default function AppointmentDetailsPage() {
                   <Separator />
                   <div>
                      <h3 className="font-semibold mb-2 flex items-center">
-                        <Image src={'/assets/icons/utils/file.svg'} alt="File" width={24} height={24} className="mr-2 text-muted-foreground" />
+                        <Image
+                           src={"/assets/icons/utils/file.svg"}
+                           alt="File"
+                           width={24}
+                           height={24}
+                           className="mr-2 text-muted-foreground"
+                        />
                         Reason for Visit
                      </h3>
                      <p className="text-sm text-muted-foreground">{appointment.reason}</p>
@@ -149,18 +174,24 @@ export default function AppointmentDetailsPage() {
                   <div>
                      <h3 className="font-semibold mb-2 flex items-center justify-between">
                         <span className="flex items-center">
-                           <Image src={'/assets/icons/utils/file.svg'} alt="Notes" width={24} height={24} className="mr-2 text-muted-foreground" />
+                           <Image
+                              src={"/assets/icons/utils/file.svg"}
+                              alt="Notes"
+                              width={24}
+                              height={24}
+                              className="mr-2 text-muted-foreground"
+                           />
                            Notes
                         </span>
                         <ButtonV2
                            variant="ghost"
                            size="sm"
                            onClick={() => {
-                              setNewNote(appointment.notes || "")
-                              setIsEditingNote(true)
+                              setNewNote(appointment.notes || "");
+                              setIsEditingNote(true);
                            }}
                         >
-                           <Image src={'/assets/icons/edit.svg'} alt="Edit" width={20} height={20} className="mr-2" />
+                           <Image src={"/assets/icons/edit.svg"} alt="Edit" width={20} height={20} className="mr-2" />
                            Edit
                         </ButtonV2>
                      </h3>
@@ -213,7 +244,9 @@ export default function AppointmentDetailsPage() {
                      </div>
                      <div className="text-center sm:text-left">
                         <h3 className="font-semibold">{appointment.doctor?.name}</h3>
-                        <p className="text-sm text-muted-foreground">{appointment.doctor?.qualifications?.join(", ")}</p>
+                        <p className="text-sm text-muted-foreground">
+                           {appointment.doctor?.qualifications?.join(", ")}
+                        </p>
                      </div>
                   </div>
                   <Separator />
@@ -318,5 +351,5 @@ export default function AppointmentDetailsPage() {
             handleCancelAppointment={handleCancelAppointment}
          />
       </div>
-   )
+   );
 }

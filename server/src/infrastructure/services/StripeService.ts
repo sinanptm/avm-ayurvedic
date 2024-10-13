@@ -60,10 +60,17 @@ class StripePaymentService implements IPaymentService {
       }
    }
 
-   async handleWebhookEvent(body: Buffer, signature: string): Promise<{ event: any; transactionId: string, type: "charge" | "paymentSuccess" | "" }> {
+   async handleWebhookEvent(
+      body: Buffer,
+      signature: string
+   ): Promise<{ event: any; transactionId: string; type: "charge" | "paymentSuccess" | "" }> {
       try {
          const event = stripe.webhooks.constructEvent(body, signature, STRIPE_WEBHOOK_SECRET!);
-         let res: { event: any; transactionId: string, type: "charge" | "paymentSuccess" | "" } = { event: null, transactionId: "", type: "" };
+         let res: { event: any; transactionId: string; type: "charge" | "paymentSuccess" | "" } = {
+            event: null,
+            transactionId: "",
+            type: "",
+         };
          switch (event.type) {
             case "payment_intent.succeeded":
                const paymentIntent = event.data.object as Stripe.PaymentIntent;
@@ -74,8 +81,8 @@ class StripePaymentService implements IPaymentService {
                throw new CustomError("Payment failed", StatusCode.PaymentError);
 
             case "charge.succeeded":
-               const charge = event.data.object as Stripe.Charge
-               res = { event, transactionId: charge.id, type: "charge" }
+               const charge = event.data.object as Stripe.Charge;
+               res = { event, transactionId: charge.id, type: "charge" };
 
             default:
                break;
@@ -95,14 +102,13 @@ class StripePaymentService implements IPaymentService {
             reason: "requested_by_customer",
          });
       } catch (error: any) {
-         if (error.raw.code === 'charge_already_refunded') {
-            return null
+         if (error.raw.code === "charge_already_refunded") {
+            return null;
          }
          logger.error(error);
-         return null
+         return null;
       }
    }
-
 }
 
 export default StripePaymentService;

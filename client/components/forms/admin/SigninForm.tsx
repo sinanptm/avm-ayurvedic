@@ -87,7 +87,7 @@ const AdminSigninForm = () => {
                   <PopoverTrigger asChild>
                      <ButtonV2 type="button" variant="shine" size="icon">
                         <Image
-                           src={'/assets/icons/guarantees/confidential.svg'}
+                           src={"/assets/icons/guarantees/confidential.svg"}
                            width={10}
                            height={10}
                            alt="Dummy user"

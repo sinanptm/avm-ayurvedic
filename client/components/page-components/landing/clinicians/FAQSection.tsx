@@ -1,4 +1,4 @@
-import  { memo } from "react";
+import { memo } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const FAQSection = () => (

@@ -8,13 +8,12 @@ import { jwtService } from "../di/services";
 
 const { updateAppointmentUseCase, getChatUseCase, createChatUseCase, notificationUseCase } = createUseCase;
 
-
 const initializeSocketIO = (server: HTTPServer) => {
-    const socketServer = new SocketServer(server);
-    const io = socketServer.getIO();
-    new VideoSocketManager(io, updateAppointmentUseCase, jwtService);
-    new ChatSocketManager(io, jwtService, createChatUseCase, getChatUseCase);
-    new NotificationSocketManager(io, notificationUseCase, jwtService);
+   const socketServer = new SocketServer(server);
+   const io = socketServer.getIO();
+   new VideoSocketManager(io, updateAppointmentUseCase, jwtService);
+   new ChatSocketManager(io, jwtService, createChatUseCase, getChatUseCase);
+   new NotificationSocketManager(io, notificationUseCase, jwtService);
 };
 
 export default initializeSocketIO;

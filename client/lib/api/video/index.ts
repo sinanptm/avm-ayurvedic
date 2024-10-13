@@ -45,4 +45,3 @@ export const getAllSectionsDoctor = async () => {
    });
    return response.data;
 };
-

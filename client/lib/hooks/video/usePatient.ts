@@ -2,24 +2,19 @@ import { getSectionByIdPatient, getSectionsInOneDayPatient } from "@/lib/api/vid
 import { IVideoSection } from "@/types/entities";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ErrorResponse,      } from "@/types";
+import { ErrorResponse } from "@/types";
 
 export const useGetSectionsInOneDayPatient = () => {
-    return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
-        queryKey: ["section-day-patient"],
-        queryFn: () => getSectionsInOneDayPatient(),
-        retry:1,
-        refetchInterval:10000,
-        staleTime:50000
-    });
+   return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
+      queryKey: ["section-day-patient"],
+      queryFn: () => getSectionsInOneDayPatient(),
+      retry: 1,
+   });
 };
 
 export const useGetSectionByIdPatient = (sectionId: string) => {
-    return useQuery<{section:IVideoSection}, AxiosError<ErrorResponse>>({
-        queryKey: ["section-patient", sectionId],
-        queryFn: () => getSectionByIdPatient(sectionId),
-        refetchInterval: 10000 * 60,
-    });
+   return useQuery<{ section: IVideoSection }, AxiosError<ErrorResponse>>({
+      queryKey: ["section-patient", sectionId],
+      queryFn: () => getSectionByIdPatient(sectionId),
+   });
 };
-
-

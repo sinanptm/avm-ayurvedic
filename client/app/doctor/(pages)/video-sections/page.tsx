@@ -1,15 +1,13 @@
-import VideoSectionsTable from '@/components/view/table/DoctorVideoSectionsTable';
-import { Metadata } from 'next';
+import VideoSectionsTable from "@/components/view/table/DoctorVideoSectionsTable";
+import { Metadata } from "next";
 
-export const metadata:Metadata = {
-    title:"Video Sections",
-    keywords:["video call", 'video sections', 'doctor dashboard','ayurvedic']
-}
+export const metadata: Metadata = {
+   title: "Video Sections",
+   keywords: ["video call", "video sections", "doctor dashboard", "ayurvedic"],
+};
 
 const Page = () => {
-    return (
-        <VideoSectionsTable  />
-    );
+   return <VideoSectionsTable />;
 };
 
 export default Page;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import apiUrls from '@/config/apiConfig'
+import apiUrls from "@/config/apiConfig";
 
 const axiosInstance = axios.create({
    baseURL: `${apiUrls.ADMIN}/auth`,

@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { memo } from "react";
 
-const ProfileSkeleton =()=> {
+const ProfileSkeleton = () => {
    return (
       <div className="min-h-screen p-4 sm:p-6 md:p-8">
          <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
@@ -44,5 +44,5 @@ const ProfileSkeleton =()=> {
          </div>
       </div>
    );
-}
-export default memo(ProfileSkeleton)
+};
+export default memo(ProfileSkeleton);

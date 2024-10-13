@@ -8,12 +8,11 @@ import LifestyleTips from "@/components/page-components/landing/home/LifeStyleTi
 import AyurvedicHerbs from "@/components/page-components/landing/home/Herbs";
 import { memo } from "react";
 import OurGoals from "@/components/page-components/landing/home/OurGoals";
-import { metadata as rootMeta } from './layout';
+import { metadata as rootMeta } from "./layout";
 
 export const metadata: Metadata = {
-   ...rootMeta
+   ...rootMeta,
 };
-
 
 const HomePage = () => {
    return (

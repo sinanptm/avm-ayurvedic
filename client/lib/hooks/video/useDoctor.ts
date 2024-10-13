@@ -5,23 +5,22 @@ import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types";
 
 export const useGetSectionsInOneDayDoctor = () => {
-    return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
-        queryKey: ["section-day-doctor"],
-        queryFn: () => getSectionsInOneDayDoctor(),
-    });
+   return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
+      queryKey: ["section-day-doctor"],
+      queryFn: () => getSectionsInOneDayDoctor(),
+   });
 };
 
 export const useGetSectionByIdDoctor = (sectionId: string) => {
-    return useQuery<{section:IVideoSection}, AxiosError<ErrorResponse>>({
-        queryKey: ["section-doctor", sectionId],
-        queryFn: () => getSectionByIdDoctor(sectionId),
-        refetchInterval: 10000 * 60,
-    });
+   return useQuery<{ section: IVideoSection }, AxiosError<ErrorResponse>>({
+      queryKey: ["section-doctor", sectionId],
+      queryFn: () => getSectionByIdDoctor(sectionId),
+   });
 };
 
 export const useGetAllSectionsDoctor = () => {
-    return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
-        queryKey: ["sections-doctor"],
-        queryFn: () => getAllSectionsDoctor(),
-    });
+   return useQuery<IVideoSection[], AxiosError<ErrorResponse>>({
+      queryKey: ["sections-doctor"],
+      queryFn: () => getAllSectionsDoctor(),
+   });
 };

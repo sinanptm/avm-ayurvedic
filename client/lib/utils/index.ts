@@ -17,5 +17,5 @@ export const formatDate = (date: Date): string => {
 };
 
 export const getRandomId = () => {
-   return (Math.random() * 121 / 12).toString() + new Date()
-}
+   return ((Math.random() * 121) / 12).toString() + new Date();
+};

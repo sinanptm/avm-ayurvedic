@@ -23,25 +23,34 @@ export default function DoctorPatientsTable({ page }: Props) {
 
    const { items: patients = [], totalPages, hasNextPage, hasPreviousPage } = data || {};
 
-   const columns = useMemo(() => [
-      { name: "Image", width: "w-[80px]" },
-      { name: "Name", width: "" },
-      { name: "Email", width: "" },
-      { name: "Phone", width: "" },
-      { name: "Blood Group", width: "" },
-      { name: "Actions", width: "text-right pr-10" },
-   ], []);
+   const columns = useMemo(
+      () => [
+         { name: "Image", width: "w-[80px]" },
+         { name: "Name", width: "" },
+         { name: "Email", width: "" },
+         { name: "Phone", width: "" },
+         { name: "Blood Group", width: "" },
+         { name: "Actions", width: "text-right pr-10" },
+      ],
+      []
+   );
 
-   const handlePageChange = useCallback((pageIndex: number) => {
-      if (pageIndex > totalPages! || pageIndex < 1) return;
-      setCurrentPage(pageIndex);
-      router.push(`/doctor/patients?page=${pageIndex}`);
-      refetch();
-   }, [totalPages, refetch, router]);
+   const handlePageChange = useCallback(
+      (pageIndex: number) => {
+         if (pageIndex > totalPages! || pageIndex < 1) return;
+         setCurrentPage(pageIndex);
+         router.push(`/doctor/patients?page=${pageIndex}`);
+         refetch();
+      },
+      [totalPages, refetch, router]
+   );
 
-   const handleViewProfile = useCallback((patientId: string) => {
-      router.push(`/doctor/patients/${patientId}`);
-   }, [router]);
+   const handleViewProfile = useCallback(
+      (patientId: string) => {
+         router.push(`/doctor/patients/${patientId}`);
+      },
+      [router]
+   );
 
    return (
       <main className="flex-1 space-y-1 p-x-4 md:p-x-8">
@@ -78,13 +87,17 @@ export default function DoctorPatientsTable({ page }: Props) {
                                     <TableRow key={patient._id}>
                                        <TableCell>
                                           <div
-                                             className={`relative w-13 h-13 rounded-full ${patient.isBlocked
-                                                ? "border-4 border-destructive"
-                                                : "border-4 border-primary"
-                                                }`}
+                                             className={`relative w-13 h-13 rounded-full ${
+                                                patient.isBlocked
+                                                   ? "border-4 border-destructive"
+                                                   : "border-4 border-primary"
+                                             }`}
                                           >
                                              <Avatar className="w-full h-full">
-                                                <AvatarImage src={patient.profile || "/assets/icons/circle-user.svg"} alt={patient.name} />
+                                                <AvatarImage
+                                                   src={patient.profile || "/assets/icons/circle-user.svg"}
+                                                   alt={patient.name}
+                                                />
                                                 <AvatarFallback>{(patient.name || "P").charAt(0)}</AvatarFallback>
                                              </Avatar>
                                           </div>

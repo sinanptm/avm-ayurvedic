@@ -29,14 +29,17 @@ const DoctorsTable = ({ page, type }: Props) => {
    const router = useRouter();
    const limit = 7;
    const { data, isLoading, error, refetch } = useGetDoctorsAdmin(currentPage - 1, limit, type);
-   const columns = useMemo(() => [
-      { name: "Image", width: "w-[80px]" },
-      { name: "Name", width: "w-1/6" },
-      { name: "Email", width: "w-1/4" },
-      { name: "Status", width: "w-1/6" },
-      { name: "Blocked", width: "w-1/12" },
-      { name: "Actions", width: "w-1/6 text-right pr-10" },
-   ], []);
+   const columns = useMemo(
+      () => [
+         { name: "Image", width: "w-[80px]" },
+         { name: "Name", width: "w-1/6" },
+         { name: "Email", width: "w-1/4" },
+         { name: "Status", width: "w-1/6" },
+         { name: "Blocked", width: "w-1/12" },
+         { name: "Actions", width: "w-1/6 text-right pr-10" },
+      ],
+      []
+   );
 
    const doctors = useMemo(() => data?.items || [], [data]);
 
@@ -76,7 +79,11 @@ const DoctorsTable = ({ page, type }: Props) => {
    return (
       <main className="flex-1 space-y-4 p-4 md:p-6">
          <div className="flex min-h-screen w-full flex-col bg-background">
-            <Tabs value={tabType} onValueChange={(value) => handleTabChange(value as DoctorsFilter)} className="space-y-4">
+            <Tabs
+               value={tabType}
+               onValueChange={(value) => handleTabChange(value as DoctorsFilter)}
+               className="space-y-4"
+            >
                <div className="flex items-center justify-between">
                   <TabsList>
                      <TabsTrigger value={DoctorsFilter.VERIFIED} asChild>
@@ -118,7 +125,9 @@ const DoctorsTable = ({ page, type }: Props) => {
                   <Card>
                      <CardHeader>
                         <CardTitle>All Doctors</CardTitle>
-                        <CardDescription>A list of all doctors including their status, specialty, qualifications, and more.</CardDescription>
+                        <CardDescription>
+                           A list of all doctors including their status, specialty, qualifications, and more.
+                        </CardDescription>
                      </CardHeader>
                      <CardContent>
                         {isLoading ? (
@@ -216,6 +225,5 @@ const DoctorsTable = ({ page, type }: Props) => {
       </main>
    );
 };
-
 
 export default memo(DoctorsTable);

@@ -64,13 +64,7 @@ const AdminLayoutWithSideBar = ({
                      href="/admin/dashboard"
                      className="group flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
                   >
-                     <Image
-                        width={23}
-                        height={23}
-                        src={'/assets/icons/logo-icon.svg'}
-                        alt="AVM"
-                        className="h-6 w-6"
-                     />
+                     <Image width={23} height={23} src={"/assets/icons/logo-icon.svg"} alt="AVM" className="h-6 w-6" />
                   </Link>
                   {sideBarLinks.map((item) => (
                      <Tooltip key={item.href}>
@@ -166,7 +160,7 @@ const AdminLayoutWithSideBar = ({
                            <Image
                               width={23}
                               height={23}
-                              src={'/assets/icons/logo-icon.svg'}
+                              src={"/assets/icons/logo-icon.svg"}
                               alt="AVM"
                               className="h-6 w-6"
                            />

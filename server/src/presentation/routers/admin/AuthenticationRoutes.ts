@@ -3,7 +3,7 @@ import createControllers from "../../di/controllers";
 
 const router = Router();
 
-const { authAdminController } = createControllers
+const { authAdminController } = createControllers;
 
 router.post("/", authAdminController.login.bind(authAdminController));
 router.post("/otp-verification", authAdminController.validateOtp.bind(authAdminController));

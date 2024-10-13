@@ -1,43 +1,43 @@
 import { AppointmentStatus } from "../domain/entities/IAppointment";
 
 export enum Months {
-    January = "January",
-    February = "February",
-    March = "March",
-    April = "April",
-    May = "May",
-    June = "June",
-    July = "July",
-    August = "August",
-    September = "September",
-    October = "October",
-    November = "November",
-    December = "December",
+   January = "January",
+   February = "February",
+   March = "March",
+   April = "April",
+   May = "May",
+   June = "June",
+   July = "July",
+   August = "August",
+   September = "September",
+   October = "October",
+   November = "November",
+   December = "December",
 }
 
 export type PatientGenderStatistics = {
-    male: number;
-    female: number;
-    others: number;
-}
+   male: number;
+   female: number;
+   others: number;
+};
 
 export type UserStatistics = {
-    month: Months;
-    doctors: number;
-    patients: number;
+   month: Months;
+   doctors: number;
+   patients: number;
 };
 
 export type AppointmentsPerMonthStatistics = {
-    month:Months;
-    count:number;
-}
+   month: Months;
+   count: number;
+};
 
 export type AppointmentsByStatusStatistics = {
-    status:AppointmentStatus;
-    count:number
-}
+   status: AppointmentStatus;
+   count: number;
+};
 
 export type SlotStatistics = {
-    time:string;
-    count:number;
-}
+   time: string;
+   count: number;
+};

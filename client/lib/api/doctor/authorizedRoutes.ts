@@ -67,14 +67,14 @@ doctorAxiosInstance.interceptors.response.use(
    }
 );
 
-export const getPatientsOfDoctor = async (limit:number,offset:number) => {
+export const getPatientsOfDoctor = async (limit: number, offset: number) => {
    const response = await doctorAxiosInstance.get(`/?limit=${limit}&offset=${offset}`);
    return response.data;
-}
+};
 
-export const getPatientMedicalHistory = async (patientId:string,limit:number,offset:number)=>{
+export const getPatientMedicalHistory = async (patientId: string, limit: number, offset: number) => {
    const response = await doctorAxiosInstance.get(`/medical-history/${patientId}?limit=${limit}&offset=${offset}`);
    return response.data;
-}
+};
 
 export default doctorAxiosInstance;

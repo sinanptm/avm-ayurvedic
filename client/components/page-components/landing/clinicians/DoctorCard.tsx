@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { memo } from "react";
 import Image from "next/image";
@@ -54,22 +54,30 @@ const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => {
             <div className="space-y-1 sm:space-y-2 mb-3 sm:mb-4 text-xs sm:text-sm text-muted-foreground flex-grow">
                {doctor.phone && (
                   <div className="flex items-center gap-1 sm:gap-2">
-                     <Image src="/assets/icons/phone.svg" width={16} height={16} alt="Phone" className="w-4 h-4 sm:w-5 sm:h-5" />
+                     <Image
+                        src="/assets/icons/phone.svg"
+                        width={16}
+                        height={16}
+                        alt="Phone"
+                        className="w-4 h-4 sm:w-5 sm:h-5"
+                     />
                      <span className="truncate">{doctor.phone}</span>
                   </div>
                )}
                {doctor.email && (
                   <div className="flex items-center gap-1 sm:gap-2">
-                     <Image src="/assets/icons/email.svg" width={16} height={16} alt="Email" className="w-4 h-4 sm:w-5 sm:h-5" />
+                     <Image
+                        src="/assets/icons/email.svg"
+                        width={16}
+                        height={16}
+                        alt="Email"
+                        className="w-4 h-4 sm:w-5 sm:h-5"
+                     />
                      <span className="truncate">{doctor.email}</span>
                   </div>
                )}
             </div>
-            <ButtonV2
-               variant={"shine"}
-               onClick={() => redirect()}
-               className="w-full text-sm sm:text-base"
-            >
+            <ButtonV2 variant={"shine"} onClick={() => redirect()} className="w-full text-sm sm:text-base">
                Book Appointment
             </ButtonV2>
          </CardContent>

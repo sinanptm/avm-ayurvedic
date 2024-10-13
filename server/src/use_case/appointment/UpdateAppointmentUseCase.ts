@@ -17,7 +17,7 @@ export default class UpdateAppointmentUseCase {
       private videoSectionRepository: IVideoSectionRepository,
       private paymentService: IPaymentService,
       private paymentRepository: IPaymentRepository
-   ) { }
+   ) {}
 
    // By Doctor
    async updateStatus(appointmentId: string, status: AppointmentStatus): Promise<void> {
@@ -35,12 +35,12 @@ export default class UpdateAppointmentUseCase {
             appointmentId,
             message: `✅ Your appointment has been accepted! Please make sure to be available at the scheduled time.`,
             patientId: appointment.patientId,
-            type: NotificationTypes.APPOINTMENT_CONFIRMED
+            type: NotificationTypes.APPOINTMENT_CONFIRMED,
          });
       }
    }
 
-   // By Patient 
+   // By Patient
    async updateStatusAndNote(appointmentId: string, status: AppointmentStatus, notes: string): Promise<void> {
       this.validatorService.validateRequiredFields({ appointmentId, status, notes });
       this.validatorService.validateEnum(status, Object.values(AppointmentStatus));
@@ -57,10 +57,12 @@ export default class UpdateAppointmentUseCase {
          appointmentId,
          message: `🚫 Your appointment has been canceled. Your refund will be credited to your account in 10 working days. If you have any questions, please contact your doctor.`,
          patientId: appointment.patientId,
-         type: NotificationTypes.APPOINTMENT_CANCELED
+         type: NotificationTypes.APPOINTMENT_CANCELED,
       });
 
-      await this.videoSectionRepository.findByAppointmentIdAndUpdate(appointmentId, { status: VideoSectionStatus.CANCELLED });
+      await this.videoSectionRepository.findByAppointmentIdAndUpdate(appointmentId, {
+         status: VideoSectionStatus.CANCELLED,
+      });
 
       const payment = await this.paymentRepository.findByAppointmentId(appointment._id!);
       if (payment) {
@@ -72,7 +74,7 @@ export default class UpdateAppointmentUseCase {
             appointmentId,
             message: `🚫 The appointment for patient has been canceled. The slot is now available for other patients.`,
             doctorId: appointment.doctorId,
-            type: NotificationTypes.APPOINTMENT_CANCELED
+            type: NotificationTypes.APPOINTMENT_CANCELED,
          });
       }
    }

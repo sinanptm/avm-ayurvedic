@@ -18,7 +18,7 @@ interface Props {
    handleCancelAppointment: () => void;
 }
 
-const  AppointmentCancellationModal = ({ open, setOpen, handleCancelAppointment }: Props) =>{
+const AppointmentCancellationModal = ({ open, setOpen, handleCancelAppointment }: Props) => {
    return (
       <AlertDialog open={open} onOpenChange={setOpen}>
          <AlertDialogContent className="sm:max-w-[425px] w-[95vw] p-6 bg-black bg-opacity-65">
@@ -58,6 +58,6 @@ const  AppointmentCancellationModal = ({ open, setOpen, handleCancelAppointment 
          </AlertDialogContent>
       </AlertDialog>
    );
-}
+};
 
-export default memo(AppointmentCancellationModal)
+export default memo(AppointmentCancellationModal);

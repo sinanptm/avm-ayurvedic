@@ -36,7 +36,7 @@ const initialState: AuthState = {
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode; }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
    const [authState, setAuthState] = useState<AuthState>(initialState);
    const [isChatBotOpen, setChatBotOpen] = useState(false);
 
@@ -81,7 +81,9 @@ export const AuthProvider = ({ children }: { children: ReactNode; }) => {
    };
 
    return (
-      <AuthContext.Provider value={{ ...authState, setCredentials, logout, setMultipleCredentials, isChatBotOpen, setChatBotOpen }}>
+      <AuthContext.Provider
+         value={{ ...authState, setCredentials, logout, setMultipleCredentials, isChatBotOpen, setChatBotOpen }}
+      >
          {children}
       </AuthContext.Provider>
    );

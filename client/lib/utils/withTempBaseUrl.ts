@@ -7,10 +7,10 @@ export const withTempBaseUrl = async (
 ): Promise<AxiosResponse> => {
    const updatedConfig = {
       ...config,
-      baseURL: newBaseUrl, 
+      baseURL: newBaseUrl,
    };
    try {
-      const response = await instance(updatedConfig); 
+      const response = await instance(updatedConfig);
       return response;
    } catch (error) {
       throw error;

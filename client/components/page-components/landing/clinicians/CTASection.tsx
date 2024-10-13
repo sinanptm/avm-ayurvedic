@@ -13,4 +13,4 @@ const CTASection = () => (
    </div>
 );
 
-export default memo(CTASection)
+export default memo(CTASection);

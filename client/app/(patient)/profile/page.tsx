@@ -8,7 +8,9 @@ import { ButtonV2 } from "@/components/button/ButtonV2";
 import dynamic from "next/dynamic";
 import Loading from "@/components/skeletons/Loader";
 
-const UpdateProfilePatient = dynamic(()=>import("@/components/models/patient/UpdateProfilePatient"), { loading: () => <Loading /> });
+const UpdateProfilePatient = dynamic(() => import("@/components/models/patient/UpdateProfilePatient"), {
+   loading: () => <Loading />,
+});
 
 export default function PatientProfilePage() {
    const { data: patientData, isLoading, refetch } = useGetPatientProfile();

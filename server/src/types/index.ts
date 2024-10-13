@@ -65,5 +65,5 @@ export enum DoctorsFilter {
 export type TokenPayload = {
    id: string;
    role: UserRole;
-   email: string
-}
+   email: string;
+};

@@ -1,3 +1,3 @@
-export default interface IUUIDService{
-    generate():string
+export default interface IUUIDService {
+   generate(): string;
 }

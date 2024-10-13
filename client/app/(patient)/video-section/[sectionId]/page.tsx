@@ -1,46 +1,46 @@
-'use client'
+"use client";
 
-import { useParams } from 'next/navigation';
-import JoinPage from '@/components/page-components/video/JoinVideoCallPage';
-import VideoChat from '@/components/page-components/video/VideoChat';
-import { useGetSectionByIdPatient } from '@/lib/hooks/video/usePatient';
-import { useVideoCall } from '@/lib/hooks/useVideoCall';
+import { useParams } from "next/navigation";
+import JoinPage from "@/components/page-components/video/JoinVideoCallPage";
+import VideoChat from "@/components/page-components/video/VideoChat";
+import { useGetSectionByIdPatient } from "@/lib/hooks/video/usePatient";
+import { useVideoCall } from "@/lib/hooks/useVideoCall";
 
 export default function PatientVideoCallPage() {
-  const { sectionId } = useParams();
-  const { data, isLoading } = useGetSectionByIdPatient(sectionId as string);
-  const section = data?.section;
+   const { sectionId } = useParams();
+   const { data, isLoading } = useGetSectionByIdPatient(sectionId as string);
+   const section = data?.section;
 
-  const {
-    hasJoined,
-    localStream,
-    remoteStream,
-    isMuted,
-    handleJoin,
-    handleEndCall,
-    isVideoOff,
-    toggleMute,
-    toggleVideo
-  } = useVideoCall(section, 'patient');
+   const {
+      hasJoined,
+      localStream,
+      remoteStream,
+      isMuted,
+      handleJoin,
+      handleEndCall,
+      isVideoOff,
+      toggleMute,
+      toggleVideo,
+   } = useVideoCall(section, "patient");
 
-  if (isLoading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
+   if (isLoading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
 
-  if (!hasJoined) {
-    return <JoinPage  handleStart={handleJoin} section={section!} />;
-  }
+   if (!hasJoined) {
+      return <JoinPage handleStart={handleJoin} section={section!} />;
+   }
 
-  return (
-    <VideoChat
-      isMuted={isMuted}
-      isVideoOff={isVideoOff}
-      localStream={localStream}
-      remoteStream={remoteStream}
-      isDoctor={false}
-      selfAvatar={section?.patientProfile!}
-      remoteAvatar={section?.doctorProfile!}
-      toggleMute={toggleMute}
-      toggleVideo={toggleVideo}
-      handleEndCall={handleEndCall}
-    />
-  );
+   return (
+      <VideoChat
+         isMuted={isMuted}
+         isVideoOff={isVideoOff}
+         localStream={localStream}
+         remoteStream={remoteStream}
+         isDoctor={false}
+         selfAvatar={section?.patientProfile!}
+         remoteAvatar={section?.doctorProfile!}
+         toggleMute={toggleMute}
+         toggleVideo={toggleVideo}
+         handleEndCall={handleEndCall}
+      />
+   );
 }

@@ -2,7 +2,7 @@ import { Router } from "express";
 import createControllers from "../../di/controllers";
 
 const router = Router();
-const { authPatientController }  = createControllers
+const { authPatientController } = createControllers;
 
 router.post("/", authPatientController.register.bind(authPatientController));
 router.post("/login", authPatientController.login.bind(authPatientController));

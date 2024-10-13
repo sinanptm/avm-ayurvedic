@@ -7,10 +7,10 @@ const otpSchema = new Schema<IOtp>(
       otp: { type: String, required: true },
    },
    {
-      timestamps: true, 
-      versionKey: false, 
-      minimize: false
-  }
+      timestamps: true,
+      versionKey: false,
+      minimize: false,
+   }
 );
 
 const OtpModel = model<IOtp>("Otp", otpSchema);

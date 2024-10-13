@@ -1,4 +1,11 @@
-import { AppointmentStatus, AppointmentType, Days, NotificationTypes, PrescriptionStatus, VideoSectionStatus } from "./enum";
+import {
+   AppointmentStatus,
+   AppointmentType,
+   Days,
+   NotificationTypes,
+   PrescriptionStatus,
+   VideoSectionStatus,
+} from "./enum";
 
 export interface IPatient {
    readonly _id?: string;
@@ -71,7 +78,6 @@ export interface INotification {
    readonly updatedAt?: Date;
    readonly appointmentId?: string;
 }
-
 
 export interface IChat {
    readonly _id?: string;

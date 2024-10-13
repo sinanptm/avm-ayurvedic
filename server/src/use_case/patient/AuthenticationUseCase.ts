@@ -22,7 +22,7 @@ export default class AuthenticationUseCase {
       private otpRepository: IOtpRepository,
       private tokenService: ITokenService,
       private validatorService: IValidatorService
-   ) { }
+   ) {}
 
    async register(patient: IPatient): Promise<string> {
       this.validatorService.validateRequiredFields({
@@ -41,10 +41,10 @@ export default class AuthenticationUseCase {
       return `Patient created successfully with ID ${_id}`;
    }
 
-   async login(patient: IPatient): Promise<{ email: string; }> {
+   async login(patient: IPatient): Promise<{ email: string }> {
       this.validatorService.validateEmailFormat(patient.email!);
       this.validatorService.validatePassword(patient.password!);
-      
+
       const foundPatient = await this.patientRepository.findByEmailWithCredentials(patient.email!);
       if (!foundPatient) throw new CustomError("Invalid email or password", StatusCode.Unauthorized);
 
@@ -54,7 +54,6 @@ export default class AuthenticationUseCase {
 
       const isPasswordValid = await this.passwordService.compare(patient.password!, foundPatient.password!);
       if (!isPasswordValid) throw new CustomError("Invalid email or password", StatusCode.Unauthorized);
-
 
       let otp;
       if (patient.email === "demouser@gmail.com") {
@@ -75,7 +74,6 @@ export default class AuthenticationUseCase {
       }
 
       await this.otpRepository.create(otp, foundPatient.email!);
-
 
       return { email: foundPatient.email! };
    }
@@ -134,7 +132,7 @@ export default class AuthenticationUseCase {
       return { accessToken, refreshToken };
    }
 
-   async refreshAccessToken(token: string): Promise<{ accessToken: string; }> {
+   async refreshAccessToken(token: string): Promise<{ accessToken: string }> {
       const { id } = this.tokenService.verifyRefreshToken(token);
 
       const patient = await this.patientRepository.findById(id);

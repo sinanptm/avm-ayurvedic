@@ -1,5 +1,5 @@
-import ChatList from './page'
+import ChatList from "./page";
 
 export default function DefaultChatList() {
-    return <ChatList />;
+   return <ChatList />;
 }

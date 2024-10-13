@@ -46,7 +46,7 @@ const AdminPatientProfileModel = ({ open, setOpen, patient, refetch }: Props) =>
                toast({
                   title: "Error in Updating Patient Status",
                   description: error.response?.data.message || "Unknown Error Occurred",
-                  variant:"destructive"
+                  variant: "destructive",
                });
             },
          }

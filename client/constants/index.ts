@@ -50,6 +50,78 @@ export const NavLinks: NavLinkType[] = [
    { href: "/about", label: "About" },
 ];
 
+export const MetaKeyWords = [
+   "AVM Ayurvedic",
+   "Ayurvedic hospital",
+   "Ayurvedic treatments",
+   "holistic healing",
+   "online Ayurveda consultation",
+   "natural medicine",
+   "herbal remedies",
+   "wellness center",
+   "Ayurvedic doctors online",
+   "Ayurvedic health care",
+   "mental wellness",
+   "immune support",
+   "Ayurvedic lifestyle",
+   "natural therapies",
+   "online appointments",
+   "virtual consultations",
+   "herbal medicine",
+   "AI Ayurvedic assistant",
+   "wellness tips",
+   "video consultations",
+   "Ayurvedic wellness center",
+   "Ayurvedic therapies",
+   "traditional medicine",
+   "Ayurveda for stress relief",
+   "Ayurvedic detox",
+   "Panchakarma therapy",
+   "Ayurvedic spa",
+   "holistic health care",
+   "herbal supplements",
+   "Ayurvedic diet",
+   "Ayurveda for skin care",
+   "herbal treatments",
+   "Ayurveda consultation online",
+   "ancient healing techniques",
+   "Ayurveda for weight loss",
+   "balance of mind and body",
+   "Ayurvedic pain relief",
+   "Ayurvedic rejuvenation",
+   "holistic wellness services",
+   "Ayurveda for better sleep",
+   "natural detoxification",
+   "Ayurvedic massage",
+   "holistic immune support",
+   "Ayurveda for digestion",
+   "mindful living",
+   "herbal skincare",
+   "Ayurveda retreat",
+   "dosha balancing",
+   "Ayurvedic lifestyle coach",
+   "wellness retreats",
+   "organic wellness",
+   "Ayurveda for anxiety",
+   "natural healing methods",
+   "Ayurvedic superfoods",
+   "detox and cleanse",
+   "customized Ayurvedic plans",
+   "ayurvedic herbs",
+   "mind-body wellness",
+   "natural stress relief",
+   "wellness rituals",
+   "Ayurvedic weight management",
+   "herbal wellness",
+   "holistic rejuvenation",
+   "ancient Ayurveda wisdom",
+   "balance and harmony",
+   "therapeutic Ayurveda",
+   "Ayurveda for longevity",
+   "holistic treatment plans",
+   "Ayurveda for energy boost",
+];
+
 export const DoctorList = [
    {
       _id: "1",
@@ -121,7 +193,7 @@ export const SliderTexts = [
    "Tradition and Innovation for Holistic Health.",
    "Personalized Ayurvedic Treatments Just for You.",
    "Experience Ayurveda and Allopathy Together.",
-   "Quality Healthcare Beyond All Boundaries."
+   "Quality Healthcare Beyond All Boundaries.",
 ];
 
 export const DoctorDegrees = [
@@ -244,21 +316,21 @@ export const FeaturesCardsHomePage: AnimatedCardProps[] = [
 
 export const Treatments = [
    {
-     title: 'Abhyanga Massage',
-     description: 'A full-body massage with warm herbal oils to promote relaxation and detoxification.',
-     image: '/assets/services/abhyanga.jpg',
+      title: "Abhyanga Massage",
+      description: "A full-body massage with warm herbal oils to promote relaxation and detoxification.",
+      image: "/assets/services/abhyanga.jpg",
    },
    {
-     title: 'Shirodhara',
-     description: 'A gentle stream of warm oil poured over the forehead to calm the mind and nervous system.',
-     image: '/assets/services/shirodhara.webp',
+      title: "Shirodhara",
+      description: "A gentle stream of warm oil poured over the forehead to calm the mind and nervous system.",
+      image: "/assets/services/shirodhara.webp",
    },
    {
-     title: 'Panchakarma',
-     description: 'A comprehensive detoxification and rejuvenation program to restore balance to the body.',
-     image: '/assets/services/panchakarma.jpg',
+      title: "Panchakarma",
+      description: "A comprehensive detoxification and rejuvenation program to restore balance to the body.",
+      image: "/assets/services/panchakarma.jpg",
    },
- ]
+];
 
 export const Banners = {
    patient_signin: "/assets/images/onboarding-img.png",
@@ -382,27 +454,25 @@ export const DiseaseOptions: string[] = [
    "Meningitis",
 ];
 
-
 export const Herbs = [
    {
-     name: 'Ashwagandha',
-     description: 'Known for its stress-reducing and energy-boosting properties.',
-     image: '/assets/services/ashwagandha.jpg',
+      name: "Ashwagandha",
+      description: "Known for its stress-reducing and energy-boosting properties.",
+      image: "/assets/services/ashwagandha.jpg",
    },
    {
-     name: 'Turmeric',
-     description: 'A powerful anti-inflammatory and antioxidant herb.',
-     image: '/assets/services/turmeric.avif',
+      name: "Turmeric",
+      description: "A powerful anti-inflammatory and antioxidant herb.",
+      image: "/assets/services/turmeric.avif",
    },
    {
-     name: 'Brahmi',
-     description: 'Supports cognitive function and mental clarity.',
-     image: '/assets/services/brahmi.jpg',
+      name: "Brahmi",
+      description: "Supports cognitive function and mental clarity.",
+      image: "/assets/services/brahmi.jpg",
    },
    {
-     name: 'Triphala',
-     description: 'A blend of three fruits that aids digestion and detoxification.',
-     image: '/assets/services/triphala.webp',
+      name: "Triphala",
+      description: "A blend of three fruits that aids digestion and detoxification.",
+      image: "/assets/services/triphala.webp",
    },
- ]
- 
+];

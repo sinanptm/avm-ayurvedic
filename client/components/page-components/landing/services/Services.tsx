@@ -34,6 +34,6 @@ const Services = () => {
          </div>
       </div>
    );
-}
+};
 
-export default memo(Services)
+export default memo(Services);

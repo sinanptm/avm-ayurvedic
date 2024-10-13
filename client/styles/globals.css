@@ -26,20 +26,19 @@
    }
 }
 
-
 @keyframes blink {
    0% {
-     opacity: .2;
+      opacity: 0.2;
    }
    20% {
-     opacity: 1;
+      opacity: 1;
    }
    100% {
-     opacity: .2;
+      opacity: 0.2;
    }
- }
- 
- .typing-indicator span {
+}
+
+.typing-indicator span {
    animation-name: blink;
    animation-duration: 1.4s;
    animation-iteration-count: infinite;
@@ -50,16 +49,16 @@
    display: inline-block;
    border-radius: 50%;
    margin: 0 1px;
- }
- 
- .typing-indicator span:nth-child(2) {
-   animation-delay: .2s;
- }
- 
- .typing-indicator span:nth-child(3) {
-   animation-delay: .4s;
- }
- 
+}
+
+.typing-indicator span:nth-child(2) {
+   animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+   animation-delay: 0.4s;
+}
+
 .no-visible-scrollbar {
    scrollbar-width: none;
    -ms-overflow-style: none;
@@ -392,4 +391,3 @@
 .PhoneInputInput::placeholder {
    color: #1a1d21;
 }
-

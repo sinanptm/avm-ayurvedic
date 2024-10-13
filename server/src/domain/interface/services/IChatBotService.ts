@@ -1,3 +1,3 @@
 export default interface IChatBotService {
-    generateResponse(userMessage: string): Promise<string>;
+   generateResponse(userMessage: string): Promise<string>;
 }

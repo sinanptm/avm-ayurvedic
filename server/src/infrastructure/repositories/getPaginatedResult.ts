@@ -6,7 +6,7 @@ export const getPaginatedResult = <T>(
    limit: number,
    items: T[]
 ): PaginatedResult<T> => {
-   const currentPage = offset + 1; 
+   const currentPage = offset + 1;
    const totalPages = Math.ceil(totalItems / limit);
    const hasNextPage = currentPage < totalPages;
    const hasPreviousPage = currentPage > 1;

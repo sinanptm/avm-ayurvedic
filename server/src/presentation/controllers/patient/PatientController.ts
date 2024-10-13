@@ -3,9 +3,7 @@ import PatientUseCase from "../../../use_case/patient/PatientUseCases";
 import { CustomRequest, StatusCode } from "../../../types";
 
 export default class PatientController {
-   constructor(
-      private patientUseCase: PatientUseCase
-   ) {}
+   constructor(private patientUseCase: PatientUseCase) {}
 
    async getProfile(req: CustomRequest, res: Response, next: NextFunction) {
       try {

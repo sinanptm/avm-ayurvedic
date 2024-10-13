@@ -1,8 +1,4 @@
-import  {
-   ErrorResponse,
-   MessageResponse,
-   PaginatedResult,
-} from "@/types";
+import { ErrorResponse, MessageResponse, PaginatedResult } from "@/types";
 import { IExtendedAppointment, IAppointment } from "@/types/entities";
 import { AppointmentStatus } from "@/types/enum";
 import {

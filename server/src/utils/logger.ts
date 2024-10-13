@@ -3,7 +3,7 @@ import { NODE_ENV } from "../config/env";
 import "winston-daily-rotate-file";
 import path from "path";
 
-const logDirectory = path.resolve(path.join(__dirname,'../../'), "logs");
+const logDirectory = path.resolve(path.join(__dirname, "../../"), "logs");
 
 const consoleFormat = format.printf(({ timestamp, level, message, stack, url, data, ...meta }) => {
    const logLevel = level.toUpperCase();
@@ -25,7 +25,7 @@ const logger = createLogger({
    defaultMeta: { service: "service" },
    transports: [
       new transports.DailyRotateFile({
-         filename: path.join(logDirectory+"/error", "%DATE%.log"),
+         filename: path.join(logDirectory + "/error", "%DATE%.log"),
          datePattern: "DD-MM-YYYY",
          level: "error",
          maxSize: "20m",
@@ -33,7 +33,7 @@ const logger = createLogger({
          zippedArchive: true,
       }),
       new transports.DailyRotateFile({
-         filename: path.join(logDirectory+"/combined", "%DATE%.log"),
+         filename: path.join(logDirectory + "/combined", "%DATE%.log"),
          datePattern: "DD-MM-YYYY",
          maxSize: "20m",
          maxFiles: "14d",

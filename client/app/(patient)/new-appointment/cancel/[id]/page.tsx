@@ -19,7 +19,13 @@ export default function PaymentFailurePage() {
 
    return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-         <BreadcrumbCollapsed items={[{ href: "/", label: "Home" }, { href: "/new-appointment", label: "New Appointment" },{ href: `/new-appointment/cancel${paymentId}`, label: "Cancel Appointment" }]} />
+         <BreadcrumbCollapsed
+            items={[
+               { href: "/", label: "Home" },
+               { href: "/new-appointment", label: "New Appointment" },
+               { href: `/new-appointment/cancel${paymentId}`, label: "Cancel Appointment" },
+            ]}
+         />
          <Link href="/" className="my-9">
             <Image
                src="/assets/icons/logo-full.svg"
@@ -35,8 +41,8 @@ export default function PaymentFailurePage() {
                <XCircle className="w-16 h-16 mx-auto text-red-500 mb-4" />
                <h2 className="text-xl font-semibold mb-2">Payment Failed</h2>
                <p className="text-muted-foreground mb-4">
-                  We&apos;re sorry, but your payment could not be processed. Please try again or contact support if the issue
-                  persists.
+                  We&apos;re sorry, but your payment could not be processed. Please try again or contact support if the
+                  issue persists.
                </p>
             </div>
 

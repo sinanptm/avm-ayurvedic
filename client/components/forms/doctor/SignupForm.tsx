@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { getPresignedUrlDoctor } from "@/lib/api/doctor/authenticationRoutes";
 import axios from "axios";
 import { DoctorDegrees } from "@/constants";
-import { MultiSelect } from "@/components/ui/multi-select"
+import { MultiSelect } from "@/components/ui/multi-select";
 
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -289,7 +289,7 @@ const SignUpForm = () => {
                   <FormItem className="space-y-4">
                      <FormLabel>Qualifications *</FormLabel>
                      <MultiSelect
-                        options={DoctorDegrees.map(degree => ({ label: degree, value: degree }))}
+                        options={DoctorDegrees.map((degree) => ({ label: degree, value: degree }))}
                         placeholder="Select qualifications"
                         className="w-full"
                         {...field}

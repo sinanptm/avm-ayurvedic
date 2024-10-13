@@ -4,9 +4,7 @@ import { Cookie, StatusCode } from "../../../types";
 import IDoctor from "../../../domain/entities/IDoctor";
 
 export default class AuthDoctorController {
-   constructor(
-      private authDoctorUseCase: AuthenticationUseCase
-   ) {}
+   constructor(private authDoctorUseCase: AuthenticationUseCase) {}
    async signin(req: Request, res: Response, next: NextFunction) {
       try {
          const { email, password } = req.body;

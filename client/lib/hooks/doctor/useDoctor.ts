@@ -1,23 +1,21 @@
-import { getPatientMedicalHistory, getPatientsOfDoctor } from "@/lib/api/doctor/authorizedRoutes"
-import { ErrorResponse, PaginatedResult } from "@/types"
-import { IExtendedAppointment, IPatient } from "@/types/entities"
-import { useQuery } from "@tanstack/react-query"
-import { AxiosError } from "axios"
+import { getPatientMedicalHistory, getPatientsOfDoctor } from "@/lib/api/doctor/authorizedRoutes";
+import { ErrorResponse, PaginatedResult } from "@/types";
+import { IExtendedAppointment, IPatient } from "@/types/entities";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 export const useGetPatientsDoctor = (offset: number, limit: number) => {
-    return useQuery<PaginatedResult<IPatient>, AxiosError<ErrorResponse>>({
-        queryKey: ["doctor-patients", offset, limit],
-        queryFn: () => getPatientsOfDoctor(limit, offset),
-        staleTime: 2 * 60 * 1000,
-        refetchOnWindowFocus: true,
-    });
+   return useQuery<PaginatedResult<IPatient>, AxiosError<ErrorResponse>>({
+      queryKey: ["doctor-patients", offset, limit],
+      queryFn: () => getPatientsOfDoctor(limit, offset),
+      staleTime: 2 * 60 * 1000,
+   });
 };
 
 export const useGetMedicalHistory = (patientId: string, offset: number, limit: number) => {
-    return useQuery<PaginatedResult<IExtendedAppointment>, AxiosError<ErrorResponse>>({
-        queryKey: ["medical-history", offset, limit, patientId],
-        queryFn: () => getPatientMedicalHistory(patientId, limit, offset),
-        staleTime: 2 * 60 * 1000,
-        refetchOnWindowFocus: true,
-    });
-}
+   return useQuery<PaginatedResult<IExtendedAppointment>, AxiosError<ErrorResponse>>({
+      queryKey: ["medical-history", offset, limit, patientId],
+      queryFn: () => getPatientMedicalHistory(patientId, limit, offset),
+      staleTime: 2 * 60 * 1000,
+   });
+};

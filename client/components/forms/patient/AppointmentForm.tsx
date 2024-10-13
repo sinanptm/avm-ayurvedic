@@ -95,34 +95,33 @@ const AppointmentForm = () => {
                if (status === 403 || status === 401) {
                   toast({
                      title: "Appointment Creation Failed ❌",
-                     description: 'This action is only allowed for verified users. 😊',
+                     description: "This action is only allowed for verified users. 😊",
                      variant: "destructive",
                      action: (
                         <ButtonV2 variant={"shine"}>
                            <Link href={"/signin"}>signin</Link>
                         </ButtonV2>
                      ),
-                  })
-                  return
+                  });
+                  return;
                }
-               if(message==='Profile is missing'){
+               if (message === "Profile is missing") {
                   toast({
                      title: "Appointment Creation Failed ❌",
                      description: "Please upload your personal information and try again",
                      variant: "destructive",
                      action: (
-                        <ButtonV2 variant={"shine"}  >
+                        <ButtonV2 variant={"shine"}>
                            <Link href={"/register"}>register</Link>
                         </ButtonV2>
                      ),
-                  })
-                  return
+                  });
+                  return;
                }
                toast({
                   title: "Appointment Creation Failed ❌",
                   description: message,
                   variant: "destructive",
-
                });
             },
          }
@@ -136,7 +135,12 @@ const AppointmentForm = () => {
                <section className="mb-12 space-y-4">
                   <h1 className="text-2xl font-bold text-gray-200">New Appointment</h1>
                   <p className="text-gray-400">Request New Appointment in 10 seconds</p>
-                  <BreadcrumbCollapsed items={[{ href: "/", label: "Home" }, { href: "/new-appointment", label: "New Appointment" }]} />
+                  <BreadcrumbCollapsed
+                     items={[
+                        { href: "/", label: "Home" },
+                        { href: "/new-appointment", label: "New Appointment" },
+                     ]}
+                  />
                </section>
 
                {/* Appointment Date Field */}
@@ -223,10 +227,11 @@ const AppointmentForm = () => {
                                           key={slot._id}
                                           variant="gooeyRight"
                                           onClick={() => form.setValue("slotId", slot._id!, { shouldValidate: true })}
-                                          className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${field.value === slot._id
+                                          className={`w-full justify-center py-1 px-2 text-xs font-medium transition-all duration-200 border ${
+                                             field.value === slot._id
                                                 ? "bg-primary text-primary-foreground border-primary shadow-md scale-105"
                                                 : "bg-gray-700 text-gray-200 border-gray-600"
-                                             }`}
+                                          }`}
                                        >
                                           {slot.startTime} - {slot.endTime}
                                        </ButtonV2>

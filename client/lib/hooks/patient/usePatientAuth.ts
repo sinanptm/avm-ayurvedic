@@ -23,7 +23,11 @@ export const useSignUpPatient = () => {
 };
 
 export const useSignInPatient = () => {
-   return useMutation<{ message: string; email: string }, AxiosError<ErrorResponse>, { email: string; password: string }>({
+   return useMutation<
+      { message: string; email: string },
+      AxiosError<ErrorResponse>,
+      { email: string; password: string }
+   >({
       mutationFn: ({ email, password }) => signInPatient(email, password),
       onError: (error) => {
          console.log("Error in signing in:", error);

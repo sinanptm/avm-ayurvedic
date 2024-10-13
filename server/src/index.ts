@@ -18,12 +18,12 @@ const server = createServer(app);
 
 app.use(helmet());
 app.use(
-    cors({
-        origin: CLIENT_URL,
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        credentials: true,
-    })
+   cors({
+      origin: CLIENT_URL,
+      methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+   })
 );
 app.post("/api/webhook", bodyParser.raw({ type: "application/json" }), webhook);
 app.use(cookieParser());
@@ -32,9 +32,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 
 connectDB().then(() => {
-    server.listen(port, () => {
-        logger.info(`Server started listening on port: ${port}`);
+   server.listen(port, () => {
+      logger.info(`Server started listening on port: ${port}`);
 
-        initializeSocketIO(server);
-    });
+      initializeSocketIO(server);
+   });
 });

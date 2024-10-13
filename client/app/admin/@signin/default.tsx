@@ -1,2 +1,2 @@
-import Signin from './page';
+import Signin from "./page";
 export default Signin;

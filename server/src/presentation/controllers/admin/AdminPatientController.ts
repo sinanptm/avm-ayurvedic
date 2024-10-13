@@ -3,9 +3,7 @@ import AdminPatientUseCase from "../../../use_case/admin/AdminPatientUseCase";
 import { CustomRequest, StatusCode } from "../../../types";
 
 export default class AdminPatientController {
-   constructor(
-      private adminPatientUseCase: AdminPatientUseCase
-   ) {}
+   constructor(private adminPatientUseCase: AdminPatientUseCase) {}
 
    async getPatients(req: Request, res: Response, next: NextFunction) {
       try {

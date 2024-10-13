@@ -90,19 +90,18 @@ export default function PatientsTable({ page }: Props) {
                                        <TableRow key={patient._id}>
                                           <TableCell>
                                              <div
-                                                className={`relative w-13 h-13 rounded-full ${patient.isBlocked
-                                                   ? "border-4 border-destructive"
-                                                   : "border-4 border-primary"
-                                                   }`}
+                                                className={`relative w-13 h-13 rounded-full ${
+                                                   patient.isBlocked
+                                                      ? "border-4 border-destructive"
+                                                      : "border-4 border-primary"
+                                                }`}
                                              >
                                                 <Avatar className="w-full h-full">
                                                    <AvatarImage
                                                       src={patient.profile || "/assets/icons/circle-user.svg"}
                                                       alt={patient.name || "Patient"}
                                                    />
-                                                   <AvatarFallback>
-                                                      {(patient.name || "P").charAt(0)}
-                                                   </AvatarFallback>
+                                                   <AvatarFallback>{(patient.name || "P").charAt(0)}</AvatarFallback>
                                                 </Avatar>
                                              </div>
                                           </TableCell>

@@ -12,7 +12,7 @@ export default class GetAppointmentUseCase {
       private validatorService: IValidatorService,
       private paymentRepository: IPaymentRepository,
       private prescriptionRepository: IPrescriptionRepository
-   ) { }
+   ) {}
 
    async getAppointmentsByDoctorId(
       doctorId: string,
@@ -27,34 +27,33 @@ export default class GetAppointmentUseCase {
       }
 
       const appointments = await this.appointmentRepository.findManyByDoctorId(doctorId, offset, limit, status);
-      const ids = appointments.items.map(el => el._id!);
+      const ids = appointments.items.map((el) => el._id!);
       const prescriptions = await this.prescriptionRepository.findManyByAppointmentIds(ids);
 
       if (!prescriptions?.length) {
          appointments.items = appointments.items
-            .filter(el => el.status !== AppointmentStatus.PAYMENT_PENDING)
-            .map(el => ({
+            .filter((el) => el.status !== AppointmentStatus.PAYMENT_PENDING)
+            .map((el) => ({
                ...el,
-               isPrescriptionAdded: false
+               isPrescriptionAdded: false,
             }));
 
          return appointments;
       }
 
       const prescriptionMap = new Map<string, boolean>();
-      prescriptions.forEach(el => {
+      prescriptions.forEach((el) => {
          prescriptionMap.set(el.appointmentId?.toString()!, true);
       });
-     
+
       appointments.items = appointments.items
-         .filter(el => el.status !== AppointmentStatus.PAYMENT_PENDING)
-         .map(el => ({
+         .filter((el) => el.status !== AppointmentStatus.PAYMENT_PENDING)
+         .map((el) => ({
             ...el,
-            isPrescriptionAdded: prescriptionMap.has(el._id?.toString()!)
+            isPrescriptionAdded: prescriptionMap.has(el._id?.toString()!),
          }));
       return appointments;
    }
-
 
    async getAppointmentDetails(appointmentId: string): Promise<IExtendedAppointment | null> {
       this.validatorService.validateIdFormat(appointmentId);

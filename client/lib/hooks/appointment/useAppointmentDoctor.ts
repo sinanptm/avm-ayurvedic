@@ -5,16 +5,8 @@ import {
    getAppointmentDetailsDoctor,
    updateAppointmentStatusDoctor,
 } from "@/lib/api/appointment";
-import {
-   ErrorResponse,
-   MessageResponse,
-   PaginatedResult,
-} from "@/types";
-import {
-   IAppointment,
-   IDoctor,
-   IExtendedAppointment
-} from "@/types/entities";
+import { ErrorResponse, MessageResponse, PaginatedResult } from "@/types";
+import { IAppointment, IDoctor, IExtendedAppointment } from "@/types/entities";
 import { AppointmentStatus } from "@/types/enum";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";

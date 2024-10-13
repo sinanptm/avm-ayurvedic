@@ -9,6 +9,7 @@ export const useGetDoctorsAdmin = (offset: number, limit: number, type: DoctorsF
    return useQuery<PaginatedResult<IDoctor>, AxiosError<ErrorResponse>>({
       queryFn: () => getDoctors(offset, limit, type),
       queryKey: ["doctors", { limit, offset, type }],
+      staleTime: 50000,
    });
 };
 

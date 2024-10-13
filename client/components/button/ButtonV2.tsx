@@ -41,7 +41,8 @@ const buttonVariants = cva(
    }
 );
 
-export const linkHover2 = "relative text-zinc-100 after:absolute after:bg-zinc-100 after:bottom-2 after:h-[1px] after:w-2/3 after:origin-bottom-left after:scale-x-100 hover:after:origin-bottom-right hover:after:scale-x-0 after:transition-transform after:ease-in-out after:duration-300"
+export const linkHover2 =
+   "relative text-zinc-100 after:absolute after:bg-zinc-100 after:bottom-2 after:h-[1px] after:w-2/3 after:origin-bottom-left after:scale-x-100 hover:after:origin-bottom-right hover:after:scale-x-0 after:transition-transform after:ease-in-out after:duration-300";
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
@@ -74,9 +75,7 @@ interface IconRefProps {
    iconPlacement?: undefined;
 }
 
-export interface ButtonProps
-   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-   ButtonVariantProps {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantProps {
    asChild?: boolean;
    color?: ButtonColorVariant | string;
 }
@@ -100,7 +99,7 @@ const colorVariants: Record<ButtonColorVariant, string> = {
    cyan: "bg-cyan-700 text-white hover:bg-cyan-600",
    lime: "bg-lime-700 text-white hover:bg-lime-600",
    emerald: "bg-emerald-700 text-white hover:bg-emerald-600",
-   link:"text-green-500 underline-offset-4 "
+   link: "text-green-500 underline-offset-4 ",
 };
 
 const ButtonV2 = React.forwardRef<HTMLButtonElement, ButtonProps & ButtonIconProps>(
@@ -114,14 +113,7 @@ const ButtonV2 = React.forwardRef<HTMLButtonElement, ButtonProps & ButtonIconPro
          : "";
 
       return (
-         <Comp
-            className={cn(
-               buttonVariants({ variant, size, className }),
-               colorClass
-            )}
-            ref={ref}
-            {...props}
-         >
+         <Comp className={cn(buttonVariants({ variant, size, className }), colorClass)} ref={ref} {...props}>
             {Icon && iconPlacement === "left" && (
                <div className="w-0 translate-x-[0%] pr-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-100 group-hover:pr-2 group-hover:opacity-100">
                   <Icon />

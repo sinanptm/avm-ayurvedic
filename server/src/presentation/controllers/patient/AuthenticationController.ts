@@ -3,8 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { Cookie, StatusCode } from "../../../types";
 
 export default class AuthPatientController {
-   constructor(
-      private authUseCase: AuthenticationUseCase) { }
+   constructor(private authUseCase: AuthenticationUseCase) {}
 
    async register(req: Request, res: Response, next: NextFunction) {
       try {

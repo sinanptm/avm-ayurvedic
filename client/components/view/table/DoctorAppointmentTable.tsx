@@ -35,14 +35,17 @@ export default function AppointmentTable({ page }: Props) {
    const { data: response } = useGetAppointmentsDoctor(0, 100, AppointmentStatus.PENDING);
    const notAcceptedAppointments = response?.items?.length ?? 0;
 
-   const columns = useMemo(() => [
-      { name: "Date", width: "w-1/5" },
-      { name: "Type", width: "w-1/5" },
-      { name: "Reason", width: "w-1/5" },
-      { name: "Status", width: "w-1/5" },
-      { name: "Prescription", width: "w-1/5" },
-      { name: "Actions", width: "w-1/5 text-right pr-10" },
-   ], []);
+   const columns = useMemo(
+      () => [
+         { name: "Date", width: "w-1/5" },
+         { name: "Type", width: "w-1/5" },
+         { name: "Reason", width: "w-1/5" },
+         { name: "Status", width: "w-1/5" },
+         { name: "Prescription", width: "w-1/5" },
+         { name: "Actions", width: "w-1/5 text-right pr-10" },
+      ],
+      []
+   );
 
    useEffect(() => {
       if (notAcceptedAppointments > 0) {
@@ -58,23 +61,32 @@ export default function AppointmentTable({ page }: Props) {
 
    const appointments = useMemo(() => data?.items || [], [data?.items]);
 
-   const handlePageChange = useCallback((pageIndex: number) => {
-      if (pageIndex > data?.totalPages! || pageIndex < 1) return;
-      setCurrentPage(pageIndex);
-      router.replace(`/doctor/appointments?page=${pageIndex}&status=${statusFilter}`);
-      refetch();
-   }, [data?.totalPages, statusFilter, refetch, router]);
+   const handlePageChange = useCallback(
+      (pageIndex: number) => {
+         if (pageIndex > data?.totalPages! || pageIndex < 1) return;
+         setCurrentPage(pageIndex);
+         router.replace(`/doctor/appointments?page=${pageIndex}&status=${statusFilter}`);
+         refetch();
+      },
+      [data?.totalPages, statusFilter, refetch, router]
+   );
 
-   const handleViewDetails = useCallback((appointmentId: string) => {
-      router.push(`/doctor/appointments/${appointmentId}`);
-   }, [router]);
+   const handleViewDetails = useCallback(
+      (appointmentId: string) => {
+         router.push(`/doctor/appointments/${appointmentId}`);
+      },
+      [router]
+   );
 
-   const handleStatusChange = useCallback((status: AppointmentStatus | "all") => {
-      setStatusFilter(status);
-      setCurrentPage(1);
-      router.replace(`/doctor/appointments?page=1&status=${status}`);
-      refetch();
-   }, [refetch, router]);
+   const handleStatusChange = useCallback(
+      (status: AppointmentStatus | "all") => {
+         setStatusFilter(status);
+         setCurrentPage(1);
+         router.replace(`/doctor/appointments?page=1&status=${status}`);
+         refetch();
+      },
+      [refetch, router]
+   );
 
    if (error) {
       return (
@@ -135,9 +147,7 @@ export default function AppointmentTable({ page }: Props) {
                         {appointments.length ? (
                            appointments.map((appointment) => (
                               <TableRow key={appointment._id}>
-                                 <TableCell>
-                                    {format(new Date(appointment.appointmentDate!), "PPPP")}
-                                 </TableCell>
+                                 <TableCell>{format(new Date(appointment.appointmentDate!), "PPPP")}</TableCell>
                                  <TableCell>{appointment.appointmentType}</TableCell>
                                  <TableCell>
                                     <ScrollArea

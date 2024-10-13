@@ -1,9 +1,15 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "@/components/ui/alert-dialog";
+import {
+   AlertDialog,
+   AlertDialogContent,
+   AlertDialogHeader,
+   AlertDialogTitle,
+   AlertDialogDescription,
+} from "@/components/ui/alert-dialog";
 import { updateProfileFormSchema } from "@/lib/form-schema/patientSchema";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Form, FormControl } from "../../ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

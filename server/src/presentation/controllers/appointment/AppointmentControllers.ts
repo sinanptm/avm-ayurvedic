@@ -98,7 +98,7 @@ export default class AppointmentController {
          next(error);
       }
    }
-   
+
    async updateAppointment(req: CustomRequest, res: Response, next: NextFunction) {
       try {
          const { appointmentId, status } = req.body;
