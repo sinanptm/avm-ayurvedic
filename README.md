@@ -2,7 +2,6 @@
 
 # 🌿 AVM Ayurvedic
 
-<img src="https://www.avm-ayurvedic.online/favicon.ico" alt="AVM Ayurvedic Logo" width="100" height="100"/>
 
 *Bridging ancient Ayurvedic wisdom with modern technology*
 
