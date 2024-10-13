@@ -1,9 +1,8 @@
 <div align="center">
 
 # 🌿 AVM Ayurvedic
-
-
 *Bridging ancient Ayurvedic wisdom with modern technology*
+
 
 [![Website](https://img.shields.io/badge/🌐_Website-Visit_Our_Site-brightgreen?style=for-the-badge&logoColor=white)](https://avm-ayurvedic.online)
 [![Frontend](https://img.shields.io/badge/▲_Frontend-Vercel-black?style=for-the-badge&logo=vercel)](https://avm-ayurvedic.online)
