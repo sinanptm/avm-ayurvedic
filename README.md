@@ -196,7 +196,51 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 ```
 
 ```bash
-# 9️⃣ Start the development server
+# 8️⃣ Install and Configure Stripe for Local Development
+
+# Install Stripe CLI globally
+npm install -g stripe
+
+# Login to your Stripe account
+stripe login
+
+
+# 9️⃣ Login to Metered for TURN Server Setup
+
+# Step 1: Go to Metered and sign up or log in.
+# Step 2: Retrieve your Metered TURN server credentials.
+# Step 3: Update your client .env file with the following:
+
+NEXT_PUBLIC_METERED_TURN_USERNAME=your-metered-username
+NEXT_PUBLIC_METERED_TURN_CREDENTIAL=your-metered-credential
+
+
+# 1️⃣1️⃣ Configure Google Gemini AI
+
+# Step 1: Log in to your Google Cloud Console.
+# Step 2: Create a new project (if not already done).
+# Step 3: Enable the Google Gemini API.
+# Step 4: Retrieve your API key and update the server .env file with the following:
+
+GEMINI_API_KEY=your-gemini-api-key
+
+
+
+
+# 1️⃣2️⃣ Start the Development Server
+
+# Step 1: Return to the root directory
+cd ..
+
+# Step 2: Start the development server for both client and server
 npm run dev
+
+# This will launch the client on localhost:3000 and the backend on localhost:8000.
+
+# Step 3: Start the Stripe webhook listener in a separate terminal
+stripe listen --forward-to localhost:8000/webhook
+
+# This will listen for Stripe events and forward them to your backend webhook endpoint.
+
 
 ```
