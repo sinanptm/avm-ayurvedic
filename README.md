@@ -133,12 +133,10 @@ npm run dev
 
 ```
 
-# 7️⃣ 🔧 Setup Environment Variables
-
-Ensure that you create a `.env` file in both the **server** and **client** directories with the following content:
+# 7️⃣ 🔧 Setup Environment Variables,  Ensure that you create a `.env` file in both the SERVER and CLIENT directories with the following content:
 
 ### Server-side `.env`:
-```bash
+
 # MongoDB connection URL
 MONGODB_URL=mongodb://localhost:27017/AVM
 
