@@ -104,6 +104,13 @@
 </div>
 
 
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+
 ## 🛠️ Installation
 
 To set up **AVM Ayurvedic** locally, follow these steps:
