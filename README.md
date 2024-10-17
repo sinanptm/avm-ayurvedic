@@ -244,5 +244,6 @@ stripe listen --forward-to localhost:8000/webhook
 
 # This will listen for Stripe events and forward them to your backend webhook endpoint.
 
+You can Start with creating new user or start testing with the dummy mails and passwords that i have provider
 
 ```
