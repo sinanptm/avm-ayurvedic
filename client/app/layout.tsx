@@ -25,8 +25,7 @@ export const metadata: Metadata = {
       template: "%s | AVM Ayurvedic",
       default: "AVM Ayurvedic - Holistic Ayurveda Health Care & Wellness",
    },
-   description:
-      "Experience authentic Ayurvedic treatments at AVM Ayurvedic Hospital. Book online appointments, access video consultations, and embrace holistic healing for a balanced life.",
+   description:   "AVM Ayurvedic offers authentic Ayurvedic treatments and wellness services. Easily book online consultations, access expert doctors through video calls, and embrace natural healing for a healthier, balanced life.",
    openGraph: {
       title: "AVM Ayurvedic - Holistic Ayurveda Health & Wellness",
       description:
