@@ -19,7 +19,6 @@
 📊 Admin Dashboard | 🔔 Real-time Notifications | 🔐 Robust Authentication | 🖼️ Secure File Uploads
 
 ---
-
 ## 💻 Tech Stack
 
 <details>
@@ -42,7 +41,7 @@
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white)
 ![Zod](https://img.shields.io/badge/Zod-3E67B1?style=flat&logo=zod&logoColor=white)
 ![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?style=flat&logo=reacthookform&logoColor=white)
-
+![Recharts](https://img.shields.io/badge/Recharts-%2348A9E6.svg?style=flat&logo=recharts&logoColor=white)
 
 </details>
 
