@@ -107,137 +107,134 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 
 
-## 🛠️ Installation
-
-To set up **AVM Ayurvedic** locally, follow these steps:
-
+## Quick Start
 ```bash
-# 1️⃣ Clone the repository
+# Clone and install
 git clone https://github.com/sinanptm/avm-ayurvedic
-
-# 2️⃣ Navigate to the project directory
 cd avm-ayurvedic
+npm install
+cd server && npm install
+cd ../client && npm install
+cd ..
 
-# 3️⃣ Install dependencies
+# Set up environment files and start
+npm run dev
+```
+
+## Detailed Setup Guide
+
+### Basic Installation
+1. Clone the repository
+```bash
+git clone https://github.com/sinanptm/avm-ayurvedic
+cd avm-ayurvedic
+```
+
+2. Install dependencies
+```bash
+# Root directory dependencies
 npm install
 
-# 4️⃣ Install server-side dependencies
+# Server dependencies
 cd server
 npm install
 
-# 5️⃣ Install client-side dependencies
+# Client dependencies
 cd ../client
 npm install
 
-# 6️⃣ Return to the root directory 
+# Return to root
 cd ..
-
 ```
 
-```
+### Environment Configuration
 
-# 7️⃣ 🔧 Setup Environment Variables,  Ensure that you create a `.env` file in both the SERVER and CLIENT directories with the following content:
-
-### Server-side `.env`:
-
-# MongoDB connection URL
+#### 1. Server Environment (.env in /server)
+```env
+# Database
 MONGODB_URL=mongodb://localhost:27017/AVM
 
-# Server settings
+# Server Configuration
 PORT=8000
 NODE_ENV=dev
 CLIENT_URL=http://localhost:3000
 
-# Nodemailer settings for email
+# Email Service
 SENDER_EMAIL=test@example.com
 NODEMAILER_PASSKEY=test-nodemailer-passkey
 
-# JWT token secrets
+# Authentication
 ACCESS_TOKEN_SECRET=test-access-token-secret
 REFRESH_TOKEN_SECRET=test-refresh-token-secret
 
-# AWS S3 storage configuration
+# AWS S3
 AWS_REGION=eu-north-1
 AWS_ACCESS_KEY_ID=test-aws-access-key-id
 AWS_SECRET_ACCESS_KEY=test-aws-secret-access-key
 S3_BUCKET_NAME=test-avm-ayurvedic-bucket
 
-# Stripe payment gateway keys
+# Payment Processing
 STRIPE_PUBLISHABLE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXX
 
-# Google Gemini AI API key
+# AI Integration
 GEMINI_API_KEY=test-gemini-api-key
 ```
 
-```bash
-# 8️⃣ Setup Client Environment Variables
+#### 2. Client Environment (.env in /client)
+```env
+# Environment
 NEXT_PUBLIC_ENV=development
 
-# API URL for backend server
+# API Configuration
 NEXT_PUBLIC_API_URL=http://localhost:8000/api
 NEXT_PUBLIC_BASE_API_URL=http://localhost:8000
 
-# Firebase configuration for authentication
+# Firebase Authentication
 NEXT_PUBLIC_FIREBASE_API_KEY=test-firebase-api-key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=test-firebase-auth-domain
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=test-firebase-messaging-sender-id
 NEXT_PUBLIC_FIREBASE_APP_ID=test-firebase-app-id
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=test-firebase-measurement-id
 
-# Stripe publishable key for client
+# Payment Integration
 NEXT_PUBLIC_STRIPE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 
-# Metered TURN server for WebRTC
+# Video Call Integration
 NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
 NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
-
-
 ```
 
-```bash
-# 8️⃣ Install and Configure Stripe for Local Development
+### Third-Party Services Setup
 
-# Install Stripe CLI globally
+#### 1. Stripe Integration
+```bash
+# Install Stripe CLI
 npm install -g stripe
 
-# Login to your Stripe account
+# Authenticate with Stripe
 stripe login
-
-
-# 9️⃣ Login to Metered for TURN Server Setup
-
-# Step 1: Go to Metered and sign up or log in.
-# Step 2: Retrieve your Metered TURN server credentials.
-# Step 3: Update your client .env file with the following:
-
-NEXT_PUBLIC_METERED_TURN_USERNAME=your-metered-username
-NEXT_PUBLIC_METERED_TURN_CREDENTIAL=your-metered-credential
-
-
-#  1️⃣0️⃣ Configure Google Gemini AI
-
-# Step 1: Log in to your Google Cloud Console.
-# Step 2: Create a new project (if not already done).
-# Step 3: Enable the Google Gemini API.
-# Step 4: Retrieve your API key and update the server .env file with the following:
-
-GEMINI_API_KEY=your-gemini-api-key
 ```
 
-```bash
-# 1️⃣1️⃣ Configuring Admin Dashboard Access
+#### 2. Metered TURN Server
+1. Sign up at Metered
+2. Get TURN credentials
+3. Update client .env with credentials
 
-# Step 1: Database Configuration
-# Ensure MongoDB is correctly configured 
-# Use either MongoDB Atlas or local database URL in .env file
-# Update MONGODB_URL in server/.env with your database connection string
+#### 3. Google Gemini AI
+1. Access Google Cloud Console
+2. Create/select project
+3. Enable Gemini API
+4. Get API key
+5. Update server .env
 
-# Step 2: Insert Admin User Document
-# Open your MongoDB database (Atlas or local)
-# Insert the following document into the 'doctors' collection:
+### Admin Dashboard Configuration
 
+#### 1. Database Setup
+
+```javascript
+// Insert into 'doctors' collection
 {
   "_id": { "$oid": "66f43da6474baf6855725456" },
   "email": "your-admin-email@example.com",
@@ -253,50 +250,46 @@ GEMINI_API_KEY=your-gemini-api-key
   "createdAt": { "$date": "2024-09-25T16:43:18.340Z" },
   "updatedAt": { "$date": "2024-10-09T02:36:37.556Z" }
 }
+```
 
-# Step 3: Password Management
-# 🔐 Security Recommendation:
-# - For enhanced security, create a new doctor or patient account
-# - Use a strong, unique password
-# - Replace the admin password in the database with the new strong password
+#### 2. Initial Login
+- Email: your configured admin email
+- Password: `asdf` (change immediately)
 
-# Step 4: Accessing Admin Dashboard
-# Login Credentials:
-# - Email: Use the email you inserted in the document
-# - Initial Password: asdf (lowercase)
-# - Navigate to the admin dashboard after logging in
-# - Manage doctor slots and other administrative tasks
+### Running the Application
 
-# 💡 Tip: Always change default credentials and use strong, unique passwords
+#### Option A: Single Command (Recommended)
+```bash
+# From root directory
+npm run dev
+```
 
-# 1️⃣2️⃣ Starting the Development Server
-
-# Option A: Starting from root directory (Recommended)
-# This will automatically start both client and server
-
-npm run dev (from root dir)
-
-# Option B: Starting servers separately
-# If you need to run servers independently, follow these steps:
-
-# Step 1: Start the server
+#### Option B: Individual Services
+```bash
+# Terminal 1 - Server
 cd server
 npm run dev
 
-# Step 2: Open a new terminal and start the client
+# Terminal 2 - Client
 cd client
 npm run dev
 
-# Step 3: If running servers separately, open a new terminal for Stripe webhook
-# Only required when running servers independently
+# Terminal 3 - Stripe (only if running servers separately)
 stripe listen --forward-to localhost:8000/webhook
-
-# 🚀 Access Points:
-# - Client: http://localhost:3000
-# - Server: http://localhost:8000
-# - Admin Dashboard: http://localhost:3000/admin/login
-# - Doctor Dashboard: http://localhost:3000/doctor/login
-
-# 💡 Note: When using 'npm run dev' from the root directory, 
-# you don't need to start Stripe webhook separately as it's handled automatically.
 ```
+
+## Access Points 🚀
+- Client Application: `http://localhost:3000`
+- Server API: `http://localhost:8000`
+- Admin Dashboard: `http://localhost:3000/admin/login`
+- Doctor Dashboard: `http://localhost:3000/doctor/login`
+
+## Security Recommendations 🔐
+- Change default admin password immediately
+- Use strong, unique passwords
+- Regularly rotate access tokens
+- Keep environment variables secure
+- Update dependencies regularly
+
+---
+For additional help or issues, please open a GitHub issue or contact the Me through email or any links from my profile.
