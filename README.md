@@ -105,6 +105,7 @@
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+
 # AVM Ayurvedic Project Setup
 
 ## Quick Start
@@ -120,6 +121,7 @@ cd ..
 
 # Set up environment files and start
 npm run dev
+```
 
 
 ## ⚙️ Detailed Setup Guide
