@@ -154,7 +154,7 @@ npm run dev
 </details>
 
 <details>
-<summary>2️⃣ Environment Configuration</summary>
+<summary>z2️⃣ Environment Configuration</summary>
 
 <details>
 <summary>1. Server Environment (.env in /server)</summary>
@@ -221,10 +221,10 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 </details>
 
 <details>
-<summary>3️⃣ Third-Party Services Setup</summary>
+<summary>3 Third-Party Services Setup</summary>
 
 <details>
-<summary>1. Stripe Integration</summary>
+<summary>3️⃣ Stripe Integration</summary>
 
 - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=ddzO85cqDeA) (2:30-4:45 for API keys)
 ```bash
@@ -286,7 +286,7 @@ stripe login
 </details>
 
 <details>
-<summary>4️⃣ Admin Dashboard Configuration</summary>
+<summary>4️4️⃣ Admin Dashboard Configuration</summary>
 
 <details>
 <summary>1. Database Setup</summary>
@@ -320,8 +320,8 @@ stripe login
 </details>
 
 <details>
-<summary>5️⃣ Running the Application</summary>
-
+<summary>5️ Running the Application</summary>
+4️⃣y
 <details>
 <summary>Option A: Single Command (Recommended)</summary>
 
