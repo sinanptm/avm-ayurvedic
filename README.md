@@ -129,9 +129,9 @@ npm install
 cd ../client
 npm install
 
-# 6️⃣ Return to the root directory and start the development server
+# 6️⃣ Return to the root directory 
 cd ..
-npm run dev
+
 ```
 
 ```
@@ -273,8 +273,8 @@ GEMINI_API_KEY=your-gemini-api-key
 
 # Option A: Starting from root directory (Recommended)
 # This will automatically start both client and server
-cd ..
-npm run dev
+
+npm run dev (from root dir)
 
 # Option B: Starting servers separately
 # If you need to run servers independently, follow these steps:
