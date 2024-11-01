@@ -123,6 +123,7 @@ npm run dev
 
 ## ⚙️ Detailed Setup Guide
 
+### 1️⃣ Installination
 
 1. Clone the repository
 ```bash
@@ -147,7 +148,7 @@ npm install
 cd ..
 ```
 
-### Environment Configuration
+### 2️⃣ Environment Configuration
 
 #### 1. Server Environment (.env in /server)
 ```env
@@ -206,7 +207,7 @@ NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
 NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 ```
 
-### Third-Party Services Setup
+### 3️⃣ Third-Party Services Setup
 
 #### 1. Stripe Integration
 ```bash
@@ -229,7 +230,7 @@ stripe login
 4. Get API key
 5. Update server .env
 
-### Admin Dashboard Configuration
+### 4️⃣ Admin Dashboard Configuration
 
 #### 1. Database Setup
 
@@ -256,7 +257,7 @@ stripe login
 - Email: your configured admin email
 - Password: `1Admin@pass` (can change this later)
 
-### Running the Application
+### 5️⃣ Running the Application
 
 #### Option A: Single Command (Recommended)
 ```bash
@@ -277,6 +278,7 @@ npm run dev
 # Terminal 3 - Stripe (only if running servers separately)
 stripe listen --forward-to localhost:8000/webhook
 ```
+
 
 ## Access Points 🚀
 - Client Application: `http://localhost:3000`
