@@ -121,19 +121,18 @@ cd ..
 npm run dev
 ```
 
-## ⚙️ Detailed Setup Guide
+<div class="p-4 max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6">⚙️ Detailed Setup Guide</h1>
 
-### 1️⃣ Installination
-
-1. Clone the repository
-```bash
-git clone https://github.com/sinanptm/avm-ayurvedic
-cd avm-ayurvedic
-```
-
-2. Install dependencies
-```bash
-# Root directory dependencies
+  <details class="mb-4 p-4 border rounded-lg">
+    <summary class="text-xl font-semibold cursor-pointer">1️⃣ Installation</summary>
+    <div class="mt-4">
+      <p class="mb-2">1. Clone the repository</p>
+      <pre class="bg-gray-100 p-3 rounded"><code>git clone https://github.com/sinanptm/avm-ayurvedic
+cd avm-ayurvedic</code></pre>
+      
+      <p class="mt-4 mb-2">2. Install dependencies</p>
+      <pre class="bg-gray-100 p-3 rounded"><code># Root directory dependencies
 npm install
 
 # Server dependencies
@@ -145,14 +144,15 @@ cd ../client
 npm install
 
 # Return to root
-cd ..
-```
+cd ..</code></pre>
+    </div>
+  </details>
 
-### 2️⃣ Environment Configuration
-
-#### 1. Server Environment (.env in /server)
-```env
-# Database
+  <details class="mb-4 p-4 border rounded-lg">
+    <summary class="text-xl font-semibold cursor-pointer">2️⃣ Environment Configuration</summary>
+    <div class="mt-4">
+      <h4 class="font-semibold mb-2">1. Server Environment (.env in /server)</h4>
+      <pre class="bg-gray-100 p-3 rounded"><code># Database
 MONGODB_URL=mongodb://localhost:27017/AVM
 
 # Server Configuration
@@ -180,12 +180,10 @@ STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXX
 
 # AI Integration
-GEMINI_API_KEY=test-gemini-api-key
-```
+GEMINI_API_KEY=test-gemini-api-key</code></pre>
 
-#### 2. Client Environment (.env in /client)
-```env
-# Environment
+      <h4 class="font-semibold mt-4 mb-2">2. Client Environment (.env in /client)</h4>
+      <pre class="bg-gray-100 p-3 rounded"><code># Environment
 NEXT_PUBLIC_ENV=development
 
 # API Configuration
@@ -204,60 +202,95 @@ NEXT_PUBLIC_STRIPE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 
 # Video Call Integration
 NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
-NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
-```
+NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential</code></pre>
+    </div>
+  </details>
 
-### 3️⃣ Third-Party Services Setup
-
-#### 1. Stripe Integration
-Refer: https://www.youtube.com/watch?v=ddzO85cqDeA (2:30-4:45 for API keys)
-```bash
-# Install Stripe CLI
+  <details class="mb-4 p-4 border rounded-lg">
+    <summary class="text-xl font-semibold cursor-pointer">3️⃣ Third-Party Services Setup</summary>
+    <div class="mt-4">
+      <details class="mb-3 p-2 border-l-4">
+        <summary class="font-semibold cursor-pointer">1. Stripe Integration</summary>
+        <div class="mt-2 ml-4">
+          <p class="text-sm mb-2">Refer: <a href="https://www.youtube.com/watch?v=ddzO85cqDeA" class="text-blue-600">Watch Tutorial</a> (2:30-4:45 for API keys)</p>
+          <pre class="bg-gray-100 p-3 rounded"><code># Install Stripe CLI
 npm install -g stripe
 
 # Authenticate with Stripe
-stripe login
-```
+stripe login</code></pre>
+        </div>
+      </details>
 
-#### 2. Metered TURN Server
-Refer: https://metered.ca (Sign up to get free TURN credentials)
-1. Sign up at Metered
-2. Get TURN credentials
-3. Update client .env with credentials
+      <details class="mb-3 p-2 border-l-4">
+        <summary class="font-semibold cursor-pointer">2. Metered TURN Server</summary>
+        <div class="mt-2 ml-4">
+          <p class="text-sm mb-2">Refer: <a href="https://metered.ca" class="text-blue-600">Metered Website</a></p>
+          <ol class="list-decimal ml-4">
+            <li>Sign up at Metered</li>
+            <li>Get TURN credentials</li>
+            <li>Update client .env with credentials</li>
+          </ol>
+        </div>
+      </details>
 
-#### 3. Google Gemini AI
-Refer: https://www.youtube.com/watch?v=o8iyrtQyrZM (1:45-3:30 for API key)
-1. Access Google Cloud Console
-2. Create/select project
-3. Enable Gemini API
-4. Get API key
-5. Update server .env
+      <details class="mb-3 p-2 border-l-4">
+        <summary class="font-semibold cursor-pointer">3. Google Gemini AI</summary>
+        <div class="mt-2 ml-4">
+          <p class="text-sm mb-2">Refer: <a href="https://www.youtube.com/watch?v=o8iyrtQyrZM" class="text-blue-600">Watch Tutorial</a></p>
+          <ol class="list-decimal ml-4">
+            <li>Access Google Cloud Console</li>
+            <li>Create/select project</li>
+            <li>Enable Gemini API</li>
+            <li>Get API key</li>
+            <li>Update server .env</li>
+          </ol>
+        </div>
+      </details>
 
-#### 4. AWS S3
-Refer: https://www.youtube.com/watch?v=eQAIojcArRY (3:20-6:45 for key generation)
-1. Access AWS Console
-2. Create S3 bucket
-3. Get access keys
-4. Update server .env
+      <details class="mb-3 p-2 border-l-4">
+        <summary class="font-semibold cursor-pointer">4. AWS S3</summary>
+        <div class="mt-2 ml-4">
+          <p class="text-sm mb-2">Refer: <a href="https://www.youtube.com/watch?v=eQAIojcArRY" class="text-blue-600">Watch Tutorial</a></p>
+          <ol class="list-decimal ml-4">
+            <li>Access AWS Console</li>
+            <li>Create S3 bucket</li>
+            <li>Get access keys</li>
+            <li>Update server .env</li>
+          </ol>
+        </div>
+      </details>
 
-#### 5. Nodemailer Setup
-Refer: https://www.youtube.com/watch?v=QDIOBsMBEI0 (2:15-4:30 for app password)
-1. Enable 2-Step Verification
-2. Generate App Password
-3. Update server .env
+      <details class="mb-3 p-2 border-l-4">
+        <summary class="font-semibold cursor-pointer">5. Nodemailer Setup</summary>
+        <div class="mt-2 ml-4">
+          <p class="text-sm mb-2">Refer: <a href="https://www.youtube.com/watch?v=QDIOBsMBEI0" class="text-blue-600">Watch Tutorial</a></p>
+          <ol class="list-decimal ml-4">
+            <li>Enable 2-Step Verification</li>
+            <li>Generate App Password</li>
+            <li>Update server .env</li>
+          </ol>
+        </div>
+      </details>
 
-#### 6. Firebase Configuration
-Refer: https://www.youtube.com/watch?v=RDJvPZ9wHj0 (1:30-4:15 for project setup)
-1. Create Firebase project
-2. Get configuration
-3. Update client .env
+      <details class="mb-3 p-2 border-l-4">
+        <summary class="font-semibold cursor-pointer">6. Firebase Configuration</summary>
+        <div class="mt-2 ml-4">
+          <p class="text-sm mb-2">Refer: <a href="https://www.youtube.com/watch?v=RDJvPZ9wHj0" class="text-blue-600">Watch Tutorial</a></p>
+          <ol class="list-decimal ml-4">
+            <li>Create Firebase project</li>
+            <li>Get configuration</li>
+            <li>Update client .env</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </details>
 
-### 4️⃣ Admin Dashboard Configuration
-
-#### 1. Database Setup
-
-```javascript
-// Insert into 'doctors' collection
+  <details class="mb-4 p-4 border rounded-lg">
+    <summary class="text-xl font-semibold cursor-pointer">4️⃣ Admin Dashboard Configuration</summary>
+    <div class="mt-4">
+      <h4 class="font-semibold mb-2">1. Database Setup</h4>
+      <pre class="bg-gray-100 p-3 rounded"><code>// Insert into 'doctors' collection
 {
   "_id": { "$oid": "66f43da6474baf6855725456" },
   "email": "your-admin-email@example.com",
@@ -272,24 +305,25 @@ Refer: https://www.youtube.com/watch?v=RDJvPZ9wHj0 (1:30-4:15 for project setup)
   "isVerified": false,
   "createdAt": { "$date": "2024-09-25T16:43:18.340Z" },
   "updatedAt": { "$date": "2024-10-09T02:36:37.556Z" }
-}
-```
+}</code></pre>
 
-#### 2. Initial Login
-- Email: your configured admin email
-- Password: `1Admin@pass` (can change this later)
+      <h4 class="font-semibold mt-4 mb-2">2. Initial Login</h4>
+      <ul class="list-disc ml-6">
+        <li>Email: your configured admin email</li>
+        <li>Password: <code class="bg-gray-100 px-2 py-1 rounded">1Admin@pass</code> (can change this later)</li>
+      </ul>
+    </div>
+  </details>
 
-### 5️⃣ Running the Application
+  <details class="mb-4 p-4 border rounded-lg">
+    <summary class="text-xl font-semibold cursor-pointer">5️⃣ Running the Application</summary>
+    <div class="mt-4">
+      <h4 class="font-semibold mb-2">Option A: Single Command (Recommended)</h4>
+      <pre class="bg-gray-100 p-3 rounded"><code># From root directory
+npm run dev</code></pre>
 
-#### Option A: Single Command (Recommended)
-```bash
-# From root directory
-npm run dev
-```
-
-#### Option B: Individual Services
-```bash
-# Terminal 1 - Server
+      <h4 class="font-semibold mt-4 mb-2">Option B: Individual Services</h4>
+      <pre class="bg-gray-100 p-3 rounded"><code># Terminal 1 - Server
 cd server
 npm run dev
 
@@ -298,25 +332,34 @@ cd client
 npm run dev
 
 # Terminal 3 - Stripe (only if running servers separately)
-stripe listen --forward-to localhost:8000/webhook
-```
+stripe listen --forward-to localhost:8000/webhook</code></pre>
+    </div>
+  </details>
 
+  <div class="mt-8">
+    <h2 class="text-2xl font-bold mb-4">Access Points 🚀</h2>
+    <ul class="list-disc ml-6">
+      <li>Client Application: <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:3000</code></li>
+      <li>Server API: <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:8000/api</code></li>
+      <li>Admin Dashboard: <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:3000/admin</code></li>
+      <li>Doctor Dashboard: <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:3000/doctor</code></li>
+    </ul>
+  </div>
 
-## Access Points 🚀
-- Client Application: `http://localhost:3000`
-- Server API: `http://localhost:8000/api`
-- Admin Dashboard: `http://localhost:3000/admin`
-- Doctor Dashboard: `http://localhost:3000/doctor`
+  <div class="mt-8">
+    <h3 class="text-xl font-bold mb-4">How to Change Admin Password</h3>
+    <ol class="list-decimal ml-6">
+      <li>Create a new doctor/patient account through the application</li>
+      <li>Go to your MongoDB database</li>
+      <li>Find the newly created account's password hash</li>
+      <li>Copy this password hash</li>
+      <li>Locate the admin document in the <code class="bg-gray-100 px-2 py-1 rounded">doctors</code> collection</li>
+      <li>Replace the admin's password field with the copied hash</li>
+      <li>You can now use the new account's password to login as admin</li>
+    </ol>
+  </div>
 
+  <hr class="my-8">
 
-### How to Change Admin Password
-1. Create a new doctor/patient account through the application
-2. Go to your MongoDB database
-3. Find the newly created account's password hash
-4. Copy this password hash
-5. Locate the admin document in the `doctors` collection
-6. Replace the admin's password field with the copied hash
-7. You can now use the new account's password to login as admin
-
----
-For additional help or issues, please open a GitHub issue or contact the Me through email or any links from my profile.
+  <p class="text-sm text-gray-600">For additional help or issues, please open a GitHub issue or contact me through email or any links from my profile.</p>
+</div>
