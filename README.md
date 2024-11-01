@@ -254,7 +254,7 @@ stripe login
 
 #### 2. Initial Login
 - Email: your configured admin email
-- Password: `1Admin@pass` 
+- Password: `1Admin@pass` (can change this later)
 
 ### Running the Application
 
