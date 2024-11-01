@@ -238,7 +238,7 @@ stripe login
 {
   "_id": { "$oid": "66f43da6474baf6855725456" },
   "email": "your-admin-email@example.com",
-  "password": "$2a$10$Isa6RkR7T8pHU//1r4dqMO9.mGza3JEBuKM.rcUjJ4hyqrZn2etpS",
+  "password": "$2a$10$g4YLaUSEWC/tJvq0jmbw6e1aS423WTqepWqH6V8PjRtrfXMxOjcca",
   "image": "",
   "isBlocked": false,
   "name": "Admin",
@@ -254,7 +254,7 @@ stripe login
 
 #### 2. Initial Login
 - Email: your configured admin email
-- Password: `asdf` (change immediately)
+- Password: `1Admin@pass` 
 
 ### Running the Application
 
@@ -280,9 +280,9 @@ stripe listen --forward-to localhost:8000/webhook
 
 ## Access Points 🚀
 - Client Application: `http://localhost:3000`
-- Server API: `http://localhost:8000`
-- Admin Dashboard: `http://localhost:3000/admin/login`
-- Doctor Dashboard: `http://localhost:3000/doctor/login`
+- Server API: `http://localhost:8000/api`
+- Admin Dashboard: `http://localhost:3000/admin`
+- Doctor Dashboard: `http://localhost:3000/doctor`
 
 ## Security Recommendations 🔐
 - Change default admin password immediately
@@ -290,6 +290,15 @@ stripe listen --forward-to localhost:8000/webhook
 - Regularly rotate access tokens
 - Keep environment variables secure
 - Update dependencies regularly
+
+### How to Change Admin Password
+1. Create a new doctor/patient account through the application
+2. Go to your MongoDB database
+3. Find the newly created account's password hash
+4. Copy this password hash
+5. Locate the admin document in the `doctors` collection
+6. Replace the admin's password field with the copied hash
+7. You can now use the new account's password to login as admin
 
 ---
 For additional help or issues, please open a GitHub issue or contact the Me through email or any links from my profile.
