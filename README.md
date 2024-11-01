@@ -218,48 +218,94 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 <details>
 <summary>3️⃣ Third-Party Services Setup</summary>
 
-1. Stripe Integration:
-- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=ddzO85cqDeA) 
-```bash
-# Install Stripe CLI
-npm install -g stripe
+### 1. Stripe Integration
+- **Tutorial**: [Watch Stripe Setup Guide](https://www.youtube.com/watch?v=ddzO85cqDeA) 
+- **Steps**:
+  1. Install Stripe CLI:
+     ```bash
+     npm install -g stripe
+     ```
+  2. Authenticate with Stripe:
+     ```bash
+     stripe login
+     ```
+  3. **Important**: Add Stripe API keys to your server's `.env` file:
+     ```env
+     STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
+     STRIPE_SECRET_KEY=sk_test_your_secret_key
+     STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+     ```
 
-# Authenticate with Stripe
-stripe login
-```
+### 2. Metered TURN Server
+- **Reference**: [Metered Website](https://metered.ca)
+- **Steps**:
+  1. Sign up for a Metered account
+  2. Navigate to the TURN server section in your dashboard
+  3. **Key Step**: Generate TURN credentials
+  4. **Important**: Update the client's `.env` file with:
+     ```env
+     NEXT_PUBLIC_METERED_TURN_USERNAME=your_turn_username
+     NEXT_PUBLIC_METERED_TURN_CREDENTIAL=your_turn_credential
+     ```
 
-2. Metered TURN Server:
-- Refer to: [Metered Website](https://metered.ca)
-1. Sign up at Metered
-2. Get TURN credentials
-3. Update client .env with credentials
+### 3. Google Gemini AI
+- **Tutorial**: [Watch Gemini AI Setup Guide](https://www.youtube.com/watch?v=o8iyrtQyrZM)
+- **Steps**:
+  1. Access [Google Cloud Console](https://console.cloud.google.com/)
+  2. Create a new project or select an existing one
+  3. Navigate to APIs & Services dashboard
+  4. **Key Step**: Enable the Gemini API for your project
+  5. Create API credentials (API key)
+  6. **Important**: Add the API key to your server's `.env` file:
+     ```env
+     GEMINI_API_KEY=your_gemini_api_key
+     ```
 
-3. Google Gemini AI:
-- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=o8iyrtQyrZM)
-1. Access Google Cloud Console
-2. Create/select project
-3. Enable Gemini API
-4. Get API key
-5. Update server .env
+### 4. AWS S3
+- **Tutorial**: [Watch AWS S3 Configuration Guide](https://www.youtube.com/watch?v=eQAIojcArRY)
+- **Steps**:
+  1. Sign in to the [AWS Management Console](https://aws.amazon.com/console/)
+  2. Navigate to S3 and create a new bucket
+  3. Configure bucket settings (e.g., region, access control)
+  4. **Key Step**: Generate AWS access keys from the IAM dashboard
+  5. **Important**: Update your server's `.env` file with:
+     ```env
+     AWS_REGION=your_selected_region
+     AWS_ACCESS_KEY_ID=your_access_key_id
+     AWS_SECRET_ACCESS_KEY=your_secret_access_key
+     S3_BUCKET_NAME=your_bucket_name
+     ```
 
-4. AWS S3:
-- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=eQAIojcArRY)
-1. Access AWS Console
-2. Create S3 bucket
-3. Get access keys
-4. Update server .env
+### 5. Nodemailer Setup
+- **Tutorial**: [Watch Nodemailer Configuration Guide](https://www.youtube.com/watch?v=QDIOBsMBEI0)
+- **Steps**:
+  1. Enable 2-Step Verification for your Gmail account
+  2. **Key Step**: Generate an App Password in your Google Account settings
+  3. **Important**: Update your server's `.env` file with:
+     ```env
+     SENDER_EMAIL=your_gmail_address
+     NODEMAILER_PASSKEY=your_generated_app_password
+     ```
 
-5. Nodemailer Setup:
-- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=QDIOBsMBEI0)
-1. Enable 2-Step Verification
-2. Generate App Password
-3. Update server .env
+### 6. Firebase Configuration
+- **Tutorial**: [Watch Firebase Setup Guide](https://www.youtube.com/watch?v=RDJvPZ9wHj0)
+- **Steps**:
+  1. Go to the [Firebase Console](https://console.firebase.google.com/)
+  2. Create a new Firebase project
+  3. Add a web app to your project
+  4. **Key Step**: Copy the Firebase configuration object
+  5. **Important**: Update your client's `.env` file with:
+     ```env
+     NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+     NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+     NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+     NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+     NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+     ```
 
-6. Firebase Configuration:
-- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=RDJvPZ9wHj0)
-1. Create Firebase project
-2. Get configuration
-3. Update client .env
+> **⚠️ Security Note**: Always keep your API keys and credentials secure. Never commit them to version control. Use environment variables as shown in the examples above.
+
 </details>
 
 <details>
