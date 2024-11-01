@@ -123,6 +123,7 @@ cd ..
 npm run dev
 ```
 
+# AVM Ayurvedic Project Setup
 
 ## ⚙️ Detailed Setup Guide
 
@@ -154,11 +155,9 @@ npm run dev
 </details>
 
 <details>
-<summary>z2️⃣ Environment Configuration</summary>
+<summary>2️⃣ Environment Configuration</summary>
 
-<details>
-<summary>1. Server Environment (.env in /server)</summary>
-
+1. Server Environment (.env in /server):
 ```env
 # Database
 MONGODB_URL=mongodb://localhost:27017/AVM
@@ -190,11 +189,8 @@ STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXX
 # AI Integration
 GEMINI_API_KEY=test-gemini-api-key
 ```
-</details>
 
-<details>
-<summary>2. Client Environment (.env in /client)</summary>
-
+2. Client Environment (.env in /client):
 ```env
 # Environment
 NEXT_PUBLIC_ENV=development
@@ -218,15 +214,12 @@ NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
 NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 ```
 </details>
-</details>
 
 <details>
-<summary>3 Third-Party Services Setup</summary>
+<summary>3️⃣ Third-Party Services Setup</summary>
 
-<details>
-<summary>3️⃣ Stripe Integration</summary>
-
-- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=ddzO85cqDeA) (2:30-4:45 for API keys)
+1. Stripe Integration:
+- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=ddzO85cqDeA) 
 ```bash
 # Install Stripe CLI
 npm install -g stripe
@@ -234,63 +227,45 @@ npm install -g stripe
 # Authenticate with Stripe
 stripe login
 ```
-</details>
 
-<details>
-<summary>2. Metered TURN Server</summary>
-
+2. Metered TURN Server:
 - Refer to: [Metered Website](https://metered.ca)
 1. Sign up at Metered
 2. Get TURN credentials
 3. Update client .env with credentials
-</details>
 
-<details>
-<summary>3. Google Gemini AI</summary>
-
+3. Google Gemini AI:
 - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=o8iyrtQyrZM)
 1. Access Google Cloud Console
 2. Create/select project
 3. Enable Gemini API
 4. Get API key
 5. Update server .env
-</details>
 
-<details>
-<summary>4. AWS S3</summary>
-
+4. AWS S3:
 - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=eQAIojcArRY)
 1. Access AWS Console
 2. Create S3 bucket
 3. Get access keys
 4. Update server .env
-</details>
 
-<details>
-<summary>5. Nodemailer Setup</summary>
-
+5. Nodemailer Setup:
 - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=QDIOBsMBEI0)
 1. Enable 2-Step Verification
 2. Generate App Password
 3. Update server .env
-</details>
 
-<details>
-<summary>6. Firebase Configuration</summary>
-
+6. Firebase Configuration:
 - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=RDJvPZ9wHj0)
 1. Create Firebase project
 2. Get configuration
 3. Update client .env
 </details>
-</details>
 
 <details>
-<summary>4️4️⃣ Admin Dashboard Configuration</summary>
+<summary>4️⃣ Admin Dashboard Configuration</summary>
 
-<details>
-<summary>1. Database Setup</summary>
-
+1. Database Setup:
 ```javascript
 // Insert into 'doctors' collection
 {
@@ -309,31 +284,22 @@ stripe login
   "updatedAt": { "$date": "2024-10-09T02:36:37.556Z" }
 }
 ```
-</details>
 
-<details>
-<summary>2. Initial Login</summary>
-
+2. Initial Login:
 - Email: your configured admin email
 - Password: `1Admin@pass` (can change this later)
 </details>
-</details>
 
 <details>
-<summary>5️ Running the Application</summary>
-4️⃣y
-<details>
-<summary>Option A: Single Command (Recommended)</summary>
+<summary>5️⃣ Running the Application</summary>
 
+Option A: Single Command (Recommended)
 ```bash
 # From root directory
 npm run dev
 ```
-</details>
 
-<details>
-<summary>Option B: Individual Services</summary>
-
+Option B: Individual Services
 ```bash
 # Terminal 1 - Server
 cd server
@@ -347,10 +313,9 @@ npm run dev
 stripe listen --forward-to localhost:8000/webhook
 ```
 </details>
-</details>
 
 <details>
-<summary>🚀 Access Points</summary>
+<summary>6️⃣ Access Points</summary>
 
 - Client Application: `http://localhost:3000`
 - Server API: `http://localhost:8000/api`
@@ -359,7 +324,7 @@ stripe listen --forward-to localhost:8000/webhook
 </details>
 
 <details>
-<summary>How to Change Admin Password</summary>
+<summary>7️⃣ How to Change Admin Password</summary>
 
 1. Create a new doctor/patient account through the application
 2. Go to your MongoDB database
