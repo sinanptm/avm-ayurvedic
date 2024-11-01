@@ -269,22 +269,34 @@ GEMINI_API_KEY=your-gemini-api-key
 
 # 💡 Tip: Always change default credentials and use strong, unique passwords
 
+# 1️⃣2️⃣ Starting the Development Server
 
-# 1️⃣2️⃣ Start the Development Server
-
-# Step 1: Return to the root directory
+# Option A: Starting from root directory (Recommended)
+# This will automatically start both client and server
 cd ..
-
-# Step 2: Start the development server for both client and server
 npm run dev
 
-# This will launch the client on localhost:3000 and the backend on localhost:8000.
+# Option B: Starting servers separately
+# If you need to run servers independently, follow these steps:
 
-# Step 3: Start the Stripe webhook listener in a separate terminal
+# Step 1: Start the server
+cd server
+npm run dev
+
+# Step 2: Open a new terminal and start the client
+cd client
+npm run dev
+
+# Step 3: If running servers separately, open a new terminal for Stripe webhook
+# Only required when running servers independently
 stripe listen --forward-to localhost:8000/webhook
 
-# This will listen for Stripe events and forward them to your backend webhook endpoint.
+# 🚀 Access Points:
+# - Client: http://localhost:3000
+# - Server: http://localhost:8000
+# - Admin Dashboard: http://localhost:3000/admin/login
+# - Doctor Dashboard: http://localhost:3000/doctor/login
 
-You can Start with creating new user or start testing with the dummy mails and passwords that i have provider
-
+# 💡 Note: When using 'npm run dev' from the root directory, 
+# you don't need to start Stripe webhook separately as it's handled automatically.
 ```
