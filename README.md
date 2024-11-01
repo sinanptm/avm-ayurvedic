@@ -210,6 +210,7 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 ### 3️⃣ Third-Party Services Setup
 
 #### 1. Stripe Integration
+Refer: https://www.youtube.com/watch?v=ddzO85cqDeA (2:30-4:45 for API keys)
 ```bash
 # Install Stripe CLI
 npm install -g stripe
@@ -219,16 +220,37 @@ stripe login
 ```
 
 #### 2. Metered TURN Server
+Refer: https://metered.ca (Sign up to get free TURN credentials)
 1. Sign up at Metered
 2. Get TURN credentials
 3. Update client .env with credentials
 
 #### 3. Google Gemini AI
+Refer: https://www.youtube.com/watch?v=o8iyrtQyrZM (1:45-3:30 for API key)
 1. Access Google Cloud Console
 2. Create/select project
 3. Enable Gemini API
 4. Get API key
 5. Update server .env
+
+#### 4. AWS S3
+Refer: https://www.youtube.com/watch?v=eQAIojcArRY (3:20-6:45 for key generation)
+1. Access AWS Console
+2. Create S3 bucket
+3. Get access keys
+4. Update server .env
+
+#### 5. Nodemailer Setup
+Refer: https://www.youtube.com/watch?v=QDIOBsMBEI0 (2:15-4:30 for app password)
+1. Enable 2-Step Verification
+2. Generate App Password
+3. Update server .env
+
+#### 6. Firebase Configuration
+Refer: https://www.youtube.com/watch?v=RDJvPZ9wHj0 (1:30-4:15 for project setup)
+1. Create Firebase project
+2. Get configuration
+3. Update client .env
 
 ### 4️⃣ Admin Dashboard Configuration
 
