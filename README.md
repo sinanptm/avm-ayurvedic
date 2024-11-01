@@ -121,9 +121,9 @@ cd ..
 npm run dev
 ```
 
-## Detailed Setup Guide
+## ⚙️ Detailed Setup Guide
 
-### Basic Installation
+
 1. Clone the repository
 ```bash
 git clone https://github.com/sinanptm/avm-ayurvedic
