@@ -216,7 +216,7 @@ NEXT_PUBLIC_METERED_TURN_USERNAME=your-metered-username
 NEXT_PUBLIC_METERED_TURN_CREDENTIAL=your-metered-credential
 
 
-# 1️⃣1️⃣ Configure Google Gemini AI
+#  1️⃣0️⃣ Configure Google Gemini AI
 
 # Step 1: Log in to your Google Cloud Console.
 # Step 2: Create a new project (if not already done).
@@ -224,8 +224,50 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=your-metered-credential
 # Step 4: Retrieve your API key and update the server .env file with the following:
 
 GEMINI_API_KEY=your-gemini-api-key
+```
 
+```bash
+# 1️⃣1️⃣ Configuring Admin Dashboard Access
 
+# Step 1: Database Configuration
+# Ensure MongoDB is correctly configured 
+# Use either MongoDB Atlas or local database URL in .env file
+# Update MONGODB_URL in server/.env with your database connection string
+
+# Step 2: Insert Admin User Document
+# Open your MongoDB database (Atlas or local)
+# Insert the following document into the 'doctors' collection:
+
+{
+  "_id": { "$oid": "66f43da6474baf6855725456" },
+  "email": "your-admin-email@example.com",
+  "password": "$2a$10$Isa6RkR7T8pHU//1r4dqMO9.mGza3JEBuKM.rcUjJ4hyqrZn2etpS",
+  "image": "",
+  "isBlocked": false,
+  "name": "Admin",
+  "phone": "2312371239",
+  "role": "admin",
+  "qualifications": [],
+  "token": "",
+  "isVerified": false,
+  "createdAt": { "$date": "2024-09-25T16:43:18.340Z" },
+  "updatedAt": { "$date": "2024-10-09T02:36:37.556Z" }
+}
+
+# Step 3: Password Management
+# 🔐 Security Recommendation:
+# - For enhanced security, create a new doctor or patient account
+# - Use a strong, unique password
+# - Replace the admin password in the database with the new strong password
+
+# Step 4: Accessing Admin Dashboard
+# Login Credentials:
+# - Email: Use the email you inserted in the document
+# - Initial Password: asdf (lowercase)
+# - Navigate to the admin dashboard after logging in
+# - Manage doctor slots and other administrative tasks
+
+# 💡 Tip: Always change default credentials and use strong, unique passwords
 
 
 # 1️⃣2️⃣ Start the Development Server
