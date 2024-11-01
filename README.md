@@ -105,10 +105,11 @@
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-
 # AVM Ayurvedic Project Setup
 
 ## Quick Start
+<details>
+<summary>Quick Installation Commands</summary>
 
 ```bash
 # Clone and install
@@ -122,10 +123,12 @@ cd ..
 # Set up environment files and start
 npm run dev
 ```
+</details>
 
 ## ⚙️ Detailed Setup Guide
 
-### 1️⃣ Installation
+<details>
+<summary>1️⃣ Installation</summary>
 
 1. Clone the repository:
    ```bash
@@ -149,146 +152,189 @@ npm run dev
    # Return to root
    cd ..
    ```
+</details>
 
-### 2️⃣ Environment Configuration
+<details>
+<summary>2️⃣ Environment Configuration</summary>
 
-1. Server Environment (.env in /server):
-   ```
-   # Database
-   MONGODB_URL=mongodb://localhost:27017/AVM
+<details>
+<summary>1. Server Environment (.env in /server)</summary>
 
-   # Server Configuration
-   PORT=8000
-   NODE_ENV=dev
-   CLIENT_URL=http://localhost:3000
+```env
+# Database
+MONGODB_URL=mongodb://localhost:27017/AVM
 
-   # Email Service
-   SENDER_EMAIL=test@example.com
-   NODEMAILER_PASSKEY=test-nodemailer-passkey
+# Server Configuration
+PORT=8000
+NODE_ENV=dev
+CLIENT_URL=http://localhost:3000
 
-   # Authentication
-   ACCESS_TOKEN_SECRET=test-access-token-secret
-   REFRESH_TOKEN_SECRET=test-refresh-token-secret
+# Email Service
+SENDER_EMAIL=test@example.com
+NODEMAILER_PASSKEY=test-nodemailer-passkey
 
-   # AWS S3
-   AWS_REGION=eu-north-1
-   AWS_ACCESS_KEY_ID=test-aws-access-key-id
-   AWS_SECRET_ACCESS_KEY=test-aws-secret-access-key
-   S3_BUCKET_NAME=test-avm-ayurvedic-bucket
+# Authentication
+ACCESS_TOKEN_SECRET=test-access-token-secret
+REFRESH_TOKEN_SECRET=test-refresh-token-secret
 
-   # Payment Processing
-   STRIPE_PUBLISHABLE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
-   STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
-   STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXX
+# AWS S3
+AWS_REGION=eu-north-1
+AWS_ACCESS_KEY_ID=test-aws-access-key-id
+AWS_SECRET_ACCESS_KEY=test-aws-secret-access-key
+S3_BUCKET_NAME=test-avm-ayurvedic-bucket
 
-   # AI Integration
-   GEMINI_API_KEY=test-gemini-api-key
-   ```
+# Payment Processing
+STRIPE_PUBLISHABLE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
+STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
+STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXX
 
-2. Client Environment (.env in /client):
-   ```
-   # Environment
-   NEXT_PUBLIC_ENV=development
+# AI Integration
+GEMINI_API_KEY=test-gemini-api-key
+```
+</details>
 
-   # API Configuration
-   NEXT_PUBLIC_API_URL=http://localhost:8000/api
-   NEXT_PUBLIC_BASE_API_URL=http://localhost:8000
+<details>
+<summary>2. Client Environment (.env in /client)</summary>
 
-   # Firebase Authentication
-   NEXT_PUBLIC_FIREBASE_API_KEY=test-firebase-api-key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=test-firebase-auth-domain
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=test-firebase-messaging-sender-id
-   NEXT_PUBLIC_FIREBASE_APP_ID=test-firebase-app-id
-   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=test-firebase-measurement-id
+```env
+# Environment
+NEXT_PUBLIC_ENV=development
 
-   # Payment Integration
-   NEXT_PUBLIC_STRIPE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_BASE_API_URL=http://localhost:8000
 
-   # Video Call Integration
-   NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
-   NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
-   ```
+# Firebase Authentication
+NEXT_PUBLIC_FIREBASE_API_KEY=test-firebase-api-key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=test-firebase-auth-domain
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=test-firebase-messaging-sender-id
+NEXT_PUBLIC_FIREBASE_APP_ID=test-firebase-app-id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=test-firebase-measurement-id
 
-### 3️⃣ Third-Party Services Setup
+# Payment Integration
+NEXT_PUBLIC_STRIPE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 
-1. Stripe Integration
-   - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=ddzO85cqDeA) (2:30-4:45 for API keys)
-   ```bash
-   # Install Stripe CLI
-   npm install -g stripe
+# Video Call Integration
+NEXT_PUBLIC_METERED_TURN_USERNAME=test-metered-turn-username
+NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
+```
+</details>
+</details>
 
-   # Authenticate with Stripe
-   stripe login
-   ```
+<details>
+<summary>3️⃣ Third-Party Services Setup</summary>
 
-2. Metered TURN Server
-   - Refer to: [Metered Website](https://metered.ca)
-   1. Sign up at Metered
-   2. Get TURN credentials
-   3. Update client .env with credentials
+<details>
+<summary>1. Stripe Integration</summary>
 
-3. Google Gemini AI
-   - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=o8iyrtQyrZM)
-   1. Access Google Cloud Console
-   2. Create/select project
-   3. Enable Gemini API
-   4. Get API key
-   5. Update server .env
+- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=ddzO85cqDeA) (2:30-4:45 for API keys)
+```bash
+# Install Stripe CLI
+npm install -g stripe
 
-4. AWS S3
-   - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=eQAIojcArRY)
-   1. Access AWS Console
-   2. Create S3 bucket
-   3. Get access keys
-   4. Update server .env
+# Authenticate with Stripe
+stripe login
+```
+</details>
 
-5. Nodemailer Setup
-   - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=QDIOBsMBEI0)
-   1. Enable 2-Step Verification
-   2. Generate App Password
-   3. Update server .env
+<details>
+<summary>2. Metered TURN Server</summary>
 
-6. Firebase Configuration
-   - Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=RDJvPZ9wHj0)
-   1. Create Firebase project
-   2. Get configuration
-   3. Update client .env
+- Refer to: [Metered Website](https://metered.ca)
+1. Sign up at Metered
+2. Get TURN credentials
+3. Update client .env with credentials
+</details>
 
-### 4️⃣ Admin Dashboard Configuration
+<details>
+<summary>3. Google Gemini AI</summary>
 
-1. Database Setup:
-   ```json
-   // Insert into 'doctors' collection
-   {
-     "_id": { "$oid": "66f43da6474baf6855725456" },
-     "email": "your-admin-email@example.com",
-     "password": "$2a$10$g4YLaUSEWC/tJvq0jmbw6e1aS423WTqepWqH6V8PjRtrfXMxOjcca",
-     "image": "",
-     "isBlocked": false,
-     "name": "Admin",
-     "phone": "2312371239",
-     "role": "admin",
-     "qualifications": [],
-     "token": "",
-     "isVerified": false,
-     "createdAt": { "$date": "2024-09-25T16:43:18.340Z" },
-     "updatedAt": { "$date": "2024-10-09T02:36:37.556Z" }
-   }
-   ```
+- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=o8iyrtQyrZM)
+1. Access Google Cloud Console
+2. Create/select project
+3. Enable Gemini API
+4. Get API key
+5. Update server .env
+</details>
 
-2. Initial Login:
-   - Email: your configured admin email
-   - Password: `1Admin@pass` (can change this later)
+<details>
+<summary>4. AWS S3</summary>
 
-### 5️⃣ Running the Application
+- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=eQAIojcArRY)
+1. Access AWS Console
+2. Create S3 bucket
+3. Get access keys
+4. Update server .env
+</details>
 
-Option A: Single Command (Recommended)
+<details>
+<summary>5. Nodemailer Setup</summary>
+
+- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=QDIOBsMBEI0)
+1. Enable 2-Step Verification
+2. Generate App Password
+3. Update server .env
+</details>
+
+<details>
+<summary>6. Firebase Configuration</summary>
+
+- Refer to: [Watch Tutorial](https://www.youtube.com/watch?v=RDJvPZ9wHj0)
+1. Create Firebase project
+2. Get configuration
+3. Update client .env
+</details>
+</details>
+
+<details>
+<summary>4️⃣ Admin Dashboard Configuration</summary>
+
+<details>
+<summary>1. Database Setup</summary>
+
+```javascript
+// Insert into 'doctors' collection
+{
+  "_id": { "$oid": "66f43da6474baf6855725456" },
+  "email": "your-admin-email@example.com",
+  "password": "$2a$10$g4YLaUSEWC/tJvq0jmbw6e1aS423WTqepWqH6V8PjRtrfXMxOjcca",
+  "image": "",
+  "isBlocked": false,
+  "name": "Admin",
+  "phone": "2312371239",
+  "role": "admin",
+  "qualifications": [],
+  "token": "",
+  "isVerified": false,
+  "createdAt": { "$date": "2024-09-25T16:43:18.340Z" },
+  "updatedAt": { "$date": "2024-10-09T02:36:37.556Z" }
+}
+```
+</details>
+
+<details>
+<summary>2. Initial Login</summary>
+
+- Email: your configured admin email
+- Password: `1Admin@pass` (can change this later)
+</details>
+</details>
+
+<details>
+<summary>5️⃣ Running the Application</summary>
+
+<details>
+<summary>Option A: Single Command (Recommended)</summary>
+
 ```bash
 # From root directory
 npm run dev
 ```
+</details>
 
-Option B: Individual Services
+<details>
+<summary>Option B: Individual Services</summary>
+
 ```bash
 # Terminal 1 - Server
 cd server
@@ -301,15 +347,20 @@ npm run dev
 # Terminal 3 - Stripe (only if running servers separately)
 stripe listen --forward-to localhost:8000/webhook
 ```
+</details>
+</details>
 
-## Access Points 🚀
+<details>
+<summary>🚀 Access Points</summary>
 
 - Client Application: `http://localhost:3000`
 - Server API: `http://localhost:8000/api`
 - Admin Dashboard: `http://localhost:3000/admin`
 - Doctor Dashboard: `http://localhost:3000/doctor`
+</details>
 
-### How to Change Admin Password
+<details>
+<summary>How to Change Admin Password</summary>
 
 1. Create a new doctor/patient account through the application
 2. Go to your MongoDB database
@@ -318,10 +369,8 @@ stripe listen --forward-to localhost:8000/webhook
 5. Locate the admin document in the `doctors` collection
 6. Replace the admin's password field with the copied hash
 7. You can now use the new account's password to login as admin
+</details>
 
 ---
 
 For additional help or issues, please open a GitHub issue or contact me through email or any links from my profile.
-```
-
-This revised version maintains the structure and content of the original README while correcting any spelling or grammatical errors. It uses Markdown formatting for better readability and consistency.
