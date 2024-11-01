@@ -286,12 +286,6 @@ stripe listen --forward-to localhost:8000/webhook
 - Admin Dashboard: `http://localhost:3000/admin`
 - Doctor Dashboard: `http://localhost:3000/doctor`
 
-## Security Recommendations 🔐
-- Change default admin password immediately
-- Use strong, unique passwords
-- Regularly rotate access tokens
-- Keep environment variables secure
-- Update dependencies regularly
 
 ### How to Change Admin Password
 1. Create a new doctor/patient account through the application
