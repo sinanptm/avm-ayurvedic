@@ -108,8 +108,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 # AVM Ayurvedic Project Setup
 
 ## Quick Start
-<details>
-<summary>Quick Installation Commands</summary>
 
 ```bash
 # Clone and install
@@ -122,8 +120,7 @@ cd ..
 
 # Set up environment files and start
 npm run dev
-```
-</details>
+
 
 ## ⚙️ Detailed Setup Guide
 
