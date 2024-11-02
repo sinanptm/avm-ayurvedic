@@ -267,7 +267,8 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
   2. Navigate to S3 and create a new bucket
   3. Configure bucket settings (e.g., region, access control)
   4. **Key Step**: Generate AWS access keys from the IAM dashboard
-  5. **Important**: Update your server's `.env` file with:
+  5. **CORS**: [Check this issue](https://github.com/sinanptm/hospital-management-system/issues/6)
+  6. **Important**: Update your server's `.env` file with:
      ```env
      AWS_REGION=your_selected_region
      AWS_ACCESS_KEY_ID=your_access_key_id
