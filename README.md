@@ -276,8 +276,7 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
      ```
    eg: S3 Policy should be like this:
 
-  ```javascript
-
+  ```json
   {
     "Version": "2012-10-17",
     "Id": "Policy1725372798445",
@@ -295,7 +294,6 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
     ]
 }
 
-  ```
 
 
 ### 5. Nodemailer Setup
