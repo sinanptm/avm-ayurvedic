@@ -274,6 +274,29 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
      AWS_SECRET_ACCESS_KEY=your_secret_access_key
      S3_BUCKET_NAME=your_bucket_name
      ```
+   eg: S3 Policy should be like this:
+
+  ```javascript
+
+  {
+    "Version": "2012-10-17",
+    "Id": "Policy1725372798445",
+    "Statement": [
+        {
+            "Sid": "Stmt1725372795858",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::avm-ayurvedic/*"
+        }
+    ]
+}
+
+  ```
+
 
 ### 5. Nodemailer Setup
 - **Tutorial**: [Watch Nodemailer Configuration Guide](https://www.youtube.com/watch?v=QDIOBsMBEI0)
