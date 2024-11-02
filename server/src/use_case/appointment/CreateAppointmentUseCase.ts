@@ -45,7 +45,7 @@ export default class AppointmentUseCase {
       const slot = await this.slotRepository.findById(appointmentData.slotId!);
       if (!slot) throw new CustomError("Slot Not Found", StatusCode.NotFound);
 
-      if (patient.address || patient.bloodGroup) {
+      if (!patient.address || !patient.bloodGroup) {
          throw new CustomError("Profile is missing", StatusCode.BadRequest);
       }
 
