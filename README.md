@@ -108,7 +108,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 # AVM Ayurvedic Project Setup
 
-## Quick Start
+## ⚡ Quick Start
 
 ```bash
 # Clone and install
@@ -123,7 +123,6 @@ cd ..
 npm run dev
 ```
 
-# AVM Ayurvedic Project Setup
 
 ## ⚙️ Detailed Setup Guide
 
