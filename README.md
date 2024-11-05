@@ -405,3 +405,9 @@ stripe listen --forward-to localhost:8000/webhook
 ---
 
 For additional help or issues, please open a GitHub issue or contact me through email or any links from my profile.
+
+
+
+<p align="center">
+  Made with ❤️ by the sinanptm
+</p>
