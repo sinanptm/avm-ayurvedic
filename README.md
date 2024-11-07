@@ -409,5 +409,5 @@ For additional help or issues, please open a GitHub issue or contact me through 
 
 
 <p align="center">
-  Made with ❤️ by the sinanptm
+  Made with ❤️ by sinanptm
 </p>
