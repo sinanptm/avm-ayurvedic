@@ -103,6 +103,7 @@ export default class JoiService implements IValidatorService {
    public validatePassword(password: string): boolean {
       const schema = Joi.string()
          .min(6)
+         .max(70)
          .pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/);
       const { error } = schema.validate(password);
       if (error) {
