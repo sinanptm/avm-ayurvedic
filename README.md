@@ -7,6 +7,7 @@
 [![Website](https://img.shields.io/badge/🌐_Website-Visit_Our_Site-brightgreen?style=for-the-badge&logoColor=white)](https://avm-ayurvedic.online)
 [![Frontend](https://img.shields.io/badge/▲_Frontend-Vercel-black?style=for-the-badge&logo=vercel)](https://avm-ayurvedic.online)
 [![Backend](https://img.shields.io/badge/🚀_Backend-AWS-orange?style=for-the-badge&logo=amazon-aws)](https://api.avm-ayurvedic.online)
+[![Demo](https://img.shields.io/badge/▶️_Demo-Watch_Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/fpOPtDixtD4)
 
 </div>
 
