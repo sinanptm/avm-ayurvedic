@@ -13,16 +13,14 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/sinanptm/hospital-management-system?style=for-the-badge&logo=github&color=gold)](https://github.com/sinanptm/hospital-management-system/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/sinanptm/hospital-management-system?style=for-the-badge&logo=github&color=blue)](https://github.com/sinanptm/hospital-management-system/network/members)
-[![GitHub Issues](https://img.shields.io/github/issues/sinanptm/hospital-management-system?style=for-the-badge&logo=github&color=red)](https://github.com/sinanptm/hospital-management-system/issues)
-
+[![Open Issues](https://img.shields.io/github/issues-raw/sinanptm/hospital-management-system?style=for-the-badge&logo=github&color=red&label=Open%20Issues)](https://github.com/sinanptm/hospital-management-system/issues)
+[![Closed Issues](https://img.shields.io/github/issues-closed-raw/sinanptm/hospital-management-system?style=for-the-badge&logo=github&color=green&label=Closed%20Issues)](https://github.com/sinanptm/hospital-management-system/issues?q=is%3Aissue+is%3Aclosed)
 </div>
 
 ---
 
 ## 🌟 Show Your Support
 If you find this project useful, please consider giving it a star on GitHub! Your support helps us grow and improve.
-
-[![Star This Project](https://img.shields.io/github/stars/sinanptm/hospital-management-system?style=social)](https://github.com/sinanptm/hospital-management-system)
 
 ---
 
