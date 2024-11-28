@@ -413,7 +413,7 @@ stripe listen --forward-to localhost:8000/webhook
 
 ---
 
-<div>
+<div  align="center">
    
 [![GitHub Stars](https://img.shields.io/github/stars/sinanptm/hospital-management-system?style=for-the-badge&logo=github&color=gold)](https://github.com/sinanptm/hospital-management-system/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/sinanptm/hospital-management-system?style=for-the-badge&logo=github&color=blue)](https://github.com/sinanptm/hospital-management-system/network/members)
@@ -422,8 +422,6 @@ stripe listen --forward-to localhost:8000/webhook
 </div>
 
 For additional help or issues, please open a GitHub issue or contact me through email or any links from my profile.
-
-
 
 <p align="center">
   Made with ❤️ by sinanptm
