@@ -10,5 +10,7 @@
    },
    "devDependencies": {
       "concurrently": "^8.2.2"
-   }
+   },
+   "author": "Muhammed Sinan",
+   "license": "ISC"
 }
