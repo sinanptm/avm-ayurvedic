@@ -1,16 +1,56 @@
 {
-   "name": "root",
+   "name": "hospital-management-system",
    "version": "1.0.0",
    "private": true,
+   "description": "A modern full-stack (Mern) Ayurvedic healthcare platform featuring real-time video consultations, AI-powered health insights, secure payment processing, appointment management, and electronic prescriptions. Built with Next.js, Node.js, and WebRTC for a seamless healthcare experience.",
+   "keywords": [
+     "ayurveda",
+     "healthcare",
+     "hospital-management",
+     "telemedicine",
+     "video-consultation",
+     "next-js",
+     "node-js",
+     "webrtc",
+     "ai-insights",
+     "typescript",
+     "react",
+     "mongodb",
+     "stripe-payments",
+     "socket-io",
+     "appointment-booking",
+     "electronic-prescriptions",
+     "real-time",
+     "full-stack",
+     "medical",
+     "health-tech",
+     "mern",
+     "full-stack-project"
+   ],
    "scripts": {
-      "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
-      "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\"",
-      "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\" \"stripe listen --forward-to localhost:8000/api/webhook\"",
-      "stripe": "stripe listen --forward-to localhost:8000/api/webhook"
+     "start": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+     "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\" \"stripe listen --forward-to localhost:8000/api/webhook\"",
+     "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\"",
+     "stripe:webhook": "stripe listen --forward-to localhost:8000/api/webhook"
    },
+   "author": {
+     "name": "Muhammed sinan - sinanptm",
+     "url": "https://github.com/sinanptm"
+   },
+   "workspaces": [
+     "client",
+     "server"
+   ],
    "devDependencies": {
-      "concurrently": "^8.2.2"
+     "concurrently": "^8.2.2"
    },
-   "author": "Muhammed Sinan",
-   "license": "ISC"
-}
+   "engines": {
+     "node": ">=22.0.0",
+     "npm": ">=10.0.0"
+   },
+   "homepage": "https://github.com/sinanptm/hospital-management-system?tab=readme-ov-file#-avm-ayurvedic",
+   "repository": {
+     "type": "git",
+     "url": "https://github.com/sinanptm/hospital-management-system"
+   }
+ }
