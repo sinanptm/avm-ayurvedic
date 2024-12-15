@@ -1,10 +1,10 @@
 import { NextFunction, Response } from "express";
-import { CustomRequest, StatusCode } from "../../../types";
-import { Days } from "../../../domain/entities/ISlot";
-import CreateSlotUseCase from "../../../use_case/slot/CreateSlotUseCase";
-import UpdateSlotUseCase from "../../../use_case/slot/UpdateSlotUseCase";
-import GetSlotUseCase from "../../../use_case/slot/GetSlotUseCase";
-import DeleteSlotUseCase from "../../../use_case/slot/DeleteSlotUseCase";
+import { CustomRequest, StatusCode } from "@/types";
+import { Days } from "@/domain/entities/ISlot";
+import CreateSlotUseCase from "@/use_case/slot/CreateSlotUseCase";
+import UpdateSlotUseCase from "@/use_case/slot/UpdateSlotUseCase";
+import GetSlotUseCase from "@/use_case/slot/GetSlotUseCase";
+import DeleteSlotUseCase from "@/use_case/slot/DeleteSlotUseCase";
 
 export default class SlotController {
    constructor(

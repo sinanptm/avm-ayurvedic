@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
-import { CustomRequest, StatusCode } from "../../../types";
-import ChatBotUseCase from "../../../use_case/chatbot/ChatBotUseCase";
+import { CustomRequest, StatusCode } from "@/types";
+import ChatBotUseCase from "@/use_case/chatbot/ChatBotUseCase";
 
 export default class ChatBotController {
    constructor(private chatBotUseCase: ChatBotUseCase) {}

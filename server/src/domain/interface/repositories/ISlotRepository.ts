@@ -1,4 +1,4 @@
-import { SlotStatistics } from "../../../types/statistics";
+import { SlotStatistics } from "@/types/statistics";
 import ISlot, { Days, SlotStatus } from "../../entities/ISlot";
 import IRepository from "./IRepository";
 

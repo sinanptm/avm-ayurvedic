@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
-import GetVideoSectionUseCase from "../../../use_case/video/GetVideoSectionUseCase";
-import { CustomRequest, StatusCode } from "../../../types";
+import GetVideoSectionUseCase from "@/use_case/video/GetVideoSectionUseCase";
+import { CustomRequest, StatusCode } from "@/types";
 
 export default class VideoController {
    constructor(private getVideoSectionUseCase: GetVideoSectionUseCase) {}

@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
+import IVideoSection, { VideoSectionStatus } from "@/domain/entities/IVideoChatSection";
 
 const videoSectionSchema = new Schema<IVideoSection>(
    {

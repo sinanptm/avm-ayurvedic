@@ -1,5 +1,5 @@
-import IChat from "../../domain/entities/IChat";
-import IChatRepository from "../../domain/interface/repositories/IChatRepository";
+import IChat from "@/domain/entities/IChat";
+import IChatRepository from "@/domain/interface/repositories/IChatRepository";
 import ChatModel from "../model/ChatModel";
 
 export default class ChatRepository implements IChatRepository {

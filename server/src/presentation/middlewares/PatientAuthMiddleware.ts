@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
-import ITokenService from "../../domain/interface/services/ITokenService";
-import { CustomRequest, StatusCode, UserRole } from "../../types";
-import logger from "../../utils/logger";
+import ITokenService from "@/domain/interface/services/ITokenService";
+import { CustomRequest, StatusCode, UserRole } from "@/types";
+import logger from "@/utils/logger";
 
 export default class PatientAuthMiddleware {
    constructor(private tokenService: ITokenService) {

@@ -1,4 +1,4 @@
-import { StatusCode } from "../../types";
+import { StatusCode } from "@/types";
 
 export default class CustomError extends Error {
    public statusCode: StatusCode;

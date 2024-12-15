@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import AdminPatientUseCase from "../../../use_case/admin/AdminPatientUseCase";
-import { CustomRequest, StatusCode } from "../../../types";
+import AdminPatientUseCase from "@/use_case/admin/AdminPatientUseCase";
+import { CustomRequest, StatusCode } from "@/types";
 
 export default class AdminPatientController {
    constructor(private adminPatientUseCase: AdminPatientUseCase) {}

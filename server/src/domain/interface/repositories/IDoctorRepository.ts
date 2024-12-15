@@ -1,5 +1,5 @@
 import IDoctor from "../../entities/IDoctor";
-import { PaginatedResult } from "../../../types";
+import { PaginatedResult } from "@/types";
 import IRepository from "./IRepository";
 
 export default interface IDoctorRepository extends IRepository<IDoctor> {

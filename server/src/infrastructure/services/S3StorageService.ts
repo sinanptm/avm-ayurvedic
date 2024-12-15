@@ -1,7 +1,7 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
-import { AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY } from "../../config/env";
+import ICloudStorageService from "@/domain/interface/services/ICloudStorageService";
+import { AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY } from "@/config/env";
 
 export default class S3StorageService implements ICloudStorageService {
    private s3: S3Client;

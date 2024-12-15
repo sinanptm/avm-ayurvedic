@@ -1,8 +1,8 @@
-import ITokenService from "../../domain/interface/services/ITokenService";
+import ITokenService from "@/domain/interface/services/ITokenService";
 import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
-import { StatusCode, UserRole } from "../../types/index";
-import CustomError from "../../domain/entities/CustomError";
-import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../../config/env";
+import { StatusCode, UserRole } from "@/types/index";
+import CustomError from "@/domain/entities/CustomError";
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "@/config/env";
 
 export default class JWTService implements ITokenService {
    private signToken(payload: object, secret: string, expiresIn: string): string {

@@ -1,15 +1,15 @@
-import ChatBotMessageRepository from "../../infrastructure/repositories/ChatBotMessageRepository";
-import NotificationRepository from "../../infrastructure/repositories/NotificationRepository";
-import VideoSectionRepository from "../../infrastructure/repositories/VideoSectionRepository";
-import PrescriptionRepository from "../../infrastructure/repositories/PrescriptionRepository";
-import AppointmentRepository from "../../infrastructure/repositories/AppointmentRepository";
-import PatientRepository from "../../infrastructure/repositories/PatientRepository";
-import PaymentRepository from "../../infrastructure/repositories/PaymentRepository";
-import MessageRepository from "../../infrastructure/repositories/MessageRepository";
-import DoctorRepository from "../../infrastructure/repositories/DoctorRepository";
-import SlotRepository from "../../infrastructure/repositories/SlotRepository";
-import ChatRepository from "../../infrastructure/repositories/ChatRepository";
-import OtpRepository from "../../infrastructure/repositories/OtpRepository";
+import ChatBotMessageRepository from "@/infrastructure/repositories/ChatBotMessageRepository";
+import NotificationRepository from "@/infrastructure/repositories/NotificationRepository";
+import VideoSectionRepository from "@/infrastructure/repositories/VideoSectionRepository";
+import PrescriptionRepository from "@/infrastructure/repositories/PrescriptionRepository";
+import AppointmentRepository from "@/infrastructure/repositories/AppointmentRepository";
+import PatientRepository from "@/infrastructure/repositories/PatientRepository";
+import PaymentRepository from "@/infrastructure/repositories/PaymentRepository";
+import MessageRepository from "@/infrastructure/repositories/MessageRepository";
+import DoctorRepository from "@/infrastructure/repositories/DoctorRepository";
+import SlotRepository from "@/infrastructure/repositories/SlotRepository";
+import ChatRepository from "@/infrastructure/repositories/ChatRepository";
+import OtpRepository from "@/infrastructure/repositories/OtpRepository";
 
 export const chatBotMessageRepository = new ChatBotMessageRepository();
 export const notificationRepository = new NotificationRepository();

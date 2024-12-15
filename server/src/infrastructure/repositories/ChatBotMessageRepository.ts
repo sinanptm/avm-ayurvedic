@@ -1,5 +1,5 @@
-import IChatBotMessage from "../../domain/entities/IChatBotMessage";
-import IChatBotMessageRepository from "../../domain/interface/repositories/IChatBotMessageRepository";
+import IChatBotMessage from "@/domain/entities/IChatBotMessage";
+import IChatBotMessageRepository from "@/domain/interface/repositories/IChatBotMessageRepository";
 import ChatbotMessageModel from "../model/ChatBotMessageModel";
 
 export default class ChaBotMessageRepository implements IChatBotMessageRepository {

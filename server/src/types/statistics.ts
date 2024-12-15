@@ -1,4 +1,4 @@
-import { AppointmentStatus } from "../domain/entities/IAppointment";
+import { AppointmentStatus } from "@/domain/entities/IAppointment";
 
 export enum Months {
    January = "January",

@@ -1,9 +1,9 @@
-import IEmailService, { SendMailProps } from "../../domain/interface/services/IEmailService";
+import IEmailService, { SendMailProps } from "@/domain/interface/services/IEmailService";
 import nodemailer from "nodemailer";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
-import { NODEMAILER_PASSKEY, SENDER_EMAIL } from "../../config/env";
+import { NODEMAILER_PASSKEY, SENDER_EMAIL } from "@/config/env";
 
 const readFileAsync = promisify(fs.readFile);
 

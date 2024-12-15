@@ -1,5 +1,5 @@
 import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../entities/IAppointment";
-import { PaginatedResult } from "../../../types";
+import { PaginatedResult } from "@/types";
 import IPatient from "../../entities/IPatient";
 import IRepository from "./IRepository";
 

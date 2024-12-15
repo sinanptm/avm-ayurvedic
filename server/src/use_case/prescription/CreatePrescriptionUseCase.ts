@@ -1,9 +1,9 @@
-import IPrescriptionRepository from "../../domain/interface/repositories/IPrescriptionRepository";
-import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import IPrescription, { PrescriptionStatus } from "../../domain/entities/IPrescription";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import CustomError from "../../domain/entities/CustomError";
-import { StatusCode } from "../../types";
+import IPrescriptionRepository from "@/domain/interface/repositories/IPrescriptionRepository";
+import IAppointmentRepository from "@/domain/interface/repositories/IAppointmentRepository";
+import IPrescription, { PrescriptionStatus } from "@/domain/entities/IPrescription";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import CustomError from "@/domain/entities/CustomError";
+import { StatusCode } from "@/types";
 
 export default class CreatePrescriptionUseCase {
    constructor(

@@ -1,4 +1,4 @@
-import { PaginatedResult } from "../../../types";
+import { PaginatedResult } from "@/types";
 
 export default interface IRepository<T> {
    findById(id: string): Promise<T | null>;

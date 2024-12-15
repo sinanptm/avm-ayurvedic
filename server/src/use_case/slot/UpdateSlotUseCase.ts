@@ -1,6 +1,6 @@
-import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import ISlot from "../../domain/entities/ISlot";
+import ISlotRepository from "@/domain/interface/repositories/ISlotRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import ISlot from "@/domain/entities/ISlot";
 
 export default class UpdateSlotUseCase {
    constructor(

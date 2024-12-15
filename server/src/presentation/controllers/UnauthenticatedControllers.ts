@@ -1,5 +1,5 @@
-import { StatusCode } from "../../types";
-import UnauthenticatedUseCases from "../../use_case/UnauthenticatedUseCases";
+import { StatusCode } from "@/types";
+import UnauthenticatedUseCases from "@/use_case/UnauthenticatedUseCases";
 import { NextFunction, Request, Response } from "express";
 
 export default class UnauthenticatedControllers {

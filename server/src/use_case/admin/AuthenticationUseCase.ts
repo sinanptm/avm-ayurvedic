@@ -1,11 +1,11 @@
-import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
-import IEmailService from "../../domain/interface/services/IEmailService";
-import ITokenService from "../../domain/interface/services/ITokenService";
-import CustomError from "../../domain/entities/CustomError";
-import { StatusCode, UserRole } from "../../types";
+import { IPasswordServiceRepository } from "@/domain/interface/services/IPasswordServiceRepository";
+import IDoctorRepository from "@/domain/interface/repositories/IDoctorRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import IOtpRepository from "@/domain/interface/repositories/IOtpRepository";
+import IEmailService from "@/domain/interface/services/IEmailService";
+import ITokenService from "@/domain/interface/services/ITokenService";
+import CustomError from "@/domain/entities/CustomError";
+import { StatusCode, UserRole } from "@/types";
 
 export default class AuthenticationUseCase {
    constructor(
@@ -38,7 +38,7 @@ export default class AuthenticationUseCase {
             email,
             name: "Admin",
             otp,
-            pathOfTemplate: "../../../public/otpEmailTemplate.html",
+            pathOfTemplate: "@/../public/otpEmailTemplate.html",
             subject: "No Reply Mail: Otp Verification",
          });
       }
@@ -79,7 +79,7 @@ export default class AuthenticationUseCase {
          email,
          name: "Admin",
          otp,
-         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         pathOfTemplate: "@/../public/otpEmailTemplate.html",
          subject: "No Reply Mail: Otp Verification",
       });
    }

@@ -1,7 +1,7 @@
 // src/repositories/PaymentRepository.ts
 
-import IPayment from "../../domain/entities/IPayment";
-import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
+import IPayment from "@/domain/entities/IPayment";
+import IPaymentRepository from "@/domain/interface/repositories/IPaymentRepository";
 import PaymentModel from "../model/PaymentModel";
 
 export default class PaymentRepository implements IPaymentRepository {

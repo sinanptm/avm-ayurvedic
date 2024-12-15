@@ -1,4 +1,4 @@
-import { UserRole } from "../../../types";
+import { UserRole } from "@/types";
 
 export default interface ITokenService {
    createRefreshToken(email: string, id: string): string;

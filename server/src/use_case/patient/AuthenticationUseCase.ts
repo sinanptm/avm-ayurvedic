@@ -1,13 +1,13 @@
-import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
-import ITokenService from "../../domain/interface/services/ITokenService";
-import IEmailService from "../../domain/interface/services/IEmailService";
-import CustomError from "../../domain/entities/CustomError";
-import IPatient from "../../domain/entities/IPatient";
-import { StatusCode, UserRole } from "../../types";
-import { CLIENT_URL } from "../../config/env";
+import { IPasswordServiceRepository } from "@/domain/interface/services/IPasswordServiceRepository";
+import IPatientRepository from "@/domain/interface/repositories/IPatientRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import IOtpRepository from "@/domain/interface/repositories/IOtpRepository";
+import ITokenService from "@/domain/interface/services/ITokenService";
+import IEmailService from "@/domain/interface/services/IEmailService";
+import CustomError from "@/domain/entities/CustomError";
+import IPatient from "@/domain/entities/IPatient";
+import { StatusCode, UserRole } from "@/types";
+import { CLIENT_URL } from "@/config/env";
 
 type TokensResponse = {
    accessToken: string;
@@ -68,7 +68,7 @@ export default class AuthenticationUseCase {
             email: foundPatient.email!,
             name: foundPatient.name!,
             otp,
-            pathOfTemplate: "../../../public/otpEmailTemplate.html",
+            pathOfTemplate: "@/../public/otpEmailTemplate.html",
             subject: "OTP Verification",
          });
       }
@@ -105,7 +105,7 @@ export default class AuthenticationUseCase {
          email,
          name: patient.name!,
          otp,
-         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         pathOfTemplate: "@/../public/otpEmailTemplate.html",
          subject: "OTP Verification",
       });
 
@@ -154,7 +154,7 @@ export default class AuthenticationUseCase {
       await this.emailService.sendMail({
          email,
          name: patient.name!,
-         pathOfTemplate: "../../../public/resetPasswordTemplate.html",
+         pathOfTemplate: "@/../public/resetPasswordTemplate.html",
          subject: "Password Reset",
          link: `${CLIENT_URL}/signin/reset-password`,
       });

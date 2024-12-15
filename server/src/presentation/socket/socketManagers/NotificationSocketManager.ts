@@ -1,6 +1,6 @@
 import { Namespace, Server, Socket } from "socket.io";
-import NotificationUseCase from "../../../use_case/notification/NotificationUseCase";
-import ITokenService from "../../../domain/interface/services/ITokenService";
+import NotificationUseCase from "@/use_case/notification/NotificationUseCase";
+import ITokenService from "@/domain/interface/services/ITokenService";
 import NotificationSocketEvents from "../events/NotificationSocketEvents";
 
 export default class NotificationSocketManager {

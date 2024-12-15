@@ -1,9 +1,9 @@
-import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
-import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import IVideoSection, { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
-import IAppointment, { AppointmentStatus } from "../../domain/entities/IAppointment";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { addDays } from "../../utils/date-formatter";
+import IVideoSectionRepository from "@/domain/interface/repositories/IVideoSectionRepository";
+import IAppointmentRepository from "@/domain/interface/repositories/IAppointmentRepository";
+import IVideoSection, { VideoSectionStatus } from "@/domain/entities/IVideoChatSection";
+import IAppointment, { AppointmentStatus } from "@/domain/entities/IAppointment";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import { addDays } from "@/utils/date-formatter";
 
 export default class GetVideoSectionUseCase {
    constructor(

@@ -9,7 +9,11 @@
       "forceConsistentCasingInFileNames": true,
       "outDir": "./dist",
       "experimentalDecorators": true,
-      "emitDecoratorMetadata": true
+      "emitDecoratorMetadata": true,
+      "baseUrl": ".",
+      "paths": {
+         "@/*": ["./src/*"]
+      }
    },
    "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
    "exclude": ["node_modules"]

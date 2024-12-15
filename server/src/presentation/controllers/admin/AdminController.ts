@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from "express";
-import DashboardUseCase from "../../../use_case/admin/DashboardUseCase";
-import { StatusCode } from "../../../types";
+import DashboardUseCase from "@/use_case/admin/DashboardUseCase";
+import { StatusCode } from "@/types";
 
 export default class AdminController {
    constructor(private dashboardUseCase: DashboardUseCase) {}

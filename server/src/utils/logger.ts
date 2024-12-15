@@ -1,9 +1,9 @@
 import { createLogger, format, transports } from "winston";
-import { NODE_ENV } from "../config/env";
+import { NODE_ENV } from "@/config/env";
 import "winston-daily-rotate-file";
 import path from "path";
 
-const logDirectory = path.resolve(path.join(__dirname, "../../"), "logs");
+const logDirectory = path.resolve(path.join(__dirname, "@/"), "logs");
 
 const consoleFormat = format.printf(({ timestamp, level, message, stack, url, data, ...meta }) => {
    const logLevel = level.toUpperCase();

@@ -1,10 +1,10 @@
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import IEmailService from "../../domain/interface/services/IEmailService";
-import { DoctorsFilter, PaginatedResult, StatusCode } from "../../types";
-import CustomError from "../../domain/entities/CustomError";
-import IDoctor from "../../domain/entities/IDoctor";
-import { CLIENT_URL } from "../../config/env";
+import IDoctorRepository from "@/domain/interface/repositories/IDoctorRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import IEmailService from "@/domain/interface/services/IEmailService";
+import { DoctorsFilter, PaginatedResult, StatusCode } from "@/types";
+import CustomError from "@/domain/entities/CustomError";
+import IDoctor from "@/domain/entities/IDoctor";
+import { CLIENT_URL } from "@/config/env";
 
 export default class AdminDoctorUseCase {
    constructor(
@@ -38,7 +38,7 @@ export default class AdminDoctorUseCase {
          await this.emailService.sendMail({
             email: updatedDoctor.email!,
             name: "Admin",
-            pathOfTemplate: "../../../public/notifyVerificationTemplate.html",
+            pathOfTemplate: "@/../public/notifyVerificationTemplate.html",
             subject: "No Reply Mail: Doctor Verification Notification",
             link: `${CLIENT_URL}/doctor`,
          });

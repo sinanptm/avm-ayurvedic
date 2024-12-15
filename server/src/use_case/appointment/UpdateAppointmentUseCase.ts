@@ -1,13 +1,13 @@
-import IVideoSectionRepository from "../../domain/interface/repositories/IVideoSectionRepository";
-import INotificationRepository from "../../domain/interface/repositories/INotificationRepository";
-import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import IPaymentRepository from "../../domain/interface/repositories/IPaymentRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import IPaymentService from "../../domain/interface/services/IPaymentService";
-import { VideoSectionStatus } from "../../domain/entities/IVideoChatSection";
-import { NotificationTypes } from "../../domain/entities/INotification";
-import { AppointmentStatus } from "../../domain/entities/IAppointment";
-import { format } from "../../utils/date-formatter";
+import IVideoSectionRepository from "@/domain/interface/repositories/IVideoSectionRepository";
+import INotificationRepository from "@/domain/interface/repositories/INotificationRepository";
+import IAppointmentRepository from "@/domain/interface/repositories/IAppointmentRepository";
+import IPaymentRepository from "@/domain/interface/repositories/IPaymentRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import IPaymentService from "@/domain/interface/services/IPaymentService";
+import { VideoSectionStatus } from "@/domain/entities/IVideoChatSection";
+import { NotificationTypes } from "@/domain/entities/INotification";
+import { AppointmentStatus } from "@/domain/entities/IAppointment";
+import { format } from "@/utils/date-formatter";
 
 export default class UpdateAppointmentUseCase {
    constructor(

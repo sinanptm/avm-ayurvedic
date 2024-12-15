@@ -1,14 +1,14 @@
-import { IPasswordServiceRepository } from "../../domain/interface/services/IPasswordServiceRepository";
-import ICloudStorageService from "../../domain/interface/services/ICloudStorageService";
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import IOtpRepository from "../../domain/interface/repositories/IOtpRepository";
-import IEmailService from "../../domain/interface/services/IEmailService";
-import ITokenService from "../../domain/interface/services/ITokenService";
-import { AWS_REGION, CLIENT_URL, S3_BUCKET_NAME } from "../../config/env";
-import CustomError from "../../domain/entities/CustomError";
-import IDoctor from "../../domain/entities/IDoctor";
-import { StatusCode, UserRole } from "../../types";
+import { IPasswordServiceRepository } from "@/domain/interface/services/IPasswordServiceRepository";
+import ICloudStorageService from "@/domain/interface/services/ICloudStorageService";
+import IDoctorRepository from "@/domain/interface/repositories/IDoctorRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import IOtpRepository from "@/domain/interface/repositories/IOtpRepository";
+import IEmailService from "@/domain/interface/services/IEmailService";
+import ITokenService from "@/domain/interface/services/ITokenService";
+import { AWS_REGION, CLIENT_URL, S3_BUCKET_NAME } from "@/config/env";
+import CustomError from "@/domain/entities/CustomError";
+import IDoctor from "@/domain/entities/IDoctor";
+import { StatusCode, UserRole } from "@/types";
 
 export default class AuthenticationUseCase {
    constructor(
@@ -44,7 +44,7 @@ export default class AuthenticationUseCase {
             email,
             name: doctor.name!,
             otp,
-            pathOfTemplate: "../../../public/otpEmailTemplate.html",
+            pathOfTemplate: "@/../public/otpEmailTemplate.html",
             subject: "No Reply Mail: Otp Verification",
          });
       }
@@ -85,7 +85,7 @@ export default class AuthenticationUseCase {
          email,
          name: doctor.name!,
          otp,
-         pathOfTemplate: "../../../public/otpEmailTemplate.html",
+         pathOfTemplate: "@/../public/otpEmailTemplate.html",
          subject: "No Reply Mail: Otp Verification",
       });
 
@@ -100,7 +100,7 @@ export default class AuthenticationUseCase {
       await this.emailService.sendMail({
          email,
          name: doctor.name!,
-         pathOfTemplate: "../../../public/resetPasswordTemplate.html",
+         pathOfTemplate: "@/../public/resetPasswordTemplate.html",
          subject: "No Reply Mail: Password Reset",
          link: `${CLIENT_URL}/doctor/reset-password`,
       });

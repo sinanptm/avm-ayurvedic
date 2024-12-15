@@ -1,7 +1,7 @@
-import IChatBotMessage from "../../domain/entities/IChatBotMessage";
-import IChatBotMessageRepository from "../../domain/interface/repositories/IChatBotMessageRepository";
-import IChatBotService from "../../domain/interface/services/IChatBotService";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
+import IChatBotMessage from "@/domain/entities/IChatBotMessage";
+import IChatBotMessageRepository from "@/domain/interface/repositories/IChatBotMessageRepository";
+import IChatBotService from "@/domain/interface/services/IChatBotService";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
 
 export default class ChatBotUseCase {
    constructor(

@@ -1,7 +1,7 @@
 import IPatient from "../../entities/IPatient";
-import { PaginatedResult } from "../../../types";
+import { PaginatedResult } from "@/types";
 import IRepository from "./IRepository";
-import { PatientGenderStatistics } from "../../../types/statistics";
+import { PatientGenderStatistics } from "@/types/statistics";
 
 export default interface IPatientRepository extends IRepository<IPatient> {
    findByEmail(email: string): Promise<IPatient | null>;

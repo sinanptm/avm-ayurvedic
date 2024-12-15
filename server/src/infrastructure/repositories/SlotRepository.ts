@@ -1,6 +1,6 @@
-import ISlot, { Days, SlotStatus } from "../../domain/entities/ISlot";
-import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
-import { SlotStatistics } from "../../types/statistics";
+import ISlot, { Days, SlotStatus } from "@/domain/entities/ISlot";
+import ISlotRepository from "@/domain/interface/repositories/ISlotRepository";
+import { SlotStatistics } from "@/types/statistics";
 import SlotModel from "../model/SlotModel";
 
 export default class SlotRepository implements ISlotRepository {

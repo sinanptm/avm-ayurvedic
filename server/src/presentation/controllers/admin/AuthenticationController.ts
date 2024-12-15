@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import AuthenticationUseCase from "../../../use_case/admin/AuthenticationUseCase";
-import { Cookie, StatusCode } from "../../../types";
+import AuthenticationUseCase from "@/use_case/admin/AuthenticationUseCase";
+import { Cookie, StatusCode } from "@/types";
 
 export default class AuthAdminController {
    constructor(private authUseCase: AuthenticationUseCase) {}

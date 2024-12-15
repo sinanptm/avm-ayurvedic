@@ -1,6 +1,6 @@
-import AuthenticationUseCase from "../../../use_case/patient/AuthenticationUseCase";
+import AuthenticationUseCase from "@/use_case/patient/AuthenticationUseCase";
 import { NextFunction, Request, Response } from "express";
-import { Cookie, StatusCode } from "../../../types";
+import { Cookie, StatusCode } from "@/types";
 
 export default class AuthPatientController {
    constructor(private authUseCase: AuthenticationUseCase) {}

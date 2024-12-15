@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
-import { CustomRequest, StatusCode } from "../../../types";
-import CreatePrescriptionUseCase from "../../../use_case/prescription/CreatePrescriptionUseCase";
+import { CustomRequest, StatusCode } from "@/types";
+import CreatePrescriptionUseCase from "@/use_case/prescription/CreatePrescriptionUseCase";
 
 export default class PrescriptionController {
    constructor(private createPrescriptionUseCase: CreatePrescriptionUseCase) {}

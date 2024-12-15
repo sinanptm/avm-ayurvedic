@@ -1,8 +1,8 @@
-import CustomError from "../../domain/entities/CustomError";
-import IPatient from "../../domain/entities/IPatient";
-import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import { PaginatedResult, StatusCode } from "../../types";
-import { PatientGenderStatistics } from "../../types/statistics";
+import CustomError from "@/domain/entities/CustomError";
+import IPatient from "@/domain/entities/IPatient";
+import IPatientRepository from "@/domain/interface/repositories/IPatientRepository";
+import { PaginatedResult, StatusCode } from "@/types";
+import { PatientGenderStatistics } from "@/types/statistics";
 import PatientModel from "../model/PatientModel";
 import { getPaginatedResult } from "./getPaginatedResult";
 

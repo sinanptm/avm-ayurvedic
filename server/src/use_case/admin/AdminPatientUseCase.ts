@@ -1,8 +1,8 @@
-import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import IPatient from "../../domain/entities/IPatient";
-import { PaginatedResult, StatusCode } from "../../types";
-import CustomError from "../../domain/entities/CustomError";
+import IPatientRepository from "@/domain/interface/repositories/IPatientRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import IPatient from "@/domain/entities/IPatient";
+import { PaginatedResult, StatusCode } from "@/types";
+import CustomError from "@/domain/entities/CustomError";
 
 export default class AdminPatientUseCase {
    constructor(

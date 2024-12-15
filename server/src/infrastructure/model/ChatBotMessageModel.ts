@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import IChatBotMessage from "../../domain/entities/IChatBotMessage";
+import IChatBotMessage from "@/domain/entities/IChatBotMessage";
 
 const chatbotMessageSchema = new Schema<IChatBotMessage>(
    {

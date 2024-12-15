@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import ISlot, { Days } from "../../domain/entities/ISlot";
+import ISlot, { Days } from "@/domain/entities/ISlot";
 
 const slotSchema = new Schema<ISlot>(
    {

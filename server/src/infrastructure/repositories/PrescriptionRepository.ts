@@ -1,5 +1,5 @@
-import IPrescription from "../../domain/entities/IPrescription";
-import IPrescriptionRepository from "../../domain/interface/repositories/IPrescriptionRepository";
+import IPrescription from "@/domain/entities/IPrescription";
+import IPrescriptionRepository from "@/domain/interface/repositories/IPrescriptionRepository";
 import PrescriptionModel from "../model/PrescriptionMode";
 
 export default class PrescriptionRepository implements IPrescriptionRepository {

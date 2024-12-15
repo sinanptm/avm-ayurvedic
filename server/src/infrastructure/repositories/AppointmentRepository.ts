@@ -1,9 +1,9 @@
-import IAppointment, { AppointmentStatus, IExtendedAppointment } from "../../domain/entities/IAppointment";
-import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import { PaginatedResult } from "../../types";
+import IAppointment, { AppointmentStatus, IExtendedAppointment } from "@/domain/entities/IAppointment";
+import IAppointmentRepository from "@/domain/interface/repositories/IAppointmentRepository";
+import { PaginatedResult } from "@/types";
 import AppointmentModel from "../model/AppointmentModel";
 import { getPaginatedResult } from "./getPaginatedResult";
-import IPatient from "../../domain/entities/IPatient";
+import IPatient from "@/domain/entities/IPatient";
 import { ObjectId } from "mongodb";
 
 export default class AppointmentRepository implements IAppointmentRepository {

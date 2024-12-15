@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import IAppointment, { AppointmentStatus, AppointmentType } from "../../domain/entities/IAppointment";
+import IAppointment, { AppointmentStatus, AppointmentType } from "@/domain/entities/IAppointment";
 
 const appointmentSchema = new Schema<IAppointment>(
    {

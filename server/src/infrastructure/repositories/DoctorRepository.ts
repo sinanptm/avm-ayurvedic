@@ -1,7 +1,7 @@
-import IDoctor from "../../domain/entities/IDoctor";
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
+import IDoctor from "@/domain/entities/IDoctor";
+import IDoctorRepository from "@/domain/interface/repositories/IDoctorRepository";
 import DoctorModel from "../model/DoctorModel";
-import { PaginatedResult } from "../../types";
+import { PaginatedResult } from "@/types";
 import { getPaginatedResult } from "./getPaginatedResult";
 
 export default class DoctorRepository implements IDoctorRepository {

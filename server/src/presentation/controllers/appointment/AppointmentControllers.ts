@@ -1,9 +1,9 @@
 import { NextFunction, Response } from "express";
-import { CustomRequest, StatusCode } from "../../../types";
-import CreateAppointmentUseCase from "../../../use_case/appointment/CreateAppointmentUseCase";
-import GetAppointmentUseCase from "../../../use_case/appointment/GetAppointmentUseCase";
-import UpdateAppointmentUseCase from "../../../use_case/appointment/UpdateAppointmentUseCase";
-import { AppointmentStatus } from "../../../domain/entities/IAppointment";
+import { CustomRequest, StatusCode } from "@/types";
+import CreateAppointmentUseCase from "@/use_case/appointment/CreateAppointmentUseCase";
+import GetAppointmentUseCase from "@/use_case/appointment/GetAppointmentUseCase";
+import UpdateAppointmentUseCase from "@/use_case/appointment/UpdateAppointmentUseCase";
+import { AppointmentStatus } from "@/domain/entities/IAppointment";
 
 export default class AppointmentController {
    constructor(

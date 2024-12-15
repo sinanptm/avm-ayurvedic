@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import AdminDoctorUseCase from "../../../use_case/admin/AdminDoctorUseCase";
-import { DoctorsFilter, StatusCode, CustomRequest } from "../../../types";
-import IDoctor from "../../../domain/entities/IDoctor";
+import AdminDoctorUseCase from "@/use_case/admin/AdminDoctorUseCase";
+import { DoctorsFilter, StatusCode, CustomRequest } from "@/types";
+import IDoctor from "@/domain/entities/IDoctor";
 
 export default class AdminDoctorController {
    constructor(private adminDoctorUseCase: AdminDoctorUseCase) {}

@@ -1,8 +1,8 @@
-import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import { IExtendedAppointment } from "../../domain/entities/IAppointment";
-import IPatient from "../../domain/entities/IPatient";
-import { PaginatedResult } from "../../types";
+import IAppointmentRepository from "@/domain/interface/repositories/IAppointmentRepository";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import { IExtendedAppointment } from "@/domain/entities/IAppointment";
+import IPatient from "@/domain/entities/IPatient";
+import { PaginatedResult } from "@/types";
 
 export default class GetPatientUseCaseDoctor {
    constructor(

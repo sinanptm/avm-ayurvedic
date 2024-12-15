@@ -1,4 +1,4 @@
-import { PaginatedResult } from "../../types";
+import { PaginatedResult } from "@/types";
 
 export const getPaginatedResult = <T>(
    totalItems: number,

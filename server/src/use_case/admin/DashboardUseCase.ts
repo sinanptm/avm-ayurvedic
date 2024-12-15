@@ -5,13 +5,13 @@ import {
    AppointmentsByStatusStatistics,
    SlotStatistics,
    AppointmentsPerMonthStatistics,
-} from "../../types/statistics";
-import IAppointmentRepository from "../../domain/interface/repositories/IAppointmentRepository";
-import IPatientRepository from "../../domain/interface/repositories/IPatientRepository";
-import IDoctorRepository from "../../domain/interface/repositories/IDoctorRepository";
-import ISlotRepository from "../../domain/interface/repositories/ISlotRepository";
-import { AppointmentStatus } from "../../domain/entities/IAppointment";
-import { endOfMonth, startOfMonth } from "../../utils/date-formatter";
+} from "@/types/statistics";
+import IAppointmentRepository from "@/domain/interface/repositories/IAppointmentRepository";
+import IPatientRepository from "@/domain/interface/repositories/IPatientRepository";
+import IDoctorRepository from "@/domain/interface/repositories/IDoctorRepository";
+import ISlotRepository from "@/domain/interface/repositories/ISlotRepository";
+import { AppointmentStatus } from "@/domain/entities/IAppointment";
+import { endOfMonth, startOfMonth } from "@/utils/date-formatter";
 
 export default class DashboardUseCase {
    constructor(

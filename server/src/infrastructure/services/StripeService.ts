@@ -1,9 +1,9 @@
 import Stripe from "stripe";
-import IPaymentService from "../../domain/interface/services/IPaymentService";
-import CustomError from "../../domain/entities/CustomError";
-import { StatusCode } from "../../types";
-import logger from "../../utils/logger";
-import { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } from "../../config/env";
+import IPaymentService from "@/domain/interface/services/IPaymentService";
+import CustomError from "@/domain/entities/CustomError";
+import { StatusCode } from "@/types";
+import logger from "@/utils/logger";
+import { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } from "@/config/env";
 
 const stripe = new Stripe(STRIPE_SECRET_KEY as string, {
    apiVersion: "2024-06-20",

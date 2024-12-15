@@ -1,5 +1,5 @@
-import IMessage from "../../domain/entities/IMessage";
-import IMessageRepository from "../../domain/interface/repositories/IMessageRepository";
+import IMessage from "@/domain/entities/IMessage";
+import IMessageRepository from "@/domain/interface/repositories/IMessageRepository";
 import MessageModel from "../model/Message";
 import { ObjectId } from "mongodb";
 

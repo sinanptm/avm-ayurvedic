@@ -1,7 +1,7 @@
 import { GenerativeModel, GoogleGenerativeAI } from "@google/generative-ai";
-import IChatBotService from "../../domain/interface/services/IChatBotService";
-import chatBotConfig from "../../config/chatBotConfig";
-import { GEMINI_API_KEY } from "../../config/env";
+import IChatBotService from "@/domain/interface/services/IChatBotService";
+import chatBotConfig from "@/config/chatBotConfig";
+import { GEMINI_API_KEY } from "@/config/env";
 
 export default class GeminiBotService implements IChatBotService {
    private genAI: GoogleGenerativeAI;

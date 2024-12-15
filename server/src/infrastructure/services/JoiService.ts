@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { StatusCode } from "../../types";
-import IValidatorService from "../../domain/interface/services/IValidatorService";
-import CustomError from "../../domain/entities/CustomError";
+import { StatusCode } from "@/types";
+import IValidatorService from "@/domain/interface/services/IValidatorService";
+import CustomError from "@/domain/entities/CustomError";
 
 export default class JoiService implements IValidatorService {
    public validateRequiredFields(input: object): void {
