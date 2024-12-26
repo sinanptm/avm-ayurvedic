@@ -23,7 +23,5 @@ const patientSchema = new Schema<IPatient>(
    }
 );
 
-patientSchema.index({ email: 1 });
-
 const PatientModel = model<IPatient>("Patient", patientSchema);
 export default PatientModel;
