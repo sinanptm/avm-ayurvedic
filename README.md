@@ -274,22 +274,17 @@ NEXT_PUBLIC_METERED_TURN_CREDENTIAL=test-metered-turn-credential
 
   ```json
   {
-    "Version": "2012-10-17",
-    "Id": "Policy1725372798445",
-    "Statement": [
-        {
-            "Sid": "Stmt1725372795858",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": [
-                "s3:GetObject",
-                "s3:DeleteObject"
-            ],
-            "Resource": "arn:aws:s3:::avm-ayurvedic/*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::avm-ayurvedic-2/*"
+    }
+  ]
 }
-
 
 
 ### 5. Nodemailer Setup
