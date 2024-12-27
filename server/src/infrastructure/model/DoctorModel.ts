@@ -3,7 +3,7 @@ import IDoctor from "@/domain/entities/IDoctor";
 
 const doctorSchema = new Schema<IDoctor>(
    {
-      email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
+      email: { type: String, required: true, unique: true, index: true, match: /.+\@.+\..+/ },
       password: { type: String },
       image: { type: String, default: "" },
       isBlocked: { type: Boolean, default: false },
@@ -19,7 +19,6 @@ const doctorSchema = new Schema<IDoctor>(
       versionKey: false,
    }
 );
-doctorSchema.index({ email: 1 });
 
 const DoctorModel = model<IDoctor>("Doctor", doctorSchema);
 export default DoctorModel;
