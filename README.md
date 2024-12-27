@@ -123,13 +123,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 # Clone and install
 git clone https://github.com/sinanptm/avm-ayurvedic
 cd avm-ayurvedic
-npm install
-cd server && npm install
-cd ../client && npm install
-cd ..
+pnpm install
 
 # Set up environment files and start
-npm run dev
+pnpm dev
 ```
 
 
@@ -146,19 +143,8 @@ npm run dev
 
 2. Install dependencies:
    ```bash
-   # Root directory dependencies
-   npm install
+   pnpm install
 
-   # Server dependencies
-   cd server
-   npm install
-
-   # Client dependencies
-   cd ../client
-   npm install
-
-   # Return to root
-   cd ..
    ```
 </details>
 
