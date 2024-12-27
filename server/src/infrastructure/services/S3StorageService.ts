@@ -27,6 +27,7 @@ export default class S3StorageService implements ICloudStorageService {
    }
 
    async deleteFile(bucket: string, key: string): Promise<void> {
+      if(!key) return
       const command = new DeleteObjectCommand({
          Bucket: bucket,
          Key: key,
