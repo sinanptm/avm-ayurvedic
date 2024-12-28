@@ -44,7 +44,7 @@ export default class AuthenticationUseCase {
             email,
             name: doctor.name!,
             otp,
-            pathOfTemplate: "@/../public/otpEmailTemplate.html",
+            pathOfTemplate: "../../../public/otpEmailTemplate.html",
             subject: "No Reply Mail: Otp Verification",
          });
       }
@@ -85,7 +85,7 @@ export default class AuthenticationUseCase {
          email,
          name: doctor.name!,
          otp,
-         pathOfTemplate: "@/../public/otpEmailTemplate.html",
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
          subject: "No Reply Mail: Otp Verification",
       });
 
@@ -100,7 +100,7 @@ export default class AuthenticationUseCase {
       await this.emailService.sendMail({
          email,
          name: doctor.name!,
-         pathOfTemplate: "@/../public/resetPasswordTemplate.html",
+         pathOfTemplate: "../../../public/resetPasswordTemplate.html",
          subject: "No Reply Mail: Password Reset",
          link: `${CLIENT_URL}/doctor/reset-password`,
       });

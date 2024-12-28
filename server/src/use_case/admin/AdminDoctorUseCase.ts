@@ -38,7 +38,7 @@ export default class AdminDoctorUseCase {
          await this.emailService.sendMail({
             email: updatedDoctor.email!,
             name: "Admin",
-            pathOfTemplate: "@/../public/notifyVerificationTemplate.html",
+            pathOfTemplate: "../../../public/notifyVerificationTemplate.html",
             subject: "No Reply Mail: Doctor Verification Notification",
             link: `${CLIENT_URL}/doctor`,
          });

@@ -38,7 +38,7 @@ export default class AuthenticationUseCase {
             email,
             name: "Admin",
             otp,
-            pathOfTemplate: "@/../public/otpEmailTemplate.html",
+            pathOfTemplate: "../../../public/otpEmailTemplate.html",
             subject: "No Reply Mail: Otp Verification",
          });
       }
@@ -79,7 +79,7 @@ export default class AuthenticationUseCase {
          email,
          name: "Admin",
          otp,
-         pathOfTemplate: "@/../public/otpEmailTemplate.html",
+         pathOfTemplate: "../../../public/otpEmailTemplate.html",
          subject: "No Reply Mail: Otp Verification",
       });
    }

@@ -7,7 +7,6 @@ import IPaymentService from "@/domain/interface/services/IPaymentService";
 import { VideoSectionStatus } from "@/domain/entities/IVideoChatSection";
 import { NotificationTypes } from "@/domain/entities/INotification";
 import { AppointmentStatus } from "@/domain/entities/IAppointment";
-import { format } from "@/utils/date-formatter";
 
 export default class UpdateAppointmentUseCase {
    constructor(
